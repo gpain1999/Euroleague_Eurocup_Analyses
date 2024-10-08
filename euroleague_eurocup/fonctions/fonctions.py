@@ -372,11 +372,10 @@ def global_io_recuperation_data_game(gs_data,pbp_data,gamecode,nb_io) :
     return local_io_summary,road_io_summary
 
 
-def io_plus_minus_analysis(data_dir,season,competition,io,sortby = "PM",teamcode = "") :
+def io_plus_minus_analysis(data_dir,season,competition,io,sortby = "PM_IN",teamcode = "") :
 
 
-    if sortby == "PM" :
-        sortby = f"PM_IN" 
+
     data_io = pd.read_csv(os.path.join(data_dir, f'{competition}_{io}_io_{season}.csv'))
     data_id = pd.read_csv(os.path.join(data_dir, f'{competition}_idplayers_{season}.csv'))
 
@@ -432,9 +431,6 @@ def io_plus_minus_analysis(data_dir,season,competition,io,sortby = "PM",teamcode
 
     gb2["PM_THEO"] = round(gb2[f"TIME_{io}IO"]/gb2["TIME_TEAM"]*gb2["PM_TEAM"],1)
     gb2["PREF_PM"] = gb2[f"PM_IN"] - gb2["PM_THEO"]
-   
-
-
     gb3 = gb2.drop(columns=[f"ID{i}" for i in range(1,io+1)]+["TIME_TEAM","PM_TEAM",f"TIME_{io}IO"]+[f"OFF_{io}IO",f"DEF_{io}IO","OFF_TEAM","DEF_TEAM"])
 
     gb4 = gb3.sort_values(by = sortby,ascending=False).reset_index(drop=True)
