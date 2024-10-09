@@ -11949,7 +11949,7 @@ Season,Phase,Round,Gamecode,TYPE,NUMBEROFPLAY,CODETEAM,PLAYER_ID,PLAYTYPE,PLAYER
 2024,,,22,0,630,ULM,P012602,3FGM,"ANIGBATA , ALEC",ratiopharm Ulm,21,40,00:04,76.0,94.0,,Three Pointer (1/1 -  3 pt),4
 2024,,,22,0,637,,,EG,,,,41,,,,,End Game,4
 2024,,,23,0,2,,,BP,,,,1,,,,,Begin Period,1
-2024,,,23,0,3,BES,,JB,,Besiktas Fibabanka Istanbul,,1,09:59,,,,Jump Ball (1),1
+2024,,,23,0,3,BES,,JB,,Besiktas Fibabanka Istanbul,,1,09:59,,,,,1
 2024,,,23,0,4,BES,P013255,2FGA,"MARTIN, KELAN",Besiktas Fibabanka Istanbul,30,1,09:47,,,,Missed Two Pointer (0/1 -  0 pt),1
 2024,,,23,0,5,HTA,P001927,D,"BEVERLEY, PATRICK",Hapoel Shlomo Tel Aviv,22,1,09:45,,,,Def Rebound (1),1
 2024,,,23,0,6,HTA,P013284,3FGA,"WAINRIGHT, ISHMAIL CARZELL",Hapoel Shlomo Tel Aviv,24,1,09:41,,,,Missed Three Pointer (0/1 -  0 pt),1
@@ -12193,7 +12193,7 @@ Season,Phase,Round,Gamecode,TYPE,NUMBEROFPLAY,CODETEAM,PLAYER_ID,PLAYTYPE,PLAYER
 2024,,,23,0,264,BES,P009680,OF,"MORGAN, CONOR",Besiktas Fibabanka Istanbul,9,18,02:50,,,,Offensive Foul (3),2
 2024,,,23,0,265,BES,P009680,TO,"MORGAN, CONOR",Besiktas Fibabanka Istanbul,9,18,02:50,,,,Turnover (1),2
 2024,,,23,0,266,HTA,P001927,RV,"BEVERLEY, PATRICK",Hapoel Shlomo Tel Aviv,22,18,02:50,,,,Foul Drawn (8),2
-2024,,,23,0,267,BES,CO_A,C,,Besiktas Fibabanka Istanbul,,18,02:50,,,,Tech Foul Coach (1),2
+2024,,,23,0,267,BES,CO_A,C,,Besiktas Fibabanka Istanbul,,18,02:50,,,,Coach Foul (1),2
 2024,,,23,0,268,HTA,P001927,FTM,"BEVERLEY, PATRICK",Hapoel Shlomo Tel Aviv,22,18,02:50,34.0,46.0,,Free Throw In (8/8 -  12 pt),2
 2024,,,23,0,269,BES,P009680,OUT,"MORGAN, CONOR",Besiktas Fibabanka Istanbul,9,18,02:50,,,,Out,2
 2024,,,23,0,270,BES,P011927,IN,"SLEVA, DUSTIN",Besiktas Fibabanka Istanbul,14,18,02:50,,,,In,2
@@ -12445,8 +12445,1318 @@ Season,Phase,Round,Gamecode,TYPE,NUMBEROFPLAY,CODETEAM,PLAYER_ID,PLAYTYPE,PLAYER
 2024,,,23,0,537,BES,P009680,OUT,"MORGAN, CONOR",Besiktas Fibabanka Istanbul,9,35,05:36,,,,Out,4
 2024,,,23,0,538,BES,P011379,IN,"KONAN, KEREM",Besiktas Fibabanka Istanbul,20,35,05:36,,,,In,4
 2024,,,23,0,539,BES,P011379,FTM,"KONAN, KEREM",Besiktas Fibabanka Istanbul,20,35,05:36,71.0,87.0,,Free Throw In (2/3 -  6 pt),4
+2024,,,23,0,540,BES,P011379,FTM,"KONAN, KEREM",Besiktas Fibabanka Istanbul,20,35,05:36,72.0,87.0,,Free Throw In (3/4 -  7 pt),4
+2024,,,23,0,541,HTA,P010386,FTM,"FOSTER, MARCUS",Hapoel Shlomo Tel Aviv,17,35,05:36,72.0,88.0,,Free Throw In (3/3 -  9 pt),4
+2024,,,23,0,542,HTA,P010386,FTM,"FOSTER, MARCUS",Hapoel Shlomo Tel Aviv,17,35,05:36,72.0,89.0,,Free Throw In (4/4 -  10 pt),4
+2024,,,23,0,543,HTA,P010386,2FGM,"FOSTER, MARCUS",Hapoel Shlomo Tel Aviv,17,35,05:28,72.0,91.0,,Two Pointer (4/5 -  12 pt),4
+2024,,,23,0,544,BES,P013255,2FGA,"MARTIN, KELAN",Besiktas Fibabanka Istanbul,30,35,05:11,,,,Missed Two Pointer (1/6 -  10 pt),4
+2024,,,23,0,545,BES,P011924,IN,"ALLMAN, KYLE",Besiktas Fibabanka Istanbul,0,35,05:11,,,,In,4
+2024,,,23,0,546,BES,P013255,OUT,"MARTIN, KELAN",Besiktas Fibabanka Istanbul,30,35,05:11,,,,Out,4
+2024,,,23,0,547,BES,P011379,O,"KONAN, KEREM",Besiktas Fibabanka Istanbul,20,35,05:11,,,,Off Rebound (2),4
+2024,,,23,0,548,BES,P008945,2FGA,"NEEDHAM, DEREK",Besiktas Fibabanka Istanbul,5,35,05:02,,,,Missed Two Pointer (1/3 -  13 pt),4
+2024,,,23,0,549,HTA,P010550,D,"GINAT, TOMER",Hapoel Shlomo Tel Aviv,41,35,05:00,,,,Def Rebound (5),4
+2024,,,23,0,551,HTA,P010386,2FGM,"FOSTER, MARCUS",Hapoel Shlomo Tel Aviv,17,36,04:52,72.0,93.0,,Two Pointer (5/6 -  14 pt),4
+2024,,,23,0,552,BES,P011379,2FGA,"KONAN, KEREM",Besiktas Fibabanka Istanbul,20,36,04:35,,,,Missed Two Pointer (2/5 -  7 pt),4
+2024,,,23,0,553,HTA,P011386,D,"YAACOV, NOAM",Hapoel Shlomo Tel Aviv,31,36,04:33,,,,Def Rebound (1),4
+2024,,,23,0,554,HTA,P011386,OF,"YAACOV, NOAM",Hapoel Shlomo Tel Aviv,31,36,04:30,,,,Offensive Foul (2),4
+2024,,,23,0,555,HTA,P011386,TO,"YAACOV, NOAM",Hapoel Shlomo Tel Aviv,31,36,04:30,,,,Turnover (1),4
+2024,,,23,0,556,BES,P007914,RV,"ARSLAN, YIGIT",Besiktas Fibabanka Istanbul,7,36,04:30,,,,Foul Drawn (2),4
+2024,,,23,0,557,BES,,TOUT,,Besiktas Fibabanka Istanbul,,36,04:30,,,,Time Out (2),4
+2024,,,23,0,558,BES,P008945,2FGM,"NEEDHAM, DEREK",Besiktas Fibabanka Istanbul,5,36,04:09,74.0,93.0,,Two Pointer (2/4 -  15 pt),4
+2024,,,23,0,561,HTA,P001927,3FGA,"BEVERLEY, PATRICK",Hapoel Shlomo Tel Aviv,22,37,03:46,,,,Missed Three Pointer (0/2 -  16 pt),4
+2024,,,23,0,562,BES,P007914,D,"ARSLAN, YIGIT",Besiktas Fibabanka Istanbul,7,37,03:45,,,,Def Rebound (5),4
+2024,,,23,0,563,HTA,P010550,CM,"GINAT, TOMER",Hapoel Shlomo Tel Aviv,41,37,03:34,,,,Foul (3),4
+2024,,,23,0,564,BES,P008945,RV,"NEEDHAM, DEREK",Besiktas Fibabanka Istanbul,5,37,03:34,,,,Foul Drawn (5),4
+2024,,,23,0,565,HTA,P004846,IN,"TIMOR, BAR",Hapoel Shlomo Tel Aviv,10,37,03:34,,,,In,4
+2024,,,23,0,566,HTA,P001927,OUT,"BEVERLEY, PATRICK",Hapoel Shlomo Tel Aviv,22,37,03:34,,,,Out,4
+2024,,,23,0,567,BES,P008945,FTM,"NEEDHAM, DEREK",Besiktas Fibabanka Istanbul,5,37,03:34,75.0,93.0,,Free Throw In (3/3 -  16 pt),4
+2024,,,23,0,568,BES,P008945,FTM,"NEEDHAM, DEREK",Besiktas Fibabanka Istanbul,5,37,03:34,76.0,93.0,,Free Throw In (4/4 -  17 pt),4
+2024,,,23,0,569,HTA,P010550,3FGA,"GINAT, TOMER",Hapoel Shlomo Tel Aviv,41,37,03:18,,,,Missed Three Pointer (0/3 -  6 pt),4
+2024,,,23,0,570,HTA,,O,,Hapoel Shlomo Tel Aviv,,37,03:18,,,,Off Rebound (3),4
+2024,,,23,0,571,BES,P011379,CM,"KONAN, KEREM",Besiktas Fibabanka Istanbul,20,37,03:18,,,,Foul (3),4
+2024,,,23,0,572,HTA,P012096,RV,"CABOCLO, BRUNO",Hapoel Shlomo Tel Aviv,51,37,03:18,,,,Foul Drawn (3),4
+2024,,,23,0,573,HTA,P012096,FTA,"CABOCLO, BRUNO",Hapoel Shlomo Tel Aviv,51,37,03:18,,,,Missed Free Throw (1/2 -  3 pt),4
+2024,,,23,0,574,HTA,P012096,FTM,"CABOCLO, BRUNO",Hapoel Shlomo Tel Aviv,51,37,03:18,76.0,94.0,,Free Throw In (2/3 -  4 pt),4
+2024,,,23,0,576,BES,P007914,3FGA,"ARSLAN, YIGIT",Besiktas Fibabanka Istanbul,7,38,02:57,,,,Missed Three Pointer (0/3 -  2 pt),4
+2024,,,23,0,577,BES,P011927,O,"SLEVA, DUSTIN",Besiktas Fibabanka Istanbul,14,38,02:54,,,,Off Rebound (2),4
+2024,,,23,0,578,BES,P011927,2FGM,"SLEVA, DUSTIN",Besiktas Fibabanka Istanbul,14,38,02:54,78.0,94.0,,Two Pointer (2/4 -  10 pt),4
+2024,,,23,0,579,HTA,P011386,TO,"YAACOV, NOAM",Hapoel Shlomo Tel Aviv,31,38,02:44,,,,Turnover (2),4
+2024,,,23,0,580,BES,P011927,ST,"SLEVA, DUSTIN",Besiktas Fibabanka Istanbul,14,38,02:42,,,,Steal (2),4
+2024,,,23,0,581,BES,P007914,3FGM,"ARSLAN, YIGIT",Besiktas Fibabanka Istanbul,7,38,02:40,81.0,94.0,,Three Pointer (1/4 -  5 pt),4
+2024,,,23,0,582,BES,P011927,AS,"SLEVA, DUSTIN",Besiktas Fibabanka Istanbul,14,38,02:40,,,,Assist (3),4
+2024,,,23,0,583,HTA,,TOUT,,Hapoel Shlomo Tel Aviv,,38,02:40,,,,Time Out (1),4
+2024,,,23,0,584,HTA,P010386,TO,"FOSTER, MARCUS",Hapoel Shlomo Tel Aviv,17,38,02:18,,,,Turnover (4),4
+2024,,,23,0,585,BES,P011927,ST,"SLEVA, DUSTIN",Besiktas Fibabanka Istanbul,14,38,02:16,,,,Steal (3),4
+2024,,,23,0,586,BES,P011927,2FGM,"SLEVA, DUSTIN",Besiktas Fibabanka Istanbul,14,38,02:14,83.0,94.0,,Two Pointer (3/5 -  12 pt),4
+2024,,,23,0,587,BES,P008945,AS,"NEEDHAM, DEREK",Besiktas Fibabanka Istanbul,5,38,02:13,,,,Assist (2),4
+2024,,,23,0,588,HTA,P001927,IN,"BEVERLEY, PATRICK",Hapoel Shlomo Tel Aviv,22,38,02:13,,,,In,4
+2024,,,23,0,589,HTA,P011386,OUT,"YAACOV, NOAM",Hapoel Shlomo Tel Aviv,31,38,02:13,,,,Out,4
+2024,,,23,0,591,HTA,P010550,2FGM,"GINAT, TOMER",Hapoel Shlomo Tel Aviv,41,39,01:53,83.0,96.0,,Two Pointer (4/5 -  8 pt),4
+2024,,,23,0,592,BES,P011927,2FGM,"SLEVA, DUSTIN",Besiktas Fibabanka Istanbul,14,39,01:41,85.0,96.0,,Two Pointer (4/6 -  14 pt),4
+2024,,,23,0,593,HTA,P011157,IN,"MOTLEY, JOHNATHAN",Hapoel Shlomo Tel Aviv,0,39,01:41,,,,In,4
+2024,,,23,0,594,HTA,P012096,OUT,"CABOCLO, BRUNO",Hapoel Shlomo Tel Aviv,51,39,01:41,,,,Out,4
+2024,,,23,0,595,HTA,P011157,TO,"MOTLEY, JOHNATHAN",Hapoel Shlomo Tel Aviv,0,39,01:22,,,,Turnover (3),4
+2024,,,23,0,596,BES,P011924,ST,"ALLMAN, KYLE",Besiktas Fibabanka Istanbul,0,39,01:20,,,,Steal (2),4
+2024,,,23,0,597,BES,P007914,TO,"ARSLAN, YIGIT",Besiktas Fibabanka Istanbul,7,39,01:18,,,,Turnover (1),4
+2024,,,23,0,598,HTA,P011157,OF,"MOTLEY, JOHNATHAN",Hapoel Shlomo Tel Aviv,0,39,01:06,,,,Offensive Foul (4),4
+2024,,,23,0,599,HTA,P011157,TO,"MOTLEY, JOHNATHAN",Hapoel Shlomo Tel Aviv,0,39,01:06,,,,Turnover (4),4
+2024,,,23,0,600,BES,P007914,RV,"ARSLAN, YIGIT",Besiktas Fibabanka Istanbul,7,39,01:06,,,,Foul Drawn (3),4
+2024,,,23,0,602,BES,P008945,3FGA,"NEEDHAM, DEREK",Besiktas Fibabanka Istanbul,5,40,00:56,,,,Missed Three Pointer (3/8 -  17 pt),4
+2024,,,23,0,603,HTA,,D,,Hapoel Shlomo Tel Aviv,,40,00:56,,,,Def Rebound (3),4
+2024,,,23,0,604,BES,P011927,CM,"SLEVA, DUSTIN",Besiktas Fibabanka Istanbul,14,40,00:56,,,,Foul (5),4
+2024,,,23,0,605,HTA,P010550,RV,"GINAT, TOMER",Hapoel Shlomo Tel Aviv,41,40,00:56,,,,Foul Drawn (1),4
+2024,,,23,0,606,BES,P011927,OUT,"SLEVA, DUSTIN",Besiktas Fibabanka Istanbul,14,40,00:56,,,,Out,4
+2024,,,23,0,607,BES,P013255,IN,"MARTIN, KELAN",Besiktas Fibabanka Istanbul,30,40,00:56,,,,In,4
+2024,,,23,0,608,HTA,P010550,FTM,"GINAT, TOMER",Hapoel Shlomo Tel Aviv,41,40,00:56,85.0,97.0,,Free Throw In (1/1 -  9 pt),4
+2024,,,23,0,609,HTA,P010550,FTA,"GINAT, TOMER",Hapoel Shlomo Tel Aviv,41,40,00:56,,,,Missed Free Throw (1/2 -  9 pt),4
+2024,,,23,0,610,BES,P013255,D,"MARTIN, KELAN",Besiktas Fibabanka Istanbul,30,40,00:56,,,,Def Rebound (2),4
+2024,,,23,0,611,BES,P007914,TO,"ARSLAN, YIGIT",Besiktas Fibabanka Istanbul,7,40,00:48,,,,Turnover (2),4
+2024,,,23,0,612,HTA,P010386,2FGM,"FOSTER, MARCUS",Hapoel Shlomo Tel Aviv,17,40,00:31,85.0,99.0,,Two Pointer (6/7 -  16 pt),4
+2024,,,23,0,613,HTA,P011157,CM,"MOTLEY, JOHNATHAN",Hapoel Shlomo Tel Aviv,0,40,00:29,,,,Foul (5),4
+2024,,,23,0,614,BES,P011379,RV,"KONAN, KEREM",Besiktas Fibabanka Istanbul,20,40,00:29,,,,Foul Drawn (2),4
+2024,,,23,0,615,HTA,P011157,OUT,"MOTLEY, JOHNATHAN",Hapoel Shlomo Tel Aviv,0,40,00:29,,,,Out,4
+2024,,,23,0,616,HTA,P013284,IN,"WAINRIGHT, ISHMAIL CARZELL",Hapoel Shlomo Tel Aviv,24,40,00:29,,,,In,4
+2024,,,23,0,617,BES,P011379,FTM,"KONAN, KEREM",Besiktas Fibabanka Istanbul,20,40,00:29,86.0,99.0,,Free Throw In (4/5 -  8 pt),4
+2024,,,23,0,618,BES,P011379,FTM,"KONAN, KEREM",Besiktas Fibabanka Istanbul,20,40,00:29,87.0,99.0,,Free Throw In (5/6 -  9 pt),4
+2024,,,23,0,619,HTA,P010386,3FGA,"FOSTER, MARCUS",Hapoel Shlomo Tel Aviv,17,40,00:06,,,,Missed Three Pointer (0/4 -  16 pt),4
+2024,,,23,0,620,BES,P011924,D,"ALLMAN, KYLE",Besiktas Fibabanka Istanbul,0,40,00:02,,,,Def Rebound (4),4
+2024,,,23,0,621,BES,P007914,2FGA,"ARSLAN, YIGIT",Besiktas Fibabanka Istanbul,7,40,00:00,,,,Missed Two Pointer (1/2 -  5 pt),4
+2024,,,23,0,622,BES,P007914,AG,"ARSLAN, YIGIT",Besiktas Fibabanka Istanbul,7,40,00:00,,,,Shot Rejected (1),4
+2024,,,23,0,623,HTA,P010386,FV,"FOSTER, MARCUS",Hapoel Shlomo Tel Aviv,17,40,00:00,,,,Block (1),4
+2024,,,23,0,624,HTA,P001927,D,"BEVERLEY, PATRICK",Hapoel Shlomo Tel Aviv,22,40,00:00,,,,Def Rebound (11),4
+2024,,,23,0,625,HTA,P010550,2FGM,"GINAT, TOMER",Hapoel Shlomo Tel Aviv,41,40,00:00,87.0,101.0,,Two Pointer (5/6 -  11 pt),4
+2024,,,23,0,626,HTA,P001927,AS,"BEVERLEY, PATRICK",Hapoel Shlomo Tel Aviv,22,40,00:00,,,,Assist (3),4
+2024,,,23,0,630,,,EG,,,,41,,,,,End Game,4
+2024,,,26,0,2,,,BP,,,,1,,,,,Begin Period,1
+2024,,,26,0,3,JER,,JB,,Hapoel Bank Yahav Jerusalem,,1,09:59,,,,Jump Ball (1),1
+2024,,,26,0,4,JER,P010587,3FGM,"SMITH, KENNETH",Hapoel Bank Yahav Jerusalem,44,1,09:59,3.0,,,Three Pointer (1/1 -  3 pt),1
+2024,,,26,0,5,JER,P011970,AS,"HARPER, JARED",Hapoel Bank Yahav Jerusalem,1,1,09:59,,,,Assist (1),1
+2024,,,26,0,6,HAM,P006006,TO,"TURUDIC, BENEDIKT",Veolia Towers Hamburg,44,1,09:21,,,,Turnover (1),1
+2024,,,26,0,7,JER,P010587,ST,"SMITH, KENNETH",Hapoel Bank Yahav Jerusalem,44,1,09:18,,,,Steal (1),1
+2024,,,26,0,9,JER,P011970,3FGM,"HARPER, JARED",Hapoel Bank Yahav Jerusalem,1,1,09:13,6.0,,,Three Pointer (1/1 -  3 pt),1
+2024,,,26,0,10,JER,P010587,AS,"SMITH, KENNETH",Hapoel Bank Yahav Jerusalem,44,1,09:13,,,,Assist (1),1
+2024,,,26,0,11,HAM,P013308,3FGA,"IVEY, BRAE",Veolia Towers Hamburg,1,1,09:13,,,,Missed Three Pointer (0/1 -  0 pt),1
+2024,,,26,0,12,JER,P013278,D,"WILEY, AUSTIN",Hapoel Bank Yahav Jerusalem,5,1,09:13,,,,Def Rebound (1),1
+2024,,,26,0,14,JER,P013278,2FGA,"WILEY, AUSTIN",Hapoel Bank Yahav Jerusalem,5,2,08:45,,,,Missed Two Pointer (0/1 -  0 pt),1
+2024,,,26,0,15,JER,P013278,O,"WILEY, AUSTIN",Hapoel Bank Yahav Jerusalem,5,2,08:42,,,,Off Rebound (1),1
+2024,,,26,0,16,JER,P013278,2FGA,"WILEY, AUSTIN",Hapoel Bank Yahav Jerusalem,5,2,08:39,,,,Missed Two Pointer (0/2 -  0 pt),1
+2024,,,26,0,17,JER,P006625,O,"ZOOSMAN, YOVEL",Hapoel Bank Yahav Jerusalem,50,2,08:36,,,,Off Rebound (1),1
+2024,,,26,0,18,JER,P006625,2FGM,"ZOOSMAN, YOVEL",Hapoel Bank Yahav Jerusalem,50,2,08:36,8.0,,,Two Pointer (1/1 -  2 pt),1
+2024,,,26,0,19,HAM,P013308,2FGA,"IVEY, BRAE",Veolia Towers Hamburg,1,2,08:22,,,,Missed Two Pointer (0/1 -  0 pt),1
+2024,,,26,0,20,JER,P013279,D,"CHACHASHVILI, GABRIEL",Hapoel Bank Yahav Jerusalem,7,2,08:18,,,,Def Rebound (1),1
+2024,,,26,0,21,JER,P011970,2FGA,"HARPER, JARED",Hapoel Bank Yahav Jerusalem,1,2,08:12,,,,Missed Two Pointer (0/1 -  3 pt),1
+2024,,,26,0,22,HAM,P003242,D,"OGBE, KENNETH",Veolia Towers Hamburg,25,2,08:09,,,,Def Rebound (1),1
+2024,,,26,0,23,JER,P006625,CM,"ZOOSMAN, YOVEL",Hapoel Bank Yahav Jerusalem,50,2,08:08,,,,Foul (1),1
+2024,,,26,0,24,HAM,P003242,RV,"OGBE, KENNETH",Veolia Towers Hamburg,25,2,08:08,,,,Foul Drawn (1),1
+2024,,,26,0,26,HAM,P011256,3FGM,"RICH, OSARO",Veolia Towers Hamburg,3,3,07:54,8.0,3.0,,Three Pointer (1/1 -  3 pt),1
+2024,,,26,0,27,HAM,P006006,AS,"TURUDIC, BENEDIKT",Veolia Towers Hamburg,44,3,07:51,,,,Assist (1),1
+2024,,,26,0,28,JER,P013278,2FGA,"WILEY, AUSTIN",Hapoel Bank Yahav Jerusalem,5,3,07:34,,,,Missed Two Pointer (0/3 -  0 pt),1
+2024,,,26,0,29,HAM,P003242,D,"OGBE, KENNETH",Veolia Towers Hamburg,25,3,07:31,,,,Def Rebound (2),1
+2024,,,26,0,30,JER,P006625,CM,"ZOOSMAN, YOVEL",Hapoel Bank Yahav Jerusalem,50,3,07:28,,,,Foul (2),1
+2024,,,26,0,31,HAM,P013308,RV,"IVEY, BRAE",Veolia Towers Hamburg,1,3,07:28,,,,Foul Drawn (1),1
+2024,,,26,0,32,HAM,P013312,3FGA,"BARNETT, JORDAN",Veolia Towers Hamburg,21,3,07:24,,,,Missed Three Pointer (0/1 -  0 pt),1
+2024,,,26,0,33,HAM,P006006,O,"TURUDIC, BENEDIKT",Veolia Towers Hamburg,44,3,07:21,,,,Off Rebound (1),1
+2024,,,26,0,35,HAM,P011256,3FGA,"RICH, OSARO",Veolia Towers Hamburg,3,3,07:10,,,,Missed Three Pointer (1/2 -  3 pt),1
+2024,,,26,0,36,JER,P013278,D,"WILEY, AUSTIN",Hapoel Bank Yahav Jerusalem,5,3,07:10,,,,Def Rebound (2),1
+2024,,,26,0,37,HAM,P013312,CM,"BARNETT, JORDAN",Veolia Towers Hamburg,21,3,07:07,,,,Foul (1),1
+2024,,,26,0,38,JER,P011970,RV,"HARPER, JARED",Hapoel Bank Yahav Jerusalem,1,3,07:07,,,,Foul Drawn (1),1
+2024,,,26,0,39,JER,P010431,IN,"MORGAN, JEREMY",Hapoel Bank Yahav Jerusalem,20,3,07:07,,,,In,1
+2024,,,26,0,40,JER,P006625,OUT,"ZOOSMAN, YOVEL",Hapoel Bank Yahav Jerusalem,50,3,07:07,,,,Out,1
+2024,,,26,0,41,JER,P011970,FTM,"HARPER, JARED",Hapoel Bank Yahav Jerusalem,1,3,07:07,9.0,3.0,,Free Throw In (1/1 -  4 pt),1
+2024,,,26,0,42,JER,P011970,FTM,"HARPER, JARED",Hapoel Bank Yahav Jerusalem,1,3,07:07,10.0,3.0,,Free Throw In (2/2 -  5 pt),1
+2024,,,26,0,44,HAM,P003242,2FGM,"OGBE, KENNETH",Veolia Towers Hamburg,25,4,06:53,10.0,5.0,,Two Pointer (1/1 -  2 pt),1
+2024,,,26,0,45,HAM,P006006,AS,"TURUDIC, BENEDIKT",Veolia Towers Hamburg,44,4,06:53,,,,Assist (2),1
+2024,,,26,0,46,JER,P011970,2FGA,"HARPER, JARED",Hapoel Bank Yahav Jerusalem,1,4,06:27,,,,Missed Two Pointer (0/2 -  5 pt),1
+2024,,,26,0,47,JER,P013278,O,"WILEY, AUSTIN",Hapoel Bank Yahav Jerusalem,5,4,06:24,,,,Off Rebound (2),1
+2024,,,26,0,62,JER,P013278,TO,"WILEY, AUSTIN",Hapoel Bank Yahav Jerusalem,5,4,06:24,,,,Turnover (1),1
+2024,,,26,0,63,HAM,P013308,ST,"IVEY, BRAE",Veolia Towers Hamburg,1,4,06:24,,,,Steal (1),1
+2024,,,26,0,48,HAM,P003242,3FGM,"OGBE, KENNETH",Veolia Towers Hamburg,25,4,06:15,10.0,8.0,,Three Pointer (1/1 -  5 pt),1
+2024,,,26,0,49,HAM,P013308,AS,"IVEY, BRAE",Veolia Towers Hamburg,1,4,06:12,,,,Assist (1),1
+2024,,,26,0,51,JER,P010587,3FGA,"SMITH, KENNETH",Hapoel Bank Yahav Jerusalem,44,5,05:53,,,,Missed Three Pointer (1/2 -  3 pt),1
+2024,,,26,0,52,JER,P013278,O,"WILEY, AUSTIN",Hapoel Bank Yahav Jerusalem,5,5,05:49,,,,Off Rebound (3),1
+2024,,,26,0,53,JER,P011970,3FGM,"HARPER, JARED",Hapoel Bank Yahav Jerusalem,1,5,05:46,13.0,8.0,,Three Pointer (2/2 -  8 pt),1
+2024,,,26,0,54,JER,P013278,AS,"WILEY, AUSTIN",Hapoel Bank Yahav Jerusalem,5,5,05:44,,,,Assist (1),1
+2024,,,26,0,55,HAM,P013308,2FGA,"IVEY, BRAE",Veolia Towers Hamburg,1,5,05:27,,,,Missed Two Pointer (0/2 -  0 pt),1
+2024,,,26,0,56,HAM,P013312,O,"BARNETT, JORDAN",Veolia Towers Hamburg,21,5,05:21,,,,Off Rebound (1),1
+2024,,,26,0,57,HAM,P013308,3FGA,"IVEY, BRAE",Veolia Towers Hamburg,1,5,05:18,,,,Missed Three Pointer (0/2 -  0 pt),1
+2024,,,26,0,58,JER,P013278,D,"WILEY, AUSTIN",Hapoel Bank Yahav Jerusalem,5,5,05:15,,,,Def Rebound (3),1
+2024,,,26,0,60,JER,,TO,,Hapoel Bank Yahav Jerusalem,,6,04:56,,,,Turnover (1),1
+2024,,,26,0,61,,,TOUT_TV,,,,6,04:56,,,,TV Time Out (1),1
+2024,,,26,0,64,JER,P013276,IN,"SMITH, JUSTIN",Hapoel Bank Yahav Jerusalem,0,6,04:56,,,,In,1
+2024,,,26,0,65,JER,P013277,IN,"JOHNSON, CHRIS",Hapoel Bank Yahav Jerusalem,4,6,04:56,,,,In,1
+2024,,,26,0,66,JER,P013278,OUT,"WILEY, AUSTIN",Hapoel Bank Yahav Jerusalem,5,6,04:56,,,,Out,1
+2024,,,26,0,67,JER,P013279,OUT,"CHACHASHVILI, GABRIEL",Hapoel Bank Yahav Jerusalem,7,6,04:56,,,,Out,1
+2024,,,26,0,68,JER,P009879,IN,"DOVRAT, NOAM",Hapoel Bank Yahav Jerusalem,8,6,04:56,,,,In,1
+2024,,,26,0,69,JER,P010587,OUT,"SMITH, KENNETH",Hapoel Bank Yahav Jerusalem,44,6,04:56,,,,Out,1
+2024,,,26,0,70,HAM,P013308,OUT,"IVEY, BRAE",Veolia Towers Hamburg,1,6,04:56,,,,Out,1
+2024,,,26,0,71,HAM,P013309,IN,"LOTTIE, JAIZEC",Veolia Towers Hamburg,4,6,04:56,,,,In,1
+2024,,,26,0,72,HAM,P012695,IN,"REECE, CAMRON",Veolia Towers Hamburg,14,6,04:56,,,,In,1
+2024,,,26,0,73,HAM,P006006,OUT,"TURUDIC, BENEDIKT",Veolia Towers Hamburg,44,6,04:56,,,,Out,1
+2024,,,26,0,74,HAM,P012695,OF,"REECE, CAMRON",Veolia Towers Hamburg,14,6,04:48,,,,Offensive Foul (1),1
+2024,,,26,0,75,HAM,P012695,TO,"REECE, CAMRON",Veolia Towers Hamburg,14,6,04:48,,,,Turnover (1),1
+2024,,,26,0,76,JER,P009879,RV,"DOVRAT, NOAM",Hapoel Bank Yahav Jerusalem,8,6,04:48,,,,Foul Drawn (1),1
+2024,,,26,0,77,JER,P013277,TO,"JOHNSON, CHRIS",Hapoel Bank Yahav Jerusalem,4,6,04:31,,,,Turnover (1),1
+2024,,,26,0,78,HAM,P012695,ST,"REECE, CAMRON",Veolia Towers Hamburg,14,6,04:30,,,,Steal (1),1
+2024,,,26,0,79,HAM,P013312,2FGM,"BARNETT, JORDAN",Veolia Towers Hamburg,21,6,04:20,13.0,10.0,,Two Pointer (1/1 -  2 pt),1
+2024,,,26,0,80,HAM,P003242,AS,"OGBE, KENNETH",Veolia Towers Hamburg,25,6,04:18,,,,Assist (1),1
+2024,,,26,0,81,HAM,P003242,CM,"OGBE, KENNETH",Veolia Towers Hamburg,25,6,04:07,,,,Foul (1),1
+2024,,,26,0,82,JER,P010431,RV,"MORGAN, JEREMY",Hapoel Bank Yahav Jerusalem,20,6,04:07,,,,Foul Drawn (1),1
+2024,,,26,0,83,JER,P010431,FTM,"MORGAN, JEREMY",Hapoel Bank Yahav Jerusalem,20,6,04:07,14.0,10.0,,Free Throw In (1/1 -  1 pt),1
+2024,,,26,0,84,JER,P010431,FTA,"MORGAN, JEREMY",Hapoel Bank Yahav Jerusalem,20,6,04:07,,,,Missed Free Throw (1/2 -  1 pt),1
+2024,,,26,0,85,HAM,P011256,D,"RICH, OSARO",Veolia Towers Hamburg,3,6,04:07,,,,Def Rebound (1),1
+2024,,,26,0,87,HAM,P012695,2FGA,"REECE, CAMRON",Veolia Towers Hamburg,14,7,03:49,,,,Missed Two Pointer (0/1 -  0 pt),1
+2024,,,26,0,88,JER,P009879,D,"DOVRAT, NOAM",Hapoel Bank Yahav Jerusalem,8,7,03:47,,,,Def Rebound (1),1
+2024,,,26,0,89,JER,P009879,2FGM,"DOVRAT, NOAM",Hapoel Bank Yahav Jerusalem,8,7,03:41,16.0,10.0,,Two Pointer (1/1 -  2 pt),1
+2024,,,26,0,90,JER,P013276,CM,"SMITH, JUSTIN",Hapoel Bank Yahav Jerusalem,0,7,03:26,,,,Foul (1),1
+2024,,,26,0,91,HAM,P013309,RV,"LOTTIE, JAIZEC",Veolia Towers Hamburg,4,7,03:26,,,,Foul Drawn (1),1
+2024,,,26,0,92,JER,P011970,OUT,"HARPER, JARED",Hapoel Bank Yahav Jerusalem,1,7,03:26,,,,Out,1
+2024,,,26,0,93,JER,P013281,IN,"CORNELIUS, OR",Hapoel Bank Yahav Jerusalem,80,7,03:26,,,,In,1
+2024,,,26,0,94,HAM,P013312,OUT,"BARNETT, JORDAN",Veolia Towers Hamburg,21,7,03:26,,,,Out,1
+2024,,,26,0,95,HAM,P006420,IN,"HECKMANN, PATRICK",Veolia Towers Hamburg,33,7,03:26,,,,In,1
+2024,,,26,0,96,HAM,P011256,3FGA,"RICH, OSARO",Veolia Towers Hamburg,3,7,03:25,,,,Missed Three Pointer (1/3 -  3 pt),1
+2024,,,26,0,97,JER,P013277,D,"JOHNSON, CHRIS",Hapoel Bank Yahav Jerusalem,4,7,03:25,,,,Def Rebound (1),1
+2024,,,26,0,98,JER,P010431,TO,"MORGAN, JEREMY",Hapoel Bank Yahav Jerusalem,20,7,03:12,,,,Turnover (1),1
+2024,,,26,0,99,HAM,P003242,ST,"OGBE, KENNETH",Veolia Towers Hamburg,25,7,03:11,,,,Steal (1),1
+2024,,,26,0,100,HAM,P003242,2FGM,"OGBE, KENNETH",Veolia Towers Hamburg,25,7,03:05,16.0,12.0,,Two Pointer (2/2 -  7 pt),1
+2024,,,26,0,102,JER,P013276,TO,"SMITH, JUSTIN",Hapoel Bank Yahav Jerusalem,0,8,02:47,,,,Turnover (1),1
+2024,,,26,0,103,HAM,P011256,ST,"RICH, OSARO",Veolia Towers Hamburg,3,8,02:46,,,,Steal (1),1
+2024,,,26,0,104,HAM,P011256,2FGM,"RICH, OSARO",Veolia Towers Hamburg,3,8,02:42,16.0,14.0,,Two Pointer (1/1 -  5 pt),1
+2024,,,26,0,105,JER,P010431,OUT,"MORGAN, JEREMY",Hapoel Bank Yahav Jerusalem,20,8,02:27,,,,Out,1
+2024,,,26,0,106,JER,P010587,IN,"SMITH, KENNETH",Hapoel Bank Yahav Jerusalem,44,8,02:27,,,,In,1
+2024,,,26,0,107,HAM,P013308,IN,"IVEY, BRAE",Veolia Towers Hamburg,1,8,02:27,,,,In,1
+2024,,,26,0,108,HAM,P011256,OUT,"RICH, OSARO",Veolia Towers Hamburg,3,8,02:27,,,,Out,1
+2024,,,26,0,109,HAM,P010070,IN,"MOELLER, LEIF",Veolia Towers Hamburg,6,8,02:27,,,,In,1
+2024,,,26,0,110,HAM,P003242,OUT,"OGBE, KENNETH",Veolia Towers Hamburg,25,8,02:27,,,,Out,1
+2024,,,26,0,111,JER,P010587,2FGA,"SMITH, KENNETH",Hapoel Bank Yahav Jerusalem,44,8,02:20,,,,Missed Two Pointer (0/1 -  3 pt),1
+2024,,,26,0,113,JER,P013276,O,"SMITH, JUSTIN",Hapoel Bank Yahav Jerusalem,0,8,02:12,,,,Off Rebound (1),1
+2024,,,26,0,114,JER,P013276,2FGA,"SMITH, JUSTIN",Hapoel Bank Yahav Jerusalem,0,8,02:12,,,,Missed Two Pointer (0/1 -  0 pt),1
+2024,,,26,0,115,HAM,P013309,D,"LOTTIE, JAIZEC",Veolia Towers Hamburg,4,8,02:10,,,,Def Rebound (1),1
+2024,,,26,0,116,HAM,P013308,2FGM,"IVEY, BRAE",Veolia Towers Hamburg,1,8,02:00,16.0,16.0,,Two Pointer (1/3 -  2 pt),1
+2024,,,26,0,134,HAM,P012695,AS,"REECE, CAMRON",Veolia Towers Hamburg,14,8,02:00,,,,Assist (1),1
+2024,,,26,0,118,JER,P009879,3FGM,"DOVRAT, NOAM",Hapoel Bank Yahav Jerusalem,8,9,01:51,19.0,16.0,,Three Pointer (1/1 -  5 pt),1
+2024,,,26,0,119,HAM,P013309,2FGM,"LOTTIE, JAIZEC",Veolia Towers Hamburg,4,9,01:37,19.0,18.0,,Two Pointer (1/1 -  2 pt),1
+2024,,,26,0,120,HAM,P010070,CM,"MOELLER, LEIF",Veolia Towers Hamburg,6,9,01:21,,,,Foul (1),1
+2024,,,26,0,121,JER,P013281,RV,"CORNELIUS, OR",Hapoel Bank Yahav Jerusalem,80,9,01:21,,,,Foul Drawn (1),1
+2024,,,26,0,122,JER,P013281,FTM,"CORNELIUS, OR",Hapoel Bank Yahav Jerusalem,80,9,01:21,20.0,18.0,,Free Throw In (1/1 -  1 pt),1
+2024,,,26,0,123,JER,P013281,FTM,"CORNELIUS, OR",Hapoel Bank Yahav Jerusalem,80,9,01:21,21.0,18.0,,Free Throw In (2/2 -  2 pt),1
+2024,,,26,0,124,JER,P013276,OUT,"SMITH, JUSTIN",Hapoel Bank Yahav Jerusalem,0,9,01:21,,,,Out,1
+2024,,,26,0,125,JER,P013278,IN,"WILEY, AUSTIN",Hapoel Bank Yahav Jerusalem,5,9,01:21,,,,In,1
+2024,,,26,0,126,HAM,P012695,TO,"REECE, CAMRON",Veolia Towers Hamburg,14,9,01:03,,,,Turnover (2),1
+2024,,,26,0,128,JER,P009879,3FGA,"DOVRAT, NOAM",Hapoel Bank Yahav Jerusalem,8,10,00:36,,,,Missed Three Pointer (1/2 -  5 pt),1
+2024,,,26,0,129,HAM,,D,,Veolia Towers Hamburg,,10,00:35,,,,Def Rebound (1),1
+2024,,,26,0,130,HAM,P013308,2FGA,"IVEY, BRAE",Veolia Towers Hamburg,1,10,00:18,,,,Missed Two Pointer (1/4 -  2 pt),1
+2024,,,26,0,131,JER,P010587,D,"SMITH, KENNETH",Hapoel Bank Yahav Jerusalem,44,10,00:16,,,,Def Rebound (1),1
+2024,,,26,0,132,JER,P013277,3FGA,"JOHNSON, CHRIS",Hapoel Bank Yahav Jerusalem,4,10,00:01,,,,Missed Three Pointer (0/1 -  0 pt),1
+2024,,,26,0,133,HAM,P013309,D,"LOTTIE, JAIZEC",Veolia Towers Hamburg,4,10,00:00,,,,Def Rebound (2),1
+2024,,,26,0,136,,,EP,,,,11,,,,,End Period,1
+2024,,,26,0,139,,,BP,,,,11,,,,,Begin Period,2
+2024,,,26,0,137,HAM,P012695,OUT,"REECE, CAMRON",Veolia Towers Hamburg,14,11,10:00,,,,Out,2
+2024,,,26,0,138,HAM,P006006,IN,"TURUDIC, BENEDIKT",Veolia Towers Hamburg,44,11,10:00,,,,In,2
+2024,,,26,0,140,JER,P010587,CM,"SMITH, KENNETH",Hapoel Bank Yahav Jerusalem,44,11,09:47,,,,Foul (1),2
+2024,,,26,0,141,HAM,P013309,RV,"LOTTIE, JAIZEC",Veolia Towers Hamburg,4,11,09:47,,,,Foul Drawn (2),2
+2024,,,26,0,142,HAM,P006006,2FGA,"TURUDIC, BENEDIKT",Veolia Towers Hamburg,44,11,09:34,,,,Missed Two Pointer (0/1 -  0 pt),2
+2024,,,26,0,143,HAM,P006006,AG,"TURUDIC, BENEDIKT",Veolia Towers Hamburg,44,11,09:34,,,,Shot Rejected (1),2
+2024,,,26,0,144,JER,P013278,FV,"WILEY, AUSTIN",Hapoel Bank Yahav Jerusalem,5,11,09:32,,,,Block (1),2
+2024,,,26,0,145,JER,P013278,D,"WILEY, AUSTIN",Hapoel Bank Yahav Jerusalem,5,11,09:30,,,,Def Rebound (4),2
+2024,,,26,0,146,JER,P013278,2FGA,"WILEY, AUSTIN",Hapoel Bank Yahav Jerusalem,5,11,09:19,,,,Missed Two Pointer (0/4 -  0 pt),2
+2024,,,26,0,256,HAM,P006006,FV,"TURUDIC, BENEDIKT",Veolia Towers Hamburg,44,11,09:19,,,,Block (1),2
+2024,,,26,0,330,JER,P013278,AG,"WILEY, AUSTIN",Hapoel Bank Yahav Jerusalem,5,11,09:19,,,,Shot Rejected (1),2
+2024,,,26,0,147,JER,P009879,O,"DOVRAT, NOAM",Hapoel Bank Yahav Jerusalem,8,11,09:17,,,,Off Rebound (1),2
+2024,,,26,0,149,JER,P009879,OUT,"DOVRAT, NOAM",Hapoel Bank Yahav Jerusalem,8,11,09:17,,,,Out,2
+2024,,,26,0,150,JER,P010431,IN,"MORGAN, JEREMY",Hapoel Bank Yahav Jerusalem,20,11,09:17,,,,In,2
+2024,,,26,0,151,JER,P010431,3FGA,"MORGAN, JEREMY",Hapoel Bank Yahav Jerusalem,20,11,09:10,,,,Missed Three Pointer (0/1 -  1 pt),2
+2024,,,26,0,152,JER,P010587,O,"SMITH, KENNETH",Hapoel Bank Yahav Jerusalem,44,11,09:07,,,,Off Rebound (1),2
+2024,,,26,0,153,JER,P010587,3FGM,"SMITH, KENNETH",Hapoel Bank Yahav Jerusalem,44,11,09:04,24.0,18.0,,Three Pointer (2/3 -  6 pt),2
+2024,,,26,0,155,HAM,P013309,3FGA,"LOTTIE, JAIZEC",Veolia Towers Hamburg,4,12,08:44,,,,Missed Three Pointer (0/1 -  2 pt),2
+2024,,,26,0,156,JER,P013278,D,"WILEY, AUSTIN",Hapoel Bank Yahav Jerusalem,5,12,08:40,,,,Def Rebound (5),2
+2024,,,26,0,157,HAM,P006420,CM,"HECKMANN, PATRICK",Veolia Towers Hamburg,33,12,08:36,,,,Foul (1),2
+2024,,,26,0,158,JER,P013277,RV,"JOHNSON, CHRIS",Hapoel Bank Yahav Jerusalem,4,12,08:36,,,,Foul Drawn (1),2
+2024,,,26,0,159,JER,P010431,3FGA,"MORGAN, JEREMY",Hapoel Bank Yahav Jerusalem,20,12,08:35,,,,Missed Three Pointer (0/2 -  1 pt),2
+2024,,,26,0,160,JER,P013277,O,"JOHNSON, CHRIS",Hapoel Bank Yahav Jerusalem,4,12,08:35,,,,Off Rebound (1),2
+2024,,,26,0,161,JER,P013277,2FGA,"JOHNSON, CHRIS",Hapoel Bank Yahav Jerusalem,4,12,08:35,,,,Missed Two Pointer (0/1 -  0 pt),2
+2024,,,26,0,162,JER,P013278,O,"WILEY, AUSTIN",Hapoel Bank Yahav Jerusalem,5,12,08:35,,,,Off Rebound (4),2
+2024,,,26,0,163,JER,P013278,2FGA,"WILEY, AUSTIN",Hapoel Bank Yahav Jerusalem,5,12,08:35,,,,Missed Two Pointer (0/5 -  0 pt),2
+2024,,,26,0,164,JER,P013278,O,"WILEY, AUSTIN",Hapoel Bank Yahav Jerusalem,5,12,08:35,,,,Off Rebound (5),2
+2024,,,26,0,165,HAM,P006006,CM,"TURUDIC, BENEDIKT",Veolia Towers Hamburg,44,12,08:35,,,,Foul (1),2
+2024,,,26,0,166,JER,P013278,RV,"WILEY, AUSTIN",Hapoel Bank Yahav Jerusalem,5,12,08:35,,,,Foul Drawn (1),2
+2024,,,26,0,167,HAM,P010070,OUT,"MOELLER, LEIF",Veolia Towers Hamburg,6,12,08:25,,,,Out,2
+2024,,,26,0,168,HAM,P003242,IN,"OGBE, KENNETH",Veolia Towers Hamburg,25,12,08:25,,,,In,2
+2024,,,26,0,169,JER,P013278,FTA,"WILEY, AUSTIN",Hapoel Bank Yahav Jerusalem,5,12,08:25,,,,Missed Free Throw (0/1 -  0 pt),2
+2024,,,26,0,170,JER,P013278,FTM,"WILEY, AUSTIN",Hapoel Bank Yahav Jerusalem,5,12,08:25,25.0,18.0,,Free Throw In (1/2 -  1 pt),2
+2024,,,26,0,171,HAM,P013309,TO,"LOTTIE, JAIZEC",Veolia Towers Hamburg,4,12,08:12,,,,Turnover (1),2
+2024,,,26,0,172,JER,P011970,IN,"HARPER, JARED",Hapoel Bank Yahav Jerusalem,1,12,08:12,,,,In,2
+2024,,,26,0,173,JER,P013277,OUT,"JOHNSON, CHRIS",Hapoel Bank Yahav Jerusalem,4,12,08:12,,,,Out,2
+2024,,,26,0,174,JER,P013279,IN,"CHACHASHVILI, GABRIEL",Hapoel Bank Yahav Jerusalem,7,12,08:12,,,,In,2
+2024,,,26,0,175,JER,P010587,OUT,"SMITH, KENNETH",Hapoel Bank Yahav Jerusalem,44,12,08:12,,,,Out,2
+2024,,,26,0,177,HAM,P013308,CM,"IVEY, BRAE",Veolia Towers Hamburg,1,12,08:01,,,,Foul (1),2
+2024,,,26,0,178,JER,P011970,RV,"HARPER, JARED",Hapoel Bank Yahav Jerusalem,1,12,08:01,,,,Foul Drawn (2),2
+2024,,,26,0,179,HAM,,TOUT,,Veolia Towers Hamburg,,12,08:01,,,,Time Out (1),2
+2024,,,26,0,326,,,TOUT_TV,,,,12,08:01,,,,TV Time Out (2),2
+2024,,,26,0,180,JER,P011970,FTM,"HARPER, JARED",Hapoel Bank Yahav Jerusalem,1,12,08:01,26.0,18.0,,Free Throw In (3/3 -  9 pt),2
+2024,,,26,0,181,JER,P011970,FTM,"HARPER, JARED",Hapoel Bank Yahav Jerusalem,1,12,08:01,27.0,18.0,,Free Throw In (4/4 -  10 pt),2
+2024,,,26,0,184,HAM,P013309,3FGA,"LOTTIE, JAIZEC",Veolia Towers Hamburg,4,13,07:49,,,,Missed Three Pointer (0/2 -  2 pt),2
+2024,,,26,0,185,HAM,P013309,O,"LOTTIE, JAIZEC",Veolia Towers Hamburg,4,13,07:46,,,,Off Rebound (1),2
+2024,,,26,0,186,HAM,P006420,3FGA,"HECKMANN, PATRICK",Veolia Towers Hamburg,33,13,07:42,,,,Missed Three Pointer (0/1 -  0 pt),2
+2024,,,26,0,187,JER,P013278,D,"WILEY, AUSTIN",Hapoel Bank Yahav Jerusalem,5,13,07:39,,,,Def Rebound (6),2
+2024,,,26,0,188,JER,P013279,2FGM,"CHACHASHVILI, GABRIEL",Hapoel Bank Yahav Jerusalem,7,13,07:28,29.0,18.0,,Two Pointer (1/1 -  2 pt),2
+2024,,,26,0,189,JER,P010431,AS,"MORGAN, JEREMY",Hapoel Bank Yahav Jerusalem,20,13,07:25,,,,Assist (1),2
+2024,,,26,0,190,HAM,P013309,3FGA,"LOTTIE, JAIZEC",Veolia Towers Hamburg,4,13,07:07,,,,Missed Three Pointer (0/3 -  2 pt),2
+2024,,,26,0,191,JER,P010431,D,"MORGAN, JEREMY",Hapoel Bank Yahav Jerusalem,20,13,07:04,,,,Def Rebound (1),2
+2024,,,26,0,193,JER,P013278,2FGA,"WILEY, AUSTIN",Hapoel Bank Yahav Jerusalem,5,14,06:50,,,,Missed Two Pointer (0/6 -  1 pt),2
+2024,,,26,0,194,HAM,P006420,D,"HECKMANN, PATRICK",Veolia Towers Hamburg,33,14,06:48,,,,Def Rebound (1),2
+2024,,,26,0,195,HAM,P006006,2FGM,"TURUDIC, BENEDIKT",Veolia Towers Hamburg,44,14,06:42,29.0,20.0,,Two Pointer (1/2 -  2 pt),2
+2024,,,26,0,196,HAM,P013309,AS,"LOTTIE, JAIZEC",Veolia Towers Hamburg,4,14,06:39,,,,Assist (1),2
+2024,,,26,0,197,JER,P013279,OF,"CHACHASHVILI, GABRIEL",Hapoel Bank Yahav Jerusalem,7,14,06:28,,,,Offensive Foul (1),2
+2024,,,26,0,198,JER,P013279,TO,"CHACHASHVILI, GABRIEL",Hapoel Bank Yahav Jerusalem,7,14,06:28,,,,Turnover (1),2
+2024,,,26,0,199,HAM,P003242,RV,"OGBE, KENNETH",Veolia Towers Hamburg,25,14,06:28,,,,Foul Drawn (2),2
+2024,,,26,0,200,JER,P013276,IN,"SMITH, JUSTIN",Hapoel Bank Yahav Jerusalem,0,14,06:28,,,,In,2
+2024,,,26,0,201,JER,P013278,OUT,"WILEY, AUSTIN",Hapoel Bank Yahav Jerusalem,5,14,06:28,,,,Out,2
+2024,,,26,0,202,JER,P006625,IN,"ZOOSMAN, YOVEL",Hapoel Bank Yahav Jerusalem,50,14,06:28,,,,In,2
+2024,,,26,0,203,JER,P013281,OUT,"CORNELIUS, OR",Hapoel Bank Yahav Jerusalem,80,14,06:28,,,,Out,2
+2024,,,26,0,204,HAM,P011256,IN,"RICH, OSARO",Veolia Towers Hamburg,3,14,06:28,,,,In,2
+2024,,,26,0,205,HAM,P013309,OUT,"LOTTIE, JAIZEC",Veolia Towers Hamburg,4,14,06:28,,,,Out,2
+2024,,,26,0,206,HAM,P012695,IN,"REECE, CAMRON",Veolia Towers Hamburg,14,14,06:28,,,,In,2
+2024,,,26,0,207,HAM,P013312,IN,"BARNETT, JORDAN",Veolia Towers Hamburg,21,14,06:28,,,,In,2
+2024,,,26,0,208,HAM,P006420,OUT,"HECKMANN, PATRICK",Veolia Towers Hamburg,33,14,06:28,,,,Out,2
+2024,,,26,0,209,HAM,P006006,OUT,"TURUDIC, BENEDIKT",Veolia Towers Hamburg,44,14,06:28,,,,Out,2
+2024,,,26,0,210,JER,P011970,CM,"HARPER, JARED",Hapoel Bank Yahav Jerusalem,1,14,06:11,,,,Foul (1),2
+2024,,,26,0,211,HAM,P013308,RV,"IVEY, BRAE",Veolia Towers Hamburg,1,14,06:11,,,,Foul Drawn (2),2
+2024,,,26,0,212,HAM,P013312,2FGA,"BARNETT, JORDAN",Veolia Towers Hamburg,21,14,06:11,,,,Missed Two Pointer (1/2 -  2 pt),2
+2024,,,26,0,213,JER,P010431,D,"MORGAN, JEREMY",Hapoel Bank Yahav Jerusalem,20,14,06:11,,,,Def Rebound (2),2
+2024,,,26,0,215,JER,P013279,2FGA,"CHACHASHVILI, GABRIEL",Hapoel Bank Yahav Jerusalem,7,15,05:39,,,,Missed Two Pointer (1/2 -  2 pt),2
+2024,,,26,0,216,JER,P013276,O,"SMITH, JUSTIN",Hapoel Bank Yahav Jerusalem,0,15,05:34,,,,Off Rebound (2),2
+2024,,,26,0,217,JER,P013276,2FGM,"SMITH, JUSTIN",Hapoel Bank Yahav Jerusalem,0,15,05:32,31.0,20.0,,Two Pointer (1/2 -  2 pt),2
+2024,,,26,0,218,HAM,P013308,3FGA,"IVEY, BRAE",Veolia Towers Hamburg,1,15,05:24,,,,Missed Three Pointer (0/3 -  2 pt),2
+2024,,,26,0,219,HAM,P003242,O,"OGBE, KENNETH",Veolia Towers Hamburg,25,15,05:21,,,,Off Rebound (1),2
+2024,,,26,0,220,HAM,P013312,3FGM,"BARNETT, JORDAN",Veolia Towers Hamburg,21,15,05:15,31.0,23.0,,Three Pointer (1/2 -  5 pt),2
+2024,,,26,0,221,HAM,P011256,AS,"RICH, OSARO",Veolia Towers Hamburg,3,15,05:11,,,,Assist (1),2
+2024,,,26,0,222,JER,P013276,TO,"SMITH, JUSTIN",Hapoel Bank Yahav Jerusalem,0,15,05:02,,,,Turnover (2),2
+2024,,,26,0,223,HAM,P013308,ST,"IVEY, BRAE",Veolia Towers Hamburg,1,15,05:00,,,,Steal (2),2
+2024,,,26,0,225,JER,P010431,CM,"MORGAN, JEREMY",Hapoel Bank Yahav Jerusalem,20,16,04:58,,,,Foul (1),2
+2024,,,26,0,226,HAM,P013308,RV,"IVEY, BRAE",Veolia Towers Hamburg,1,16,04:58,,,,Foul Drawn (3),2
+2024,,,26,0,227,JER,P013277,IN,"JOHNSON, CHRIS",Hapoel Bank Yahav Jerusalem,4,16,04:58,,,,In,2
+2024,,,26,0,228,JER,P013279,OUT,"CHACHASHVILI, GABRIEL",Hapoel Bank Yahav Jerusalem,7,16,04:58,,,,Out,2
+2024,,,26,0,229,HAM,P013308,FTM,"IVEY, BRAE",Veolia Towers Hamburg,1,16,04:58,31.0,24.0,,Free Throw In (1/1 -  3 pt),2
+2024,,,26,0,230,HAM,P013308,FTM,"IVEY, BRAE",Veolia Towers Hamburg,1,16,04:58,31.0,25.0,,Free Throw In (2/2 -  4 pt),2
+2024,,,26,0,231,HAM,P013308,OUT,"IVEY, BRAE",Veolia Towers Hamburg,1,16,04:58,,,,Out,2
+2024,,,26,0,232,HAM,P013309,IN,"LOTTIE, JAIZEC",Veolia Towers Hamburg,4,16,04:58,,,,In,2
+2024,,,26,0,233,JER,P011970,TO,"HARPER, JARED",Hapoel Bank Yahav Jerusalem,1,16,04:46,,,,Turnover (1),2
+2024,,,26,0,234,HAM,P012695,ST,"REECE, CAMRON",Veolia Towers Hamburg,14,16,04:44,,,,Steal (2),2
+2024,,,26,0,236,HAM,P013309,2FGA,"LOTTIE, JAIZEC",Veolia Towers Hamburg,4,16,04:43,,,,Missed Two Pointer (1/2 -  2 pt),2
+2024,,,26,0,237,HAM,P013309,AG,"LOTTIE, JAIZEC",Veolia Towers Hamburg,4,16,04:43,,,,Shot Rejected (1),2
+2024,,,26,0,238,JER,P013277,FV,"JOHNSON, CHRIS",Hapoel Bank Yahav Jerusalem,4,16,04:43,,,,Block (1),2
+2024,,,26,0,239,HAM,,O,,Veolia Towers Hamburg,,16,04:43,,,,Off Rebound (1),2
+2024,,,26,0,240,JER,P010431,CMU,"MORGAN, JEREMY",Hapoel Bank Yahav Jerusalem,20,16,04:43,,,,Unsportsmanlike Foul  (2),2
+2024,,,26,0,241,HAM,P003242,RV,"OGBE, KENNETH",Veolia Towers Hamburg,25,16,04:43,,,,Foul Drawn (3),2
+2024,,,26,0,242,JER,P010431,OUT,"MORGAN, JEREMY",Hapoel Bank Yahav Jerusalem,20,16,04:43,,,,Out,2
+2024,,,26,0,243,JER,P010587,IN,"SMITH, KENNETH",Hapoel Bank Yahav Jerusalem,44,16,04:43,,,,In,2
+2024,,,26,0,244,HAM,P003242,FTA,"OGBE, KENNETH",Veolia Towers Hamburg,25,16,04:43,,,,Missed Free Throw (0/1 -  7 pt),2
+2024,,,26,0,245,HAM,P003242,FTM,"OGBE, KENNETH",Veolia Towers Hamburg,25,16,04:43,31.0,26.0,,Free Throw In (1/2 -  8 pt),2
+2024,,,26,0,246,HAM,P003242,TO,"OGBE, KENNETH",Veolia Towers Hamburg,25,16,04:31,,,,Turnover (1),2
+2024,,,26,0,248,JER,P010587,3FGA,"SMITH, KENNETH",Hapoel Bank Yahav Jerusalem,44,16,04:08,,,,Missed Three Pointer (2/4 -  6 pt),2
+2024,,,26,0,249,JER,P013277,O,"JOHNSON, CHRIS",Hapoel Bank Yahav Jerusalem,4,16,04:06,,,,Off Rebound (2),2
+2024,,,26,0,250,JER,P013277,2FGM,"JOHNSON, CHRIS",Hapoel Bank Yahav Jerusalem,4,16,04:02,33.0,26.0,,Two Pointer (1/2 -  2 pt),2
+2024,,,26,0,252,HAM,P013312,3FGA,"BARNETT, JORDAN",Veolia Towers Hamburg,21,17,03:52,,,,Missed Three Pointer (1/3 -  5 pt),2
+2024,,,26,0,253,JER,P011970,D,"HARPER, JARED",Hapoel Bank Yahav Jerusalem,1,17,03:49,,,,Def Rebound (1),2
+2024,,,26,0,254,JER,P011970,2FGM,"HARPER, JARED",Hapoel Bank Yahav Jerusalem,1,17,03:45,35.0,26.0,,Two Pointer (1/3 -  12 pt),2
+2024,,,26,0,255,HAM,,TOUT,,Veolia Towers Hamburg,,17,03:45,,,,Time Out (2),2
+2024,,,26,0,257,JER,P013276,CM,"SMITH, JUSTIN",Hapoel Bank Yahav Jerusalem,0,17,03:42,,,,Foul (2),2
+2024,,,26,0,258,HAM,P013309,RV,"LOTTIE, JAIZEC",Veolia Towers Hamburg,4,17,03:42,,,,Foul Drawn (3),2
+2024,,,26,0,259,HAM,P013309,FTA,"LOTTIE, JAIZEC",Veolia Towers Hamburg,4,17,03:42,,,,Missed Free Throw (0/1 -  2 pt),2
+2024,,,26,0,260,HAM,P013309,FTM,"LOTTIE, JAIZEC",Veolia Towers Hamburg,4,17,03:42,35.0,27.0,,Free Throw In (1/2 -  3 pt),2
+2024,,,26,0,261,HAM,P013310,IN,"GREY, JARED",Veolia Towers Hamburg,8,17,03:42,,,,In,2
+2024,,,26,0,262,HAM,P003242,OUT,"OGBE, KENNETH",Veolia Towers Hamburg,25,17,03:42,,,,Out,2
+2024,,,26,0,263,JER,P013276,2FGM,"SMITH, JUSTIN",Hapoel Bank Yahav Jerusalem,0,17,03:23,37.0,27.0,,Two Pointer (2/3 -  4 pt),2
+2024,,,26,0,264,JER,P011970,AS,"HARPER, JARED",Hapoel Bank Yahav Jerusalem,1,17,03:19,,,,Assist (2),2
+2024,,,26,0,265,HAM,P012695,2FGM,"REECE, CAMRON",Veolia Towers Hamburg,14,17,03:06,37.0,29.0,,Two Pointer (1/2 -  2 pt),2
+2024,,,26,0,266,HAM,P013310,AS,"GREY, JARED",Veolia Towers Hamburg,8,17,03:04,,,,Assist (1),2
+2024,,,26,0,267,JER,P013276,OUT,"SMITH, JUSTIN",Hapoel Bank Yahav Jerusalem,0,17,03:04,,,,Out,2
+2024,,,26,0,268,JER,P013278,IN,"WILEY, AUSTIN",Hapoel Bank Yahav Jerusalem,5,17,03:04,,,,In,2
+2024,,,26,0,270,JER,P011970,2FGA,"HARPER, JARED",Hapoel Bank Yahav Jerusalem,1,18,02:50,,,,Missed Two Pointer (1/4 -  12 pt),2
+2024,,,26,0,271,HAM,,D,,Veolia Towers Hamburg,,18,02:50,,,,Def Rebound (2),2
+2024,,,26,0,272,JER,P013278,CM,"WILEY, AUSTIN",Hapoel Bank Yahav Jerusalem,5,18,02:50,,,,Foul (1),2
+2024,,,26,0,273,HAM,P013312,RV,"BARNETT, JORDAN",Veolia Towers Hamburg,21,18,02:50,,,,Foul Drawn (1),2
+2024,,,26,0,274,HAM,P013312,FTM,"BARNETT, JORDAN",Veolia Towers Hamburg,21,18,02:50,37.0,30.0,,Free Throw In (1/1 -  6 pt),2
+2024,,,26,0,275,HAM,P013312,FTM,"BARNETT, JORDAN",Veolia Towers Hamburg,21,18,02:50,37.0,31.0,,Free Throw In (2/2 -  7 pt),2
+2024,,,26,0,276,JER,P006625,2FGM,"ZOOSMAN, YOVEL",Hapoel Bank Yahav Jerusalem,50,18,02:36,39.0,31.0,,Two Pointer (2/2 -  4 pt),2
+2024,,,26,0,277,HAM,P013312,3FGM,"BARNETT, JORDAN",Veolia Towers Hamburg,21,18,02:12,39.0,34.0,,Three Pointer (2/4 -  10 pt),2
+2024,,,26,0,278,HAM,P012695,AS,"REECE, CAMRON",Veolia Towers Hamburg,14,18,02:09,,,,Assist (2),2
+2024,,,26,0,280,JER,P010587,2FGA,"SMITH, KENNETH",Hapoel Bank Yahav Jerusalem,44,19,01:53,,,,Missed Two Pointer (0/2 -  6 pt),2
+2024,,,26,0,281,HAM,,D,,Veolia Towers Hamburg,,19,01:52,,,,Def Rebound (3),2
+2024,,,26,0,282,HAM,P012695,2FGM,"REECE, CAMRON",Veolia Towers Hamburg,14,19,01:31,39.0,36.0,,Two Pointer (2/3 -  4 pt),2
+2024,,,26,0,283,HAM,P013309,AS,"LOTTIE, JAIZEC",Veolia Towers Hamburg,4,19,01:31,,,,Assist (2),2
+2024,,,26,0,284,JER,,TOUT,,Hapoel Bank Yahav Jerusalem,,19,01:31,,,,Time Out (1),2
+2024,,,26,0,285,JER,P010587,3FGM,"SMITH, KENNETH",Hapoel Bank Yahav Jerusalem,44,19,01:21,42.0,36.0,,Three Pointer (3/5 -  9 pt),2
+2024,,,26,0,286,JER,P013278,AS,"WILEY, AUSTIN",Hapoel Bank Yahav Jerusalem,5,19,01:19,,,,Assist (2),2
+2024,,,26,0,287,HAM,P013309,OF,"LOTTIE, JAIZEC",Veolia Towers Hamburg,4,19,01:05,,,,Offensive Foul (1),2
+2024,,,26,0,288,HAM,P013309,TO,"LOTTIE, JAIZEC",Veolia Towers Hamburg,4,19,01:05,,,,Turnover (2),2
+2024,,,26,0,289,JER,P011970,RV,"HARPER, JARED",Hapoel Bank Yahav Jerusalem,1,19,01:05,,,,Foul Drawn (3),2
+2024,,,26,0,291,HAM,P013312,CM,"BARNETT, JORDAN",Veolia Towers Hamburg,21,20,00:48,,,,Foul (2),2
+2024,,,26,0,292,JER,P011970,RV,"HARPER, JARED",Hapoel Bank Yahav Jerusalem,1,20,00:48,,,,Foul Drawn (4),2
+2024,,,26,0,293,JER,P006625,OUT,"ZOOSMAN, YOVEL",Hapoel Bank Yahav Jerusalem,50,20,00:48,,,,Out,2
+2024,,,26,0,294,JER,P013281,IN,"CORNELIUS, OR",Hapoel Bank Yahav Jerusalem,80,20,00:48,,,,In,2
+2024,,,26,0,295,HAM,P013308,IN,"IVEY, BRAE",Veolia Towers Hamburg,1,20,00:48,,,,In,2
+2024,,,26,0,296,HAM,P013310,OUT,"GREY, JARED",Veolia Towers Hamburg,8,20,00:48,,,,Out,2
+2024,,,26,0,297,JER,P011970,FTM,"HARPER, JARED",Hapoel Bank Yahav Jerusalem,1,20,00:48,43.0,36.0,,Free Throw In (5/5 -  13 pt),2
+2024,,,26,0,298,JER,P011970,FTA,"HARPER, JARED",Hapoel Bank Yahav Jerusalem,1,20,00:48,,,,Missed Free Throw (5/6 -  13 pt),2
+2024,,,26,0,299,HAM,P013312,D,"BARNETT, JORDAN",Veolia Towers Hamburg,21,20,00:48,,,,Def Rebound (1),2
+2024,,,26,0,300,JER,P013278,CM,"WILEY, AUSTIN",Hapoel Bank Yahav Jerusalem,5,20,00:28,,,,Foul (2),2
+2024,,,26,0,301,HAM,P013308,RV,"IVEY, BRAE",Veolia Towers Hamburg,1,20,00:28,,,,Foul Drawn (4),2
+2024,,,26,0,302,JER,,TOUT,,Hapoel Bank Yahav Jerusalem,,20,00:28,,,,Time Out (2),2
+2024,,,26,0,303,HAM,P013309,OUT,"LOTTIE, JAIZEC",Veolia Towers Hamburg,4,20,00:28,,,,Out,2
+2024,,,26,0,304,HAM,P003242,IN,"OGBE, KENNETH",Veolia Towers Hamburg,25,20,00:28,,,,In,2
+2024,,,26,0,305,HAM,P013308,FTA,"IVEY, BRAE",Veolia Towers Hamburg,1,20,00:28,,,,Missed Free Throw (2/3 -  4 pt),2
+2024,,,26,0,306,HAM,P013308,FTM,"IVEY, BRAE",Veolia Towers Hamburg,1,20,00:28,43.0,37.0,,Free Throw In (3/4 -  5 pt),2
+2024,,,26,0,307,JER,P013281,2FGA,"CORNELIUS, OR",Hapoel Bank Yahav Jerusalem,80,20,00:28,,,,Missed Two Pointer (0/1 -  2 pt),2
+2024,,,26,0,308,HAM,P013308,D,"IVEY, BRAE",Veolia Towers Hamburg,1,20,00:28,,,,Def Rebound (1),2
+2024,,,26,0,309,HAM,P013308,OF,"IVEY, BRAE",Veolia Towers Hamburg,1,20,00:05,,,,Offensive Foul (2),2
+2024,,,26,0,310,HAM,P013308,TO,"IVEY, BRAE",Veolia Towers Hamburg,1,20,00:05,,,,Turnover (1),2
+2024,,,26,0,311,JER,P011970,RV,"HARPER, JARED",Hapoel Bank Yahav Jerusalem,1,20,00:05,,,,Foul Drawn (5),2
+2024,,,26,0,312,JER,P013278,OUT,"WILEY, AUSTIN",Hapoel Bank Yahav Jerusalem,5,20,00:05,,,,Out,2
+2024,,,26,0,313,JER,P010431,IN,"MORGAN, JEREMY",Hapoel Bank Yahav Jerusalem,20,20,00:05,,,,In,2
+2024,,,26,0,314,HAM,P013312,CM,"BARNETT, JORDAN",Veolia Towers Hamburg,21,20,00:01,,,,Foul (3),2
+2024,,,26,0,315,JER,P011970,RV,"HARPER, JARED",Hapoel Bank Yahav Jerusalem,1,20,00:01,,,,Foul Drawn (6),2
+2024,,,26,0,317,JER,P013276,IN,"SMITH, JUSTIN",Hapoel Bank Yahav Jerusalem,0,20,00:01,,,,In,2
+2024,,,26,0,318,JER,P010587,OUT,"SMITH, KENNETH",Hapoel Bank Yahav Jerusalem,44,20,00:01,,,,Out,2
+2024,,,26,0,319,JER,P011970,FTM,"HARPER, JARED",Hapoel Bank Yahav Jerusalem,1,20,00:01,44.0,37.0,,Free Throw In (6/7 -  14 pt),2
+2024,,,26,0,320,JER,P011970,FTM,"HARPER, JARED",Hapoel Bank Yahav Jerusalem,1,20,00:01,45.0,37.0,,Free Throw In (7/8 -  15 pt),2
+2024,,,26,0,321,JER,P011970,FTM,"HARPER, JARED",Hapoel Bank Yahav Jerusalem,1,20,00:01,46.0,37.0,,Free Throw In (8/9 -  16 pt),2
+2024,,,26,0,322,JER,P011970,OUT,"HARPER, JARED",Hapoel Bank Yahav Jerusalem,1,20,00:01,,,,Out,2
+2024,,,26,0,323,JER,P006625,IN,"ZOOSMAN, YOVEL",Hapoel Bank Yahav Jerusalem,50,20,00:01,,,,In,2
+2024,,,26,0,325,,,EP,,,,21,,,,,End Period,2
+2024,,,26,0,339,,,BP,,,,21,,,,,Begin Period,3
+2024,,,26,0,331,JER,P013276,OUT,"SMITH, JUSTIN",Hapoel Bank Yahav Jerusalem,0,21,10:00,,,,Out,3
+2024,,,26,0,332,JER,P013278,IN,"WILEY, AUSTIN",Hapoel Bank Yahav Jerusalem,5,21,10:00,,,,In,3
+2024,,,26,0,333,JER,P010587,IN,"SMITH, KENNETH",Hapoel Bank Yahav Jerusalem,44,21,10:00,,,,In,3
+2024,,,26,0,334,JER,P013281,OUT,"CORNELIUS, OR",Hapoel Bank Yahav Jerusalem,80,21,10:00,,,,Out,3
+2024,,,26,0,335,HAM,P012695,OUT,"REECE, CAMRON",Veolia Towers Hamburg,14,21,10:00,,,,Out,3
+2024,,,26,0,336,HAM,P013312,OUT,"BARNETT, JORDAN",Veolia Towers Hamburg,21,21,10:00,,,,Out,3
+2024,,,26,0,337,HAM,P006420,IN,"HECKMANN, PATRICK",Veolia Towers Hamburg,33,21,10:00,,,,In,3
+2024,,,26,0,338,HAM,P006006,IN,"TURUDIC, BENEDIKT",Veolia Towers Hamburg,44,21,10:00,,,,In,3
+2024,,,26,0,340,HAM,P003242,3FGA,"OGBE, KENNETH",Veolia Towers Hamburg,25,21,09:47,,,,Missed Three Pointer (1/2 -  8 pt),3
+2024,,,26,0,341,JER,P013278,D,"WILEY, AUSTIN",Hapoel Bank Yahav Jerusalem,5,21,09:44,,,,Def Rebound (7),3
+2024,,,26,0,342,HAM,P006006,CM,"TURUDIC, BENEDIKT",Veolia Towers Hamburg,44,21,09:30,,,,Foul (2),3
+2024,,,26,0,343,JER,P013277,RV,"JOHNSON, CHRIS",Hapoel Bank Yahav Jerusalem,4,21,09:30,,,,Foul Drawn (2),3
+2024,,,26,0,344,JER,P013277,FTM,"JOHNSON, CHRIS",Hapoel Bank Yahav Jerusalem,4,21,09:30,47.0,37.0,,Free Throw In (1/1 -  3 pt),3
+2024,,,26,0,345,JER,P013277,FTM,"JOHNSON, CHRIS",Hapoel Bank Yahav Jerusalem,4,21,09:30,48.0,37.0,,Free Throw In (2/2 -  4 pt),3
+2024,,,26,0,346,HAM,P003242,3FGA,"OGBE, KENNETH",Veolia Towers Hamburg,25,21,09:15,,,,Missed Three Pointer (1/3 -  8 pt),3
+2024,,,26,0,347,JER,P010431,D,"MORGAN, JEREMY",Hapoel Bank Yahav Jerusalem,20,21,09:12,,,,Def Rebound (3),3
+2024,,,26,0,349,JER,P006625,TO,"ZOOSMAN, YOVEL",Hapoel Bank Yahav Jerusalem,50,22,08:55,,,,Turnover (1),3
+2024,,,26,0,350,HAM,P013308,ST,"IVEY, BRAE",Veolia Towers Hamburg,1,22,08:53,,,,Steal (3),3
+2024,,,26,0,351,HAM,P013308,TO,"IVEY, BRAE",Veolia Towers Hamburg,1,22,08:42,,,,Turnover (2),3
+2024,,,26,0,352,JER,P006625,ST,"ZOOSMAN, YOVEL",Hapoel Bank Yahav Jerusalem,50,22,08:40,,,,Steal (1),3
+2024,,,26,0,353,JER,P010587,3FGA,"SMITH, KENNETH",Hapoel Bank Yahav Jerusalem,44,22,08:35,,,,Missed Three Pointer (3/6 -  9 pt),3
+2024,,,26,0,354,HAM,P011256,D,"RICH, OSARO",Veolia Towers Hamburg,3,22,08:32,,,,Def Rebound (2),3
+2024,,,26,0,355,HAM,P003242,TO,"OGBE, KENNETH",Veolia Towers Hamburg,25,22,08:30,,,,Turnover (2),3
+2024,,,26,0,356,HAM,P006006,CM,"TURUDIC, BENEDIKT",Veolia Towers Hamburg,44,22,08:15,,,,Foul (3),3
+2024,,,26,0,357,JER,P013278,RV,"WILEY, AUSTIN",Hapoel Bank Yahav Jerusalem,5,22,08:15,,,,Foul Drawn (2),3
+2024,,,26,0,358,JER,P006625,3FGA,"ZOOSMAN, YOVEL",Hapoel Bank Yahav Jerusalem,50,22,08:07,,,,Missed Three Pointer (0/1 -  4 pt),3
+2024,,,26,0,359,HAM,P013308,D,"IVEY, BRAE",Veolia Towers Hamburg,1,22,08:04,,,,Def Rebound (2),3
+2024,,,26,0,361,JER,P013277,CM,"JOHNSON, CHRIS",Hapoel Bank Yahav Jerusalem,4,23,07:56,,,,Foul (1),3
+2024,,,26,0,362,HAM,P003242,RV,"OGBE, KENNETH",Veolia Towers Hamburg,25,23,07:56,,,,Foul Drawn (4),3
+2024,,,26,0,363,HAM,P006006,2FGA,"TURUDIC, BENEDIKT",Veolia Towers Hamburg,44,23,07:49,,,,Missed Two Pointer (1/3 -  2 pt),3
+2024,,,26,0,364,HAM,P006006,AG,"TURUDIC, BENEDIKT",Veolia Towers Hamburg,44,23,07:49,,,,Shot Rejected (2),3
+2024,,,26,0,365,JER,P013277,FV,"JOHNSON, CHRIS",Hapoel Bank Yahav Jerusalem,4,23,07:49,,,,Block (2),3
+2024,,,26,0,367,HAM,,O,,Veolia Towers Hamburg,,23,07:49,,,,Off Rebound (2),3
+2024,,,26,0,368,JER,,CCH,,Hapoel Bank Yahav Jerusalem,,23,07:50,,,,Coach Challenge (1),3
+2024,,,26,0,369,HAM,P006420,2FGA,"HECKMANN, PATRICK",Veolia Towers Hamburg,33,23,07:45,,,,Missed Two Pointer (0/1 -  0 pt),3
+2024,,,26,0,370,JER,P013278,D,"WILEY, AUSTIN",Hapoel Bank Yahav Jerusalem,5,23,07:42,,,,Def Rebound (8),3
+2024,,,26,0,371,JER,P013277,3FGA,"JOHNSON, CHRIS",Hapoel Bank Yahav Jerusalem,4,23,07:22,,,,Missed Three Pointer (0/2 -  4 pt),3
+2024,,,26,0,372,JER,,TO,,Hapoel Bank Yahav Jerusalem,,23,07:22,,,,Turnover (2),3
+2024,,,26,0,373,JER,P013277,CM,"JOHNSON, CHRIS",Hapoel Bank Yahav Jerusalem,4,23,07:07,,,,Foul (2),3
+2024,,,26,0,374,HAM,P006420,RV,"HECKMANN, PATRICK",Veolia Towers Hamburg,33,23,07:07,,,,Foul Drawn (1),3
+2024,,,26,0,375,HAM,P013308,TO,"IVEY, BRAE",Veolia Towers Hamburg,1,23,07:07,,,,Turnover (3),3
+2024,,,26,0,376,JER,P006625,ST,"ZOOSMAN, YOVEL",Hapoel Bank Yahav Jerusalem,50,23,07:02,,,,Steal (2),3
+2024,,,26,0,378,JER,P013278,2FGM,"WILEY, AUSTIN",Hapoel Bank Yahav Jerusalem,5,24,06:51,50.0,37.0,,Two Pointer (1/7 -  3 pt),3
+2024,,,26,0,379,JER,P010587,AS,"SMITH, KENNETH",Hapoel Bank Yahav Jerusalem,44,24,06:48,,,,Assist (2),3
+2024,,,26,0,380,HAM,P006420,TO,"HECKMANN, PATRICK",Veolia Towers Hamburg,33,24,06:38,,,,Turnover (1),3
+2024,,,26,0,381,JER,P006625,ST,"ZOOSMAN, YOVEL",Hapoel Bank Yahav Jerusalem,50,24,06:36,,,,Steal (3),3
+2024,,,26,0,382,JER,P013277,TO,"JOHNSON, CHRIS",Hapoel Bank Yahav Jerusalem,4,24,06:32,,,,Turnover (2),3
+2024,,,26,0,383,HAM,P013308,ST,"IVEY, BRAE",Veolia Towers Hamburg,1,24,06:30,,,,Steal (4),3
+2024,,,26,0,384,HAM,P013308,3FGM,"IVEY, BRAE",Veolia Towers Hamburg,1,24,06:27,50.0,40.0,,Three Pointer (1/4 -  8 pt),3
+2024,,,26,0,385,HAM,P006006,CM,"TURUDIC, BENEDIKT",Veolia Towers Hamburg,44,24,06:06,,,,Foul (4),3
+2024,,,26,0,386,JER,P013278,RV,"WILEY, AUSTIN",Hapoel Bank Yahav Jerusalem,5,24,06:06,,,,Foul Drawn (3),3
+2024,,,26,0,387,JER,P013276,IN,"SMITH, JUSTIN",Hapoel Bank Yahav Jerusalem,0,24,06:06,,,,In,3
+2024,,,26,0,388,JER,P011970,IN,"HARPER, JARED",Hapoel Bank Yahav Jerusalem,1,24,06:06,,,,In,3
+2024,,,26,0,389,JER,P013277,OUT,"JOHNSON, CHRIS",Hapoel Bank Yahav Jerusalem,4,24,06:06,,,,Out,3
+2024,,,26,0,390,JER,P013278,OUT,"WILEY, AUSTIN",Hapoel Bank Yahav Jerusalem,5,24,06:06,,,,Out,3
+2024,,,26,0,391,JER,P013279,IN,"CHACHASHVILI, GABRIEL",Hapoel Bank Yahav Jerusalem,7,24,06:06,,,,In,3
+2024,,,26,0,392,JER,P010587,OUT,"SMITH, KENNETH",Hapoel Bank Yahav Jerusalem,44,24,06:06,,,,Out,3
+2024,,,26,0,393,HAM,P011256,OUT,"RICH, OSARO",Veolia Towers Hamburg,3,24,06:06,,,,Out,3
+2024,,,26,0,394,HAM,P013309,IN,"LOTTIE, JAIZEC",Veolia Towers Hamburg,4,24,06:06,,,,In,3
+2024,,,26,0,395,HAM,P012695,IN,"REECE, CAMRON",Veolia Towers Hamburg,14,24,06:06,,,,In,3
+2024,,,26,0,396,HAM,P006006,OUT,"TURUDIC, BENEDIKT",Veolia Towers Hamburg,44,24,06:06,,,,Out,3
+2024,,,26,0,398,JER,P013276,2FGA,"SMITH, JUSTIN",Hapoel Bank Yahav Jerusalem,0,25,05:56,,,,Missed Two Pointer (2/4 -  4 pt),3
+2024,,,26,0,399,HAM,P012695,D,"REECE, CAMRON",Veolia Towers Hamburg,14,25,05:52,,,,Def Rebound (1),3
+2024,,,26,0,400,HAM,P013308,3FGA,"IVEY, BRAE",Veolia Towers Hamburg,1,25,05:38,,,,Missed Three Pointer (1/5 -  8 pt),3
+2024,,,26,0,401,JER,P013279,D,"CHACHASHVILI, GABRIEL",Hapoel Bank Yahav Jerusalem,7,25,05:36,,,,Def Rebound (2),3
+2024,,,26,0,402,JER,P013276,OF,"SMITH, JUSTIN",Hapoel Bank Yahav Jerusalem,0,25,05:23,,,,Offensive Foul (3),3
+2024,,,26,0,403,JER,P013276,TO,"SMITH, JUSTIN",Hapoel Bank Yahav Jerusalem,0,25,05:23,,,,Turnover (3),3
+2024,,,26,0,404,HAM,P013308,RV,"IVEY, BRAE",Veolia Towers Hamburg,1,25,05:23,,,,Foul Drawn (5),3
+2024,,,26,0,406,HAM,P013309,3FGA,"LOTTIE, JAIZEC",Veolia Towers Hamburg,4,26,04:59,,,,Missed Three Pointer (0/4 -  3 pt),3
+2024,,,26,0,407,HAM,P012695,O,"REECE, CAMRON",Veolia Towers Hamburg,14,26,04:56,,,,Off Rebound (1),3
+2024,,,26,0,408,HAM,P006420,TO,"HECKMANN, PATRICK",Veolia Towers Hamburg,33,26,04:55,,,,Turnover (2),3
+2024,,,26,0,409,,,TOUT_TV,,,,26,04:55,,,,TV Time Out (3),3
+2024,,,26,0,410,JER,P010431,OUT,"MORGAN, JEREMY",Hapoel Bank Yahav Jerusalem,20,26,04:55,,,,Out,3
+2024,,,26,0,411,JER,P013281,IN,"CORNELIUS, OR",Hapoel Bank Yahav Jerusalem,80,26,04:55,,,,In,3
+2024,,,26,0,412,JER,P013279,TO,"CHACHASHVILI, GABRIEL",Hapoel Bank Yahav Jerusalem,7,26,04:32,,,,Turnover (2),3
+2024,,,26,0,413,HAM,P013308,ST,"IVEY, BRAE",Veolia Towers Hamburg,1,26,04:30,,,,Steal (5),3
+2024,,,26,0,414,HAM,P013309,3FGM,"LOTTIE, JAIZEC",Veolia Towers Hamburg,4,26,04:17,50.0,43.0,,Three Pointer (1/5 -  6 pt),3
+2024,,,26,0,415,HAM,P006420,AS,"HECKMANN, PATRICK",Veolia Towers Hamburg,33,26,04:15,,,,Assist (1),3
+2024,,,26,0,417,JER,P013281,3FGM,"CORNELIUS, OR",Hapoel Bank Yahav Jerusalem,80,27,03:48,53.0,43.0,,Three Pointer (1/1 -  5 pt),3
+2024,,,26,0,418,JER,P011970,AS,"HARPER, JARED",Hapoel Bank Yahav Jerusalem,1,27,03:46,,,,Assist (3),3
+2024,,,26,0,419,HAM,P003242,TO,"OGBE, KENNETH",Veolia Towers Hamburg,25,27,03:35,,,,Turnover (3),3
+2024,,,26,0,420,JER,P013281,ST,"CORNELIUS, OR",Hapoel Bank Yahav Jerusalem,80,27,03:33,,,,Steal (1),3
+2024,,,26,0,421,JER,P013276,2FGM,"SMITH, JUSTIN",Hapoel Bank Yahav Jerusalem,0,27,03:28,55.0,43.0,,Two Pointer (3/5 -  6 pt),3
+2024,,,26,0,422,JER,P013281,AS,"CORNELIUS, OR",Hapoel Bank Yahav Jerusalem,80,27,03:26,,,,Assist (1),3
+2024,,,26,0,423,JER,P006625,CM,"ZOOSMAN, YOVEL",Hapoel Bank Yahav Jerusalem,50,27,03:17,,,,Foul (3),3
+2024,,,26,0,424,HAM,P013308,RV,"IVEY, BRAE",Veolia Towers Hamburg,1,27,03:17,,,,Foul Drawn (6),3
+2024,,,26,0,425,JER,P009879,IN,"DOVRAT, NOAM",Hapoel Bank Yahav Jerusalem,8,27,03:17,,,,In,3
+2024,,,26,0,426,JER,P006625,OUT,"ZOOSMAN, YOVEL",Hapoel Bank Yahav Jerusalem,50,27,03:17,,,,Out,3
+2024,,,26,0,427,HAM,P013312,IN,"BARNETT, JORDAN",Veolia Towers Hamburg,21,27,03:17,,,,In,3
+2024,,,26,0,428,HAM,P006420,OUT,"HECKMANN, PATRICK",Veolia Towers Hamburg,33,27,03:17,,,,Out,3
+2024,,,26,0,429,HAM,P013308,FTM,"IVEY, BRAE",Veolia Towers Hamburg,1,27,03:17,55.0,44.0,,Free Throw In (4/5 -  9 pt),3
+2024,,,26,0,430,HAM,P013308,FTM,"IVEY, BRAE",Veolia Towers Hamburg,1,27,03:17,55.0,45.0,,Free Throw In (5/6 -  10 pt),3
+2024,,,26,0,431,HAM,P013308,OUT,"IVEY, BRAE",Veolia Towers Hamburg,1,27,03:17,,,,Out,3
+2024,,,26,0,432,HAM,P010070,IN,"MOELLER, LEIF",Veolia Towers Hamburg,6,27,03:17,,,,In,3
+2024,,,26,0,434,JER,P013279,2FGM,"CHACHASHVILI, GABRIEL",Hapoel Bank Yahav Jerusalem,7,28,02:57,57.0,45.0,,Two Pointer (2/3 -  4 pt),3
+2024,,,26,0,435,JER,P011970,AS,"HARPER, JARED",Hapoel Bank Yahav Jerusalem,1,28,02:54,,,,Assist (4),3
+2024,,,26,0,436,HAM,P013309,2FGM,"LOTTIE, JAIZEC",Veolia Towers Hamburg,4,28,02:44,57.0,47.0,,Two Pointer (2/3 -  8 pt),3
+2024,,,26,0,437,JER,P013279,CM,"CHACHASHVILI, GABRIEL",Hapoel Bank Yahav Jerusalem,7,28,02:44,,,,Foul (2),3
+2024,,,26,0,438,HAM,P013309,RV,"LOTTIE, JAIZEC",Veolia Towers Hamburg,4,28,02:44,,,,Foul Drawn (4),3
+2024,,,26,0,439,HAM,P013309,FTM,"LOTTIE, JAIZEC",Veolia Towers Hamburg,4,28,02:44,57.0,48.0,,Free Throw In (2/3 -  9 pt),3
+2024,,,26,0,440,JER,P013279,2FGA,"CHACHASHVILI, GABRIEL",Hapoel Bank Yahav Jerusalem,7,28,02:35,,,,Missed Two Pointer (2/4 -  4 pt),3
+2024,,,26,0,441,JER,P013276,O,"SMITH, JUSTIN",Hapoel Bank Yahav Jerusalem,0,28,02:32,,,,Off Rebound (3),3
+2024,,,26,0,442,JER,P013276,2FGA,"SMITH, JUSTIN",Hapoel Bank Yahav Jerusalem,0,28,02:32,,,,Missed Two Pointer (3/6 -  6 pt),3
+2024,,,26,0,443,HAM,P013312,D,"BARNETT, JORDAN",Veolia Towers Hamburg,21,28,02:30,,,,Def Rebound (2),3
+2024,,,26,0,444,HAM,P013312,3FGA,"BARNETT, JORDAN",Veolia Towers Hamburg,21,28,02:17,,,,Missed Three Pointer (2/5 -  10 pt),3
+2024,,,26,0,445,JER,P013276,D,"SMITH, JUSTIN",Hapoel Bank Yahav Jerusalem,0,28,02:15,,,,Def Rebound (1),3
+2024,,,26,0,446,JER,P013276,TO,"SMITH, JUSTIN",Hapoel Bank Yahav Jerusalem,0,28,02:15,,,,Turnover (4),3
+2024,,,26,0,447,JER,P013278,IN,"WILEY, AUSTIN",Hapoel Bank Yahav Jerusalem,5,28,02:15,,,,In,3
+2024,,,26,0,448,JER,P013279,OUT,"CHACHASHVILI, GABRIEL",Hapoel Bank Yahav Jerusalem,7,28,02:15,,,,Out,3
+2024,,,26,0,449,HAM,P013309,3FGA,"LOTTIE, JAIZEC",Veolia Towers Hamburg,4,28,02:06,,,,Missed Three Pointer (1/6 -  9 pt),3
+2024,,,26,0,450,HAM,P013309,AG,"LOTTIE, JAIZEC",Veolia Towers Hamburg,4,28,02:06,,,,Shot Rejected (2),3
+2024,,,26,0,451,JER,P013281,FV,"CORNELIUS, OR",Hapoel Bank Yahav Jerusalem,80,28,02:06,,,,Block (1),3
+2024,,,26,0,452,JER,,D,,Hapoel Bank Yahav Jerusalem,,28,02:06,,,,Def Rebound (4),3
+2024,,,26,0,453,HAM,P010070,CM,"MOELLER, LEIF",Veolia Towers Hamburg,6,28,02:02,,,,Foul (2),3
+2024,,,26,0,454,JER,P011970,RV,"HARPER, JARED",Hapoel Bank Yahav Jerusalem,1,28,02:02,,,,Foul Drawn (7),3
+2024,,,26,0,456,JER,P013276,2FGA,"SMITH, JUSTIN",Hapoel Bank Yahav Jerusalem,0,29,01:43,,,,Missed Two Pointer (3/7 -  6 pt),3
+2024,,,26,0,457,JER,P013278,O,"WILEY, AUSTIN",Hapoel Bank Yahav Jerusalem,5,29,01:36,,,,Off Rebound (6),3
+2024,,,26,0,458,JER,P013278,2FGA,"WILEY, AUSTIN",Hapoel Bank Yahav Jerusalem,5,29,01:33,,,,Missed Two Pointer (1/8 -  3 pt),3
+2024,,,26,0,459,JER,P013278,AG,"WILEY, AUSTIN",Hapoel Bank Yahav Jerusalem,5,29,01:33,,,,Shot Rejected (2),3
+2024,,,26,0,460,HAM,P013312,FV,"BARNETT, JORDAN",Veolia Towers Hamburg,21,29,01:33,,,,Block (1),3
+2024,,,26,0,461,HAM,P012695,D,"REECE, CAMRON",Veolia Towers Hamburg,14,29,01:33,,,,Def Rebound (2),3
+2024,,,26,0,462,HAM,P012695,2FGM,"REECE, CAMRON",Veolia Towers Hamburg,14,29,01:33,57.0,50.0,,Two Pointer (3/4 -  6 pt),3
+2024,,,26,0,463,HAM,P013309,AS,"LOTTIE, JAIZEC",Veolia Towers Hamburg,4,29,01:33,,,,Assist (3),3
+2024,,,26,0,464,JER,P013278,CM,"WILEY, AUSTIN",Hapoel Bank Yahav Jerusalem,5,29,01:33,,,,Foul (3),3
+2024,,,26,0,465,HAM,P012695,RV,"REECE, CAMRON",Veolia Towers Hamburg,14,29,01:33,,,,Foul Drawn (1),3
+2024,,,26,0,466,HAM,P012695,FTM,"REECE, CAMRON",Veolia Towers Hamburg,14,29,01:33,57.0,51.0,,Free Throw In (1/1 -  7 pt),3
+2024,,,26,0,467,JER,P013277,IN,"JOHNSON, CHRIS",Hapoel Bank Yahav Jerusalem,4,29,01:33,,,,In,3
+2024,,,26,0,468,JER,P013278,OUT,"WILEY, AUSTIN",Hapoel Bank Yahav Jerusalem,5,29,01:33,,,,Out,3
+2024,,,26,0,469,HAM,P013310,IN,"GREY, JARED",Veolia Towers Hamburg,8,29,01:33,,,,In,3
+2024,,,26,0,470,HAM,P003242,OUT,"OGBE, KENNETH",Veolia Towers Hamburg,25,29,01:33,,,,Out,3
+2024,,,26,0,471,HAM,P013309,CM,"LOTTIE, JAIZEC",Veolia Towers Hamburg,4,29,01:20,,,,Foul (2),3
+2024,,,26,0,472,JER,P011970,RV,"HARPER, JARED",Hapoel Bank Yahav Jerusalem,1,29,01:20,,,,Foul Drawn (8),3
+2024,,,26,0,473,JER,P011970,FTA,"HARPER, JARED",Hapoel Bank Yahav Jerusalem,1,29,01:20,,,,Missed Free Throw (8/10 -  16 pt),3
+2024,,,26,0,474,JER,P011970,FTM,"HARPER, JARED",Hapoel Bank Yahav Jerusalem,1,29,01:20,58.0,51.0,,Free Throw In (9/11 -  17 pt),3
+2024,,,26,0,476,HAM,P013309,2FGA,"LOTTIE, JAIZEC",Veolia Towers Hamburg,4,30,00:57,,,,Missed Two Pointer (2/4 -  9 pt),3
+2024,,,26,0,477,HAM,,TO,,Veolia Towers Hamburg,,30,00:54,,,,Turnover (3),3
+2024,,,26,0,478,JER,P010587,IN,"SMITH, KENNETH",Hapoel Bank Yahav Jerusalem,44,30,00:54,,,,In,3
+2024,,,26,0,479,JER,P013281,OUT,"CORNELIUS, OR",Hapoel Bank Yahav Jerusalem,80,30,00:54,,,,Out,3
+2024,,,26,0,480,JER,P011970,TO,"HARPER, JARED",Hapoel Bank Yahav Jerusalem,1,30,00:37,,,,Turnover (2),3
+2024,,,26,0,481,HAM,P012695,ST,"REECE, CAMRON",Veolia Towers Hamburg,14,30,00:35,,,,Steal (3),3
+2024,,,26,0,482,HAM,P013309,3FGM,"LOTTIE, JAIZEC",Veolia Towers Hamburg,4,30,00:31,58.0,54.0,,Three Pointer (2/7 -  12 pt),3
+2024,,,26,0,483,HAM,P012695,AS,"REECE, CAMRON",Veolia Towers Hamburg,14,30,00:29,,,,Assist (3),3
+2024,,,26,0,484,JER,P010587,2FGA,"SMITH, KENNETH",Hapoel Bank Yahav Jerusalem,44,30,00:10,,,,Missed Two Pointer (0/3 -  9 pt),3
+2024,,,26,0,486,JER,,O,,Hapoel Bank Yahav Jerusalem,,30,00:10,,,,Off Rebound (3),3
+2024,,,26,0,487,HAM,P010070,CM,"MOELLER, LEIF",Veolia Towers Hamburg,6,30,00:10,,,,Foul (3),3
+2024,,,26,0,488,JER,P013276,RV,"SMITH, JUSTIN",Hapoel Bank Yahav Jerusalem,0,30,00:10,,,,Foul Drawn (1),3
+2024,,,26,0,489,JER,P011970,OUT,"HARPER, JARED",Hapoel Bank Yahav Jerusalem,1,30,00:10,,,,Out,3
+2024,,,26,0,490,JER,P009879,OUT,"DOVRAT, NOAM",Hapoel Bank Yahav Jerusalem,8,30,00:10,,,,Out,3
+2024,,,26,0,491,JER,P010431,IN,"MORGAN, JEREMY",Hapoel Bank Yahav Jerusalem,20,30,00:10,,,,In,3
+2024,,,26,0,492,JER,P013281,IN,"CORNELIUS, OR",Hapoel Bank Yahav Jerusalem,80,30,00:10,,,,In,3
+2024,,,26,0,493,HAM,P013308,IN,"IVEY, BRAE",Veolia Towers Hamburg,1,30,00:10,,,,In,3
+2024,,,26,0,494,HAM,P010070,OUT,"MOELLER, LEIF",Veolia Towers Hamburg,6,30,00:10,,,,Out,3
+2024,,,26,0,495,JER,P013276,FTM,"SMITH, JUSTIN",Hapoel Bank Yahav Jerusalem,0,30,00:10,59.0,54.0,,Free Throw In (1/1 -  7 pt),3
+2024,,,26,0,496,JER,P013276,FTA,"SMITH, JUSTIN",Hapoel Bank Yahav Jerusalem,0,30,00:10,,,,Missed Free Throw (1/2 -  7 pt),3
+2024,,,26,0,497,JER,P013277,O,"JOHNSON, CHRIS",Hapoel Bank Yahav Jerusalem,4,30,00:10,,,,Off Rebound (3),3
+2024,,,26,0,498,JER,P013277,3FGA,"JOHNSON, CHRIS",Hapoel Bank Yahav Jerusalem,4,30,00:00,,,,Missed Three Pointer (0/3 -  4 pt),3
+2024,,,26,0,499,HAM,P013312,D,"BARNETT, JORDAN",Veolia Towers Hamburg,21,30,00:01,,,,Def Rebound (3),3
+2024,,,26,0,501,,,EP,,,,31,,,,,End Period,3
+2024,,,26,0,506,,,BP,,,,31,,,,,Begin Period,4
+2024,,,26,0,502,JER,P011970,IN,"HARPER, JARED",Hapoel Bank Yahav Jerusalem,1,31,10:00,,,,In,4
+2024,,,26,0,503,JER,P013281,OUT,"CORNELIUS, OR",Hapoel Bank Yahav Jerusalem,80,31,10:00,,,,Out,4
+2024,,,26,0,504,HAM,P011256,IN,"RICH, OSARO",Veolia Towers Hamburg,3,31,10:00,,,,In,4
+2024,,,26,0,505,HAM,P013310,OUT,"GREY, JARED",Veolia Towers Hamburg,8,31,10:00,,,,Out,4
+2024,,,26,0,507,HAM,P011256,CM,"RICH, OSARO",Veolia Towers Hamburg,3,31,09:46,,,,Foul (1),4
+2024,,,26,0,508,JER,P010587,RV,"SMITH, KENNETH",Hapoel Bank Yahav Jerusalem,44,31,09:46,,,,Foul Drawn (1),4
+2024,,,26,0,509,JER,P010431,3FGA,"MORGAN, JEREMY",Hapoel Bank Yahav Jerusalem,20,31,09:39,,,,Missed Three Pointer (0/3 -  1 pt),4
+2024,,,26,0,510,JER,P013277,O,"JOHNSON, CHRIS",Hapoel Bank Yahav Jerusalem,4,31,09:39,,,,Off Rebound (4),4
+2024,,,26,0,511,HAM,P013308,CM,"IVEY, BRAE",Veolia Towers Hamburg,1,31,09:39,,,,Foul (3),4
+2024,,,26,0,512,JER,P013277,RV,"JOHNSON, CHRIS",Hapoel Bank Yahav Jerusalem,4,31,09:39,,,,Foul Drawn (3),4
+2024,,,26,0,513,JER,P011970,2FGM,"HARPER, JARED",Hapoel Bank Yahav Jerusalem,1,31,09:39,61.0,54.0,,Two Pointer (2/5 -  19 pt),4
+2024,,,26,0,514,JER,P010587,AS,"SMITH, KENNETH",Hapoel Bank Yahav Jerusalem,44,31,09:39,,,,Assist (3),4
+2024,,,26,0,531,HAM,P013312,TO,"BARNETT, JORDAN",Veolia Towers Hamburg,21,31,09:39,,,,Turnover (1),4
+2024,,,26,0,532,JER,P010587,ST,"SMITH, KENNETH",Hapoel Bank Yahav Jerusalem,44,31,09:39,,,,Steal (2),4
+2024,,,26,0,533,JER,P010587,TO,"SMITH, KENNETH",Hapoel Bank Yahav Jerusalem,44,31,09:39,,,,Turnover (1),4
+2024,,,26,0,515,HAM,P013312,3FGM,"BARNETT, JORDAN",Veolia Towers Hamburg,21,31,09:03,61.0,57.0,,Three Pointer (3/6 -  13 pt),4
+2024,,,26,0,516,HAM,P013308,AS,"IVEY, BRAE",Veolia Towers Hamburg,1,31,09:00,,,,Assist (2),4
+2024,,,26,0,518,JER,P010431,2FGA,"MORGAN, JEREMY",Hapoel Bank Yahav Jerusalem,20,32,08:36,,,,Missed Two Pointer (0/1 -  1 pt),4
+2024,,,26,0,519,JER,P013276,O,"SMITH, JUSTIN",Hapoel Bank Yahav Jerusalem,0,32,08:34,,,,Off Rebound (4),4
+2024,,,26,0,520,JER,P013276,2FGM,"SMITH, JUSTIN",Hapoel Bank Yahav Jerusalem,0,32,08:33,63.0,57.0,,Two Pointer (4/8 -  9 pt),4
+2024,,,26,0,521,JER,P010431,CM,"MORGAN, JEREMY",Hapoel Bank Yahav Jerusalem,20,32,08:29,,,,Foul (3),4
+2024,,,26,0,522,HAM,P013309,RV,"LOTTIE, JAIZEC",Veolia Towers Hamburg,4,32,08:29,,,,Foul Drawn (5),4
+2024,,,26,0,523,JER,P010431,CM,"MORGAN, JEREMY",Hapoel Bank Yahav Jerusalem,20,32,08:28,,,,Foul (4),4
+2024,,,26,0,524,HAM,P013312,RV,"BARNETT, JORDAN",Veolia Towers Hamburg,21,32,08:28,,,,Foul Drawn (2),4
+2024,,,26,0,525,HAM,P013309,TO,"LOTTIE, JAIZEC",Veolia Towers Hamburg,4,32,08:22,,,,Turnover (3),4
+2024,,,26,0,526,JER,P010431,OUT,"MORGAN, JEREMY",Hapoel Bank Yahav Jerusalem,20,32,08:22,,,,Out,4
+2024,,,26,0,527,JER,P006625,IN,"ZOOSMAN, YOVEL",Hapoel Bank Yahav Jerusalem,50,32,08:22,,,,In,4
+2024,,,26,0,528,JER,P006625,3FGM,"ZOOSMAN, YOVEL",Hapoel Bank Yahav Jerusalem,50,32,08:09,66.0,57.0,,Three Pointer (1/2 -  7 pt),4
+2024,,,26,0,529,JER,P011970,AS,"HARPER, JARED",Hapoel Bank Yahav Jerusalem,1,32,08:09,,,,Assist (5),4
+2024,,,26,0,530,HAM,,TOUT,,Veolia Towers Hamburg,,32,08:09,,,,Time Out (1),4
+2024,,,26,0,680,,,TOUT_TV,,,,32,08:09,,,,TV Time Out (4),4
+2024,,,26,0,534,JER,P011970,OUT,"HARPER, JARED",Hapoel Bank Yahav Jerusalem,1,32,08:09,,,,Out,4
+2024,,,26,0,535,JER,P009879,IN,"DOVRAT, NOAM",Hapoel Bank Yahav Jerusalem,8,32,08:09,,,,In,4
+2024,,,26,0,538,HAM,P012695,2FGA,"REECE, CAMRON",Veolia Towers Hamburg,14,33,07:45,,,,Missed Two Pointer (3/5 -  7 pt),4
+2024,,,26,0,539,HAM,P013309,O,"LOTTIE, JAIZEC",Veolia Towers Hamburg,4,33,07:42,,,,Off Rebound (2),4
+2024,,,26,0,540,HAM,P013308,2FGA,"IVEY, BRAE",Veolia Towers Hamburg,1,33,07:41,,,,Missed Two Pointer (1/5 -  10 pt),4
+2024,,,26,0,541,JER,P013276,D,"SMITH, JUSTIN",Hapoel Bank Yahav Jerusalem,0,33,07:38,,,,Def Rebound (2),4
+2024,,,26,0,542,JER,P009879,3FGA,"DOVRAT, NOAM",Hapoel Bank Yahav Jerusalem,8,33,07:33,,,,Missed Three Pointer (1/3 -  5 pt),4
+2024,,,26,0,543,JER,P010587,O,"SMITH, KENNETH",Hapoel Bank Yahav Jerusalem,44,33,07:33,,,,Off Rebound (2),4
+2024,,,26,0,544,HAM,P013308,CM,"IVEY, BRAE",Veolia Towers Hamburg,1,33,07:22,,,,Foul (4),4
+2024,,,26,0,545,JER,P010587,RV,"SMITH, KENNETH",Hapoel Bank Yahav Jerusalem,44,33,07:22,,,,Foul Drawn (2),4
+2024,,,26,0,546,HAM,P013308,OUT,"IVEY, BRAE",Veolia Towers Hamburg,1,33,07:22,,,,Out,4
+2024,,,26,0,547,HAM,P003242,IN,"OGBE, KENNETH",Veolia Towers Hamburg,25,33,07:22,,,,In,4
+2024,,,26,0,548,JER,P010587,FTM,"SMITH, KENNETH",Hapoel Bank Yahav Jerusalem,44,33,07:22,67.0,57.0,,Free Throw In (1/1 -  10 pt),4
+2024,,,26,0,549,JER,P010587,FTA,"SMITH, KENNETH",Hapoel Bank Yahav Jerusalem,44,33,07:22,,,,Missed Free Throw (1/2 -  10 pt),4
+2024,,,26,0,550,HAM,P012695,D,"REECE, CAMRON",Veolia Towers Hamburg,14,33,07:22,,,,Def Rebound (3),4
+2024,,,26,0,551,HAM,P012695,2FGM,"REECE, CAMRON",Veolia Towers Hamburg,14,33,07:03,67.0,59.0,,Two Pointer (4/6 -  9 pt),4
+2024,,,26,0,552,HAM,P013309,AS,"LOTTIE, JAIZEC",Veolia Towers Hamburg,4,33,07:00,,,,Assist (4),4
+2024,,,26,0,554,JER,P013276,2FGA,"SMITH, JUSTIN",Hapoel Bank Yahav Jerusalem,0,34,06:44,,,,Missed Two Pointer (4/9 -  9 pt),4
+2024,,,26,0,555,JER,P013276,AG,"SMITH, JUSTIN",Hapoel Bank Yahav Jerusalem,0,34,06:44,,,,Shot Rejected (1),4
+2024,,,26,0,556,HAM,P013312,FV,"BARNETT, JORDAN",Veolia Towers Hamburg,21,34,06:44,,,,Block (2),4
+2024,,,26,0,557,JER,,O,,Hapoel Bank Yahav Jerusalem,,34,06:44,,,,Off Rebound (4),4
+2024,,,26,0,558,JER,P013276,OUT,"SMITH, JUSTIN",Hapoel Bank Yahav Jerusalem,0,34,06:44,,,,Out,4
+2024,,,26,0,559,JER,P013278,IN,"WILEY, AUSTIN",Hapoel Bank Yahav Jerusalem,5,34,06:44,,,,In,4
+2024,,,26,0,560,JER,P010587,2FGA,"SMITH, KENNETH",Hapoel Bank Yahav Jerusalem,44,34,06:36,,,,Missed Two Pointer (0/4 -  10 pt),4
+2024,,,26,0,561,JER,P013277,O,"JOHNSON, CHRIS",Hapoel Bank Yahav Jerusalem,4,34,06:36,,,,Off Rebound (5),4
+2024,,,26,0,562,JER,P013277,2FGM,"JOHNSON, CHRIS",Hapoel Bank Yahav Jerusalem,4,34,06:36,69.0,59.0,,Two Pointer (2/3 -  6 pt),4
+2024,,,26,0,563,HAM,P003242,CM,"OGBE, KENNETH",Veolia Towers Hamburg,25,34,06:36,,,,Foul (2),4
+2024,,,26,0,564,JER,P013277,RV,"JOHNSON, CHRIS",Hapoel Bank Yahav Jerusalem,4,34,06:36,,,,Foul Drawn (4),4
+2024,,,26,0,565,JER,P013277,FTM,"JOHNSON, CHRIS",Hapoel Bank Yahav Jerusalem,4,34,06:36,70.0,59.0,,Free Throw In (3/3 -  7 pt),4
+2024,,,26,0,566,HAM,P013309,3FGA,"LOTTIE, JAIZEC",Veolia Towers Hamburg,4,34,06:20,,,,Missed Three Pointer (2/8 -  12 pt),4
+2024,,,26,0,567,HAM,P003242,O,"OGBE, KENNETH",Veolia Towers Hamburg,25,34,06:18,,,,Off Rebound (2),4
+2024,,,26,0,568,HAM,P011256,3FGM,"RICH, OSARO",Veolia Towers Hamburg,3,34,06:09,70.0,62.0,,Three Pointer (2/4 -  8 pt),4
+2024,,,26,0,569,HAM,P013309,AS,"LOTTIE, JAIZEC",Veolia Towers Hamburg,4,34,06:07,,,,Assist (5),4
+2024,,,26,0,571,JER,P009879,2FGA,"DOVRAT, NOAM",Hapoel Bank Yahav Jerusalem,8,35,05:47,,,,Missed Two Pointer (1/2 -  5 pt),4
+2024,,,26,0,572,JER,P013278,O,"WILEY, AUSTIN",Hapoel Bank Yahav Jerusalem,5,35,05:44,,,,Off Rebound (7),4
+2024,,,26,0,573,JER,P013278,2FGM,"WILEY, AUSTIN",Hapoel Bank Yahav Jerusalem,5,35,05:44,72.0,62.0,,Two Pointer (2/9 -  5 pt),4
+2024,,,26,0,574,HAM,P012695,TO,"REECE, CAMRON",Veolia Towers Hamburg,14,35,05:38,,,,Turnover (3),4
+2024,,,26,0,575,JER,P006625,ST,"ZOOSMAN, YOVEL",Hapoel Bank Yahav Jerusalem,50,35,05:37,,,,Steal (4),4
+2024,,,26,0,576,JER,P006625,3FGM,"ZOOSMAN, YOVEL",Hapoel Bank Yahav Jerusalem,50,35,05:32,75.0,62.0,,Three Pointer (2/3 -  10 pt),4
+2024,,,26,0,577,HAM,P011256,3FGA,"RICH, OSARO",Veolia Towers Hamburg,3,35,05:20,,,,Missed Three Pointer (2/5 -  8 pt),4
+2024,,,26,0,578,JER,P006625,D,"ZOOSMAN, YOVEL",Hapoel Bank Yahav Jerusalem,50,35,05:18,,,,Def Rebound (1),4
+2024,,,26,0,579,JER,P011970,IN,"HARPER, JARED",Hapoel Bank Yahav Jerusalem,1,35,05:17,,,,In,4
+2024,,,26,0,580,JER,P010587,OUT,"SMITH, KENNETH",Hapoel Bank Yahav Jerusalem,44,35,05:17,,,,Out,4
+2024,,,26,0,581,HAM,P013309,OUT,"LOTTIE, JAIZEC",Veolia Towers Hamburg,4,35,05:17,,,,Out,4
+2024,,,26,0,582,HAM,P006006,IN,"TURUDIC, BENEDIKT",Veolia Towers Hamburg,44,35,05:17,,,,In,4
+2024,,,26,0,583,JER,P006625,2FGM,"ZOOSMAN, YOVEL",Hapoel Bank Yahav Jerusalem,50,35,05:08,77.0,62.0,,Two Pointer (3/3 -  12 pt),4
+2024,,,26,0,584,JER,P013278,AS,"WILEY, AUSTIN",Hapoel Bank Yahav Jerusalem,5,35,05:08,,,,Assist (3),4
+2024,,,26,0,585,HAM,P011256,CM,"RICH, OSARO",Veolia Towers Hamburg,3,35,05:08,,,,Foul (2),4
+2024,,,26,0,586,JER,P006625,RV,"ZOOSMAN, YOVEL",Hapoel Bank Yahav Jerusalem,50,35,05:08,,,,Foul Drawn (1),4
+2024,,,26,0,587,JER,P006625,FTM,"ZOOSMAN, YOVEL",Hapoel Bank Yahav Jerusalem,50,35,05:08,78.0,62.0,,Free Throw In (1/1 -  13 pt),4
+2024,,,26,0,589,HAM,P013312,2FGA,"BARNETT, JORDAN",Veolia Towers Hamburg,21,36,04:46,,,,Missed Two Pointer (1/3 -  13 pt),4
+2024,,,26,0,590,HAM,P013312,AG,"BARNETT, JORDAN",Veolia Towers Hamburg,21,36,04:46,,,,Shot Rejected (1),4
+2024,,,26,0,591,JER,P013278,FV,"WILEY, AUSTIN",Hapoel Bank Yahav Jerusalem,5,36,04:44,,,,Block (2),4
+2024,,,26,0,592,JER,P009879,D,"DOVRAT, NOAM",Hapoel Bank Yahav Jerusalem,8,36,04:41,,,,Def Rebound (2),4
+2024,,,26,0,593,JER,P009879,3FGA,"DOVRAT, NOAM",Hapoel Bank Yahav Jerusalem,8,36,04:38,,,,Missed Three Pointer (1/4 -  5 pt),4
+2024,,,26,0,594,JER,P013278,O,"WILEY, AUSTIN",Hapoel Bank Yahav Jerusalem,5,36,04:35,,,,Off Rebound (8),4
+2024,,,26,0,682,JER,P013278,2FGA,"WILEY, AUSTIN",Hapoel Bank Yahav Jerusalem,5,36,04:35,,,,Missed Two Pointer (2/10 -  5 pt),4
+2024,,,26,0,683,JER,,O,,Hapoel Bank Yahav Jerusalem,,36,04:35,,,,Off Rebound (5),4
+2024,,,26,0,595,JER,P006625,2FGM,"ZOOSMAN, YOVEL",Hapoel Bank Yahav Jerusalem,50,36,04:35,80.0,62.0,,Two Pointer (4/4 -  15 pt),4
+2024,,,26,0,596,HAM,,TOUT,,Veolia Towers Hamburg,,36,04:35,,,,Time Out (2),4
+2024,,,26,0,597,HAM,P013309,IN,"LOTTIE, JAIZEC",Veolia Towers Hamburg,4,36,04:35,,,,In,4
+2024,,,26,0,598,HAM,P013310,IN,"GREY, JARED",Veolia Towers Hamburg,8,36,04:35,,,,In,4
+2024,,,26,0,599,HAM,P012695,OUT,"REECE, CAMRON",Veolia Towers Hamburg,14,36,04:35,,,,Out,4
+2024,,,26,0,600,HAM,P003242,OUT,"OGBE, KENNETH",Veolia Towers Hamburg,25,36,04:35,,,,Out,4
+2024,,,26,0,601,HAM,P013309,2FGM,"LOTTIE, JAIZEC",Veolia Towers Hamburg,4,36,04:24,80.0,64.0,,Two Pointer (3/5 -  14 pt),4
+2024,,,26,0,602,JER,P009879,TO,"DOVRAT, NOAM",Hapoel Bank Yahav Jerusalem,8,36,04:11,,,,Turnover (1),4
+2024,,,26,0,603,HAM,P011256,ST,"RICH, OSARO",Veolia Towers Hamburg,3,36,04:08,,,,Steal (2),4
+2024,,,26,0,604,HAM,P011256,2FGM,"RICH, OSARO",Veolia Towers Hamburg,3,36,04:05,80.0,66.0,,Two Pointer (2/2 -  10 pt),4
+2024,,,26,0,606,HAM,P013309,CM,"LOTTIE, JAIZEC",Veolia Towers Hamburg,4,37,03:57,,,,Foul (3),4
+2024,,,26,0,607,JER,P013278,RV,"WILEY, AUSTIN",Hapoel Bank Yahav Jerusalem,5,37,03:57,,,,Foul Drawn (4),4
+2024,,,26,0,608,JER,P009879,OUT,"DOVRAT, NOAM",Hapoel Bank Yahav Jerusalem,8,37,03:57,,,,Out,4
+2024,,,26,0,609,JER,P010587,IN,"SMITH, KENNETH",Hapoel Bank Yahav Jerusalem,44,37,03:57,,,,In,4
+2024,,,26,0,610,JER,P013278,FTA,"WILEY, AUSTIN",Hapoel Bank Yahav Jerusalem,5,37,03:57,,,,Missed Free Throw (1/3 -  5 pt),4
+2024,,,26,0,611,JER,P013278,FTM,"WILEY, AUSTIN",Hapoel Bank Yahav Jerusalem,5,37,03:57,81.0,66.0,,Free Throw In (2/4 -  6 pt),4
+2024,,,26,0,612,JER,P006625,AS,"ZOOSMAN, YOVEL",Hapoel Bank Yahav Jerusalem,50,37,03:57,,,,Assist (1),4
+2024,,,26,0,613,HAM,P013309,TO,"LOTTIE, JAIZEC",Veolia Towers Hamburg,4,37,03:43,,,,Turnover (4),4
+2024,,,26,0,614,JER,P010587,ST,"SMITH, KENNETH",Hapoel Bank Yahav Jerusalem,44,37,03:41,,,,Steal (3),4
+2024,,,26,0,615,JER,P013278,2FGM,"WILEY, AUSTIN",Hapoel Bank Yahav Jerusalem,5,37,03:38,83.0,66.0,,Two Pointer (3/11 -  8 pt),4
+2024,,,26,0,616,JER,P010587,AS,"SMITH, KENNETH",Hapoel Bank Yahav Jerusalem,44,37,03:35,,,,Assist (4),4
+2024,,,26,0,617,HAM,P010070,IN,"MOELLER, LEIF",Veolia Towers Hamburg,6,37,03:57,,,,In,4
+2024,,,26,0,618,HAM,P013310,OUT,"GREY, JARED",Veolia Towers Hamburg,8,37,03:57,,,,Out,4
+2024,,,26,0,619,HAM,P010070,2FGM,"MOELLER, LEIF",Veolia Towers Hamburg,6,37,03:16,83.0,68.0,,Two Pointer (1/1 -  2 pt),4
+2024,,,26,0,620,JER,P013277,3FGA,"JOHNSON, CHRIS",Hapoel Bank Yahav Jerusalem,4,37,03:07,,,,Missed Three Pointer (0/4 -  7 pt),4
+2024,,,26,0,621,HAM,P013309,D,"LOTTIE, JAIZEC",Veolia Towers Hamburg,4,37,03:04,,,,Def Rebound (3),4
+2024,,,26,0,623,HAM,P013309,TO,"LOTTIE, JAIZEC",Veolia Towers Hamburg,4,38,02:59,,,,Turnover (5),4
+2024,,,26,0,624,JER,P006625,ST,"ZOOSMAN, YOVEL",Hapoel Bank Yahav Jerusalem,50,38,02:57,,,,Steal (5),4
+2024,,,26,0,625,JER,P006625,2FGA,"ZOOSMAN, YOVEL",Hapoel Bank Yahav Jerusalem,50,38,02:54,,,,Missed Two Pointer (4/5 -  15 pt),4
+2024,,,26,0,626,JER,P006625,O,"ZOOSMAN, YOVEL",Hapoel Bank Yahav Jerusalem,50,38,02:52,,,,Off Rebound (2),4
+2024,,,26,0,627,HAM,P011256,CM,"RICH, OSARO",Veolia Towers Hamburg,3,38,02:52,,,,Foul (3),4
+2024,,,26,0,628,JER,P006625,RV,"ZOOSMAN, YOVEL",Hapoel Bank Yahav Jerusalem,50,38,02:52,,,,Foul Drawn (2),4
+2024,,,26,0,629,JER,P013277,OUT,"JOHNSON, CHRIS",Hapoel Bank Yahav Jerusalem,4,38,02:52,,,,Out,4
+2024,,,26,0,630,JER,P013279,IN,"CHACHASHVILI, GABRIEL",Hapoel Bank Yahav Jerusalem,7,38,02:52,,,,In,4
+2024,,,26,0,631,JER,P006625,FTA,"ZOOSMAN, YOVEL",Hapoel Bank Yahav Jerusalem,50,38,02:52,,,,Missed Free Throw (1/2 -  15 pt),4
+2024,,,26,0,632,JER,P006625,FTM,"ZOOSMAN, YOVEL",Hapoel Bank Yahav Jerusalem,50,38,02:52,84.0,68.0,,Free Throw In (2/3 -  16 pt),4
+2024,,,26,0,633,JER,P010431,IN,"MORGAN, JEREMY",Hapoel Bank Yahav Jerusalem,20,38,02:52,,,,In,4
+2024,,,26,0,634,JER,P006625,OUT,"ZOOSMAN, YOVEL",Hapoel Bank Yahav Jerusalem,50,38,02:52,,,,Out,4
+2024,,,26,0,635,HAM,P013309,2FGM,"LOTTIE, JAIZEC",Veolia Towers Hamburg,4,38,02:31,84.0,70.0,,Two Pointer (4/6 -  16 pt),4
+2024,,,26,0,636,JER,P010587,2FGA,"SMITH, KENNETH",Hapoel Bank Yahav Jerusalem,44,38,02:18,,,,Missed Two Pointer (0/5 -  10 pt),4
+2024,,,26,0,637,HAM,P013309,D,"LOTTIE, JAIZEC",Veolia Towers Hamburg,4,38,02:15,,,,Def Rebound (4),4
+2024,,,26,0,638,HAM,P010070,3FGA,"MOELLER, LEIF",Veolia Towers Hamburg,6,38,02:07,,,,Missed Three Pointer (0/1 -  2 pt),4
+2024,,,26,0,639,JER,P013278,D,"WILEY, AUSTIN",Hapoel Bank Yahav Jerusalem,5,38,02:03,,,,Def Rebound (9),4
+2024,,,26,0,641,JER,P011970,TO,"HARPER, JARED",Hapoel Bank Yahav Jerusalem,1,39,01:49,,,,Turnover (3),4
+2024,,,26,0,642,HAM,P011256,ST,"RICH, OSARO",Veolia Towers Hamburg,3,39,01:47,,,,Steal (3),4
+2024,,,26,0,643,JER,P010587,CM,"SMITH, KENNETH",Hapoel Bank Yahav Jerusalem,44,39,01:46,,,,Foul (2),4
+2024,,,26,0,644,HAM,P011256,RV,"RICH, OSARO",Veolia Towers Hamburg,3,39,01:46,,,,Foul Drawn (1),4
+2024,,,26,0,645,JER,P013276,IN,"SMITH, JUSTIN",Hapoel Bank Yahav Jerusalem,0,39,01:46,,,,In,4
+2024,,,26,0,646,JER,P013279,OUT,"CHACHASHVILI, GABRIEL",Hapoel Bank Yahav Jerusalem,7,39,01:46,,,,Out,4
+2024,,,26,0,647,HAM,P013308,IN,"IVEY, BRAE",Veolia Towers Hamburg,1,39,01:46,,,,In,4
+2024,,,26,0,648,HAM,P013309,OUT,"LOTTIE, JAIZEC",Veolia Towers Hamburg,4,39,01:46,,,,Out,4
+2024,,,26,0,649,HAM,P013312,OUT,"BARNETT, JORDAN",Veolia Towers Hamburg,21,39,01:46,,,,Out,4
+2024,,,26,0,650,HAM,P006420,IN,"HECKMANN, PATRICK",Veolia Towers Hamburg,33,39,01:46,,,,In,4
+2024,,,26,0,651,HAM,P011256,FTM,"RICH, OSARO",Veolia Towers Hamburg,3,39,01:46,84.0,71.0,,Free Throw In (1/1 -  11 pt),4
+2024,,,26,0,652,HAM,P011256,FTM,"RICH, OSARO",Veolia Towers Hamburg,3,39,01:46,84.0,72.0,,Free Throw In (2/2 -  12 pt),4
+2024,,,26,0,653,HAM,P011256,OUT,"RICH, OSARO",Veolia Towers Hamburg,3,39,01:46,,,,Out,4
+2024,,,26,0,654,HAM,P013310,IN,"GREY, JARED",Veolia Towers Hamburg,8,39,01:46,,,,In,4
+2024,,,26,0,655,JER,P010431,3FGM,"MORGAN, JEREMY",Hapoel Bank Yahav Jerusalem,20,39,01:33,87.0,72.0,,Three Pointer (1/4 -  4 pt),4
+2024,,,26,0,656,JER,P011970,AS,"HARPER, JARED",Hapoel Bank Yahav Jerusalem,1,39,01:34,,,,Assist (6),4
+2024,,,26,0,657,HAM,P010070,3FGA,"MOELLER, LEIF",Veolia Towers Hamburg,6,39,01:14,,,,Missed Three Pointer (0/2 -  2 pt),4
+2024,,,26,0,658,JER,P013276,D,"SMITH, JUSTIN",Hapoel Bank Yahav Jerusalem,0,39,01:12,,,,Def Rebound (3),4
+2024,,,26,0,659,JER,P013278,2FGM,"WILEY, AUSTIN",Hapoel Bank Yahav Jerusalem,5,39,01:05,89.0,72.0,,Two Pointer (4/12 -  10 pt),4
+2024,,,26,0,660,JER,P010587,AS,"SMITH, KENNETH",Hapoel Bank Yahav Jerusalem,44,39,01:05,,,,Assist (5),4
+2024,,,26,0,661,HAM,P006006,2FGM,"TURUDIC, BENEDIKT",Veolia Towers Hamburg,44,39,01:05,89.0,74.0,,Two Pointer (2/4 -  4 pt),4
+2024,,,26,0,662,HAM,P006420,AS,"HECKMANN, PATRICK",Veolia Towers Hamburg,33,39,01:05,,,,Assist (2),4
+2024,,,26,0,663,JER,P013278,OUT,"WILEY, AUSTIN",Hapoel Bank Yahav Jerusalem,5,39,01:00,,,,Out,4
+2024,,,26,0,664,JER,P006625,IN,"ZOOSMAN, YOVEL",Hapoel Bank Yahav Jerusalem,50,39,01:00,,,,In,4
+2024,,,26,0,669,JER,P013276,OF,"SMITH, JUSTIN",Hapoel Bank Yahav Jerusalem,0,40,00:34,,,,Offensive Foul (4),4
+2024,,,26,0,670,JER,P013276,TO,"SMITH, JUSTIN",Hapoel Bank Yahav Jerusalem,0,40,00:34,,,,Turnover (5),4
+2024,,,26,0,671,HAM,P013308,RV,"IVEY, BRAE",Veolia Towers Hamburg,1,40,00:34,,,,Foul Drawn (7),4
+2024,,,26,0,672,JER,P009879,IN,"DOVRAT, NOAM",Hapoel Bank Yahav Jerusalem,8,40,00:34,,,,In,4
+2024,,,26,0,673,JER,P010587,OUT,"SMITH, KENNETH",Hapoel Bank Yahav Jerusalem,44,40,00:34,,,,Out,4
+2024,,,26,0,674,HAM,P010070,3FGA,"MOELLER, LEIF",Veolia Towers Hamburg,6,40,00:22,,,,Missed Three Pointer (0/3 -  2 pt),4
+2024,,,26,0,675,JER,P006625,D,"ZOOSMAN, YOVEL",Hapoel Bank Yahav Jerusalem,50,40,00:20,,,,Def Rebound (2),4
+2024,,,26,0,676,JER,P011970,2FGA,"HARPER, JARED",Hapoel Bank Yahav Jerusalem,1,40,00:00,,,,Missed Two Pointer (2/6 -  19 pt),4
+2024,,,26,0,677,HAM,P013308,D,"IVEY, BRAE",Veolia Towers Hamburg,1,40,00:00,,,,Def Rebound (3),4
+2024,,,26,0,686,,,EG,,,,41,,,,,End Game,4
+2024,,,27,0,2,,,BP,,,,1,,,,,Begin Period,1
+2024,,,27,0,3,PAM,,JB,,Valencia Basket,,1,09:59,,,,Jump Ball (1),1
+2024,,,27,0,4,PAM,P007527,3FGA,"BADIO, BRANCOU",Valencia Basket,0,1,09:41,,,,Missed Three Pointer (0/1 -  0 pt),1
+2024,,,27,0,5,CLU,P004862,D,"SEELEY, DENNIS",U-BT Cluj-Napoca,11,1,09:39,,,,Def Rebound (1),1
+2024,,,27,0,6,CLU,P005714,2FGM,"MEJERIS, MAREKS",U-BT Cluj-Napoca,5,1,09:27,2.0,,,Two Pointer (1/1 -  2 pt),1
+2024,,,27,0,7,CLU,P004862,AS,"SEELEY, DENNIS",U-BT Cluj-Napoca,11,1,09:25,,,,Assist (1),1
+2024,,,27,0,8,CLU,P005714,CM,"MEJERIS, MAREKS",U-BT Cluj-Napoca,5,1,09:14,,,,Foul (1),1
+2024,,,27,0,9,PAM,P012738,RV,"REUVERS, NATHAN",Valencia Basket,3,1,09:14,,,,Foul Drawn (1),1
+2024,,,27,0,10,PAM,P012738,FTA,"REUVERS, NATHAN",Valencia Basket,3,1,09:14,,,,Missed Free Throw (0/1 -  0 pt),1
+2024,,,27,0,11,PAM,P012738,FTM,"REUVERS, NATHAN",Valencia Basket,3,1,09:14,2.0,1.0,,Free Throw In (1/2 -  1 pt),1
+2024,,,27,0,12,PAM,P005356,AS,"LOPEZ-AROSTEGUI, XABI",Valencia Basket,6,1,09:14,,,,Assist (1),1
+2024,,,27,0,14,CLU,P002820,3FGA,"SALIN, SASU",U-BT Cluj-Napoca,9,2,08:55,,,,Missed Three Pointer (0/1 -  0 pt),1
+2024,,,27,0,15,CLU,P005714,O,"MEJERIS, MAREKS",U-BT Cluj-Napoca,5,2,08:53,,,,Off Rebound (1),1
+2024,,,27,0,16,CLU,P013302,TO,"SIMPSON, ZAVIER",U-BT Cluj-Napoca,3,2,08:38,,,,Turnover (1),1
+2024,,,27,0,17,PAM,P004863,ST,"JOVIC, STEFAN",Valencia Basket,16,2,08:36,,,,Steal (1),1
+2024,,,27,0,18,PAM,P010393,2FGM,"PRADILLA, JAIME",Valencia Basket,4,2,08:31,2.0,3.0,,Two Pointer (1/1 -  2 pt),1
+2024,,,27,0,19,PAM,P004863,AS,"JOVIC, STEFAN",Valencia Basket,16,2,08:28,,,,Assist (1),1
+2024,,,27,0,20,CLU,P004862,2FGM,"SEELEY, DENNIS",U-BT Cluj-Napoca,11,2,08:09,4.0,3.0,,Two Pointer (1/1 -  2 pt),1
+2024,,,27,0,22,PAM,P005356,3FGM,"LOPEZ-AROSTEGUI, XABI",Valencia Basket,6,3,07:46,4.0,6.0,,Three Pointer (1/1 -  3 pt),1
+2024,,,27,0,23,PAM,P010393,AS,"PRADILLA, JAIME",Valencia Basket,4,3,07:44,,,,Assist (1),1
+2024,,,27,0,24,CLU,P013302,TO,"SIMPSON, ZAVIER",U-BT Cluj-Napoca,3,3,07:35,,,,Turnover (2),1
+2024,,,27,0,25,PAM,P005356,ST,"LOPEZ-AROSTEGUI, XABI",Valencia Basket,6,3,07:33,,,,Steal (1),1
+2024,,,27,0,26,CLU,P013302,CM,"SIMPSON, ZAVIER",U-BT Cluj-Napoca,3,3,07:33,,,,Foul (1),1
+2024,,,27,0,27,PAM,P005356,RV,"LOPEZ-AROSTEGUI, XABI",Valencia Basket,6,3,07:33,,,,Foul Drawn (1),1
+2024,,,27,0,28,PAM,P007527,3FGM,"BADIO, BRANCOU",Valencia Basket,0,3,07:25,4.0,9.0,,Three Pointer (1/2 -  3 pt),1
+2024,,,27,0,29,PAM,P004863,AS,"JOVIC, STEFAN",Valencia Basket,16,3,07:19,,,,Assist (2),1
+2024,,,27,0,30,CLU,P002820,3FGM,"SALIN, SASU",U-BT Cluj-Napoca,9,3,07:04,7.0,9.0,,Three Pointer (1/2 -  3 pt),1
+2024,,,27,0,31,CLU,P013304,AS,"HANKINS, ZACH",U-BT Cluj-Napoca,10,3,07:02,,,,Assist (1),1
+2024,,,27,0,33,PAM,P004863,TO,"JOVIC, STEFAN",Valencia Basket,16,4,06:55,,,,Turnover (1),1
+2024,,,27,0,34,CLU,P013304,ST,"HANKINS, ZACH",U-BT Cluj-Napoca,10,4,06:53,,,,Steal (1),1
+2024,,,27,0,35,CLU,P013302,3FGA,"SIMPSON, ZAVIER",U-BT Cluj-Napoca,3,4,06:48,,,,Missed Three Pointer (0/1 -  0 pt),1
+2024,,,27,0,36,CLU,P002820,O,"SALIN, SASU",U-BT Cluj-Napoca,9,4,06:46,,,,Off Rebound (1),1
+2024,,,27,0,37,CLU,P002820,3FGM,"SALIN, SASU",U-BT Cluj-Napoca,9,4,06:35,10.0,9.0,,Three Pointer (2/3 -  6 pt),1
+2024,,,27,0,38,CLU,P013302,AS,"SIMPSON, ZAVIER",U-BT Cluj-Napoca,3,4,06:32,,,,Assist (1),1
+2024,,,27,0,39,PAM,P005356,3FGM,"LOPEZ-AROSTEGUI, XABI",Valencia Basket,6,4,06:32,10.0,12.0,,Three Pointer (2/2 -  6 pt),1
+2024,,,27,0,40,PAM,P007527,AS,"BADIO, BRANCOU",Valencia Basket,0,4,06:32,,,,Assist (1),1
+2024,,,27,0,41,CLU,P002820,3FGA,"SALIN, SASU",U-BT Cluj-Napoca,9,4,06:32,,,,Missed Three Pointer (2/4 -  6 pt),1
+2024,,,27,0,42,PAM,P007527,D,"BADIO, BRANCOU",Valencia Basket,0,4,06:32,,,,Def Rebound (1),1
+2024,,,27,0,44,PAM,P007527,3FGA,"BADIO, BRANCOU",Valencia Basket,0,5,05:53,,,,Missed Three Pointer (1/3 -  3 pt),1
+2024,,,27,0,45,CLU,P004862,D,"SEELEY, DENNIS",U-BT Cluj-Napoca,11,5,05:53,,,,Def Rebound (2),1
+2024,,,27,0,46,PAM,P007527,CM,"BADIO, BRANCOU",Valencia Basket,0,5,05:53,,,,Foul (1),1
+2024,,,27,0,47,CLU,P004862,RV,"SEELEY, DENNIS",U-BT Cluj-Napoca,11,5,05:53,,,,Foul Drawn (1),1
+2024,,,27,0,48,PAM,P012738,OUT,"REUVERS, NATHAN",Valencia Basket,3,5,05:53,,,,Out,1
+2024,,,27,0,49,PAM,P010750,IN,"DE LARREA, SERGIO",Valencia Basket,5,5,05:53,,,,In,1
+2024,,,27,0,50,PAM,P005356,OUT,"LOPEZ-AROSTEGUI, XABI",Valencia Basket,6,5,05:53,,,,Out,1
+2024,,,27,0,51,PAM,P009864,IN,"HAPP, ETHAN",Valencia Basket,22,5,05:53,,,,In,1
+2024,,,27,0,52,PAM,P005356,IN,"LOPEZ-AROSTEGUI, XABI",Valencia Basket,6,5,05:53,,,,In,1
+2024,,,27,0,53,PAM,P004863,OUT,"JOVIC, STEFAN",Valencia Basket,16,5,05:53,,,,Out,1
+2024,,,27,0,54,CLU,P013302,2FGM,"SIMPSON, ZAVIER",U-BT Cluj-Napoca,3,5,05:35,12.0,12.0,,Two Pointer (1/1 -  2 pt),1
+2024,,,27,0,55,PAM,P007527,3FGM,"BADIO, BRANCOU",Valencia Basket,0,5,05:19,12.0,15.0,,Three Pointer (2/4 -  6 pt),1
+2024,,,27,0,56,PAM,P010750,AS,"DE LARREA, SERGIO",Valencia Basket,5,5,05:16,,,,Assist (1),1
+2024,,,27,0,57,CLU,P013304,2FGM,"HANKINS, ZACH",U-BT Cluj-Napoca,10,5,05:03,14.0,15.0,,Two Pointer (1/1 -  2 pt),1
+2024,,,27,0,58,CLU,P002820,AS,"SALIN, SASU",U-BT Cluj-Napoca,9,5,05:00,,,,Assist (1),1
+2024,,,27,0,60,PAM,P010750,3FGA,"DE LARREA, SERGIO",Valencia Basket,5,6,04:47,,,,Missed Three Pointer (0/1 -  0 pt),1
+2024,,,27,0,61,CLU,P004862,D,"SEELEY, DENNIS",U-BT Cluj-Napoca,11,6,04:45,,,,Def Rebound (3),1
+2024,,,27,0,62,CLU,P013302,TO,"SIMPSON, ZAVIER",U-BT Cluj-Napoca,3,6,04:42,,,,Turnover (3),1
+2024,,,27,0,63,,,TOUT_TV,,,,6,04:42,,,,TV Time Out (1),1
+2024,,,27,0,64,CLU,P013304,OUT,"HANKINS, ZACH",U-BT Cluj-Napoca,10,6,04:42,,,,Out,1
+2024,,,27,0,65,CLU,P006618,IN,"STEPHENS, DE'SHAWN",U-BT Cluj-Napoca,23,6,04:42,,,,In,1
+2024,,,27,0,66,PAM,P007527,OUT,"BADIO, BRANCOU",Valencia Basket,0,6,04:42,,,,Out,1
+2024,,,27,0,67,PAM,P010393,OUT,"PRADILLA, JAIME",Valencia Basket,4,6,04:42,,,,Out,1
+2024,,,27,0,68,PAM,P005356,OUT,"LOPEZ-AROSTEGUI, XABI",Valencia Basket,6,6,04:42,,,,Out,1
+2024,,,27,0,69,PAM,P010042,IN,"MONTERO, JEAN",Valencia Basket,8,6,04:42,,,,In,1
+2024,,,27,0,70,PAM,P011982,IN,"OJELEYE, SEMI",Valencia Basket,37,6,04:42,,,,In,1
+2024,,,27,0,71,PAM,P011980,IN,"SESTINA, NATHAN",Valencia Basket,77,6,04:42,,,,In,1
+2024,,,27,0,72,PAM,P011982,2FGA,"OJELEYE, SEMI",Valencia Basket,37,6,04:17,,,,Missed Two Pointer (0/1 -  0 pt),1
+2024,,,27,0,73,PAM,,O,,Valencia Basket,,6,04:16,,,,Off Rebound (1),1
+2024,,,27,0,74,PAM,P011982,3FGA,"OJELEYE, SEMI",Valencia Basket,37,6,04:05,,,,Missed Three Pointer (0/1 -  0 pt),1
+2024,,,27,0,75,CLU,P006618,D,"STEPHENS, DE'SHAWN",U-BT Cluj-Napoca,23,6,04:02,,,,Def Rebound (1),1
+2024,,,27,0,77,PAM,P010750,CM,"DE LARREA, SERGIO",Valencia Basket,5,7,03:48,,,,Foul (1),1
+2024,,,27,0,78,CLU,P013302,RV,"SIMPSON, ZAVIER",U-BT Cluj-Napoca,3,7,03:48,,,,Foul Drawn (1),1
+2024,,,27,0,79,CLU,P002820,OUT,"SALIN, SASU",U-BT Cluj-Napoca,9,7,03:48,,,,Out,1
+2024,,,27,0,80,CLU,P004862,OUT,"SEELEY, DENNIS",U-BT Cluj-Napoca,11,7,03:48,,,,Out,1
+2024,,,27,0,81,CLU,P011801,IN,"RICHARD, PATRICK",U-BT Cluj-Napoca,35,7,03:48,,,,In,1
+2024,,,27,0,82,CLU,P012698,IN,"MOKOKA, ADAM",U-BT Cluj-Napoca,95,7,03:48,,,,In,1
+2024,,,27,0,83,CLU,P011801,3FGA,"RICHARD, PATRICK",U-BT Cluj-Napoca,35,7,03:42,,,,Missed Three Pointer (0/1 -  0 pt),1
+2024,,,27,0,84,PAM,P010750,D,"DE LARREA, SERGIO",Valencia Basket,5,7,03:40,,,,Def Rebound (1),1
+2024,,,27,0,85,PAM,P009864,2FGM,"HAPP, ETHAN",Valencia Basket,22,7,03:22,14.0,17.0,,Two Pointer (1/1 -  2 pt),1
+2024,,,27,0,86,PAM,P010750,AS,"DE LARREA, SERGIO",Valencia Basket,5,7,03:20,,,,Assist (2),1
+2024,,,27,0,88,CLU,,TO,,U-BT Cluj-Napoca,,8,02:55,,,,Turnover (1),1
+2024,,,27,0,89,CLU,P011797,IN,"GUZMAN, KAREL",U-BT Cluj-Napoca,0,8,02:55,,,,In,1
+2024,,,27,0,90,CLU,P010651,IN,"HERVEY, KEVIN",U-BT Cluj-Napoca,1,8,02:55,,,,In,1
+2024,,,27,0,91,CLU,P013302,OUT,"SIMPSON, ZAVIER",U-BT Cluj-Napoca,3,8,02:55,,,,Out,1
+2024,,,27,0,92,CLU,P005714,OUT,"MEJERIS, MAREKS",U-BT Cluj-Napoca,5,8,02:55,,,,Out,1
+2024,,,27,0,93,PAM,P010042,2FGM,"MONTERO, JEAN",Valencia Basket,8,8,02:30,14.0,19.0,,Two Pointer (1/1 -  2 pt),1
+2024,,,27,0,94,CLU,P012698,2FGM,"MOKOKA, ADAM",U-BT Cluj-Napoca,95,8,02:19,16.0,19.0,,Two Pointer (1/1 -  2 pt),1
+2024,,,27,0,95,PAM,P010750,TO,"DE LARREA, SERGIO",Valencia Basket,5,8,02:14,,,,Turnover (1),1
+2024,,,27,0,96,PAM,P009864,OUT,"HAPP, ETHAN",Valencia Basket,22,8,02:14,,,,Out,1
+2024,,,27,0,97,PAM,P010444,IN,"COSTELLO, MATTHEW",Valencia Basket,24,8,02:14,,,,In,1
+2024,,,27,0,98,CLU,P012698,2FGM,"MOKOKA, ADAM",U-BT Cluj-Napoca,95,8,02:08,18.0,19.0,,Two Pointer (2/2 -  4 pt),1
+2024,,,27,0,100,PAM,P011980,2FGA,"SESTINA, NATHAN",Valencia Basket,77,9,01:45,,,,Missed Two Pointer (0/1 -  0 pt),1
+2024,,,27,0,101,CLU,P006618,D,"STEPHENS, DE'SHAWN",U-BT Cluj-Napoca,23,9,01:42,,,,Def Rebound (2),1
+2024,,,27,0,102,PAM,P010750,OUT,"DE LARREA, SERGIO",Valencia Basket,5,9,01:33,,,,Out,1
+2024,,,27,0,103,PAM,P004863,IN,"JOVIC, STEFAN",Valencia Basket,16,9,01:33,,,,In,1
+2024,,,27,0,104,CLU,P011797,2FGM,"GUZMAN, KAREL",U-BT Cluj-Napoca,0,9,01:24,20.0,19.0,,Two Pointer (1/1 -  2 pt),1
+2024,,,27,0,105,CLU,P011801,AS,"RICHARD, PATRICK",U-BT Cluj-Napoca,35,9,01:22,,,,Assist (1),1
+2024,,,27,0,106,PAM,P011982,3FGA,"OJELEYE, SEMI",Valencia Basket,37,9,01:10,,,,Missed Three Pointer (0/2 -  0 pt),1
+2024,,,27,0,107,CLU,P011797,D,"GUZMAN, KAREL",U-BT Cluj-Napoca,0,9,01:09,,,,Def Rebound (1),1
+2024,,,27,0,109,CLU,P006618,2FGM,"STEPHENS, DE'SHAWN",U-BT Cluj-Napoca,23,10,00:57,22.0,19.0,,Two Pointer (1/1 -  2 pt),1
+2024,,,27,0,110,CLU,P012698,AS,"MOKOKA, ADAM",U-BT Cluj-Napoca,95,10,00:54,,,,Assist (1),1
+2024,,,27,0,111,PAM,P011980,2FGA,"SESTINA, NATHAN",Valencia Basket,77,10,00:52,,,,Missed Two Pointer (0/2 -  0 pt),1
+2024,,,27,0,112,CLU,,D,,U-BT Cluj-Napoca,,10,00:52,,,,Def Rebound (1),1
+2024,,,27,0,113,CLU,P011801,2FGA,"RICHARD, PATRICK",U-BT Cluj-Napoca,35,10,00:38,,,,Missed Two Pointer (0/1 -  0 pt),1
+2024,,,27,0,114,CLU,P011797,O,"GUZMAN, KAREL",U-BT Cluj-Napoca,0,10,00:36,,,,Off Rebound (1),1
+2024,,,27,0,115,CLU,P010651,2FGA,"HERVEY, KEVIN",U-BT Cluj-Napoca,1,10,00:35,,,,Missed Two Pointer (0/1 -  0 pt),1
+2024,,,27,0,116,CLU,P006618,O,"STEPHENS, DE'SHAWN",U-BT Cluj-Napoca,23,10,00:32,,,,Off Rebound (1),1
+2024,,,27,0,117,CLU,P006618,2FGM,"STEPHENS, DE'SHAWN",U-BT Cluj-Napoca,23,10,00:33,24.0,19.0,,Two Pointer (2/2 -  4 pt),1
+2024,,,27,0,118,PAM,,TOUT,,Valencia Basket,,10,00:33,,,,Time Out (1),1
+2024,,,27,0,119,CLU,P010651,CM,"HERVEY, KEVIN",U-BT Cluj-Napoca,1,10,00:13,,,,Foul (1),1
+2024,,,27,0,120,PAM,P010444,RV,"COSTELLO, MATTHEW",Valencia Basket,24,10,00:13,,,,Foul Drawn (1),1
+2024,,,27,0,121,PAM,P011982,2FGA,"OJELEYE, SEMI",Valencia Basket,37,10,00:00,,,,Missed Two Pointer (0/2 -  0 pt),1
+2024,,,27,0,122,CLU,P006618,D,"STEPHENS, DE'SHAWN",U-BT Cluj-Napoca,23,10,00:00,,,,Def Rebound (3),1
+2024,,,27,0,124,,,EP,,,,11,,,,,End Period,1
+2024,,,27,0,133,,,BP,,,,11,,,,,Begin Period,2
+2024,,,27,0,125,PAM,P007527,IN,"BADIO, BRANCOU",Valencia Basket,0,11,10:00,,,,In,2
+2024,,,27,0,126,PAM,P006643,IN,"PUERTO, JOSEP",Valencia Basket,2,11,10:00,,,,In,2
+2024,,,27,0,127,PAM,P012738,IN,"REUVERS, NATHAN",Valencia Basket,3,11,10:00,,,,In,2
+2024,,,27,0,128,PAM,P010393,IN,"PRADILLA, JAIME",Valencia Basket,4,11,10:00,,,,In,2
+2024,,,27,0,129,PAM,P010042,OUT,"MONTERO, JEAN",Valencia Basket,8,11,10:00,,,,Out,2
+2024,,,27,0,130,PAM,P010444,OUT,"COSTELLO, MATTHEW",Valencia Basket,24,11,10:00,,,,Out,2
+2024,,,27,0,131,PAM,P011982,OUT,"OJELEYE, SEMI",Valencia Basket,37,11,10:00,,,,Out,2
+2024,,,27,0,132,PAM,P011980,OUT,"SESTINA, NATHAN",Valencia Basket,77,11,10:00,,,,Out,2
+2024,,,27,0,134,PAM,P004863,CM,"JOVIC, STEFAN",Valencia Basket,16,11,09:53,,,,Foul (1),2
+2024,,,27,0,135,CLU,P012698,RV,"MOKOKA, ADAM",U-BT Cluj-Napoca,95,11,09:53,,,,Foul Drawn (1),2
+2024,,,27,0,136,CLU,P006618,2FGM,"STEPHENS, DE'SHAWN",U-BT Cluj-Napoca,23,11,09:42,26.0,19.0,,Two Pointer (3/3 -  6 pt),2
+2024,,,27,0,137,CLU,P012698,AS,"MOKOKA, ADAM",U-BT Cluj-Napoca,95,11,09:42,,,,Assist (2),2
+2024,,,27,0,138,PAM,P012738,CM,"REUVERS, NATHAN",Valencia Basket,3,11,09:42,,,,Foul (1),2
+2024,,,27,0,139,CLU,P006618,RV,"STEPHENS, DE'SHAWN",U-BT Cluj-Napoca,23,11,09:42,,,,Foul Drawn (1),2
+2024,,,27,0,140,CLU,P006618,FTM,"STEPHENS, DE'SHAWN",U-BT Cluj-Napoca,23,11,09:42,27.0,19.0,,Free Throw In (1/1 -  7 pt),2
+2024,,,27,0,141,PAM,P010393,2FGM,"PRADILLA, JAIME",Valencia Basket,4,11,09:32,27.0,21.0,,Two Pointer (2/2 -  4 pt),2
+2024,,,27,0,142,PAM,P004863,AS,"JOVIC, STEFAN",Valencia Basket,16,11,09:32,,,,Assist (3),2
+2024,,,27,0,143,CLU,P011797,CM,"GUZMAN, KAREL",U-BT Cluj-Napoca,0,11,09:32,,,,Foul (1),2
+2024,,,27,0,144,PAM,P010393,RV,"PRADILLA, JAIME",Valencia Basket,4,11,09:32,,,,Foul Drawn (1),2
+2024,,,27,0,145,PAM,P010393,FTM,"PRADILLA, JAIME",Valencia Basket,4,11,09:32,27.0,22.0,,Free Throw In (1/1 -  5 pt),2
+2024,,,27,0,146,CLU,P011797,2FGA,"GUZMAN, KAREL",U-BT Cluj-Napoca,0,11,09:14,,,,Missed Two Pointer (1/2 -  2 pt),2
+2024,,,27,0,147,PAM,P012738,D,"REUVERS, NATHAN",Valencia Basket,3,11,09:12,,,,Def Rebound (1),2
+2024,,,27,0,149,PAM,P012738,3FGA,"REUVERS, NATHAN",Valencia Basket,3,12,08:58,,,,Missed Three Pointer (0/1 -  1 pt),2
+2024,,,27,0,150,PAM,P010393,O,"PRADILLA, JAIME",Valencia Basket,4,12,08:56,,,,Off Rebound (1),2
+2024,,,27,0,151,PAM,P012738,3FGA,"REUVERS, NATHAN",Valencia Basket,3,12,08:48,,,,Missed Three Pointer (0/2 -  1 pt),2
+2024,,,27,0,152,CLU,P006618,D,"STEPHENS, DE'SHAWN",U-BT Cluj-Napoca,23,12,08:46,,,,Def Rebound (4),2
+2024,,,27,0,153,CLU,P012698,2FGA,"MOKOKA, ADAM",U-BT Cluj-Napoca,95,12,08:41,,,,Missed Two Pointer (2/3 -  4 pt),2
+2024,,,27,0,154,CLU,P012698,AG,"MOKOKA, ADAM",U-BT Cluj-Napoca,95,12,08:41,,,,Shot Rejected (1),2
+2024,,,27,0,155,PAM,P012738,FV,"REUVERS, NATHAN",Valencia Basket,3,12,08:39,,,,Block (1),2
+2024,,,27,0,175,CLU,P010651,O,"HERVEY, KEVIN",U-BT Cluj-Napoca,1,12,08:39,,,,Off Rebound (2),2
+2024,,,27,0,177,CLU,P010651,AG,"HERVEY, KEVIN",U-BT Cluj-Napoca,1,12,08:39,,,,Shot Rejected (1),2
+2024,,,27,0,176,CLU,P010651,2FGA,"HERVEY, KEVIN",U-BT Cluj-Napoca,1,12,08:39,,,,Missed Two Pointer (0/2 -  0 pt),2
+2024,,,27,0,178,PAM,P010393,FV,"PRADILLA, JAIME",Valencia Basket,4,12,08:39,,,,Block (1),2
+2024,,,27,0,179,CLU,P010651,O,"HERVEY, KEVIN",U-BT Cluj-Napoca,1,12,08:39,,,,Off Rebound (2),2
+2024,,,27,0,157,CLU,P006618,2FGM,"STEPHENS, DE'SHAWN",U-BT Cluj-Napoca,23,12,08:34,29.0,22.0,,Two Pointer (4/4 -  9 pt),2
+2024,,,27,0,236,CLU,P010651,AS,"HERVEY, KEVIN",U-BT Cluj-Napoca,1,12,08:34,,,,Assist (1),2
+2024,,,27,0,158,PAM,P006643,3FGA,"PUERTO, JOSEP",Valencia Basket,2,12,08:28,,,,Missed Three Pointer (0/1 -  0 pt),2
+2024,,,27,0,159,CLU,P011801,D,"RICHARD, PATRICK",U-BT Cluj-Napoca,35,12,08:26,,,,Def Rebound (1),2
+2024,,,27,0,160,CLU,P011797,3FGM,"GUZMAN, KAREL",U-BT Cluj-Napoca,0,12,08:20,32.0,22.0,,Three Pointer (1/1 -  5 pt),2
+2024,,,27,0,161,CLU,P011801,AS,"RICHARD, PATRICK",U-BT Cluj-Napoca,35,12,08:19,,,,Assist (2),2
+2024,,,27,0,162,PAM,,TOUT,,Valencia Basket,,12,08:19,,,,Time Out (1),2
+2024,,,27,0,237,,,TOUT_TV,,,,12,08:19,,,,TV Time Out (2),2
+2024,,,27,0,163,CLU,P011797,OUT,"GUZMAN, KAREL",U-BT Cluj-Napoca,0,12,08:19,,,,Out,2
+2024,,,27,0,164,CLU,P013304,IN,"HANKINS, ZACH",U-BT Cluj-Napoca,10,12,08:19,,,,In,2
+2024,,,27,0,165,CLU,P004862,IN,"SEELEY, DENNIS",U-BT Cluj-Napoca,11,12,08:19,,,,In,2
+2024,,,27,0,166,CLU,P006618,OUT,"STEPHENS, DE'SHAWN",U-BT Cluj-Napoca,23,12,08:19,,,,Out,2
+2024,,,27,0,167,PAM,P010042,IN,"MONTERO, JEAN",Valencia Basket,8,12,08:19,,,,In,2
+2024,,,27,0,168,PAM,P004863,OUT,"JOVIC, STEFAN",Valencia Basket,16,12,08:19,,,,Out,2
+2024,,,27,0,169,CLU,P010651,CM,"HERVEY, KEVIN",U-BT Cluj-Napoca,1,12,08:03,,,,Foul (2),2
+2024,,,27,0,170,PAM,P010042,RV,"MONTERO, JEAN",Valencia Basket,8,12,08:03,,,,Foul Drawn (1),2
+2024,,,27,0,171,CLU,P010651,OUT,"HERVEY, KEVIN",U-BT Cluj-Napoca,1,12,08:03,,,,Out,2
+2024,,,27,0,172,CLU,P005714,IN,"MEJERIS, MAREKS",U-BT Cluj-Napoca,5,12,08:03,,,,In,2
+2024,,,27,0,180,PAM,,TO,,Valencia Basket,,13,07:47,,,,Turnover (2),2
+2024,,,27,0,181,CLU,P004862,2FGM,"SEELEY, DENNIS",U-BT Cluj-Napoca,11,13,07:29,34.0,22.0,,Two Pointer (2/2 -  4 pt),2
+2024,,,27,0,182,PAM,P010042,3FGA,"MONTERO, JEAN",Valencia Basket,8,13,07:09,,,,Missed Three Pointer (0/1 -  2 pt),2
+2024,,,27,0,183,CLU,P013304,D,"HANKINS, ZACH",U-BT Cluj-Napoca,10,13,07:07,,,,Def Rebound (1),2
+2024,,,27,0,184,PAM,P010042,CM,"MONTERO, JEAN",Valencia Basket,8,13,07:03,,,,Foul (1),2
+2024,,,27,0,185,CLU,P004862,RV,"SEELEY, DENNIS",U-BT Cluj-Napoca,11,13,07:03,,,,Foul Drawn (2),2
+2024,,,27,0,186,CLU,P013302,IN,"SIMPSON, ZAVIER",U-BT Cluj-Napoca,3,13,07:03,,,,In,2
+2024,,,27,0,187,CLU,P002820,IN,"SALIN, SASU",U-BT Cluj-Napoca,9,13,07:03,,,,In,2
+2024,,,27,0,188,CLU,P011801,OUT,"RICHARD, PATRICK",U-BT Cluj-Napoca,35,13,07:03,,,,Out,2
+2024,,,27,0,189,CLU,P012698,OUT,"MOKOKA, ADAM",U-BT Cluj-Napoca,95,13,07:03,,,,Out,2
+2024,,,27,0,190,PAM,P006643,OUT,"PUERTO, JOSEP",Valencia Basket,2,13,07:03,,,,Out,2
+2024,,,27,0,191,PAM,P011982,IN,"OJELEYE, SEMI",Valencia Basket,37,13,07:03,,,,In,2
+2024,,,27,0,193,PAM,P011982,CM,"OJELEYE, SEMI",Valencia Basket,37,14,06:57,,,,Foul (1),2
+2024,,,27,0,194,CLU,P004862,RV,"SEELEY, DENNIS",U-BT Cluj-Napoca,11,14,06:57,,,,Foul Drawn (3),2
+2024,,,27,0,195,CLU,P004862,FTA,"SEELEY, DENNIS",U-BT Cluj-Napoca,11,14,06:57,,,,Missed Free Throw (0/1 -  4 pt),2
+2024,,,27,0,196,CLU,P004862,FTM,"SEELEY, DENNIS",U-BT Cluj-Napoca,11,14,06:57,35.0,22.0,,Free Throw In (1/2 -  5 pt),2
+2024,,,27,0,197,CLU,P004862,CM,"SEELEY, DENNIS",U-BT Cluj-Napoca,11,14,06:48,,,,Foul (1),2
+2024,,,27,0,198,PAM,P011982,RV,"OJELEYE, SEMI",Valencia Basket,37,14,06:48,,,,Foul Drawn (1),2
+2024,,,27,0,199,PAM,P007527,3FGM,"BADIO, BRANCOU",Valencia Basket,0,14,06:42,35.0,25.0,,Three Pointer (3/5 -  9 pt),2
+2024,,,27,0,200,CLU,P005714,2FGM,"MEJERIS, MAREKS",U-BT Cluj-Napoca,5,14,06:23,37.0,25.0,,Two Pointer (2/2 -  4 pt),2
+2024,,,27,0,201,CLU,P013302,AS,"SIMPSON, ZAVIER",U-BT Cluj-Napoca,3,14,06:21,,,,Assist (2),2
+2024,,,27,0,202,PAM,P011982,TO,"OJELEYE, SEMI",Valencia Basket,37,14,06:08,,,,Turnover (1),2
+2024,,,27,0,203,CLU,P005714,ST,"MEJERIS, MAREKS",U-BT Cluj-Napoca,5,14,06:06,,,,Steal (1),2
+2024,,,27,0,204,PAM,P012738,CM,"REUVERS, NATHAN",Valencia Basket,3,14,06:01,,,,Foul (2),2
+2024,,,27,0,205,CLU,P013302,RV,"SIMPSON, ZAVIER",U-BT Cluj-Napoca,3,14,06:01,,,,Foul Drawn (2),2
+2024,,,27,0,206,PAM,P012738,OUT,"REUVERS, NATHAN",Valencia Basket,3,14,06:01,,,,Out,2
+2024,,,27,0,207,PAM,P009864,IN,"HAPP, ETHAN",Valencia Basket,22,14,06:01,,,,In,2
+2024,,,27,0,208,CLU,P013302,FTM,"SIMPSON, ZAVIER",U-BT Cluj-Napoca,3,14,06:01,38.0,25.0,,Free Throw In (1/1 -  3 pt),2
+2024,,,27,0,209,CLU,P013302,FTM,"SIMPSON, ZAVIER",U-BT Cluj-Napoca,3,14,06:01,39.0,25.0,,Free Throw In (2/2 -  4 pt),2
+2024,,,27,0,211,PAM,P009864,2FGA,"HAPP, ETHAN",Valencia Basket,22,15,05:46,,,,Missed Two Pointer (1/2 -  2 pt),2
+2024,,,27,0,212,CLU,P013304,D,"HANKINS, ZACH",U-BT Cluj-Napoca,10,15,05:43,,,,Def Rebound (2),2
+2024,,,27,0,213,CLU,P002820,3FGA,"SALIN, SASU",U-BT Cluj-Napoca,9,15,05:21,,,,Missed Three Pointer (2/5 -  6 pt),2
+2024,,,27,0,214,PAM,P010042,D,"MONTERO, JEAN",Valencia Basket,8,15,05:19,,,,Def Rebound (1),2
+2024,,,27,0,215,PAM,P011982,3FGA,"OJELEYE, SEMI",Valencia Basket,37,15,05:04,,,,Missed Three Pointer (0/3 -  0 pt),2
+2024,,,27,0,216,CLU,,D,,U-BT Cluj-Napoca,,15,05:04,,,,Def Rebound (2),2
+2024,,,27,0,217,PAM,P010393,CM,"PRADILLA, JAIME",Valencia Basket,4,15,05:04,,,,Foul (1),2
+2024,,,27,0,218,CLU,P013302,RV,"SIMPSON, ZAVIER",U-BT Cluj-Napoca,3,15,05:04,,,,Foul Drawn (3),2
+2024,,,27,0,219,PAM,P010393,OUT,"PRADILLA, JAIME",Valencia Basket,4,15,05:04,,,,Out,2
+2024,,,27,0,220,PAM,P011980,IN,"SESTINA, NATHAN",Valencia Basket,77,15,05:04,,,,In,2
+2024,,,27,0,221,CLU,P013302,FTA,"SIMPSON, ZAVIER",U-BT Cluj-Napoca,3,15,05:04,,,,Missed Free Throw (2/3 -  4 pt),2
+2024,,,27,0,222,CLU,P013302,FTM,"SIMPSON, ZAVIER",U-BT Cluj-Napoca,3,15,05:04,40.0,25.0,,Free Throw In (3/4 -  5 pt),2
+2024,,,27,0,224,PAM,P009864,2FGA,"HAPP, ETHAN",Valencia Basket,22,16,04:45,,,,Missed Two Pointer (1/3 -  2 pt),2
+2024,,,27,0,225,CLU,P005714,D,"MEJERIS, MAREKS",U-BT Cluj-Napoca,5,16,04:43,,,,Def Rebound (1),2
+2024,,,27,0,226,CLU,P013302,2FGM,"SIMPSON, ZAVIER",U-BT Cluj-Napoca,3,16,04:37,42.0,25.0,,Two Pointer (2/2 -  7 pt),2
+2024,,,27,0,227,CLU,P013304,CM,"HANKINS, ZACH",U-BT Cluj-Napoca,10,16,04:31,,,,Foul (1),2
+2024,,,27,0,228,PAM,P010042,RV,"MONTERO, JEAN",Valencia Basket,8,16,04:31,,,,Foul Drawn (2),2
+2024,,,27,0,229,PAM,P007527,OUT,"BADIO, BRANCOU",Valencia Basket,0,16,04:31,,,,Out,2
+2024,,,27,0,230,PAM,P005356,IN,"LOPEZ-AROSTEGUI, XABI",Valencia Basket,6,16,04:31,,,,In,2
+2024,,,27,0,231,PAM,P011982,2FGM,"OJELEYE, SEMI",Valencia Basket,37,16,04:21,42.0,27.0,,Two Pointer (1/3 -  2 pt),2
+2024,,,27,0,232,CLU,P004862,3FGA,"SEELEY, DENNIS",U-BT Cluj-Napoca,11,16,04:08,,,,Missed Three Pointer (0/1 -  5 pt),2
+2024,,,27,0,233,PAM,P005356,D,"LOPEZ-AROSTEGUI, XABI",Valencia Basket,6,16,04:06,,,,Def Rebound (1),2
+2024,,,27,0,234,PAM,P005356,2FGM,"LOPEZ-AROSTEGUI, XABI",Valencia Basket,6,16,04:01,42.0,29.0,,Two Pointer (1/1 -  8 pt),2
+2024,,,27,0,235,CLU,,TOUT,,U-BT Cluj-Napoca,,16,04:01,,,,Time Out (1),2
+2024,,,27,0,238,CLU,P010651,IN,"HERVEY, KEVIN",U-BT Cluj-Napoca,1,16,04:01,,,,In,2
+2024,,,27,0,239,CLU,P005714,OUT,"MEJERIS, MAREKS",U-BT Cluj-Napoca,5,16,04:01,,,,Out,2
+2024,,,27,0,240,CLU,P013304,OUT,"HANKINS, ZACH",U-BT Cluj-Napoca,10,16,04:01,,,,Out,2
+2024,,,27,0,241,CLU,P004862,OUT,"SEELEY, DENNIS",U-BT Cluj-Napoca,11,16,04:01,,,,Out,2
+2024,,,27,0,242,CLU,P006618,IN,"STEPHENS, DE'SHAWN",U-BT Cluj-Napoca,23,16,04:01,,,,In,2
+2024,,,27,0,243,CLU,P012698,IN,"MOKOKA, ADAM",U-BT Cluj-Napoca,95,16,04:01,,,,In,2
+2024,,,27,0,245,CLU,P002820,3FGM,"SALIN, SASU",U-BT Cluj-Napoca,9,17,03:42,45.0,29.0,,Three Pointer (3/6 -  9 pt),2
+2024,,,27,0,246,CLU,P013302,AS,"SIMPSON, ZAVIER",U-BT Cluj-Napoca,3,17,03:40,,,,Assist (3),2
+2024,,,27,0,247,PAM,P010042,3FGM,"MONTERO, JEAN",Valencia Basket,8,17,03:30,45.0,32.0,,Three Pointer (1/2 -  5 pt),2
+2024,,,27,0,248,CLU,P002820,2FGA,"SALIN, SASU",U-BT Cluj-Napoca,9,17,03:15,,,,Missed Two Pointer (0/1 -  9 pt),2
+2024,,,27,0,249,CLU,P002820,AG,"SALIN, SASU",U-BT Cluj-Napoca,9,17,03:15,,,,Shot Rejected (1),2
+2024,,,27,0,250,PAM,P010042,FV,"MONTERO, JEAN",Valencia Basket,8,17,03:14,,,,Block (1),2
+2024,,,27,0,251,CLU,P002820,O,"SALIN, SASU",U-BT Cluj-Napoca,9,17,03:12,,,,Off Rebound (2),2
+2024,,,27,0,252,CLU,P013302,OF,"SIMPSON, ZAVIER",U-BT Cluj-Napoca,3,17,03:11,,,,Offensive Foul (2),2
+2024,,,27,0,253,CLU,P013302,TO,"SIMPSON, ZAVIER",U-BT Cluj-Napoca,3,17,03:11,,,,Turnover (4),2
+2024,,,27,0,254,PAM,P005356,RV,"LOPEZ-AROSTEGUI, XABI",Valencia Basket,6,17,03:11,,,,Foul Drawn (2),2
+2024,,,27,0,255,CLU,P011797,IN,"GUZMAN, KAREL",U-BT Cluj-Napoca,0,17,03:11,,,,In,2
+2024,,,27,0,256,CLU,P013302,OUT,"SIMPSON, ZAVIER",U-BT Cluj-Napoca,3,17,03:11,,,,Out,2
+2024,,,27,0,257,CLU,P002820,OUT,"SALIN, SASU",U-BT Cluj-Napoca,9,17,03:11,,,,Out,2
+2024,,,27,0,258,CLU,P011801,IN,"RICHARD, PATRICK",U-BT Cluj-Napoca,35,17,03:11,,,,In,2
+2024,,,27,0,259,PAM,P010042,TO,"MONTERO, JEAN",Valencia Basket,8,17,03:03,,,,Turnover (1),2
+2024,,,27,0,261,CLU,P010651,3FGA,"HERVEY, KEVIN",U-BT Cluj-Napoca,1,18,02:48,,,,Missed Three Pointer (0/1 -  0 pt),2
+2024,,,27,0,262,PAM,P005356,D,"LOPEZ-AROSTEGUI, XABI",Valencia Basket,6,18,02:46,,,,Def Rebound (2),2
+2024,,,27,0,263,PAM,P010042,2FGA,"MONTERO, JEAN",Valencia Basket,8,18,02:35,,,,Missed Two Pointer (1/2 -  5 pt),2
+2024,,,27,0,264,PAM,P010042,AG,"MONTERO, JEAN",Valencia Basket,8,18,02:35,,,,Shot Rejected (1),2
+2024,,,27,0,265,CLU,P006618,FV,"STEPHENS, DE'SHAWN",U-BT Cluj-Napoca,23,18,02:35,,,,Block (1),2
+2024,,,27,0,266,CLU,,D,,U-BT Cluj-Napoca,,18,02:35,,,,Def Rebound (3),2
+2024,,,27,0,267,PAM,P010042,OUT,"MONTERO, JEAN",Valencia Basket,8,18,02:35,,,,Out,2
+2024,,,27,0,268,PAM,P004863,IN,"JOVIC, STEFAN",Valencia Basket,16,18,02:35,,,,In,2
+2024,,,27,0,269,PAM,,CCH,,Valencia Basket,,18,02:35,,,,Coach Challenge (1),2
+2024,,,27,0,270,CLU,P010651,3FGA,"HERVEY, KEVIN",U-BT Cluj-Napoca,1,18,02:20,,,,Missed Three Pointer (0/2 -  0 pt),2
+2024,,,27,0,271,CLU,P006618,O,"STEPHENS, DE'SHAWN",U-BT Cluj-Napoca,23,18,02:15,,,,Off Rebound (2),2
+2024,,,27,0,272,CLU,P006618,2FGM,"STEPHENS, DE'SHAWN",U-BT Cluj-Napoca,23,18,02:13,47.0,32.0,,Two Pointer (5/5 -  11 pt),2
+2024,,,27,0,273,PAM,P011982,3FGM,"OJELEYE, SEMI",Valencia Basket,37,18,02:04,47.0,35.0,,Three Pointer (1/4 -  5 pt),2
+2024,,,27,0,274,PAM,P009864,AS,"HAPP, ETHAN",Valencia Basket,22,18,02:02,,,,Assist (1),2
+2024,,,27,0,276,CLU,P011797,3FGA,"GUZMAN, KAREL",U-BT Cluj-Napoca,0,19,01:47,,,,Missed Three Pointer (1/2 -  5 pt),2
+2024,,,27,0,277,PAM,P005356,D,"LOPEZ-AROSTEGUI, XABI",Valencia Basket,6,19,01:45,,,,Def Rebound (3),2
+2024,,,27,0,278,PAM,P009864,2FGM,"HAPP, ETHAN",Valencia Basket,22,19,01:34,47.0,37.0,,Two Pointer (2/4 -  4 pt),2
+2024,,,27,0,279,PAM,P004863,AS,"JOVIC, STEFAN",Valencia Basket,16,19,01:34,,,,Assist (4),2
+2024,,,27,0,280,CLU,,TOUT,,U-BT Cluj-Napoca,,19,01:34,,,,Time Out (2),2
+2024,,,27,0,281,CLU,P011797,OUT,"GUZMAN, KAREL",U-BT Cluj-Napoca,0,19,01:34,,,,Out,2
+2024,,,27,0,282,CLU,P010651,OUT,"HERVEY, KEVIN",U-BT Cluj-Napoca,1,19,01:34,,,,Out,2
+2024,,,27,0,283,CLU,P005714,IN,"MEJERIS, MAREKS",U-BT Cluj-Napoca,5,19,01:34,,,,In,2
+2024,,,27,0,284,CLU,P002820,IN,"SALIN, SASU",U-BT Cluj-Napoca,9,19,01:34,,,,In,2
+2024,,,27,0,285,PAM,P009864,OUT,"HAPP, ETHAN",Valencia Basket,22,19,01:34,,,,Out,2
+2024,,,27,0,286,PAM,P010444,IN,"COSTELLO, MATTHEW",Valencia Basket,24,19,01:34,,,,In,2
+2024,,,27,0,287,CLU,P002820,3FGA,"SALIN, SASU",U-BT Cluj-Napoca,9,19,01:19,,,,Missed Three Pointer (3/7 -  9 pt),2
+2024,,,27,0,288,PAM,P011980,D,"SESTINA, NATHAN",Valencia Basket,77,19,01:17,,,,Def Rebound (1),2
+2024,,,27,0,289,CLU,P002820,CM,"SALIN, SASU",U-BT Cluj-Napoca,9,19,01:09,,,,Foul (1),2
+2024,,,27,0,290,PAM,P005356,RV,"LOPEZ-AROSTEGUI, XABI",Valencia Basket,6,19,01:09,,,,Foul Drawn (3),2
+2024,,,27,0,291,PAM,P005356,FTM,"LOPEZ-AROSTEGUI, XABI",Valencia Basket,6,19,01:09,47.0,38.0,,Free Throw In (1/1 -  9 pt),2
+2024,,,27,0,292,PAM,P005356,FTM,"LOPEZ-AROSTEGUI, XABI",Valencia Basket,6,19,01:09,47.0,39.0,,Free Throw In (2/2 -  10 pt),2
+2024,,,27,0,293,PAM,P005356,CM,"LOPEZ-AROSTEGUI, XABI",Valencia Basket,6,19,01:01,,,,Foul (1),2
+2024,,,27,0,294,CLU,P012698,RV,"MOKOKA, ADAM",U-BT Cluj-Napoca,95,19,01:01,,,,Foul Drawn (2),2
+2024,,,27,0,295,CLU,P011797,IN,"GUZMAN, KAREL",U-BT Cluj-Napoca,0,19,01:01,,,,In,2
+2024,,,27,0,296,CLU,P002820,OUT,"SALIN, SASU",U-BT Cluj-Napoca,9,19,01:01,,,,Out,2
+2024,,,27,0,297,CLU,P012698,FTM,"MOKOKA, ADAM",U-BT Cluj-Napoca,95,19,01:01,48.0,39.0,,Free Throw In (1/1 -  5 pt),2
+2024,,,27,0,298,CLU,P012698,FTM,"MOKOKA, ADAM",U-BT Cluj-Napoca,95,19,01:01,49.0,39.0,,Free Throw In (2/2 -  6 pt),2
+2024,,,27,0,300,PAM,P011982,3FGM,"OJELEYE, SEMI",Valencia Basket,37,20,00:47,49.0,42.0,,Three Pointer (2/5 -  8 pt),2
+2024,,,27,0,301,PAM,P004863,AS,"JOVIC, STEFAN",Valencia Basket,16,20,00:45,,,,Assist (5),2
+2024,,,27,0,302,CLU,P012698,3FGM,"MOKOKA, ADAM",U-BT Cluj-Napoca,95,20,00:28,52.0,42.0,,Three Pointer (1/1 -  9 pt),2
+2024,,,27,0,303,CLU,P011801,AS,"RICHARD, PATRICK",U-BT Cluj-Napoca,35,20,00:26,,,,Assist (3),2
+2024,,,27,0,304,PAM,P005356,OUT,"LOPEZ-AROSTEGUI, XABI",Valencia Basket,6,20,00:26,,,,Out,2
+2024,,,27,0,305,PAM,P010042,IN,"MONTERO, JEAN",Valencia Basket,8,20,00:26,,,,In,2
+2024,,,27,0,306,CLU,P011797,CM,"GUZMAN, KAREL",U-BT Cluj-Napoca,0,20,00:09,,,,Foul (2),2
+2024,,,27,0,307,PAM,P011982,RV,"OJELEYE, SEMI",Valencia Basket,37,20,00:09,,,,Foul Drawn (2),2
+2024,,,27,0,308,PAM,P011982,FTM,"OJELEYE, SEMI",Valencia Basket,37,20,00:09,52.0,43.0,,Free Throw In (1/1 -  9 pt),2
+2024,,,27,0,309,PAM,P011980,AS,"SESTINA, NATHAN",Valencia Basket,77,20,00:09,,,,Assist (1),2
+2024,,,27,0,310,PAM,P011982,FTM,"OJELEYE, SEMI",Valencia Basket,37,20,00:09,52.0,44.0,,Free Throw In (2/2 -  10 pt),2
+2024,,,27,0,311,CLU,P005714,OUT,"MEJERIS, MAREKS",U-BT Cluj-Napoca,5,20,00:09,,,,Out,2
+2024,,,27,0,312,CLU,P002820,IN,"SALIN, SASU",U-BT Cluj-Napoca,9,20,00:09,,,,In,2
+2024,,,27,0,313,CLU,P004862,IN,"SEELEY, DENNIS",U-BT Cluj-Napoca,11,20,00:09,,,,In,2
+2024,,,27,0,314,CLU,P006618,OUT,"STEPHENS, DE'SHAWN",U-BT Cluj-Napoca,23,20,00:09,,,,Out,2
+2024,,,27,0,315,PAM,P010393,IN,"PRADILLA, JAIME",Valencia Basket,4,20,00:09,,,,In,2
+2024,,,27,0,316,PAM,P011980,OUT,"SESTINA, NATHAN",Valencia Basket,77,20,00:09,,,,Out,2
+2024,,,27,0,317,PAM,P007527,IN,"BADIO, BRANCOU",Valencia Basket,0,20,00:09,,,,In,2
+2024,,,27,0,318,PAM,P010444,OUT,"COSTELLO, MATTHEW",Valencia Basket,24,20,00:09,,,,Out,2
+2024,,,27,0,319,CLU,P012698,2FGA,"MOKOKA, ADAM",U-BT Cluj-Napoca,95,20,00:01,,,,Missed Two Pointer (2/4 -  9 pt),2
+2024,,,27,0,320,PAM,P007527,D,"BADIO, BRANCOU",Valencia Basket,0,20,00:00,,,,Def Rebound (2),2
+2024,,,27,0,321,PAM,P007527,3FGA,"BADIO, BRANCOU",Valencia Basket,0,20,00:00,,,,Missed Three Pointer (3/6 -  9 pt),2
+2024,,,27,0,323,,,EP,,,,21,,,,,End Period,2
+2024,,,27,0,332,,,BP,,,,21,,,,,Begin Period,3
+2024,,,27,0,324,CLU,P011797,OUT,"GUZMAN, KAREL",U-BT Cluj-Napoca,0,21,10:00,,,,Out,3
+2024,,,27,0,325,CLU,P013302,IN,"SIMPSON, ZAVIER",U-BT Cluj-Napoca,3,21,10:00,,,,In,3
+2024,,,27,0,326,CLU,P005714,IN,"MEJERIS, MAREKS",U-BT Cluj-Napoca,5,21,10:00,,,,In,3
+2024,,,27,0,327,CLU,P013304,IN,"HANKINS, ZACH",U-BT Cluj-Napoca,10,21,10:00,,,,In,3
+2024,,,27,0,328,CLU,P011801,OUT,"RICHARD, PATRICK",U-BT Cluj-Napoca,35,21,10:00,,,,Out,3
+2024,,,27,0,329,CLU,P012698,OUT,"MOKOKA, ADAM",U-BT Cluj-Napoca,95,21,10:00,,,,Out,3
+2024,,,27,0,330,PAM,P004863,OUT,"JOVIC, STEFAN",Valencia Basket,16,21,10:00,,,,Out,3
+2024,,,27,0,331,PAM,P010444,IN,"COSTELLO, MATTHEW",Valencia Basket,24,21,10:00,,,,In,3
+2024,,,27,0,333,CLU,P013304,TO,"HANKINS, ZACH",U-BT Cluj-Napoca,10,21,09:45,,,,Turnover (1),3
+2024,,,27,0,334,PAM,P007527,ST,"BADIO, BRANCOU",Valencia Basket,0,21,09:44,,,,Steal (1),3
+2024,,,27,0,335,PAM,P010393,3FGA,"PRADILLA, JAIME",Valencia Basket,4,21,09:39,,,,Missed Three Pointer (0/1 -  5 pt),3
+2024,,,27,0,336,CLU,P013302,D,"SIMPSON, ZAVIER",U-BT Cluj-Napoca,3,21,09:37,,,,Def Rebound (1),3
+2024,,,27,0,337,CLU,P013302,2FGA,"SIMPSON, ZAVIER",U-BT Cluj-Napoca,3,21,09:23,,,,Missed Two Pointer (2/3 -  7 pt),3
+2024,,,27,0,338,CLU,P005714,O,"MEJERIS, MAREKS",U-BT Cluj-Napoca,5,21,09:20,,,,Off Rebound (2),3
+2024,,,27,0,339,PAM,P007527,CM,"BADIO, BRANCOU",Valencia Basket,0,21,09:15,,,,Foul (2),3
+2024,,,27,0,340,CLU,P013302,RV,"SIMPSON, ZAVIER",U-BT Cluj-Napoca,3,21,09:15,,,,Foul Drawn (4),3
+2024,,,27,0,341,CLU,P013302,FTA,"SIMPSON, ZAVIER",U-BT Cluj-Napoca,3,21,09:15,,,,Missed Free Throw (3/5 -  7 pt),3
+2024,,,27,0,342,CLU,P013302,FTA,"SIMPSON, ZAVIER",U-BT Cluj-Napoca,3,21,09:15,,,,Missed Free Throw (3/6 -  7 pt),3
+2024,,,27,0,343,PAM,P010393,D,"PRADILLA, JAIME",Valencia Basket,4,21,09:15,,,,Def Rebound (1),3
+2024,,,27,0,344,PAM,P007527,3FGA,"BADIO, BRANCOU",Valencia Basket,0,21,09:04,,,,Missed Three Pointer (3/7 -  9 pt),3
+2024,,,27,0,345,CLU,P013304,D,"HANKINS, ZACH",U-BT Cluj-Napoca,10,21,09:03,,,,Def Rebound (3),3
+2024,,,27,0,347,CLU,P005714,2FGA,"MEJERIS, MAREKS",U-BT Cluj-Napoca,5,22,08:56,,,,Missed Two Pointer (2/3 -  4 pt),3
+2024,,,27,0,348,PAM,P007527,D,"BADIO, BRANCOU",Valencia Basket,0,22,08:54,,,,Def Rebound (3),3
+2024,,,27,0,349,PAM,P007527,TO,"BADIO, BRANCOU",Valencia Basket,0,22,08:40,,,,Turnover (1),3
+2024,,,27,0,350,CLU,P004862,2FGM,"SEELEY, DENNIS",U-BT Cluj-Napoca,11,22,08:22,54.0,44.0,,Two Pointer (3/3 -  7 pt),3
+2024,,,27,0,351,PAM,P011982,2FGM,"OJELEYE, SEMI",Valencia Basket,37,22,08:08,54.0,46.0,,Two Pointer (2/4 -  12 pt),3
+2024,,,27,0,352,PAM,P010444,AS,"COSTELLO, MATTHEW",Valencia Basket,24,22,08:06,,,,Assist (1),3
+2024,,,27,0,354,CLU,P004862,2FGA,"SEELEY, DENNIS",U-BT Cluj-Napoca,11,23,07:51,,,,Missed Two Pointer (3/4 -  7 pt),3
+2024,,,27,0,355,PAM,P010042,D,"MONTERO, JEAN",Valencia Basket,8,23,07:49,,,,Def Rebound (2),3
+2024,,,27,0,356,CLU,P002820,CM,"SALIN, SASU",U-BT Cluj-Napoca,9,23,07:46,,,,Foul (2),3
+2024,,,27,0,357,PAM,P010042,RV,"MONTERO, JEAN",Valencia Basket,8,23,07:46,,,,Foul Drawn (3),3
+2024,,,27,0,358,PAM,P010042,2FGA,"MONTERO, JEAN",Valencia Basket,8,23,07:33,,,,Missed Two Pointer (1/3 -  5 pt),3
+2024,,,27,0,359,CLU,,D,,U-BT Cluj-Napoca,,23,07:31,,,,Def Rebound (4),3
+2024,,,27,0,360,CLU,P013302,2FGM,"SIMPSON, ZAVIER",U-BT Cluj-Napoca,3,23,07:19,56.0,46.0,,Two Pointer (3/4 -  9 pt),3
+2024,,,27,0,361,CLU,P013304,CM,"HANKINS, ZACH",U-BT Cluj-Napoca,10,23,07:13,,,,Foul (2),3
+2024,,,27,0,362,PAM,P007527,RV,"BADIO, BRANCOU",Valencia Basket,0,23,07:13,,,,Foul Drawn (1),3
+2024,,,27,0,363,PAM,P012738,IN,"REUVERS, NATHAN",Valencia Basket,3,23,07:13,,,,In,3
+2024,,,27,0,364,PAM,P010444,OUT,"COSTELLO, MATTHEW",Valencia Basket,24,23,07:13,,,,Out,3
+2024,,,27,0,365,CLU,P013304,CM,"HANKINS, ZACH",U-BT Cluj-Napoca,10,23,07:08,,,,Foul (3),3
+2024,,,27,0,366,PAM,P010393,RV,"PRADILLA, JAIME",Valencia Basket,4,23,07:08,,,,Foul Drawn (2),3
+2024,,,27,0,367,PAM,P010393,FTM,"PRADILLA, JAIME",Valencia Basket,4,23,07:08,56.0,47.0,,Free Throw In (2/2 -  6 pt),3
+2024,,,27,0,368,PAM,P010042,AS,"MONTERO, JEAN",Valencia Basket,8,23,07:08,,,,Assist (1),3
+2024,,,27,0,369,PAM,P010393,FTM,"PRADILLA, JAIME",Valencia Basket,4,23,07:08,56.0,48.0,,Free Throw In (3/3 -  7 pt),3
+2024,,,27,0,371,CLU,P004862,2FGA,"SEELEY, DENNIS",U-BT Cluj-Napoca,11,24,06:49,,,,Missed Two Pointer (3/5 -  7 pt),3
+2024,,,27,0,372,CLU,P013304,O,"HANKINS, ZACH",U-BT Cluj-Napoca,10,24,06:49,,,,Off Rebound (1),3
+2024,,,27,0,373,PAM,P012738,CM,"REUVERS, NATHAN",Valencia Basket,3,24,06:49,,,,Foul (3),3
+2024,,,27,0,374,CLU,P013304,RV,"HANKINS, ZACH",U-BT Cluj-Napoca,10,24,06:49,,,,Foul Drawn (1),3
+2024,,,27,0,375,CLU,P013304,OUT,"HANKINS, ZACH",U-BT Cluj-Napoca,10,24,06:49,,,,Out,3
+2024,,,27,0,376,CLU,P006618,IN,"STEPHENS, DE'SHAWN",U-BT Cluj-Napoca,23,24,06:49,,,,In,3
+2024,,,27,0,377,CLU,P006618,2FGM,"STEPHENS, DE'SHAWN",U-BT Cluj-Napoca,23,24,06:39,58.0,48.0,,Two Pointer (6/6 -  13 pt),3
+2024,,,27,0,378,CLU,P002820,AS,"SALIN, SASU",U-BT Cluj-Napoca,9,24,06:37,,,,Assist (2),3
+2024,,,27,0,379,PAM,P010042,TO,"MONTERO, JEAN",Valencia Basket,8,24,06:25,,,,Turnover (2),3
+2024,,,27,0,380,CLU,P006618,ST,"STEPHENS, DE'SHAWN",U-BT Cluj-Napoca,23,24,06:24,,,,Steal (1),3
+2024,,,27,0,381,CLU,P013302,2FGM,"SIMPSON, ZAVIER",U-BT Cluj-Napoca,3,24,06:18,60.0,48.0,,Two Pointer (4/5 -  11 pt),3
+2024,,,27,0,383,PAM,P012738,TO,"REUVERS, NATHAN",Valencia Basket,3,25,05:55,,,,Turnover (1),3
+2024,,,27,0,384,CLU,P006618,ST,"STEPHENS, DE'SHAWN",U-BT Cluj-Napoca,23,25,05:54,,,,Steal (2),3
+2024,,,27,0,385,PAM,P010042,CM,"MONTERO, JEAN",Valencia Basket,8,25,05:47,,,,Foul (2),3
+2024,,,27,0,386,CLU,P005714,RV,"MEJERIS, MAREKS",U-BT Cluj-Napoca,5,25,05:47,,,,Foul Drawn (1),3
+2024,,,27,0,387,PAM,P010042,OUT,"MONTERO, JEAN",Valencia Basket,8,25,05:47,,,,Out,3
+2024,,,27,0,388,PAM,P004863,IN,"JOVIC, STEFAN",Valencia Basket,16,25,05:47,,,,In,3
+2024,,,27,0,389,CLU,P002820,3FGA,"SALIN, SASU",U-BT Cluj-Napoca,9,25,05:47,,,,Missed Three Pointer (3/8 -  9 pt),3
+2024,,,27,0,390,PAM,P007527,D,"BADIO, BRANCOU",Valencia Basket,0,25,05:47,,,,Def Rebound (4),3
+2024,,,27,0,391,PAM,P007527,2FGM,"BADIO, BRANCOU",Valencia Basket,0,25,05:34,60.0,50.0,,Two Pointer (1/1 -  11 pt),3
+2024,,,27,0,392,PAM,P012738,CM,"REUVERS, NATHAN",Valencia Basket,3,25,05:21,,,,Foul (4),3
+2024,,,27,0,393,CLU,P002820,RV,"SALIN, SASU",U-BT Cluj-Napoca,9,25,05:21,,,,Foul Drawn (1),3
+2024,,,27,0,394,CLU,P002820,OUT,"SALIN, SASU",U-BT Cluj-Napoca,9,25,05:21,,,,Out,3
+2024,,,27,0,395,CLU,P004862,OUT,"SEELEY, DENNIS",U-BT Cluj-Napoca,11,25,05:21,,,,Out,3
+2024,,,27,0,396,CLU,P011801,IN,"RICHARD, PATRICK",U-BT Cluj-Napoca,35,25,05:21,,,,In,3
+2024,,,27,0,397,CLU,P012698,IN,"MOKOKA, ADAM",U-BT Cluj-Napoca,95,25,05:21,,,,In,3
+2024,,,27,0,398,PAM,P012738,OUT,"REUVERS, NATHAN",Valencia Basket,3,25,05:21,,,,Out,3
+2024,,,27,0,399,PAM,P009864,IN,"HAPP, ETHAN",Valencia Basket,22,25,05:21,,,,In,3
+2024,,,27,0,400,CLU,P011801,3FGM,"RICHARD, PATRICK",U-BT Cluj-Napoca,35,25,05:12,63.0,50.0,,Three Pointer (1/2 -  3 pt),3
+2024,,,27,0,401,CLU,P006618,AS,"STEPHENS, DE'SHAWN",U-BT Cluj-Napoca,23,25,05:09,,,,Assist (1),3
+2024,,,27,0,403,PAM,P009864,2FGA,"HAPP, ETHAN",Valencia Basket,22,26,04:55,,,,Missed Two Pointer (2/5 -  4 pt),3
+2024,,,27,0,404,PAM,P009864,O,"HAPP, ETHAN",Valencia Basket,22,26,04:51,,,,Off Rebound (1),3
+2024,,,27,0,405,PAM,P007527,3FGA,"BADIO, BRANCOU",Valencia Basket,0,26,04:46,,,,Missed Three Pointer (3/8 -  11 pt),3
+2024,,,27,0,406,PAM,P011982,O,"OJELEYE, SEMI",Valencia Basket,37,26,04:44,,,,Off Rebound (1),3
+2024,,,27,0,407,CLU,P006618,CM,"STEPHENS, DE'SHAWN",U-BT Cluj-Napoca,23,26,04:44,,,,Foul (1),3
+2024,,,27,0,408,PAM,P011982,RV,"OJELEYE, SEMI",Valencia Basket,37,26,04:44,,,,Foul Drawn (3),3
+2024,,,27,0,409,,,TOUT_TV,,,,26,04:44,,,,TV Time Out (3),3
+2024,,,27,0,410,CLU,P010651,IN,"HERVEY, KEVIN",U-BT Cluj-Napoca,1,26,04:44,,,,In,3
+2024,,,27,0,411,CLU,P005714,OUT,"MEJERIS, MAREKS",U-BT Cluj-Napoca,5,26,04:44,,,,Out,3
+2024,,,27,0,412,PAM,P010393,OUT,"PRADILLA, JAIME",Valencia Basket,4,26,04:44,,,,Out,3
+2024,,,27,0,413,PAM,P011980,IN,"SESTINA, NATHAN",Valencia Basket,77,26,04:44,,,,In,3
+2024,,,27,0,414,PAM,P011982,FTM,"OJELEYE, SEMI",Valencia Basket,37,26,04:44,63.0,51.0,,Free Throw In (3/3 -  13 pt),3
+2024,,,27,0,415,PAM,P011982,FTM,"OJELEYE, SEMI",Valencia Basket,37,26,04:44,63.0,52.0,,Free Throw In (4/4 -  14 pt),3
+2024,,,27,0,416,CLU,P013302,TO,"SIMPSON, ZAVIER",U-BT Cluj-Napoca,3,26,04:34,,,,Turnover (5),3
+2024,,,27,0,417,CLU,P011797,IN,"GUZMAN, KAREL",U-BT Cluj-Napoca,0,26,04:34,,,,In,3
+2024,,,27,0,418,CLU,P013302,OUT,"SIMPSON, ZAVIER",U-BT Cluj-Napoca,3,26,04:34,,,,Out,3
+2024,,,27,0,419,PAM,P011982,3FGM,"OJELEYE, SEMI",Valencia Basket,37,26,04:19,63.0,55.0,,Three Pointer (3/6 -  17 pt),3
+2024,,,27,0,420,PAM,P004863,AS,"JOVIC, STEFAN",Valencia Basket,16,26,04:17,,,,Assist (6),3
+2024,,,27,0,422,CLU,P012698,2FGA,"MOKOKA, ADAM",U-BT Cluj-Napoca,95,27,03:53,,,,Missed Two Pointer (2/5 -  9 pt),3
+2024,,,27,0,423,PAM,P011980,D,"SESTINA, NATHAN",Valencia Basket,77,27,03:51,,,,Def Rebound (2),3
+2024,,,27,0,424,PAM,P007527,3FGM,"BADIO, BRANCOU",Valencia Basket,0,27,03:35,63.0,58.0,,Three Pointer (4/9 -  14 pt),3
+2024,,,27,0,425,CLU,,TOUT,,U-BT Cluj-Napoca,,27,03:34,,,,Time Out (1),3
+2024,,,27,0,426,PAM,P007527,OUT,"BADIO, BRANCOU",Valencia Basket,0,27,03:34,,,,Out,3
+2024,,,27,0,427,PAM,P005356,IN,"LOPEZ-AROSTEGUI, XABI",Valencia Basket,6,27,03:34,,,,In,3
+2024,,,27,0,458,PAM,P011982,FV,"OJELEYE, SEMI",Valencia Basket,37,27,03:21,,,,Block (1),3
+2024,,,27,0,653,CLU,P012698,2FGA,"MOKOKA, ADAM",U-BT Cluj-Napoca,95,27,03:21,,,,Missed Two Pointer (2/6 -  9 pt),3
+2024,,,27,0,654,CLU,P012698,AG,"MOKOKA, ADAM",U-BT Cluj-Napoca,95,27,03:21,,,,Shot Rejected (2),3
+2024,,,27,0,429,PAM,P005356,D,"LOPEZ-AROSTEGUI, XABI",Valencia Basket,6,27,03:19,,,,Def Rebound (4),3
+2024,,,27,0,430,PAM,P004863,3FGA,"JOVIC, STEFAN",Valencia Basket,16,27,03:12,,,,Missed Three Pointer (0/1 -  0 pt),3
+2024,,,27,0,431,CLU,P010651,D,"HERVEY, KEVIN",U-BT Cluj-Napoca,1,27,03:10,,,,Def Rebound (1),3
+2024,,,27,0,432,CLU,P011797,TO,"GUZMAN, KAREL",U-BT Cluj-Napoca,0,27,03:06,,,,Turnover (1),3
+2024,,,27,0,433,PAM,P009864,ST,"HAPP, ETHAN",Valencia Basket,22,27,03:04,,,,Steal (1),3
+2024,,,27,0,434,PAM,P004863,2FGM,"JOVIC, STEFAN",Valencia Basket,16,27,03:02,63.0,60.0,,Two Pointer (1/1 -  2 pt),3
+2024,,,27,0,436,CLU,P010651,3FGM,"HERVEY, KEVIN",U-BT Cluj-Napoca,1,28,02:47,66.0,60.0,,Three Pointer (1/3 -  3 pt),3
+2024,,,27,0,437,CLU,P006618,CM,"STEPHENS, DE'SHAWN",U-BT Cluj-Napoca,23,28,02:41,,,,Foul (2),3
+2024,,,27,0,438,PAM,P009864,RV,"HAPP, ETHAN",Valencia Basket,22,28,02:41,,,,Foul Drawn (1),3
+2024,,,27,0,439,PAM,P006643,IN,"PUERTO, JOSEP",Valencia Basket,2,28,02:41,,,,In,3
+2024,,,27,0,440,PAM,P011982,OUT,"OJELEYE, SEMI",Valencia Basket,37,28,02:41,,,,Out,3
+2024,,,27,0,441,PAM,P009864,FTM,"HAPP, ETHAN",Valencia Basket,22,28,02:41,66.0,61.0,,Free Throw In (1/1 -  5 pt),3
+2024,,,27,0,442,PAM,P009864,FTM,"HAPP, ETHAN",Valencia Basket,22,28,02:41,66.0,62.0,,Free Throw In (2/2 -  6 pt),3
+2024,,,27,0,443,PAM,P009864,CM,"HAPP, ETHAN",Valencia Basket,22,28,02:25,,,,Foul (1),3
+2024,,,27,0,444,CLU,P006618,RV,"STEPHENS, DE'SHAWN",U-BT Cluj-Napoca,23,28,02:25,,,,Foul Drawn (2),3
+2024,,,27,0,445,CLU,P006618,FTM,"STEPHENS, DE'SHAWN",U-BT Cluj-Napoca,23,28,02:25,67.0,62.0,,Free Throw In (2/2 -  14 pt),3
+2024,,,27,0,446,CLU,P006618,FTM,"STEPHENS, DE'SHAWN",U-BT Cluj-Napoca,23,28,02:25,68.0,62.0,,Free Throw In (3/3 -  15 pt),3
+2024,,,27,0,447,PAM,P005356,3FGA,"LOPEZ-AROSTEGUI, XABI",Valencia Basket,6,28,02:08,,,,Missed Three Pointer (2/3 -  10 pt),3
+2024,,,27,0,448,CLU,P010651,D,"HERVEY, KEVIN",U-BT Cluj-Napoca,1,28,02:06,,,,Def Rebound (2),3
+2024,,,27,0,449,CLU,P011797,2FGM,"GUZMAN, KAREL",U-BT Cluj-Napoca,0,28,02:02,70.0,62.0,,Two Pointer (2/3 -  7 pt),3
+2024,,,27,0,451,CLU,P010651,AS,"HERVEY, KEVIN",U-BT Cluj-Napoca,1,29,01:59,,,,Assist (2),3
+2024,,,27,0,452,PAM,P011980,3FGA,"SESTINA, NATHAN",Valencia Basket,77,29,01:50,,,,Missed Three Pointer (0/1 -  0 pt),3
+2024,,,27,0,453,CLU,,D,,U-BT Cluj-Napoca,,29,01:48,,,,Def Rebound (5),3
+2024,,,27,0,454,PAM,P009864,OUT,"HAPP, ETHAN",Valencia Basket,22,29,01:48,,,,Out,3
+2024,,,27,0,455,PAM,P010444,IN,"COSTELLO, MATTHEW",Valencia Basket,24,29,01:48,,,,In,3
+2024,,,27,0,456,CLU,P012698,2FGM,"MOKOKA, ADAM",U-BT Cluj-Napoca,95,29,01:35,72.0,62.0,,Two Pointer (3/7 -  11 pt),3
+2024,,,27,0,457,PAM,,TOUT,,Valencia Basket,,29,01:35,,,,Time Out (1),3
+2024,,,27,0,459,PAM,P010042,IN,"MONTERO, JEAN",Valencia Basket,8,29,01:35,,,,In,3
+2024,,,27,0,460,PAM,P004863,OUT,"JOVIC, STEFAN",Valencia Basket,16,29,01:35,,,,Out,3
+2024,,,27,0,461,PAM,P011980,3FGA,"SESTINA, NATHAN",Valencia Basket,77,29,01:21,,,,Missed Three Pointer (0/2 -  0 pt),3
+2024,,,27,0,462,PAM,,O,,Valencia Basket,,29,01:21,,,,Off Rebound (2),3
+2024,,,27,0,463,CLU,P006618,CM,"STEPHENS, DE'SHAWN",U-BT Cluj-Napoca,23,29,01:21,,,,Foul (3),3
+2024,,,27,0,464,PAM,P010444,RV,"COSTELLO, MATTHEW",Valencia Basket,24,29,01:21,,,,Foul Drawn (2),3
+2024,,,27,0,465,CLU,P013304,IN,"HANKINS, ZACH",U-BT Cluj-Napoca,10,29,01:21,,,,In,3
+2024,,,27,0,466,CLU,P006618,OUT,"STEPHENS, DE'SHAWN",U-BT Cluj-Napoca,23,29,01:21,,,,Out,3
+2024,,,27,0,467,PAM,P010444,FTM,"COSTELLO, MATTHEW",Valencia Basket,24,29,01:21,72.0,63.0,,Free Throw In (1/1 -  1 pt),3
+2024,,,27,0,468,PAM,P010444,FTM,"COSTELLO, MATTHEW",Valencia Basket,24,29,01:21,72.0,64.0,,Free Throw In (2/2 -  2 pt),3
+2024,,,27,0,469,CLU,P010651,OF,"HERVEY, KEVIN",U-BT Cluj-Napoca,1,29,01:10,,,,Offensive Foul (3),3
+2024,,,27,0,470,CLU,P010651,TO,"HERVEY, KEVIN",U-BT Cluj-Napoca,1,29,01:10,,,,Turnover (1),3
+2024,,,27,0,471,PAM,P005356,RV,"LOPEZ-AROSTEGUI, XABI",Valencia Basket,6,29,01:10,,,,Foul Drawn (4),3
+2024,,,27,0,472,CLU,P010651,OUT,"HERVEY, KEVIN",U-BT Cluj-Napoca,1,29,01:10,,,,Out,3
+2024,,,27,0,473,CLU,P005714,IN,"MEJERIS, MAREKS",U-BT Cluj-Napoca,5,29,01:10,,,,In,3
+2024,,,27,0,475,PAM,P005356,3FGM,"LOPEZ-AROSTEGUI, XABI",Valencia Basket,6,30,00:56,72.0,67.0,,Three Pointer (3/4 -  13 pt),3
+2024,,,27,0,476,PAM,P010042,AS,"MONTERO, JEAN",Valencia Basket,8,30,00:53,,,,Assist (2),3
+2024,,,27,0,477,CLU,P011797,3FGA,"GUZMAN, KAREL",U-BT Cluj-Napoca,0,30,00:37,,,,Missed Three Pointer (1/3 -  7 pt),3
+2024,,,27,0,478,PAM,P011980,D,"SESTINA, NATHAN",Valencia Basket,77,30,00:33,,,,Def Rebound (3),3
+2024,,,27,0,479,PAM,P010444,TO,"COSTELLO, MATTHEW",Valencia Basket,24,30,00:25,,,,Turnover (1),3
+2024,,,27,0,480,CLU,P012698,ST,"MOKOKA, ADAM",U-BT Cluj-Napoca,95,30,00:23,,,,Steal (1),3
+2024,,,27,0,481,CLU,P011801,2FGM,"RICHARD, PATRICK",U-BT Cluj-Napoca,35,30,00:13,74.0,67.0,,Two Pointer (1/2 -  5 pt),3
+2024,,,27,0,482,PAM,P010042,CM,"MONTERO, JEAN",Valencia Basket,8,30,00:13,,,,Foul (3),3
+2024,,,27,0,483,CLU,P011801,RV,"RICHARD, PATRICK",U-BT Cluj-Napoca,35,30,00:13,,,,Foul Drawn (1),3
+2024,,,27,0,484,CLU,P011801,FTM,"RICHARD, PATRICK",U-BT Cluj-Napoca,35,30,00:13,75.0,67.0,,Free Throw In (1/1 -  6 pt),3
+2024,,,27,0,485,CLU,P013304,OUT,"HANKINS, ZACH",U-BT Cluj-Napoca,10,30,00:13,,,,Out,3
+2024,,,27,0,486,CLU,P006618,IN,"STEPHENS, DE'SHAWN",U-BT Cluj-Napoca,23,30,00:13,,,,In,3
+2024,,,27,0,487,PAM,P010042,3FGM,"MONTERO, JEAN",Valencia Basket,8,30,00:02,75.0,70.0,,Three Pointer (2/3 -  8 pt),3
+2024,,,27,0,489,,,EP,,,,31,,,,,End Period,3
+2024,,,27,0,502,,,BP,,,,31,,,,,Begin Period,4
+2024,,,27,0,490,CLU,P011797,OUT,"GUZMAN, KAREL",U-BT Cluj-Napoca,0,31,10:00,,,,Out,4
+2024,,,27,0,491,CLU,P010651,IN,"HERVEY, KEVIN",U-BT Cluj-Napoca,1,31,10:00,,,,In,4
+2024,,,27,0,492,CLU,P013302,IN,"SIMPSON, ZAVIER",U-BT Cluj-Napoca,3,31,10:00,,,,In,4
+2024,,,27,0,493,CLU,P005714,OUT,"MEJERIS, MAREKS",U-BT Cluj-Napoca,5,31,10:00,,,,Out,4
+2024,,,27,0,494,CLU,P013304,IN,"HANKINS, ZACH",U-BT Cluj-Napoca,10,31,10:00,,,,In,4
+2024,,,27,0,495,CLU,P004862,IN,"SEELEY, DENNIS",U-BT Cluj-Napoca,11,31,10:00,,,,In,4
+2024,,,27,0,496,CLU,P006618,OUT,"STEPHENS, DE'SHAWN",U-BT Cluj-Napoca,23,31,10:00,,,,Out,4
+2024,,,27,0,497,CLU,P011801,OUT,"RICHARD, PATRICK",U-BT Cluj-Napoca,35,31,10:00,,,,Out,4
+2024,,,27,0,498,PAM,P006643,OUT,"PUERTO, JOSEP",Valencia Basket,2,31,10:00,,,,Out,4
+2024,,,27,0,499,PAM,P010393,IN,"PRADILLA, JAIME",Valencia Basket,4,31,10:00,,,,In,4
+2024,,,27,0,500,PAM,P011982,IN,"OJELEYE, SEMI",Valencia Basket,37,31,10:00,,,,In,4
+2024,,,27,0,501,PAM,P011980,OUT,"SESTINA, NATHAN",Valencia Basket,77,31,10:00,,,,Out,4
+2024,,,27,0,503,PAM,P010444,3FGM,"COSTELLO, MATTHEW",Valencia Basket,24,31,09:35,75.0,73.0,,Three Pointer (1/1 -  5 pt),4
+2024,,,27,0,504,CLU,P012698,TO,"MOKOKA, ADAM",U-BT Cluj-Napoca,95,31,09:15,,,,Turnover (1),4
+2024,,,27,0,505,PAM,P010444,ST,"COSTELLO, MATTHEW",Valencia Basket,24,31,09:13,,,,Steal (1),4
+2024,,,27,0,506,PAM,P011982,2FGA,"OJELEYE, SEMI",Valencia Basket,37,31,09:09,,,,Missed Two Pointer (2/5 -  17 pt),4
+2024,,,27,0,507,PAM,P010393,O,"PRADILLA, JAIME",Valencia Basket,4,31,09:09,,,,Off Rebound (2),4
+2024,,,27,0,508,PAM,P010393,2FGM,"PRADILLA, JAIME",Valencia Basket,4,31,09:09,75.0,75.0,,Two Pointer (3/3 -  9 pt),4
+2024,,,27,0,509,CLU,P013302,CM,"SIMPSON, ZAVIER",U-BT Cluj-Napoca,3,31,09:09,,,,Foul (3),4
+2024,,,27,0,510,PAM,P010393,RV,"PRADILLA, JAIME",Valencia Basket,4,31,09:09,,,,Foul Drawn (3),4
+2024,,,27,0,511,CLU,P002820,IN,"SALIN, SASU",U-BT Cluj-Napoca,9,31,09:09,,,,In,4
+2024,,,27,0,512,CLU,P012698,OUT,"MOKOKA, ADAM",U-BT Cluj-Napoca,95,31,09:09,,,,Out,4
+2024,,,27,0,513,PAM,P010393,FTA,"PRADILLA, JAIME",Valencia Basket,4,31,09:09,,,,Missed Free Throw (3/4 -  9 pt),4
+2024,,,27,0,514,CLU,P010651,D,"HERVEY, KEVIN",U-BT Cluj-Napoca,1,31,09:09,,,,Def Rebound (3),4
+2024,,,27,0,516,CLU,P004862,3FGM,"SEELEY, DENNIS",U-BT Cluj-Napoca,11,32,08:58,78.0,75.0,,Three Pointer (1/2 -  10 pt),4
+2024,,,27,0,517,CLU,P013302,AS,"SIMPSON, ZAVIER",U-BT Cluj-Napoca,3,32,08:55,,,,Assist (4),4
+2024,,,27,0,518,PAM,P005356,3FGA,"LOPEZ-AROSTEGUI, XABI",Valencia Basket,6,32,08:43,,,,Missed Three Pointer (3/5 -  13 pt),4
+2024,,,27,0,519,PAM,P011982,O,"OJELEYE, SEMI",Valencia Basket,37,32,08:41,,,,Off Rebound (2),4
+2024,,,27,0,520,CLU,P002820,CM,"SALIN, SASU",U-BT Cluj-Napoca,9,32,08:41,,,,Foul (3),4
+2024,,,27,0,521,PAM,P011982,RV,"OJELEYE, SEMI",Valencia Basket,37,32,08:41,,,,Foul Drawn (4),4
+2024,,,27,0,522,PAM,P010042,3FGM,"MONTERO, JEAN",Valencia Basket,8,32,08:31,78.0,78.0,,Three Pointer (3/4 -  11 pt),4
+2024,,,27,0,523,CLU,P013302,2FGA,"SIMPSON, ZAVIER",U-BT Cluj-Napoca,3,32,08:13,,,,Missed Two Pointer (4/6 -  11 pt),4
+2024,,,27,0,524,PAM,P010444,D,"COSTELLO, MATTHEW",Valencia Basket,24,32,08:11,,,,Def Rebound (1),4
+2024,,,27,0,525,PAM,P005356,3FGM,"LOPEZ-AROSTEGUI, XABI",Valencia Basket,6,32,08:00,78.0,81.0,,Three Pointer (4/6 -  16 pt),4
+2024,,,27,0,527,PAM,P010444,AS,"COSTELLO, MATTHEW",Valencia Basket,24,33,07:58,,,,Assist (2),4
+2024,,,27,0,528,PAM,P005356,CM,"LOPEZ-AROSTEGUI, XABI",Valencia Basket,6,33,07:48,,,,Foul (2),4
+2024,,,27,0,529,CLU,P013302,RV,"SIMPSON, ZAVIER",U-BT Cluj-Napoca,3,33,07:48,,,,Foul Drawn (5),4
+2024,,,27,0,530,CLU,P004862,2FGA,"SEELEY, DENNIS",U-BT Cluj-Napoca,11,33,07:38,,,,Missed Two Pointer (3/6 -  10 pt),4
+2024,,,27,0,531,PAM,P010393,D,"PRADILLA, JAIME",Valencia Basket,4,33,07:36,,,,Def Rebound (2),4
+2024,,,27,0,532,PAM,P005356,3FGM,"LOPEZ-AROSTEGUI, XABI",Valencia Basket,6,33,07:25,78.0,84.0,,Three Pointer (5/7 -  19 pt),4
+2024,,,27,0,533,PAM,P010393,AS,"PRADILLA, JAIME",Valencia Basket,4,33,07:25,,,,Assist (2),4
+2024,,,27,0,534,CLU,,TOUT,,U-BT Cluj-Napoca,,33,07:25,,,,Time Out (1),4
+2024,,,27,0,535,,,TOUT_TV,,,,33,07:25,,,,TV Time Out (4),4
+2024,,,27,0,536,CLU,P013304,OUT,"HANKINS, ZACH",U-BT Cluj-Napoca,10,33,07:25,,,,Out,4
+2024,,,27,0,537,CLU,P006618,IN,"STEPHENS, DE'SHAWN",U-BT Cluj-Napoca,23,33,07:25,,,,In,4
+2024,,,27,0,538,PAM,P007527,IN,"BADIO, BRANCOU",Valencia Basket,0,33,07:25,,,,In,4
+2024,,,27,0,539,PAM,P005356,OUT,"LOPEZ-AROSTEGUI, XABI",Valencia Basket,6,33,07:25,,,,Out,4
+2024,,,27,0,540,CLU,P010651,3FGA,"HERVEY, KEVIN",U-BT Cluj-Napoca,1,33,07:09,,,,Missed Three Pointer (1/4 -  3 pt),4
+2024,,,27,0,541,PAM,P010444,D,"COSTELLO, MATTHEW",Valencia Basket,24,33,07:07,,,,Def Rebound (2),4
+2024,,,27,0,543,CLU,P011797,IN,"GUZMAN, KAREL",U-BT Cluj-Napoca,0,33,07:00,,,,In,4
+2024,,,27,0,544,CLU,P010651,OUT,"HERVEY, KEVIN",U-BT Cluj-Napoca,1,33,07:00,,,,Out,4
+2024,,,27,0,546,PAM,P010444,TO,"COSTELLO, MATTHEW",Valencia Basket,24,33,07:00,,,,Turnover (2),4
+2024,,,27,0,548,CLU,P006618,ST,"STEPHENS, DE'SHAWN",U-BT Cluj-Napoca,23,34,06:53,,,,Steal (3),4
+2024,,,27,0,549,CLU,P002820,3FGM,"SALIN, SASU",U-BT Cluj-Napoca,9,34,06:47,81.0,84.0,,Three Pointer (4/9 -  12 pt),4
+2024,,,27,0,550,CLU,P006618,AS,"STEPHENS, DE'SHAWN",U-BT Cluj-Napoca,23,34,06:45,,,,Assist (2),4
+2024,,,27,0,551,PAM,P010042,2FGA,"MONTERO, JEAN",Valencia Basket,8,34,06:26,,,,Missed Two Pointer (1/4 -  11 pt),4
+2024,,,27,0,552,CLU,P013302,D,"SIMPSON, ZAVIER",U-BT Cluj-Napoca,3,34,06:24,,,,Def Rebound (2),4
+2024,,,27,0,553,CLU,P004862,3FGM,"SEELEY, DENNIS",U-BT Cluj-Napoca,11,34,06:19,84.0,84.0,,Three Pointer (2/3 -  13 pt),4
+2024,,,27,0,554,CLU,P013302,AS,"SIMPSON, ZAVIER",U-BT Cluj-Napoca,3,34,06:18,,,,Assist (5),4
+2024,,,27,0,555,PAM,,TOUT,,Valencia Basket,,34,06:18,,,,Time Out (1),4
+2024,,,27,0,556,PAM,P010393,OUT,"PRADILLA, JAIME",Valencia Basket,4,34,06:18,,,,Out,4
+2024,,,27,0,557,PAM,P005356,IN,"LOPEZ-AROSTEGUI, XABI",Valencia Basket,6,34,06:18,,,,In,4
+2024,,,27,0,558,PAM,P010042,OUT,"MONTERO, JEAN",Valencia Basket,8,34,06:18,,,,Out,4
+2024,,,27,0,559,PAM,P004863,IN,"JOVIC, STEFAN",Valencia Basket,16,34,06:18,,,,In,4
+2024,,,27,0,560,PAM,P010444,3FGM,"COSTELLO, MATTHEW",Valencia Basket,24,34,06:02,84.0,87.0,,Three Pointer (2/2 -  8 pt),4
+2024,,,27,0,561,PAM,P005356,AS,"LOPEZ-AROSTEGUI, XABI",Valencia Basket,6,34,06:00,,,,Assist (2),4
+2024,,,27,0,563,CLU,P002820,3FGA,"SALIN, SASU",U-BT Cluj-Napoca,9,35,05:49,,,,Missed Three Pointer (4/10 -  12 pt),4
+2024,,,27,0,564,CLU,P011797,O,"GUZMAN, KAREL",U-BT Cluj-Napoca,0,35,05:42,,,,Off Rebound (2),4
+2024,,,27,0,565,CLU,P011797,TO,"GUZMAN, KAREL",U-BT Cluj-Napoca,0,35,05:42,,,,Turnover (2),4
+2024,,,27,0,566,PAM,P011982,ST,"OJELEYE, SEMI",Valencia Basket,37,35,05:42,,,,Steal (1),4
+2024,,,27,0,567,CLU,P013302,CM,"SIMPSON, ZAVIER",U-BT Cluj-Napoca,3,35,05:42,,,,Foul (4),4
+2024,,,27,0,568,PAM,P011982,RV,"OJELEYE, SEMI",Valencia Basket,37,35,05:42,,,,Foul Drawn (5),4
+2024,,,27,0,569,CLU,P004862,OUT,"SEELEY, DENNIS",U-BT Cluj-Napoca,11,35,05:42,,,,Out,4
+2024,,,27,0,570,CLU,P011801,IN,"RICHARD, PATRICK",U-BT Cluj-Napoca,35,35,05:42,,,,In,4
+2024,,,27,0,571,CLU,P013302,OUT,"SIMPSON, ZAVIER",U-BT Cluj-Napoca,3,35,05:42,,,,Out,4
+2024,,,27,0,572,CLU,P012698,IN,"MOKOKA, ADAM",U-BT Cluj-Napoca,95,35,05:42,,,,In,4
+2024,,,27,0,573,PAM,P010444,2FGA,"COSTELLO, MATTHEW",Valencia Basket,24,35,05:26,,,,Missed Two Pointer (0/1 -  8 pt),4
+2024,,,27,0,574,PAM,P010444,AG,"COSTELLO, MATTHEW",Valencia Basket,24,35,05:26,,,,Shot Rejected (1),4
+2024,,,27,0,575,CLU,P012698,FV,"MOKOKA, ADAM",U-BT Cluj-Napoca,95,35,05:24,,,,Block (1),4
+2024,,,27,0,576,CLU,P002820,D,"SALIN, SASU",U-BT Cluj-Napoca,9,35,05:22,,,,Def Rebound (1),4
+2024,,,27,0,577,CLU,P012698,3FGA,"MOKOKA, ADAM",U-BT Cluj-Napoca,95,35,05:13,,,,Missed Three Pointer (1/2 -  11 pt),4
+2024,,,27,0,578,PAM,P010444,D,"COSTELLO, MATTHEW",Valencia Basket,24,35,05:11,,,,Def Rebound (3),4
+2024,,,27,0,580,CLU,P011797,CM,"GUZMAN, KAREL",U-BT Cluj-Napoca,0,36,04:54,,,,Foul (3),4
+2024,,,27,0,581,PAM,P011982,RV,"OJELEYE, SEMI",Valencia Basket,37,36,04:54,,,,Foul Drawn (6),4
+2024,,,27,0,582,PAM,P011982,FTM,"OJELEYE, SEMI",Valencia Basket,37,36,04:54,84.0,88.0,,Free Throw In (5/5 -  18 pt),4
+2024,,,27,0,583,PAM,P007527,AS,"BADIO, BRANCOU",Valencia Basket,0,36,04:54,,,,Assist (2),4
+2024,,,27,0,584,PAM,P011982,FTM,"OJELEYE, SEMI",Valencia Basket,37,36,04:54,84.0,89.0,,Free Throw In (6/6 -  19 pt),4
+2024,,,27,0,585,PAM,P011982,FTM,"OJELEYE, SEMI",Valencia Basket,37,36,04:54,84.0,90.0,,Free Throw In (7/7 -  20 pt),4
+2024,,,27,0,586,PAM,P006643,IN,"PUERTO, JOSEP",Valencia Basket,2,36,04:54,,,,In,4
+2024,,,27,0,587,PAM,P011982,OUT,"OJELEYE, SEMI",Valencia Basket,37,36,04:54,,,,Out,4
+2024,,,27,0,588,CLU,P012698,2FGM,"MOKOKA, ADAM",U-BT Cluj-Napoca,95,36,04:45,86.0,90.0,,Two Pointer (4/8 -  13 pt),4
+2024,,,27,0,589,PAM,P005356,TO,"LOPEZ-AROSTEGUI, XABI",Valencia Basket,6,36,04:24,,,,Turnover (1),4
+2024,,,27,0,590,CLU,P012698,ST,"MOKOKA, ADAM",U-BT Cluj-Napoca,95,36,04:22,,,,Steal (2),4
+2024,,,27,0,591,CLU,P011797,2FGM,"GUZMAN, KAREL",U-BT Cluj-Napoca,0,36,04:15,88.0,90.0,,Two Pointer (3/4 -  9 pt),4
+2024,,,27,0,594,PAM,P006643,3FGM,"PUERTO, JOSEP",Valencia Basket,2,37,03:47,88.0,93.0,,Three Pointer (1/2 -  3 pt),4
+2024,,,27,0,595,PAM,P004863,AS,"JOVIC, STEFAN",Valencia Basket,16,37,03:47,,,,Assist (7),4
+2024,,,27,0,596,CLU,P011797,OUT,"GUZMAN, KAREL",U-BT Cluj-Napoca,0,37,03:47,,,,Out,4
+2024,,,27,0,597,CLU,P004862,IN,"SEELEY, DENNIS",U-BT Cluj-Napoca,11,37,03:47,,,,In,4
+2024,,,27,0,598,PAM,P010393,IN,"PRADILLA, JAIME",Valencia Basket,4,37,03:47,,,,In,4
+2024,,,27,0,599,PAM,P010444,OUT,"COSTELLO, MATTHEW",Valencia Basket,24,37,03:47,,,,Out,4
+2024,,,27,0,600,CLU,P011801,3FGA,"RICHARD, PATRICK",U-BT Cluj-Napoca,35,37,03:30,,,,Missed Three Pointer (1/3 -  6 pt),4
+2024,,,27,0,601,PAM,P010393,D,"PRADILLA, JAIME",Valencia Basket,4,37,03:26,,,,Def Rebound (3),4
+2024,,,27,0,602,PAM,,TO,,Valencia Basket,,37,03:21,,,,Turnover (3),4
+2024,,,27,0,603,CLU,P012698,2FGM,"MOKOKA, ADAM",U-BT Cluj-Napoca,95,37,03:11,90.0,93.0,,Two Pointer (5/9 -  15 pt),4
+2024,,,27,0,605,PAM,P006643,3FGM,"PUERTO, JOSEP",Valencia Basket,2,38,02:51,90.0,96.0,,Three Pointer (2/3 -  6 pt),4
+2024,,,27,0,606,PAM,P004863,AS,"JOVIC, STEFAN",Valencia Basket,16,38,02:49,,,,Assist (8),4
+2024,,,27,0,608,CLU,P011801,TO,"RICHARD, PATRICK",U-BT Cluj-Napoca,35,38,02:31,,,,Turnover (1),4
+2024,,,27,0,609,PAM,P004863,ST,"JOVIC, STEFAN",Valencia Basket,16,38,02:31,,,,Steal (2),4
+2024,,,27,0,610,PAM,P010393,2FGM,"PRADILLA, JAIME",Valencia Basket,4,38,02:31,90.0,98.0,,Two Pointer (4/4 -  11 pt),4
+2024,,,27,0,611,PAM,P004863,AS,"JOVIC, STEFAN",Valencia Basket,16,38,02:31,,,,Assist (9),4
+2024,,,27,0,612,CLU,,TOUT,,U-BT Cluj-Napoca,,38,02:31,,,,Time Out (2),4
+2024,,,27,0,613,CLU,P013302,IN,"SIMPSON, ZAVIER",U-BT Cluj-Napoca,3,38,02:31,,,,In,4
+2024,,,27,0,614,CLU,P011801,OUT,"RICHARD, PATRICK",U-BT Cluj-Napoca,35,38,02:31,,,,Out,4
+2024,,,27,0,615,PAM,P007527,OUT,"BADIO, BRANCOU",Valencia Basket,0,38,02:31,,,,Out,4
+2024,,,27,0,616,PAM,P006643,OUT,"PUERTO, JOSEP",Valencia Basket,2,38,02:31,,,,Out,4
+2024,,,27,0,617,PAM,P010042,IN,"MONTERO, JEAN",Valencia Basket,8,38,02:31,,,,In,4
+2024,,,27,0,618,PAM,P011982,IN,"OJELEYE, SEMI",Valencia Basket,37,38,02:31,,,,In,4
+2024,,,27,0,619,CLU,P006618,2FGM,"STEPHENS, DE'SHAWN",U-BT Cluj-Napoca,23,38,02:06,92.0,98.0,,Two Pointer (7/7 -  17 pt),4
+2024,,,27,0,620,CLU,P013302,AS,"SIMPSON, ZAVIER",U-BT Cluj-Napoca,3,38,02:04,,,,Assist (6),4
+2024,,,27,0,622,PAM,P010042,OF,"MONTERO, JEAN",Valencia Basket,8,39,01:52,,,,Offensive Foul (4),4
+2024,,,27,0,623,PAM,P010042,TO,"MONTERO, JEAN",Valencia Basket,8,39,01:52,,,,Turnover (3),4
+2024,,,27,0,624,CLU,P002820,RV,"SALIN, SASU",U-BT Cluj-Napoca,9,39,01:52,,,,Foul Drawn (2),4
+2024,,,27,0,625,CLU,P004862,2FGM,"SEELEY, DENNIS",U-BT Cluj-Napoca,11,39,01:33,94.0,98.0,,Two Pointer (4/7 -  15 pt),4
+2024,,,27,0,626,PAM,P005356,TO,"LOPEZ-AROSTEGUI, XABI",Valencia Basket,6,39,01:12,,,,Turnover (2),4
+2024,,,27,0,627,CLU,P006618,ST,"STEPHENS, DE'SHAWN",U-BT Cluj-Napoca,23,39,01:10,,,,Steal (4),4
+2024,,,27,0,628,CLU,P006618,TO,"STEPHENS, DE'SHAWN",U-BT Cluj-Napoca,23,39,01:09,,,,Turnover (1),4
+2024,,,27,0,629,PAM,P011982,ST,"OJELEYE, SEMI",Valencia Basket,37,39,01:09,,,,Steal (2),4
+2024,,,27,0,630,CLU,P006618,CM,"STEPHENS, DE'SHAWN",U-BT Cluj-Napoca,23,39,01:09,,,,Foul (4),4
+2024,,,27,0,631,PAM,P011982,RV,"OJELEYE, SEMI",Valencia Basket,37,39,01:09,,,,Foul Drawn (7),4
+2024,,,27,0,632,PAM,P011982,FTM,"OJELEYE, SEMI",Valencia Basket,37,39,01:09,94.0,99.0,,Free Throw In (8/8 -  21 pt),4
+2024,,,27,0,633,PAM,P011982,FTM,"OJELEYE, SEMI",Valencia Basket,37,39,01:09,94.0,100.0,,Free Throw In (9/9 -  22 pt),4
+2024,,,27,0,634,CLU,P012698,TO,"MOKOKA, ADAM",U-BT Cluj-Napoca,95,39,01:04,,,,Turnover (2),4
+2024,,,27,0,635,PAM,P005356,ST,"LOPEZ-AROSTEGUI, XABI",Valencia Basket,6,39,01:03,,,,Steal (2),4
+2024,,,27,0,637,PAM,P010042,2FGM,"MONTERO, JEAN",Valencia Basket,8,40,00:59,94.0,102.0,,Two Pointer (2/5 -  13 pt),4
+2024,,,27,0,651,PAM,P011982,AS,"OJELEYE, SEMI",Valencia Basket,37,40,00:59,,,,Assist (1),4
+2024,,,27,0,638,PAM,P007527,IN,"BADIO, BRANCOU",Valencia Basket,0,40,00:59,,,,In,4
+2024,,,27,0,639,PAM,P011982,OUT,"OJELEYE, SEMI",Valencia Basket,37,40,00:59,,,,Out,4
+2024,,,27,0,640,PAM,P004863,CM,"JOVIC, STEFAN",Valencia Basket,16,40,00:45,,,,Foul (2),4
+2024,,,27,0,641,CLU,P012698,RV,"MOKOKA, ADAM",U-BT Cluj-Napoca,95,40,00:45,,,,Foul Drawn (3),4
+2024,,,27,0,642,CLU,P004862,3FGA,"SEELEY, DENNIS",U-BT Cluj-Napoca,11,40,00:45,,,,Missed Three Pointer (2/4 -  15 pt),4
+2024,,,27,0,643,PAM,P005356,D,"LOPEZ-AROSTEGUI, XABI",Valencia Basket,6,40,00:45,,,,Def Rebound (5),4
+2024,,,27,0,644,PAM,P010042,3FGA,"MONTERO, JEAN",Valencia Basket,8,40,00:21,,,,Missed Three Pointer (3/5 -  13 pt),4
+2024,,,27,0,645,CLU,P013302,D,"SIMPSON, ZAVIER",U-BT Cluj-Napoca,3,40,00:19,,,,Def Rebound (3),4
+2024,,,27,0,646,CLU,P013302,2FGM,"SIMPSON, ZAVIER",U-BT Cluj-Napoca,3,40,00:14,96.0,102.0,,Two Pointer (5/7 -  13 pt),4
+2024,,,27,0,647,PAM,P005356,3FGM,"LOPEZ-AROSTEGUI, XABI",Valencia Basket,6,40,00:00,96.0,105.0,,Three Pointer (6/8 -  22 pt),4
+2024,,,27,0,648,PAM,P010042,AS,"MONTERO, JEAN",Valencia Basket,8,40,00:00,,,,Assist (3),4
+2024,,,27,0,655,,,EG,,,,41,,,,,End Game,4
 2024,,,28,0,2,,,BP,,,,1,,,,,Begin Period,1
-2024,,,28,0,3,VNC,,JB,,Umana Reyer Venice,,1,09:59,,,,Jump Ball (1),1
+2024,,,28,0,3,VNC,,JB,,Umana Reyer Venice,,1,09:59,,,,,1
 2024,,,28,0,4,VNC,P009400,OF,"CASARIN, DAVIDE",Umana Reyer Venice,7,1,09:59,,,,Offensive Foul (1),1
 2024,,,28,0,5,VNC,P009400,TO,"CASARIN, DAVIDE",Umana Reyer Venice,7,1,09:59,,,,Turnover (1),1
 2024,,,28,0,6,BOU,P013266,RV,"CASTANEDA, XAVIER",Cosea JL Bourg-en-Bresse,13,1,09:59,,,,Foul Drawn (1),1

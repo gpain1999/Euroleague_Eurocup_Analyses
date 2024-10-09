@@ -60,15 +60,15 @@ def recuperation_pbp(competition, season, data_dir, first_gamecode=None, last_ga
         # Si first_gamecode et last_gamecode sont fournis, itérer sur la plage de gamecodes
         if first_gamecode is not None and last_gamecode is not None:
             for gc in range(first_gamecode, last_gamecode + 1):
-                print(gc)
                 # Vérifier si _pbp contient déjà des lignes pour ce gamecode
                 if not (_pbp['Gamecode'] == gc).any():
                     # Récupérer les données pour le gamecode spécifique
                     try : 
                         sub = pbp_.get_game_play_by_play_data(season=season, gamecode=gc)
-                        
-                        # Concaténer les nouvelles données avec _pbp
-                        _pbp = pd.concat([_pbp, sub], ignore_index=True)
+                        print(sub["PLAYINFO"].values)
+                        if "End Game" in sub["PLAYINFO"].values:
+                            # Concaténer les nouvelles données avec _pbp
+                            _pbp = pd.concat([_pbp, sub], ignore_index=True)
                     except :
                         pass
                 else :
@@ -162,10 +162,13 @@ def recuperation_gs(competition, season, data_dir, first_gamecode=None, last_gam
                 if not (_gs['Gamecode'] == gc).any():
                     # Récupérer les données pour le gamecode spécifique
                     try : 
-                        sub = gs_.get_game_report(season=season, gamecode=gc)
-                        
+                        sub = gs_.get_game_report(season=season, game_code=gc)
+                        if sub["local.score"].to_list()[0] == 0 :
+
+                            pass
+                        else :
                         # Concaténer les nouvelles données avec _gs
-                        _gs = pd.concat([_gs, sub], ignore_index=True)
+                            _gs = pd.concat([_gs, sub], ignore_index=True)
                     except :
                         pass
         
