@@ -76,8 +76,8 @@ selected_fields = st.sidebar.multiselect(
     default=["PLAYER", "TEAM"]
 )
 
-mode = st.sidebar.selectbox("Mode", options=["CUMULATED", "AVERAGE"], index=0)
-percent = st.sidebar.selectbox("Pourcentage ou Bruts", options=["MADE", "PERCENT"], index=0)
+mode = st.sidebar.selectbox("Méthode d'Agrégation", options=["CUMULATED", "AVERAGE"], index=0)
+percent = st.sidebar.selectbox("Afficahge des tirs", options=["MADE", "PERCENT"], index=0)
 
 # Mise à jour automatique des résultats
 if not df.empty:
