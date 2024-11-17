@@ -7,8 +7,8 @@ from PIL import Image
 
 season = 2024
 competition = "euroleague"
-data_dir = os.path.join(os.path.dirname(__file__), 'datas')
-sys.path.append(os.path.join(os.path.dirname(__file__), 'fonctions'))
+data_dir = os.path.join(os.path.dirname(__file__), '../datas')
+sys.path.append(os.path.join(os.path.dirname(__file__), '../fonctions'))
 
 
 import fonctions as f
