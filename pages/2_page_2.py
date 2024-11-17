@@ -7,8 +7,8 @@ from PIL import Image
 
 season = 2024
 competition = "euroleague"
-data_dir = os.path.join(os.path.dirname(__file__), '../datas')
-sys.path.append(os.path.join(os.path.dirname(__file__), '../fonctions'))
+data_dir = os.path.join(os.path.dirname(__file__), 'datas')
+sys.path.append(os.path.join(os.path.dirname(__file__), 'fonctions'))
 
 
 import fonctions as f
@@ -60,7 +60,7 @@ else:
 
 
 # Configuration de l'interface utilisateur
-st.title("Data Euroleague - Page 2")
+st.title("+/- Analysis - by gpain1999")
 
 # Paramètres interactifs
 st.sidebar.header("Paramètres")
