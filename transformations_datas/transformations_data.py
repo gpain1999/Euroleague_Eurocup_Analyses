@@ -7,7 +7,7 @@ import warnings
 warnings.simplefilter(action='ignore', category=FutureWarning)
 
 season = 2024
-competition = "eurocup"
+competition = "euroleague"
 data_dir = os.path.join(os.path.dirname(__file__), '..', 'datas')
 
 f.recup_idplayers(data_dir,season,competition)
