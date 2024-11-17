@@ -121,7 +121,10 @@ def analyse_io_2(data_dir,competition,season,num_players,min_round,max_round,COD
     result = result.drop(columns=[f'ID{i}' for i in range(1,num_players+1)],axis = 1)
 
     result.insert(num_players+1,"PERCENT_IN",((result["TIME_ON"]/result["TIME_TEAM"]*100).round(0)).astype(int))
-    result.insert(num_players+6,"PERCENT_OUT",((result["TIME_OFF"]/result["TIME_TEAM"]*100).round(0)).astype(int))
+    result.insert(num_players+6,"DELTA_IN",((result["OFF_ON_10"]-result["DEF_ON_10"]).round(2)))
+
+    result.insert(num_players+7,"PERCENT_OUT",((result["TIME_OFF"]/result["TIME_TEAM"]*100).round(0)).astype(int))
+    result.insert(num_players+12,"DELTA_OUT",((result["OFF_OFF_10"]-result["DEF_OFF_10"]).round(2)))
 
     if selected_players != [] :
         result = result[result[[f"P{i+1}" for i in range(num_players)]].apply(lambda row: all(joueur in row.values for joueur in selected_players), axis=1)]

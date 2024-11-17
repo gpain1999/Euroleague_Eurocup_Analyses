@@ -13,6 +13,8 @@ sys.path.append(os.path.join(os.path.dirname(__file__), '../fonctions'))
 
 import fonctions as f
 
+players = pd.read_csv(os.path.join(data_dir, f"{competition}_idplayers_{season}.csv"))
+
 df = f.analyse_io_2(data_dir = data_dir,
                    competition = competition,
                    season = season,
@@ -76,11 +78,9 @@ CODETEAM = st.sidebar.multiselect("Équipes Sélectionnées", options=df["TEAM"]
 # Mise à jour dynamique des joueurs en fonction des équipes sélectionnées
 if CODETEAM:
 
-    available_players = pd.unique(df[df["TEAM"].isin(CODETEAM)][[f"P{i+1}" for i in range(num_players)]].values.ravel())
-
+    available_players = players[players["CODETEAM"].isin(CODETEAM)]["PLAYER"].unique()
 else:
-    # Extraire les joueurs uniques uniquement des colonnes existantes
-    available_players = pd.unique(df[[f"P{i+1}" for i in range(num_players)]].values.ravel())
+    available_players = players["PLAYER"].unique()
 
 selected_players = st.sidebar.multiselect("Joueurs Sélectionnés", options=available_players)
 
