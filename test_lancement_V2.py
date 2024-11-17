@@ -58,7 +58,7 @@ else:
     st.warning(f"L'image {image_path} est introuvable. Veuillez vérifier le chemin.")
 
 # Configuration de l'interface utilisateur
-st.title("Interface Interactive - Analyse des Données")
+st.title("Data Euroleague - by gpain1999")
 
 # Paramètres interactifs
 st.sidebar.header("Paramètres")
@@ -91,7 +91,7 @@ if not df.empty:
         percent=percent
     )
 
-    st.write("### Résultats")
+    st.write("### Tableau")
     st.dataframe(result_df, height=700)  # Augmenter la hauteur du tableau
 else:
     st.error("Les données ne sont pas chargées. Veuillez vérifier votre fichier source.")
