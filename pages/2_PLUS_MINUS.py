@@ -16,9 +16,9 @@ import fonctions as f
 df = f.analyse_io_2(data_dir = data_dir,
                    competition = competition,
                    season = season,
-                   num_players = 2,
+                   num_players = 3,
                     min_round = 1,
-                    max_round = 10,
+                    max_round = 34,
                    CODETEAM = [],
                    selected_players = [],
                    min_percent_in = 0)
