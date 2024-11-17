@@ -19,11 +19,11 @@ import warnings
 import numpy as np
 warnings.filterwarnings("ignore")
 
-import tkinter as tk
-from tkinter import ttk
+# import tkinter as tk
+# from tkinter import ttk
 
-import tkinter as tk
-from tkinter import ttk
+# import tkinter as tk
+# from tkinter import ttk
 import pandas as pd
 import threading
 
