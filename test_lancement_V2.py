@@ -66,9 +66,19 @@ st.sidebar.header("Paramètres")
 min_round = st.sidebar.number_input("Round Minimum", min_value=1, value=1)
 max_round = st.sidebar.number_input("Round Maximum", min_value=min_round, value=df["ROUND"].max() if not df.empty else 1)
 
+# Filtrage dynamique des équipes
 selected_teams = st.sidebar.multiselect("Équipes Sélectionnées", options=df["TEAM"].unique() if not df.empty else [])
+
+# Mise à jour dynamique des joueurs en fonction des équipes sélectionnées
+if selected_teams:
+    available_players = df[df["TEAM"].isin(selected_teams)]["PLAYER"].unique()
+else:
+    available_players = df["PLAYER"].unique()
+
+selected_players = st.sidebar.multiselect("Joueurs Sélectionnés", options=available_players)
+
+# Autres paramètres
 selected_opponents = st.sidebar.multiselect("Adversaires Sélectionnés", options=df["OPPONENT"].unique() if not df.empty else [])
-selected_players = st.sidebar.multiselect("Joueurs Sélectionnés", options=df["PLAYER"].unique() if not df.empty else [])
 
 selected_fields = st.sidebar.multiselect(
     "Champs Sélectionnés",
@@ -77,7 +87,7 @@ selected_fields = st.sidebar.multiselect(
 )
 
 mode = st.sidebar.selectbox("Méthode d'Agrégation", options=["CUMULATED", "AVERAGE"], index=0)
-percent = st.sidebar.selectbox("Afficahge des tirs", options=["MADE", "PERCENT"], index=0)
+percent = st.sidebar.selectbox("Affichage des tirs", options=["MADE", "PERCENT"], index=0)
 
 # Mise à jour automatique des résultats
 if not df.empty:
