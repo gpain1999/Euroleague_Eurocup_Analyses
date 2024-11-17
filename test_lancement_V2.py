@@ -11,6 +11,7 @@ competition = "euroleague"
 data_dir = os.path.join(os.path.dirname(__file__), 'datas')
 sys.path.append(os.path.join(os.path.dirname(__file__), 'fonctions'))
 
+
 import fonctions as f
 
 # Charger les données
@@ -24,6 +25,7 @@ df = df[['ROUND', 'NB_GAME', 'TEAM', 'OPPONENT', 'HOME', 'WIN', 'NUMBER', 'PLAYE
 
 # Ajouter une image en haut à droite
 image_path = f"images/{competition}.png"  # Chemin vers l'image
+
 if os.path.exists(image_path):
     # Charger l'image
     img = Image.open(image_path)

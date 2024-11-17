@@ -780,7 +780,7 @@ def recuperation_players_photo2(competition,season,image_dir,data_dir) :
 
     for index, row in df_filtered.iterrows():
 
-        image_player_link = os.path.join(image_dir, f'{competition}_{season}_players\{row["TEAM"]}_{row["PLAYER_ID"]}.png')
+        image_player_link = os.path.join(image_dir, rf'{competition}_{season}_players\{row["TEAM"]}_{row["PLAYER_ID"]}.png')
         url_player = row["LINK"]
         response = requests.get(url_player)
         # Vérifier que la requête est réussie (code 200)
