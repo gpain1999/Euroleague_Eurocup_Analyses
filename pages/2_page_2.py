@@ -4,12 +4,11 @@ import sys
 import os
 from PIL import Image
 
-st.set_page_config(layout="wide")  # Pour une mise en page plus large
 
 season = 2024
 competition = "euroleague"
-data_dir = os.path.join(os.path.dirname(__file__), 'datas')
-sys.path.append(os.path.join(os.path.dirname(__file__), 'fonctions'))
+data_dir = os.path.join(os.path.dirname(__file__), '../datas')
+sys.path.append(os.path.join(os.path.dirname(__file__), '../fonctions'))
 
 
 import fonctions as f
@@ -61,7 +60,7 @@ else:
 
 
 # Configuration de l'interface utilisateur
-st.title("Data Euroleague - by gpain1999")
+st.title("Data Euroleague - Page 2")
 
 # Paramètres interactifs
 st.sidebar.header("Paramètres")
@@ -76,9 +75,12 @@ CODETEAM = st.sidebar.multiselect("Équipes Sélectionnées", options=df["TEAM"]
 
 # Mise à jour dynamique des joueurs en fonction des équipes sélectionnées
 if CODETEAM:
-    available_players = df[df["TEAM"].isin(CODETEAM)]["PLAYER"].unique()
+
+    available_players = pd.unique(df[df["TEAM"].isin(CODETEAM)][[f"P{i+1}" for i in range(num_players)]].values.ravel())
+
 else:
-    available_players = df["PLAYER"].unique()
+    # Extraire les joueurs uniques uniquement des colonnes existantes
+    available_players = pd.unique(df[[f"P{i+1}" for i in range(num_players)]].values.ravel())
 
 selected_players = st.sidebar.multiselect("Joueurs Sélectionnés", options=available_players)
 
@@ -98,7 +100,7 @@ if not df.empty:
                    selected_players = selected_players,
                    min_percent_in = min_percent_in)
 
-    st.write("### Tableau")
+    st.write("### +/- RESULTS")
     st.dataframe(result_df, height=1000,width=2000)  # Augmenter la hauteur du tableau
 else:
     st.error("Les données ne sont pas chargées. Veuillez vérifier votre fichier source.")
