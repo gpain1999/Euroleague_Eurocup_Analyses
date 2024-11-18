@@ -108,6 +108,7 @@ PLAYER_ID = players[(players["CODETEAM"] == TEAM_PLAYER) & (players["PLAYER"] ==
 
 filtered_df = filtered_df.drop(columns=["NB_GAME", "PLAYER", "#", "TEAM"])
 
+
 # Création du graphique avec Plotly Graph Objects
 fig = go.Figure()
 
@@ -219,25 +220,32 @@ with col3:
 # Fonction pour appliquer un style basé sur la colonne WIN
 def highlight_win(row):
     # Appliquer vert si WIN est "YES", rouge sinon, à toutes les colonnes
-    color = 'background-color: green; color: white;' if row["WIN"] == "YES" else 'background-color: red; color: white;'
+    color = 'background-color: green; color: black;' if row["WIN"] == "YES" else 'background-color: red; color: black;'
     return [color for _ in row.index]
 
 
-col1, col2 = st.columns([4, 1])
+filtered_df2 = filtered_df.drop(columns=["WIN"])
+
+# Jointure gauche
+df_resultat = pd.merge(
+    gs_filtered, 
+    filtered_df2, 
+    on='ROUND', 
+    how='left'
+)
+
+# Remplacement des valeurs manquantes par '---'
+df_resultat.fillna('---', inplace=True)
+
+# col1 = st.columns([4])
 
 
-with col1:
+# with col1:
 
-    # Appliquer le style sur le DataFrame
-    styled_df = filtered_df.style.apply(highlight_win, axis=1).format(precision=1)  # Limiter à 1 décimales
+# Appliquer le style sur le DataFrame
+styled_df = df_resultat.style.apply(highlight_win, axis=1).format(precision=1)  # Limiter à 1 décimales
 
-    # Afficher le tableau stylé dans Streamlit
-    st.header("Stats Joueur")
-    st.dataframe(styled_df, use_container_width=True)
-
-with col2:
-
-    gs_styled_df = gs_filtered.style.apply(highlight_win, axis=1)
-    st.header("Resultat Equipe")
-    st.dataframe(gs_styled_df)
+# Afficher le tableau stylé dans Streamlit
+st.header("Stats Joueur")
+st.dataframe(styled_df, use_container_width=True)
 
