@@ -241,8 +241,11 @@ df_resultat = pd.merge(
     how='left'
 )
 
-# Remplacement des valeurs manquantes par '---'
-df_resultat.fillna('---', inplace=True)
+colonnes_a_convertir = ['PM_ON', 'PTS', 'DR', 'OR', 'TR', 'AS', 'ST', 'TO', '1_T', '2_T', '3_T', 'CO', 'FP', 'CF', 'NCF']
+
+# Conversion des colonnes en entier
+df_resultat[colonnes_a_convertir] = df_resultat[colonnes_a_convertir].astype(int)
+
 
 # col1 = st.columns([4])
 
@@ -250,7 +253,7 @@ df_resultat.fillna('---', inplace=True)
 # with col1:
 
 # Appliquer le style sur le DataFrame
-styled_df = df_resultat.style.apply(highlight_win, axis=1).format(precision=1)  # Limiter à 1 décimales
+styled_df = df_resultat.style.apply(highlight_win, axis=1).format(precision=1)  
 
 # Afficher le tableau stylé dans Streamlit
 st.header("Stats Joueur")
