@@ -68,6 +68,9 @@ selected_fields = st.sidebar.multiselect(
 mode = st.sidebar.selectbox("Méthode d'Agrégation", options=["CUMULATED", "AVERAGE"], index=0)
 percent = st.sidebar.selectbox("Affichage des tirs", options=["MADE", "PERCENT"], index=0)
 
+
+
+
 # Mise à jour automatique des résultats
 if not df.empty:
     result_df = f.get_aggregated_data(
@@ -79,6 +82,8 @@ if not df.empty:
         mode=mode,
         percent=percent
     )
+    result_df = result_df.loc[:, (result_df != "---").any(axis=0)]
+
 
     st.write("### Tableau")
     st.dataframe(result_df, height=1000,width=2000)  # Augmenter la hauteur du tableau

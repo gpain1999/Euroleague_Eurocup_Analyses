@@ -53,7 +53,7 @@ min_round = st.sidebar.number_input("Round Minimum", min_value=1, value=1)
 max_round = st.sidebar.number_input("Round Maximum", min_value=min_round, value=34 if not df.empty else 1)
 
 # Filtrage dynamique des équipes
-CODETEAM = st.sidebar.multiselect("Équipes Sélectionnées", options=df["TEAM"].unique() if not df.empty else [])
+CODETEAM = st.sidebar.multiselect("Équipes Sélectionnées", options=sorted(df["TEAM"].unique()) if not df.empty else [])
 
 # Mise à jour dynamique des joueurs en fonction des équipes sélectionnées
 if CODETEAM:
