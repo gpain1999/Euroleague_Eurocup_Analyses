@@ -1,23 +1,24 @@
 import pandas as pd
 
-# Exemple de DataFrame avec des colonnes supplémentaires
+# Exemple de données pour les rounds manquants
 data = {
-    'ID': [1, 2, 3, 4],
-    'P1': ['Gui', 'Alice', 'Leon', 'Gui'],
-    'P2': ['Bob', 'Leon', 'Gui', 'Charlie'],
-    'P3': ['Charlie', 'Gui', 'Alice', 'Leon'],
-    'Score': [10, 20, 15, 30]
+    "ROUND": [1, 2, 3, 4, 6],  # Rounds avec un gap (pas de round 5)
+    "selected_stats": [10, 15, 20, 25, 30],
+    "WIN": ["YES", "NO", "YES", "NO", "YES"],
+    "TIME_ON": [5, 10, 15, 20, 25]
 }
-df = pd.DataFrame(data)
+filtered_df = pd.DataFrame(data)
 
-# Liste des joueurs à rechercher
-joueurs = ["Gui", "Leon"]
+# Calcul de la moyenne glissante en tenant compte des rounds manquants
+def calculate_moving_average(df, column, round_column, window_size=3):
+    moving_avg = []
+    for current_round in df[round_column]:
+        # Filtrer les rounds à inclure dans la moyenne
+        valid_rows = df[(df[round_column] <= current_round) & (df[round_column] > current_round - window_size)]
+        moving_avg.append(valid_rows[column].mean())
+    return moving_avg
 
-# Colonnes à analyser
-colonnes_cibles = ['P1', 'P2', 'P3']
+# Ajout de la colonne "moving_avg"
+filtered_df["moving_avg"] = calculate_moving_average(filtered_df, "selected_stats", "ROUND")
 
-# Filtrer les lignes où au moins un des joueurs est présent dans les colonnes spécifiées
-df_filtre = df[df[colonnes_cibles].apply(lambda row: all(joueur in row.values for joueur in joueurs), axis=1)]
-
-# Résultat
-print(df_filtre)
+print(filtered_df)

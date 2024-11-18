@@ -69,6 +69,7 @@ else:
 selected_players = st.sidebar.selectbox("Joueur Sélectionné", options=sorted(available_players))
 
 selected_stats = st.sidebar.selectbox("Stat Sélectionné", options=["PER","I_PER","PTS","TR","AS","PM_ON"])
+window_size = st.sidebar.number_input("Moyenne glissante", min_value=1,max_value=max_round ,value=3)
 
 
 filtered_df = f.get_aggregated_data(
@@ -102,9 +103,22 @@ PLAYER_ID = players[(players["CODETEAM"] == TEAM_PLAYER) & (players["PLAYER"] ==
 filtered_df = filtered_df.drop(columns=["NB_GAME", "PLAYER", "#", "TEAM"])
 
 
-# Création du graphique avec Plotly Graph Objects
+# Calcul de la moyenne glissante en tenant compte des rounds manquants
+def calculate_moving_average(df, column, round_column, window_size):
+    moving_avg = []
+    for current_round in df[round_column]:
+        # Filtrer les rounds à inclure dans la moyenne
+        valid_rows = df[(df[round_column] <= current_round) & (df[round_column] > current_round - window_size)]
+        moving_avg.append(valid_rows[column].mean())
+    return moving_avg
+
+# Ajout de la colonne "moving_avg"
+filtered_df["moving_avg"] = calculate_moving_average(filtered_df, selected_stats, "ROUND",window_size)
+
+# Création du graphique avec la nouvelle courbe de moyenne glissante
 fig = go.Figure()
 
+# Barres pour les stats
 for i, row in filtered_df.iterrows():
     color = "green" if row["WIN"] == "YES" else "red"
     fig.add_trace(go.Bar(
@@ -115,6 +129,7 @@ for i, row in filtered_df.iterrows():
         showlegend=False
     ))
 
+# Courbe pour les minutes
 fig.add_trace(go.Scatter(
     x=filtered_df["ROUND"],
     y=filtered_df["TIME_ON"],
@@ -122,16 +137,30 @@ fig.add_trace(go.Scatter(
     line=dict(color='blue', width=2),
     marker=dict(size=8, symbol="circle", color="blue"),
     yaxis="y2",
-    showlegend=False
+    showlegend=True,
+    name="Minutes jouées"
 ))
 
+# Nouvelle courbe pour la moyenne glissante
+fig.add_trace(go.Scatter(
+    x=filtered_df["ROUND"],
+    y=filtered_df["moving_avg"],
+    mode="lines+markers",
+    line=dict(color='orange', width=2, dash="dot"),
+    marker=dict(size=8, symbol="square", color="orange"),
+    yaxis="y1",
+    showlegend=True,
+    name=f"Moyenne glissante ({window_size} derniers rounds)"
+))
+
+# Mise à jour du layout
 fig.update_layout(
-    title=f'#{NUMBER_PLAYER} {NAME_PLAYER} ({TEAM_PLAYER}) : {selected_stats}  et Minutes',
+    title=f'#{NUMBER_PLAYER} {NAME_PLAYER} ({TEAM_PLAYER}) : {selected_stats} et Minutes',
     xaxis=dict(
         title="ROUND",
         showgrid=False,
         tickmode='linear',
-        tick0=min_round,
+        tick0=min(filtered_df["ROUND"]),
     ),
     yaxis=dict(
         title=selected_stats,
@@ -148,13 +177,21 @@ fig.update_layout(
         side="right",
         showgrid=False
     ),
-    margin=dict(l=50, r=50, t=50, b=50),
+    legend=dict(
+        orientation="h",  # Horizontal layout
+        yanchor="top",
+        y=-0.3,  # Position sous le graphique
+        xanchor="center",
+        x=0.5  # Centré horizontalement
+    ),
+    margin=dict(l=50, r=50, t=50, b=100),  # Augmenter la marge inférieure pour la légende
 )
+
 
 player_image_path = os.path.join(images_dir, f"{competition}_{season}_players/{TEAM_PLAYER}_{PLAYER_ID}.png")
 team_logo_path = os.path.join(images_dir, f"{competition}_{season}_teams/{TEAM_PLAYER}.png")
 
-col1, col2, col3,col4 = st.columns([1,2, 5, 5])
+col1, col2, col3,col4 = st.columns([1,2, 6, 4])
 
 with col1:
     if os.path.exists(team_logo_path):
@@ -231,7 +268,7 @@ def format_dataframe(df):
         subset=df.columns
     )
 
-filtered_df2 = filtered_df.drop(columns=["WIN","OPPONENT","HOME"])
+filtered_df2 = filtered_df.drop(columns=["WIN","OPPONENT","HOME","moving_avg"])
 
 # Jointure gauche
 df_resultat = pd.merge(
