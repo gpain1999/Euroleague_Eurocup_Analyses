@@ -150,7 +150,7 @@ fig.add_trace(go.Scatter(
     marker=dict(size=8, symbol="square", color="orange"),
     yaxis="y1",
     showlegend=True,
-    name=f"Moyenne glissante ({window_size} derniers rounds)"
+    name=f"{selected_stats} Moyenne glissante ({window_size} derniers rounds)"
 ))
 
 # Mise à jour du layout
