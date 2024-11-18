@@ -25,37 +25,17 @@ df = df[['ROUND', 'NB_GAME', 'TEAM', 'OPPONENT', 'HOME', 'WIN', 'NUMBER', 'PLAYE
 # Ajouter une image en haut à droite
 image_path = f"images/{competition}.png"  # Chemin vers l'image
 
-if os.path.exists(image_path):
-    # Charger l'image
-    img = Image.open(image_path)
+try:
+    image = Image.open(image_path)
+    # Redimensionner l'image (par exemple, largeur de 300 pixels)
+    max_width = 600
+    image = image.resize((max_width, int(image.height * (max_width / image.width))))
 
-    # Ajouter du CSS pour positionner l'image en haut à droite
-    st.markdown(
-        """
-        <style>
-            .top-right-image {
-                position: absolute;
-                top: 10px;
-                right: 100px;
-                z-index: 1;
-            }
-        </style>
-        """,
-        unsafe_allow_html=True
-    )
-
-    # Insérer l'image en utilisant HTML
-    st.markdown(
-        f"""
-        <div class="top-right-image">
-            <img src="data:image/png;base64,{st.image(image_path)}" alt="Logo" width="150">
-        </div>
-        """,
-        unsafe_allow_html=True
-    )
-else:
-    st.warning(f"L'image {image_path} est introuvable. Veuillez vérifier le chemin.")
-
+    # Afficher l'image redimensionnée
+    st.image(image, caption=f"Rapport pour {competition}")
+except FileNotFoundError:
+    st.warning(f"L'image pour {competition} est introuvable à l'emplacement : {image_path}") 
+    
 # Configuration de l'interface utilisateur
 st.title("Stats PER - by gpain1999")
 

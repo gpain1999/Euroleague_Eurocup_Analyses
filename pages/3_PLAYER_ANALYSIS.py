@@ -29,32 +29,18 @@ df = df[['ROUND', 'NB_GAME', 'TEAM', 'OPPONENT', 'HOME', 'WIN', 'NUMBER', 'PLAYE
          'TIME_ON', "I_PER", 'PER', 'PM_ON', 'PTS', 'DR', 'OR', 'TR', 'AS', 'ST', 'CO',
          '1_R', '1_T', '2_R', '2_T', '3_R', '3_T', 'TO', 'FP', 'CF', 'NCF']]
 
-if os.path.exists(image_path):
-    img = Image.open(image_path)
-    st.markdown(
-        """
-        <style>
-            .top-right-image {
-                position: absolute;
-                top: 10px;
-                right: 100px;
-                z-index: 1;
-            }
-        </style>
-        """,
-        unsafe_allow_html=True
-    )
-    st.markdown(
-        f"""
-        <div class="top-right-image">
-            <img src="data:image/png;base64,{st.image(image_path)}" alt="Logo" width="150">
-        </div>
-        """,
-        unsafe_allow_html=True
-    )
-else:
-    st.warning(f"L'image {image_path} est introuvable. Veuillez vérifier le chemin.")
+try:
+    image = Image.open(image_path)
+    # Redimensionner l'image (par exemple, largeur de 300 pixels)
+    max_width = 600
+    image = image.resize((max_width, int(image.height * (max_width / image.width))))
 
+    # Afficher l'image redimensionnée
+    st.image(image, caption=f"Rapport pour {competition}")
+except FileNotFoundError:
+    st.warning(f"L'image pour {competition} est introuvable à l'emplacement : {image_path}") 
+
+    
 st.title("Analyse de joueur ")
 
 # Remplir les trous dans ROUND
@@ -100,6 +86,9 @@ gs_filtered['WIN'] = gs_filtered.apply(lambda row: 'YES' if
                      (row['ROAD'] == CODETEAM and row['SL'] < row['SR']) 
                      else 'NO', axis=1)
 
+gs_filtered['OPPONENT'] = gs_filtered.apply(lambda row: row['LOCAL'] if 
+                     (row['ROAD'] == CODETEAM)
+                     else row['ROAD'], axis=1)
 
 NAME_PLAYER = filtered_df["PLAYER"].to_list()[0]
 NUMBER_PLAYER = filtered_df["#"].to_list()[0]
@@ -220,11 +209,11 @@ with col3:
 # Fonction pour appliquer un style basé sur la colonne WIN
 def highlight_win(row):
     # Appliquer vert si WIN est "YES", rouge sinon, à toutes les colonnes
-    color = 'background-color: green; color: black;' if row["WIN"] == "YES" else 'background-color: red; color: black;'
+    color = 'background-color: #CCFFCC; color: black;' if row["WIN"] == "YES" else 'background-color: #FFCCCC; color: black;'
     return [color for _ in row.index]
 
 
-filtered_df2 = filtered_df.drop(columns=["WIN"])
+filtered_df2 = filtered_df.drop(columns=["WIN","OPPONENT"])
 
 # Jointure gauche
 df_resultat = pd.merge(
