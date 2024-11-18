@@ -241,14 +241,12 @@ df_resultat = pd.merge(
     how='left'
 )
 
-print(df_resultat.dtypes)
 
 colonnes_a_convertir = ['PM_ON', 'PTS', 'DR', 'OR', 'TR', 'AS', 'ST', 'TO', '1_T', '2_T', '3_T', 'CO', 'FP', 'CF', 'NCF']
 
 # Conversion en type Int64 (supporte les NA)
 df_resultat[colonnes_a_convertir] = df_resultat[colonnes_a_convertir].astype('Int64')
 
-print(df_resultat.dtypes)
 
 # Appliquer le style sur le DataFrame
 styled_df = df_resultat.style.apply(highlight_win, axis=1).format(precision=1)  
