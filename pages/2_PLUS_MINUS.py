@@ -62,7 +62,7 @@ if CODETEAM:
 else:
     available_players = players["PLAYER"].unique()
 
-selected_players = st.sidebar.multiselect("Joueurs Sélectionnés", options=available_players)
+selected_players = st.sidebar.multiselect("Joueurs Sélectionnés", options=sorted(available_players))
 
 min_percent_in = st.sidebar.slider("Time percent min", min_value=0, max_value=100, value=0)
 

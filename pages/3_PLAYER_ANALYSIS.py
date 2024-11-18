@@ -58,7 +58,7 @@ selected_range = st.sidebar.slider(
 )
 
 # Filtrage dynamique des équipes
-CODETEAM = st.sidebar.selectbox("Équipe Sélectionnée", options=df["TEAM"].unique() if not df.empty else [])
+CODETEAM = st.sidebar.selectbox("Équipe Sélectionnée", options=sorted(df["TEAM"].unique()) if not df.empty else [])
 
 # Mise à jour dynamique des joueurs en fonction des équipes sélectionnées
 if CODETEAM:
@@ -66,7 +66,7 @@ if CODETEAM:
 else:
     available_players = players["PLAYER"].unique()
 
-selected_players = st.sidebar.selectbox("Joueur Sélectionné", options=available_players)
+selected_players = st.sidebar.selectbox("Joueur Sélectionné", options=sorted(available_players))
 
 selected_stats = st.sidebar.selectbox("Stat Sélectionné", options=["PER","I_PER","PTS","TR","AS","PM_ON"])
 
@@ -210,12 +210,26 @@ with col4:
     st.header(f"Boxplots de {selected_stats}")
     st.plotly_chart(box_fig, use_container_width=True)
 
-# Fonction pour appliquer un style basé sur la colonne WIN
 def highlight_win(row):
-    # Appliquer vert si WIN est "YES", rouge sinon, à toutes les colonnes
+    # Appliquer vert si WIN est "YES", rouge sinon
     color = 'background-color: #CCFFCC; color: black;' if row["WIN"] == "YES" else 'background-color: #FFCCCC; color: black;'
     return [color for _ in row.index]
 
+# Fonction pour appliquer un format conditionnel par colonne
+def format_columns(value, col):
+    if isinstance(value, (int, float)):  # Vérifie si la valeur est numérique
+        if col in ["PER", "I_PER", "TIME_ON"]:  # Colonnes avec 1 chiffre après la virgule
+            return f"{value:.1f}"
+        else:  # Autres colonnes numériques avec 0 chiffre après la virgule
+            return f"{value:.0f}"
+    return value  # Ne change pas les valeurs non numériques (str)
+
+# Appliquer un format par colonne au DataFrame stylisé
+def format_dataframe(df):
+    return df.style.apply(highlight_win, axis=1).format(
+        lambda x, col: format_columns(x, col),
+        subset=df.columns
+    )
 
 filtered_df2 = filtered_df.drop(columns=["WIN","OPPONENT","HOME"])
 
