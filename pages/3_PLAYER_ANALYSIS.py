@@ -41,7 +41,7 @@ except FileNotFoundError:
     st.warning(f"L'image pour {competition} est introuvable à l'emplacement : {image_path}") 
 
     
-st.title("Analyse de joueur ")
+st.title("Player Analysis - by gpain1999 ")
 
 # Remplir les trous dans ROUND
 min_round, max_round = df["ROUND"].min(), df["ROUND"].max()
@@ -68,7 +68,7 @@ else:
 
 selected_players = st.sidebar.selectbox("Joueur Sélectionné", options=available_players)
 
-selected_stats = st.sidebar.selectbox("Stat Sélectionné", options=["PER","I_PER","PTS","TR","AS"])
+selected_stats = st.sidebar.selectbox("Stat Sélectionné", options=["PER","I_PER","PTS","TR","AS","PM_ON"])
 
 
 filtered_df = f.get_aggregated_data(
@@ -89,6 +89,10 @@ gs_filtered['WIN'] = gs_filtered.apply(lambda row: 'YES' if
 gs_filtered['OPPONENT'] = gs_filtered.apply(lambda row: row['LOCAL'] if 
                      (row['ROAD'] == CODETEAM)
                      else row['ROAD'], axis=1)
+
+gs_filtered['HOME'] = gs_filtered.apply(lambda row: 'NO' if 
+                     (row['ROAD'] == CODETEAM)
+                     else 'YES', axis=1)
 
 NAME_PLAYER = filtered_df["PLAYER"].to_list()[0]
 NUMBER_PLAYER = filtered_df["#"].to_list()[0]
@@ -150,26 +154,26 @@ fig.update_layout(
 player_image_path = os.path.join(images_dir, f"{competition}_{season}_players/{TEAM_PLAYER}_{PLAYER_ID}.png")
 team_logo_path = os.path.join(images_dir, f"{competition}_{season}_teams/{TEAM_PLAYER}.png")
 
-col1, col2, col3 = st.columns([1, 3, 3])
+col1, col2, col3,col4 = st.columns([1,2, 5, 5])
 
 with col1:
-    if os.path.exists(player_image_path):
-        st.image(player_image_path, caption=f"#{NUMBER_PLAYER} {NAME_PLAYER}", width=150)
-    else:
-        st.warning(f"Image introuvable pour le joueur : {NAME_PLAYER}")
-
     if os.path.exists(team_logo_path):
-        st.image(team_logo_path, caption=f"Équipe : {TEAM_PLAYER}", width=150)
+        st.image(team_logo_path, caption=f"Équipe : {TEAM_PLAYER}", width=100)
     else:
         st.warning(f"Logo introuvable pour l'équipe : {TEAM_PLAYER}")
 
-with col2:
-    st.plotly_chart(fig, use_container_width=True)
 
-
+with col2 :
+    if os.path.exists(player_image_path):
+        st.image(player_image_path, caption=f"#{NUMBER_PLAYER} {NAME_PLAYER}", width=250)
+    else:
+        st.warning(f"Image introuvable pour le joueur : {NAME_PLAYER}")
 
 
 with col3:
+    st.plotly_chart(fig, use_container_width=True)
+
+with col4:
     # Création des boxplots avec Plotly Graph Objects
     box_fig = go.Figure()
 
@@ -213,7 +217,7 @@ def highlight_win(row):
     return [color for _ in row.index]
 
 
-filtered_df2 = filtered_df.drop(columns=["WIN","OPPONENT"])
+filtered_df2 = filtered_df.drop(columns=["WIN","OPPONENT","HOME"])
 
 # Jointure gauche
 df_resultat = pd.merge(
