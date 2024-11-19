@@ -129,7 +129,7 @@ def analyse_io_2(data_dir,competition,season,num_players,min_round,max_round,COD
     if selected_players != [] :
         result = result[result[[f"P{i+1}" for i in range(num_players)]].apply(lambda row: all(joueur in row.values for joueur in selected_players), axis=1)]
 
-    result = result[result["PERCENT_IN"]>=min_percent_in]
+    result = result[result["PERCENT_ON"]>=min_percent_in]
     return result.reset_index(drop = True)
 
 
