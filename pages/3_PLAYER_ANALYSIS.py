@@ -71,6 +71,8 @@ selected_players = st.sidebar.selectbox("Joueur Sélectionné", options=sorted(a
 selected_stats = st.sidebar.selectbox("Stat Sélectionné", options=["PER","I_PER","PTS","TR","AS","PM_ON"])
 window_size = st.sidebar.number_input("Moyenne glissante", min_value=1,max_value=max_round ,value=3)
 
+min_percent_in = st.sidebar.slider("Time percent min for +/-", min_value=0, max_value=100, value=0)
+
 
 filtered_df = f.get_aggregated_data(
     df=df, min_round=selected_range[0], max_round=selected_range[1],
@@ -252,21 +254,7 @@ def highlight_win(row):
     color = 'background-color: #CCFFCC; color: black;' if row["WIN"] == "YES" else 'background-color: #FFCCCC; color: black;'
     return [color for _ in row.index]
 
-# Fonction pour appliquer un format conditionnel par colonne
-def format_columns(value, col):
-    if isinstance(value, (int, float)):  # Vérifie si la valeur est numérique
-        if col in ["PER", "I_PER", "TIME_ON"]:  # Colonnes avec 1 chiffre après la virgule
-            return f"{value:.1f}"
-        else:  # Autres colonnes numériques avec 0 chiffre après la virgule
-            return f"{value:.0f}"
-    return value  # Ne change pas les valeurs non numériques (str)
 
-# Appliquer un format par colonne au DataFrame stylisé
-def format_dataframe(df):
-    return df.style.apply(highlight_win, axis=1).format(
-        lambda x, col: format_columns(x, col),
-        subset=df.columns
-    )
 
 filtered_df2 = filtered_df.drop(columns=["WIN","OPPONENT","HOME","moving_avg"])
 
@@ -292,3 +280,35 @@ styled_df = df_resultat.style.apply(highlight_win, axis=1).format(precision=1)
 st.header("Stats Joueur")
 st.dataframe(styled_df, use_container_width=True)
 
+
+
+result_pm = f.analyse_io_2(data_dir = data_dir,
+                competition = competition,
+                season = season,
+                num_players = 2,
+                min_round = min_round,
+                max_round = max_round,
+                CODETEAM = [CODETEAM],
+                selected_players = [selected_players],
+                min_percent_in = min_percent_in)
+
+result_pm['P2'] = result_pm.apply(lambda row: row['P2'] if 
+                     (row['P1'] == selected_players)
+                     else row['P1'], axis=1)
+
+result_pm = result_pm.drop(columns = ["P1","TEAM","TIME_TEAM","PM_TEAM","OFF_TEAM_10","DEF_TEAM_10"])
+
+def style_pm_on(value):
+    if value > 0:
+        return "background-color: #CCFFCC;color: black;"
+    elif value < 0:
+        return "background-color: #FFCCCC;color: black;"
+    else:
+        return "background-color: #FFFFFF;color: black;"
+
+# Apply styling
+styled_result_pm = result_pm.style.applymap(style_pm_on, subset=["PM_ON"]).format(precision=2) 
+
+
+st.header("Duo +/-")
+st.dataframe(styled_result_pm,height=500, use_container_width=True)
