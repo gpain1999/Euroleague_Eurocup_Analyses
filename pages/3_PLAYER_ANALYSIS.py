@@ -307,8 +307,8 @@ def style_pm_on(value):
         return "background-color: #FFFFFF;color: black;"
 
 # Apply styling
-styled_result_pm = result_pm.style.applymap(style_pm_on, subset=["PM_ON"]).format(precision=2) 
+styled_result_pm = result_pm.style.applymap(style_pm_on, subset=["PM_ON", "DELTA_IN","PM_OFF","DELTA_OFF"]).format(precision=2) 
 
 
 st.header("Duo +/-")
-st.dataframe(styled_result_pm,height=500, use_container_width=True)
+st.dataframe(styled_result_pm,height=45*len(result_pm), use_container_width=True)
