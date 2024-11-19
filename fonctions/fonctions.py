@@ -120,8 +120,8 @@ def analyse_io_2(data_dir,competition,season,num_players,min_round,max_round,COD
 
     result = result.drop(columns=[f'ID{i}' for i in range(1,num_players+1)],axis = 1)
 
-    result.insert(num_players+1,"PERCENT_IN",((result["TIME_ON"]/result["TIME_TEAM"]*100).round(1)))
-    result.insert(num_players+6,"DELTA_IN",((result["OFF_ON_10"]-result["DEF_ON_10"]).round(2)))
+    result.insert(num_players+1,"PERCENT_ON",((result["TIME_ON"]/result["TIME_TEAM"]*100).round(1)))
+    result.insert(num_players+6,"DELTA_ON",((result["OFF_ON_10"]-result["DEF_ON_10"]).round(2)))
 
     result.insert(num_players+7,"PERCENT_OFF",((result["TIME_OFF"]/result["TIME_TEAM"]*100).round(1)))
     result.insert(num_players+12,"DELTA_OFF",((result["OFF_OFF_10"]-result["DEF_OFF_10"]).round(2)))
