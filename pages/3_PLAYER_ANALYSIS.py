@@ -190,65 +190,6 @@ fig.update_layout(
 )
 
 
-player_image_path = os.path.join(images_dir, f"{competition}_{season}_players/{TEAM_PLAYER}_{PLAYER_ID}.png")
-team_logo_path = os.path.join(images_dir, f"{competition}_{season}_teams/{TEAM_PLAYER}.png")
-
-col1, col2, col3,col4 = st.columns([1,2, 6, 4])
-
-with col1:
-    if os.path.exists(team_logo_path):
-        st.image(team_logo_path, caption=f"Équipe : {TEAM_PLAYER}", width=100)
-    else:
-        st.warning(f"Logo introuvable pour l'équipe : {TEAM_PLAYER}")
-
-
-with col2 :
-    if os.path.exists(player_image_path):
-        st.image(player_image_path, caption=f"#{NUMBER_PLAYER} {NAME_PLAYER}", width=250)
-    else:
-        st.warning(f"Image introuvable pour le joueur : {NAME_PLAYER}")
-
-
-with col3:
-    st.plotly_chart(fig, use_container_width=True)
-
-with col4:
-    # Création des boxplots avec Plotly Graph Objects
-    box_fig = go.Figure()
-
-    # Boxplot global pour PER
-    box_fig.add_trace(go.Box(
-        y=filtered_df[selected_stats],
-        name="Global",
-        marker_color="blue"
-    ))
-
-    # Boxplots pour chaque modalité de WIN
-    for win_status in filtered_df["WIN"].unique():
-        box_fig.add_trace(go.Box(
-            y=filtered_df[filtered_df["WIN"] == win_status][selected_stats],
-            name=f"WIN = {win_status}",
-            marker_color="green" if win_status == "YES" else "red"
-        ))
-
-    # Configuration du layout des boxplots
-    box_fig.update_layout(
-        title=f"Distribution de {selected_stats} (Global et par resultat)",
-        yaxis=dict(
-            title=selected_stats,
-            showgrid=True
-        ),
-        xaxis=dict(
-            title="Catégories",
-            showgrid=False
-        ),
-        margin=dict(l=50, r=50, t=50, b=50)
-    )
-
-    # Affichage des boxplots
-    st.header(f"Boxplots de {selected_stats}")
-    st.plotly_chart(box_fig, use_container_width=True)
-
 def highlight_win(row):
     # Appliquer vert si WIN est "YES", rouge sinon
     color = 'background-color: #CCFFCC; color: black;' if row["WIN"] == "YES" else 'background-color: #FFCCCC; color: black;'
@@ -320,8 +261,70 @@ def style_pm_on(value):
 # Apply styling
 styled_result_pm = result_pm.style.applymap(style_pm_on, subset=["PM_ON", "DELTA_ON","PM_OFF","DELTA_OFF"]).format(precision=2) 
 
+
+player_image_path = os.path.join(images_dir, f"{competition}_{season}_players/{TEAM_PLAYER}_{PLAYER_ID}.png")
+team_logo_path = os.path.join(images_dir, f"{competition}_{season}_teams/{TEAM_PLAYER}.png")
+
 st.header("Moyennes")
 st.dataframe(avg_data,height=45*len(avg_data), use_container_width=True)
+
+
+col1, col2, col3,col4 = st.columns([1,2, 6, 4])
+
+with col1:
+    if os.path.exists(team_logo_path):
+        st.image(team_logo_path, caption=f"Équipe : {TEAM_PLAYER}", width=100)
+    else:
+        st.warning(f"Logo introuvable pour l'équipe : {TEAM_PLAYER}")
+
+
+with col2 :
+    if os.path.exists(player_image_path):
+        st.image(player_image_path, caption=f"#{NUMBER_PLAYER} {NAME_PLAYER}", width=250)
+    else:
+        st.warning(f"Image introuvable pour le joueur : {NAME_PLAYER}")
+
+
+with col3:
+    st.plotly_chart(fig, use_container_width=True)
+
+with col4:
+    # Création des boxplots avec Plotly Graph Objects
+    box_fig = go.Figure()
+
+    # Boxplot global pour PER
+    box_fig.add_trace(go.Box(
+        y=filtered_df[selected_stats],
+        name="Global",
+        marker_color="blue"
+    ))
+
+    # Boxplots pour chaque modalité de WIN
+    for win_status in filtered_df["WIN"].unique():
+        box_fig.add_trace(go.Box(
+            y=filtered_df[filtered_df["WIN"] == win_status][selected_stats],
+            name=f"WIN = {win_status}",
+            marker_color="green" if win_status == "YES" else "red"
+        ))
+
+    # Configuration du layout des boxplots
+    box_fig.update_layout(
+        title=f"Distribution de {selected_stats} (Global et par resultat)",
+        yaxis=dict(
+            title=selected_stats,
+            showgrid=True
+        ),
+        xaxis=dict(
+            title="Catégories",
+            showgrid=False
+        ),
+        margin=dict(l=50, r=50, t=50, b=50)
+    )
+
+    # Affichage des boxplots
+    st.header(f"Boxplots de {selected_stats}")
+    st.plotly_chart(box_fig, use_container_width=True)
+
 
 # Afficher le tableau stylé dans Streamlit
 st.header("Stats Joueur")
