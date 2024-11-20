@@ -276,9 +276,6 @@ df_resultat[colonnes_a_convertir] = df_resultat[colonnes_a_convertir].astype('In
 # Appliquer le style sur le DataFrame
 styled_df = df_resultat.style.apply(highlight_win, axis=1).format(precision=1)  
 
-# Afficher le tableau stylé dans Streamlit
-st.header("Stats Joueur")
-st.dataframe(styled_df, use_container_width=True)
 
 
 
@@ -292,11 +289,25 @@ result_pm = f.analyse_io_2(data_dir = data_dir,
                 selected_players = [selected_players],
                 min_percent_in = min_percent_in)
 
+
 result_pm['P2'] = result_pm.apply(lambda row: row['P2'] if 
                      (row['P1'] == selected_players)
                      else row['P1'], axis=1)
 
 result_pm = result_pm.drop(columns = ["P1","TEAM","TIME_TEAM","PM_TEAM","OFF_TEAM_10","DEF_TEAM_10"])
+
+avg_data = f.get_aggregated_data(
+    df, min_round, max_round,
+    selected_teams=[CODETEAM],
+    selected_opponents=[],
+    selected_fields=["TEAM","PLAYER"],
+    selected_players=[selected_players],
+    mode="AVERAGE",
+    percent="MADE"
+)
+avg_data = avg_data.loc[:, (avg_data != "---").any(axis=0)]
+
+avg_data = avg_data.drop(columns = ["#","PLAYER","TEAM"])
 
 def style_pm_on(value):
     if value > 0:
@@ -308,6 +319,13 @@ def style_pm_on(value):
 
 # Apply styling
 styled_result_pm = result_pm.style.applymap(style_pm_on, subset=["PM_ON", "DELTA_ON","PM_OFF","DELTA_OFF"]).format(precision=2) 
+
+st.header("Moyennes")
+st.dataframe(avg_data,height=45*len(avg_data), use_container_width=True)
+
+# Afficher le tableau stylé dans Streamlit
+st.header("Stats Joueur")
+st.dataframe(styled_df, use_container_width=True)
 
 
 st.header("Duo +/-")
