@@ -65,7 +65,7 @@ selected_fields = st.sidebar.multiselect(
     default=["PLAYER", "TEAM"]
 )
 
-mode = st.sidebar.selectbox("Méthode d'Agrégation", options=["CUMULATED", "AVERAGE"], index=0)
+mode = st.sidebar.selectbox("Méthode d'Agrégation", options=["CUMULATED", "AVERAGE","I_MODE"], index=0)
 percent = st.sidebar.selectbox("Affichage des tirs", options=["MADE", "PERCENT"], index=0)
 
 

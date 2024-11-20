@@ -1571,6 +1571,8 @@ def get_aggregated_data(df, min_round, max_round, selected_teams = [],selected_o
         df_filtered = df_filtered[df_filtered['TEAM'].isin(selected_teams)]
     
     stats = ["TIME_ON"   , "PER" , "PM_ON","PTS",   "DR" ,  "OR" ,  "TR"  , "AS"  , "ST" , "CO" , "1_R" , "1_T" , "2_R" , "2_T" , "3_R" , "3_T" ,  "TO" ,  "FP"  , "CF" , "NCF"]
+    stats_i = ["PER" ,"PTS",   "DR" ,  "OR" ,  "TR"  , "AS"  , "ST" , "CO" ,  "TO" ,  "FP"  , "CF" , "NCF"]
+
     aggregation_functions = {
         'TIME_ON': 'sum', 'PER': 'sum', 'PM_ON': 'sum', 'PTS': 'sum', 'DR': 'sum', 'OR': 'sum', 'TR': 'sum',
         'AS': 'sum', 'ST': 'sum', 'CO': 'sum', '1_R': 'sum', '1_T': 'sum', '2_R': 'sum', '2_T': 'sum',
@@ -1701,6 +1703,10 @@ def get_aggregated_data(df, min_round, max_round, selected_teams = [],selected_o
     if mode == "AVERAGE" : 
         for s in stats :
             df_grouped[s] = (df_grouped[s]/df_grouped["NB_GAME"]).round(1)
+
+    if mode == "I_MODE" :
+        for s in stats_i :
+            df_grouped[s] = (df_grouped[s]/(df_grouped["TIME_ON"]**0.5)).round(1)
 
     if (df_grouped['NB_GAME'] == 1).all():
         # If NB_GAME is entirely filled with 1, map HOME and WIN to 'YES'/'NO'
