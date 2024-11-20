@@ -65,11 +65,13 @@ selected_fields = st.sidebar.multiselect(
     default=["PLAYER", "TEAM"]
 )
 
-mode = st.sidebar.selectbox("Méthode d'Agrégation", options=["CUMULATED", "AVERAGE","I_MODE"], index=0)
+mode = st.sidebar.selectbox("Méthode d'Agrégation", options=["CUMULATED", "AVERAGE"], index=0)
 percent = st.sidebar.selectbox("Affichage des tirs", options=["MADE", "PERCENT"], index=0)
 
+I_MODE = st.sidebar.checkbox("Activer le mode I_stats", value=False)
 
 
+stats_i = [ "PTS", "DR", "OR", "TR", "AS", "ST", "CO", "TO", "FP", "CF", "NCF"]
 
 # Mise à jour automatique des résultats
 if not df.empty:
@@ -82,7 +84,16 @@ if not df.empty:
         mode=mode,
         percent=percent
     )
+
     result_df = result_df.loc[:, (result_df != "---").any(axis=0)]
+    if I_MODE:
+        for s in stats_i:
+            if s in result_df.columns:  # Vérifie si la statistique existe dans df_grouped
+                # Calcul des valeurs ajustées
+                result_df[s] = (result_df[s] / (result_df["TIME_ON"] ** 0.5)).round(1)
+                # Renommer la colonne
+                result_df.rename(columns={s: f"I_{s}"}, inplace=True)
+    
 
 
     st.write("### Tableau")
