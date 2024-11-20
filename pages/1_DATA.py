@@ -45,6 +45,17 @@ st.sidebar.header("Paramètres")
 min_round = st.sidebar.number_input("Round Minimum", min_value=1, value=1)
 max_round = st.sidebar.number_input("Round Maximum", min_value=min_round, value=df["ROUND"].max() if not df.empty else 1)
 
+selected_range = st.sidebar.slider(
+    "Sélectionnez une plage de ROUND :",
+    min_value=1,
+    max_value=df["ROUND"].max(),
+    value=(1, df["ROUND"].max()),
+    step=1
+)
+
+min_round = selected_range[0]
+max_round = selected_range[1]
+
 # Filtrage dynamique des équipes
 selected_teams = st.sidebar.multiselect("Équipes Sélectionnées", options=sorted(df["TEAM"].unique()) if not df.empty else [])
 
