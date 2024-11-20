@@ -214,7 +214,7 @@ colonnes_a_convertir = ['PM_ON', 'PTS', 'DR', 'OR', 'TR', 'AS', 'ST', 'TO', '1_T
 
 # Conversion en type Int64 (supporte les NA)
 df_resultat[colonnes_a_convertir] = df_resultat[colonnes_a_convertir].astype('Int64')
-
+df_resultat = df_resultat.sort_values(by = "ROUND",ascending=False)
 
 # Appliquer le style sur le DataFrame
 styled_df = df_resultat.style.apply(highlight_win, axis=1).format(precision=1)  
@@ -268,7 +268,7 @@ player_image_path = os.path.join(images_dir, f"{competition}_{season}_players/{T
 team_logo_path = os.path.join(images_dir, f"{competition}_{season}_teams/{TEAM_PLAYER}.png")
 
 st.header("Moyennes")
-st.dataframe(avg_data,height=50, use_container_width=True)
+st.dataframe(avg_data,height=60, use_container_width=True)
 
 
 col1, col2, col3,col4 = st.columns([1,2, 6, 4])
@@ -334,4 +334,4 @@ st.dataframe(styled_df, use_container_width=True)
 
 
 st.header("Duo +/-")
-st.dataframe(styled_result_pm,height=50*len(result_pm), use_container_width=True)
+st.dataframe(styled_result_pm,height=60*len(result_pm), use_container_width=True)
