@@ -9,8 +9,8 @@ data_dir = os.path.join(os.path.dirname(__file__), '..', 'datas')
 image_dir = os.path.join(os.path.dirname(__file__), '..', 'images')
 
 season = 2024
-competition = "eurocup"
-round_ = 8
+competition = "euroleague"
+round_ = 11
 
 
 
