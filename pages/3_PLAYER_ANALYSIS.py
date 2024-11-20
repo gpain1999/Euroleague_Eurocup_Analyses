@@ -268,7 +268,7 @@ player_image_path = os.path.join(images_dir, f"{competition}_{season}_players/{T
 team_logo_path = os.path.join(images_dir, f"{competition}_{season}_teams/{TEAM_PLAYER}.png")
 
 st.header("Moyennes")
-st.dataframe(avg_data,height=45*len(avg_data), use_container_width=True)
+st.dataframe(avg_data,height=50, use_container_width=True)
 
 
 col1, col2, col3,col4 = st.columns([1,2, 6, 4])
@@ -334,4 +334,4 @@ st.dataframe(styled_df, use_container_width=True)
 
 
 st.header("Duo +/-")
-st.dataframe(styled_result_pm,height=45*len(result_pm), use_container_width=True)
+st.dataframe(styled_result_pm,height=50*len(result_pm), use_container_width=True)
