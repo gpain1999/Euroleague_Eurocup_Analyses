@@ -42,9 +42,6 @@ st.title("Stats PER - by gpain1999")
 # Paramètres interactifs
 st.sidebar.header("Paramètres")
 
-min_round = st.sidebar.number_input("Round Minimum", min_value=1, value=1)
-max_round = st.sidebar.number_input("Round Maximum", min_value=min_round, value=df["ROUND"].max() if not df.empty else 1)
-
 selected_range = st.sidebar.slider(
     "Sélectionnez une plage de ROUND :",
     min_value=1,
