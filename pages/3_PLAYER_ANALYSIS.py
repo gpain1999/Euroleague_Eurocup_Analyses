@@ -84,6 +84,8 @@ filtered_df = f.get_aggregated_data(
     percent="PERCENT"
 )
 gs_filtered = gs[(gs["LOCAL"]==CODETEAM)|(gs["ROAD"]==CODETEAM)].reset_index(drop = True)
+gs_filtered = gs_filtered[(gs_filtered["ROUND"]>=selected_range[0])&(gs_filtered["ROUND"]<=selected_range[1])].reset_index(drop = True)
+
 gs_filtered['WIN'] = gs_filtered.apply(lambda row: 'YES' if 
                      (row['LOCAL'] == CODETEAM and row['SL'] > row['SR']) or 
                      (row['ROAD'] == CODETEAM and row['SL'] < row['SR']) 
@@ -238,7 +240,7 @@ result_pm['P2'] = result_pm.apply(lambda row: row['P2'] if
 result_pm = result_pm.drop(columns = ["P1","TEAM","TIME_TEAM","PM_TEAM","OFF_TEAM_10","DEF_TEAM_10"])
 
 avg_data = f.get_aggregated_data(
-    df, min_round, max_round,
+    df, selected_range[0], selected_range[1],
     selected_teams=[CODETEAM],
     selected_opponents=[],
     selected_fields=["TEAM","PLAYER"],
