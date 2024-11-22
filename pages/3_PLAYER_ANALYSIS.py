@@ -83,7 +83,7 @@ else:
 selected_players = st.sidebar.selectbox("Joueur Sélectionné", options=sorted(available_players))
 
 selected_stats = st.sidebar.selectbox("Stat Sélectionné", options=["PER","I_PER","PTS","TR","AS","PM_ON"])
-window_size = st.sidebar.number_input("Moyenne glissante", min_value=1,max_value=max_round ,value=4)
+window_size = st.sidebar.number_input("Moyenne glissante", min_value=1,max_value=max_round ,value=5)
 
 min_percent_in = st.sidebar.slider("Min. Time percent for +/- DUO", min_value=0, max_value=100, value=0)
 
