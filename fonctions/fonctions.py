@@ -18,10 +18,65 @@ from PIL import Image, ImageOps,ImageDraw,ImageFont
 import warnings
 import numpy as np
 warnings.filterwarnings("ignore")
-
-
+import matplotlib.pyplot as plt
+import plotly.graph_objects as go
 import pandas as pd
 import threading
+import streamlit as st
+
+def plot_semi_circular_chart(value, t,width=600, height=300):
+    """
+    Create a semi-circular chart (top half only) with Plotly.
+    The size can be controlled with the `width` and `height` parameters.
+    """
+    # Validate input
+    if not 0 <= value <= 1:
+        raise ValueError("Value must be between 0 and 1.")
+
+    # Define chart data for the semi-circle
+    value_percentage = value * 100
+    filled_portion = value * 180  # Degrees for the filled portion
+    empty_portion = 180 - filled_portion  # Degrees for the empty portion
+
+    # Add a transparent placeholder to simulate the bottom half of the circle
+    placeholder = 180
+
+    # Create the semi-circular plot using a Pie chart
+    fig = go.Figure()
+
+    # Add the green (filled) and red (empty) portions
+    fig.add_trace(go.Pie(
+        values=[filled_portion, empty_portion, placeholder],
+        labels=["Rempli", "Vide", ""],  # Empty label for the placeholder
+        marker=dict(colors=["green", "red", "rgba(0,0,0,0)"]),  # Transparent for placeholder
+        textinfo="none",  # Hide text on the slices
+        hole=0.8,
+        direction="clockwise",
+        sort=False,
+        showlegend=False
+    ))
+
+    # Add the percentage text in the center
+    fig.update_layout(
+        annotations=[
+            dict(
+                text=f"{t} : <b>{int(value_percentage)}%</b>",
+                x=0.5, y=0.4,
+                font_size=25,
+                showarrow=False
+            )
+        ],
+        # Adjust layout for the semi-circle
+        margin=dict(t=0, b=0, l=0, r=0),
+        width=width,  # Control the width of the graph
+        height=height,  # Control the height of the graph
+    )
+
+    # Restrict to the top half of the circle
+    fig.update_traces(rotation=270, pull=[0, 0, 0])  # Rotate to make green start on the top left
+
+    return fig
+
 
 
 def analyse_io_2(data_dir,competition,season,num_players,min_round,max_round,CODETEAM = [],selected_players = [],min_percent_in = 0) :

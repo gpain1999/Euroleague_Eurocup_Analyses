@@ -4,6 +4,7 @@ import plotly.graph_objects as go
 import sys
 import os
 from PIL import Image
+import matplotlib.pyplot as plt
 
 season = 2024
 competition = "euroleague"
@@ -88,7 +89,7 @@ filtered_df = f.get_aggregated_data(
     selected_fields=["ROUND", "PLAYER", "TEAM"],
     selected_players=[selected_players],
     mode="CUMULATED",
-    percent="PERCENT"
+    percent="MADE"
 )
 gs_filtered = gs[(gs["LOCAL"]==CODETEAM)|(gs["ROAD"]==CODETEAM)].reset_index(drop = True)
 gs_filtered = gs_filtered[(gs_filtered["ROUND"]>=selected_range[0])&(gs_filtered["ROUND"]<=selected_range[1])].reset_index(drop = True)
@@ -278,26 +279,43 @@ st.header("Moyennes")
 st.dataframe(avg_data,height=60, use_container_width=True)
 
 
-col1, col2, col3,col4 = st.columns([1,2, 6, 4])
+col1, col2, col3 = st.columns([3, 6, 4])
 
 with col1:
-    if os.path.exists(team_logo_path):
-        st.image(team_logo_path, caption=f"Équipe : {TEAM_PLAYER}", width=100)
-    else:
-        st.warning(f"Logo introuvable pour l'équipe : {TEAM_PLAYER}")
+    cola, colb= st.columns([1,2])
+
+    with cola : 
 
 
-with col2 :
-    if os.path.exists(player_image_path):
-        st.image(player_image_path, caption=f"#{NUMBER_PLAYER} {NAME_PLAYER}", width=250)
-    else:
-        st.warning(f"Image introuvable pour le joueur : {NAME_PLAYER}")
+        if os.path.exists(team_logo_path):
+            st.image(team_logo_path, caption=f"Équipe : {TEAM_PLAYER}", width=100)
+        else:
+            st.warning(f"Logo introuvable pour l'équipe : {TEAM_PLAYER}")
 
 
-with col3:
+    with colb :
+        if os.path.exists(player_image_path):
+            st.image(player_image_path, caption=f"#{NUMBER_PLAYER} {NAME_PLAYER}", width=250)
+        else:
+            st.warning(f"Image introuvable pour le joueur : {NAME_PLAYER}")
+
+    t1, t2 , t3= st.columns([1,1,1])
+
+    print(df_resultat["1_R"].sum()/df_resultat["1_T"].sum())
+    with t1 : 
+        fig2 = f.plot_semi_circular_chart(df_resultat["1_R"].sum()/df_resultat["1_T"].sum() if df_resultat["1_T"].sum() != 0 else 0,"1P",width=200, height=100)
+        st.plotly_chart(fig2)
+    with t2 : 
+        fig2 = f.plot_semi_circular_chart(df_resultat["2_R"].sum()/df_resultat["2_T"].sum() if df_resultat["2_T"].sum() != 0 else 0,"2P",width=200, height=100)
+        st.plotly_chart(fig2)
+    with t3 : 
+        fig2 = f.plot_semi_circular_chart(df_resultat["3_R"].sum()/df_resultat["3_T"].sum() if df_resultat["3_T"].sum() != 0 else 0,"3P",width=200, height=100)
+        st.plotly_chart(fig2)
+
+with col2:
     st.plotly_chart(fig, use_container_width=True)
 
-with col4:
+with col3:
     # Création des boxplots avec Plotly Graph Objects
     box_fig = go.Figure()
 
@@ -342,3 +360,6 @@ st.dataframe(styled_df,height=min(38*len(df_resultat),650), use_container_width=
 
 st.header("Duo +/-")
 st.dataframe(styled_result_pm,height=min(38*len(result_pm),650), use_container_width=True)
+
+
+
