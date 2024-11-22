@@ -218,7 +218,7 @@ df_resultat = pd.merge(
 )
 
 
-colonnes_a_convertir = ['PM_ON', 'PTS', 'DR', 'OR', 'TR', 'AS', 'ST', 'TO', '1_T', '2_T', '3_T', 'CO', 'FP', 'CF', 'NCF']
+colonnes_a_convertir = ['PM_ON', 'PTS', 'DR', 'OR', 'TR', 'AS', 'ST', 'TO', '1_T', '2_T', '3_T',"1_R", "2_R", "3_R", 'CO', 'FP', 'CF', 'NCF']
 
 # Conversion en type Int64 (supporte les NA)
 df_resultat[colonnes_a_convertir] = df_resultat[colonnes_a_convertir].astype('Int64')
@@ -226,7 +226,6 @@ df_resultat = df_resultat.sort_values(by = "ROUND",ascending=False)
 
 # Appliquer le style sur le DataFrame
 styled_df = df_resultat.style.apply(highlight_win, axis=1).format(precision=1)  
-
 
 
 
@@ -246,6 +245,10 @@ result_pm['P2'] = result_pm.apply(lambda row: row['P2'] if
                      else row['P1'], axis=1)
 
 result_pm = result_pm.drop(columns = ["P1","TEAM","TIME_TEAM","PM_TEAM","OFF_TEAM_10","DEF_TEAM_10"])
+
+result_pm.insert(1,"PER_REL_ON", (result_pm["TIME_ON"]/(result_pm["TIME_ON"].sum()/4)*100).round(2) )
+
+result_pm = result_pm.sort_values(by = ["TIME_ON"],ascending = False).reset_index(drop = True)
 
 avg_data = f.get_aggregated_data(
     df, selected_range[0], selected_range[1],
@@ -327,10 +330,15 @@ with col3:
     ))
 
     # Boxplots pour chaque modalité de WIN
-    for win_status in filtered_df["WIN"].unique():
+    for win_status in reversed(sorted(filtered_df["WIN"].unique())):
+        if win_status == "YES" :
+            ecriture = "WIN"
+        else :
+            ecriture = "LOSE"
+
         box_fig.add_trace(go.Box(
             y=filtered_df[filtered_df["WIN"] == win_status][selected_stats],
-            name=f"WIN = {win_status}",
+            name=f"{ecriture}",
             marker_color="green" if win_status == "YES" else "red"
         ))
 
@@ -345,7 +353,8 @@ with col3:
             title="Catégories",
             showgrid=False
         ),
-        margin=dict(l=50, r=50, t=50, b=50)
+        margin=dict(l=50, r=50, t=50, b=50),
+            showlegend=False
     )
 
     # Affichage des boxplots
