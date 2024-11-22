@@ -1,0 +1,7 @@
+streamlit==1.25.0
+pandas
+numpy
+euroleague_api
+Pillow==9.5.0
+plotly
+matplotlib
