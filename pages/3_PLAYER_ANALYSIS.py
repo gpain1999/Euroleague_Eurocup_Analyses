@@ -32,7 +32,7 @@ df = df[['ROUND', 'NB_GAME', 'TEAM', 'OPPONENT', 'HOME', 'WIN', 'NUMBER', 'PLAYE
 try:
     image = Image.open(image_path)
     # Redimensionner l'image (par exemple, largeur de 300 pixels)
-    max_width = 600
+    max_width = 400
     image = image.resize((max_width, int(image.height * (max_width / image.width))))
 
     # Afficher l'image redimensionnée
