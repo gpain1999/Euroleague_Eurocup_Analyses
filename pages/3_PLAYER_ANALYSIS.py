@@ -314,9 +314,23 @@ with col1:
     with t3 : 
         fig2 = f.plot_semi_circular_chart(df_resultat["3_R"].sum()/df_resultat["3_T"].sum() if df_resultat["3_T"].sum() != 0 else 0,"3P",width=200, height=100)
         st.plotly_chart(fig2)
+    
+
+
+
+    
 
 with col2:
     st.plotly_chart(fig, use_container_width=True)
+    st.markdown(
+        f'''
+        <p style="font-size:25px; text-align: center;">
+            <b>{avg_data[selected_stats].sum()} {selected_stats}/game&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            {avg_data["TIME_ON"].sum()} MIN/game</b>
+        </p>
+        ''',
+        unsafe_allow_html=True
+    )
 
 with col3:
     # Création des boxplots avec Plotly Graph Objects
@@ -356,7 +370,7 @@ with col3:
         margin=dict(l=50, r=50, t=50, b=50),
             showlegend=False
     )
-
+    
     # Affichage des boxplots
     st.header(f"Boxplots de {selected_stats}")
     st.plotly_chart(box_fig, use_container_width=True)
