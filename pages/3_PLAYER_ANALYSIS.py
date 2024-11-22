@@ -37,19 +37,25 @@ df = df[['ROUND', 'NB_GAME', 'TEAM', 'OPPONENT', 'HOME', 'WIN', 'NUMBER', 'PLAYE
          'TIME_ON', "I_PER", 'PER', 'PM_ON', 'PTS', 'DR', 'OR', 'TR', 'AS', 'ST', 'CO',
          '1_R', '1_T', '2_R', '2_T', '3_R', '3_T', 'TO', 'FP', 'CF', 'NCF']]
 
-try:
-    image = Image.open(image_path)
-    # Redimensionner l'image (par exemple, largeur de 300 pixels)
-    max_width = 400
-    image = image.resize((max_width, int(image.height * (max_width / image.width))))
+col1, col2, col3 = st.columns([1, 1, 1])
 
-    # Afficher l'image redimensionnée
-    st.image(image, caption=f"Rapport pour {competition}")
-except FileNotFoundError:
-    st.warning(f"L'image pour {competition} est introuvable à l'emplacement : {image_path}") 
+with col1 : 
 
-    
-st.title("Player Analysis - by gpain1999 ")
+
+    try:
+        image = Image.open(image_path)
+        # Redimensionner l'image (par exemple, largeur de 300 pixels)
+        max_width = 400
+        image = image.resize((max_width, int(image.height * (max_width / image.width))))
+
+        # Afficher l'image redimensionnée
+        st.image(image, caption=f"Rapport pour {competition}")
+    except FileNotFoundError:
+        st.warning(f"L'image pour {competition} est introuvable à l'emplacement : {image_path}") 
+
+
+with col2 : 
+    st.title("Player Analysis - by gpain1999 ")
 
 # Remplir les trous dans ROUND
 min_round, max_round = df["ROUND"].min(), df["ROUND"].max()
@@ -277,6 +283,7 @@ styled_result_pm = result_pm.style.applymap(style_pm_on, subset=["PM_ON", "DELTA
 
 player_image_path = os.path.join(images_dir, f"{competition}_{season}_players/{TEAM_PLAYER}_{PLAYER_ID}.png")
 team_logo_path = os.path.join(images_dir, f"{competition}_{season}_teams/{TEAM_PLAYER}.png")
+
 
 st.header("Moyennes")
 st.dataframe(avg_data,height=60, use_container_width=True)
