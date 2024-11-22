@@ -33,5 +33,32 @@ try:
 except FileNotFoundError:
     st.warning(f"L'image pour {competition} est introuvable à l'emplacement : {image_path}") 
 
+# Charger les données
+df = f.calcul_per2(data_dir, season, competition)
+df.insert(6, "I_PER", df["PER"] / df["TIME_ON"] ** 0.5)
+df["I_PER"] = df["I_PER"].round(2)
+df["NB_GAME"] = 1
+df = df[['ROUND', 'NB_GAME', 'TEAM', 'OPPONENT', 'HOME', 'WIN', 'NUMBER', 'PLAYER',
+         'TIME_ON', "I_PER", 'PER', 'PM_ON', 'PTS', 'DR', 'OR', 'TR', 'AS', 'ST', 'CO',
+         '1_R', '1_T', '2_R', '2_T', '3_R', '3_T', 'TO', 'FP', 'CF', 'NCF']]
+
+
     
 st.title("Team Analysis - by gpain1999 ")
+
+# Remplir les trous dans ROUND
+min_round, max_round = df["ROUND"].min(), df["ROUND"].max()
+
+# Sidebar : Curseur pour sélectionner la plage de ROUND
+st.sidebar.header("Paramètres")
+
+selected_range = st.sidebar.slider(
+    "Sélectionnez une plage de ROUND :",
+    min_value=min_round,
+    max_value=max_round,
+    value=(min_round, max_round),
+    step=1
+)
+
+# Filtrage dynamique des équipes
+CODETEAM = st.sidebar.selectbox("Équipe Sélectionnée", options=sorted(df["TEAM"].unique()) if not df.empty else [])
