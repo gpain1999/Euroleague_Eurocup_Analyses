@@ -181,6 +181,7 @@ fig.add_trace(go.Scatter(
 
 # Mise à jour du layout
 fig.update_layout(
+    autosize=True,
     title=f'#{NUMBER_PLAYER} {NAME_PLAYER} ({TEAM_PLAYER}) : {selected_stats} et Minutes',
     xaxis=dict(
         title="ROUND",
@@ -324,20 +325,6 @@ with col1:
         else:
             st.warning(f"Image introuvable pour le joueur : {NAME_PLAYER}")
 
-    # t1, t2 , t3= st.columns([1,1,1])
-
-    # with t1 : 
-    #     fig2 = f.plot_semi_circular_chart(df_resultat["1_R"].sum()/df_resultat["1_T"].sum() if df_resultat["1_T"].sum() != 0 else 0,"1P",width=200, height=100)
-    #     st.plotly_chart(fig2)
-    # with t2 : 
-    #     fig2 = f.plot_semi_circular_chart(df_resultat["2_R"].sum()/df_resultat["2_T"].sum() if df_resultat["2_T"].sum() != 0 else 0,"2P",width=200, height=100)
-    #     st.plotly_chart(fig2)
-    # with t3 : 
-    #     fig2 = f.plot_semi_circular_chart(df_resultat["3_R"].sum()/df_resultat["3_T"].sum() if df_resultat["3_T"].sum() != 0 else 0,"3P",width=200, height=100)
-    #     st.plotly_chart(fig2)
-    
-
-
 
     
 
@@ -380,7 +367,8 @@ with col3:
 
     # Configuration du layout des boxplots
     box_fig.update_layout(
-        title=f"Distribution de {selected_stats} (Global et par resultat)",
+        autosize=True,  # Le graphique s'ajuste automatiquement
+        title=f"Distribution de {selected_stats} (Global et par résultat)",
         yaxis=dict(
             title=selected_stats,
             showgrid=True
@@ -390,9 +378,10 @@ with col3:
             showgrid=False
         ),
         margin=dict(l=50, r=50, t=50, b=50),
-            showlegend=False,
-            dragmode="pan"  
+        showlegend=False,
+        dragmode="pan"
     )
+
     
     # Affichage des boxplots
     st.header(f"Boxplots de {selected_stats}")
