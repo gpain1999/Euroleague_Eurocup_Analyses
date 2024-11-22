@@ -34,7 +34,7 @@ df = f.analyse_io_2(data_dir = data_dir,
 image_path = f"images/{competition}.png"  # Chemin vers l'image
 
 
-col1, col2, col3 = st.columns([1, 1, 1])
+col1, col2 = st.columns([1, 2])
 
 with col1 : 
     try:
