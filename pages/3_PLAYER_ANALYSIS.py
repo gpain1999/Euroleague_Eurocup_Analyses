@@ -283,7 +283,6 @@ styled_result_pm = result_pm.style.applymap(style_pm_on, subset=["PM_ON", "DELTA
 
 
 player_image_path = os.path.join(images_dir, f"{competition}_{season}_players/{TEAM_PLAYER}_{PLAYER_ID}.png")
-team_logo_path = os.path.join(images_dir, f"{competition}_{season}_teams/{TEAM_PLAYER}.png")
 
 
 st.header("Moyennes")
@@ -297,31 +296,37 @@ with col1:
 
     with cola : 
 
+        team_logo_path = os.path.join(images_dir, f"{competition}_{season}_teams/{TEAM_PLAYER}.png")
 
         if os.path.exists(team_logo_path):
             st.image(team_logo_path, caption=f"Équipe : {TEAM_PLAYER}", width=100)
         else:
             st.warning(f"Logo introuvable pour l'équipe : {TEAM_PLAYER}")
 
+        fig2 = f.plot_semi_circular_chart(df_resultat["1_R"].sum()/df_resultat["1_T"].sum() if df_resultat["1_T"].sum() != 0 else 0,"1P",width=200, height=100)
+        st.plotly_chart(fig2)
+        fig2 = f.plot_semi_circular_chart(df_resultat["2_R"].sum()/df_resultat["2_T"].sum() if df_resultat["2_T"].sum() != 0 else 0,"2P",width=200, height=100)
+        st.plotly_chart(fig2)
+        fig2 = f.plot_semi_circular_chart(df_resultat["3_R"].sum()/df_resultat["3_T"].sum() if df_resultat["3_T"].sum() != 0 else 0,"3P",width=200, height=100)
+        st.plotly_chart(fig2)
 
     with colb :
         if os.path.exists(player_image_path):
-            st.image(player_image_path, caption=f"#{NUMBER_PLAYER} {NAME_PLAYER}", width=250)
+            st.image(player_image_path, caption=f"#{NUMBER_PLAYER} {NAME_PLAYER}", width=350)
         else:
             st.warning(f"Image introuvable pour le joueur : {NAME_PLAYER}")
 
-    t1, t2 , t3= st.columns([1,1,1])
+    # t1, t2 , t3= st.columns([1,1,1])
 
-    print(df_resultat["1_R"].sum()/df_resultat["1_T"].sum())
-    with t1 : 
-        fig2 = f.plot_semi_circular_chart(df_resultat["1_R"].sum()/df_resultat["1_T"].sum() if df_resultat["1_T"].sum() != 0 else 0,"1P",width=200, height=100)
-        st.plotly_chart(fig2)
-    with t2 : 
-        fig2 = f.plot_semi_circular_chart(df_resultat["2_R"].sum()/df_resultat["2_T"].sum() if df_resultat["2_T"].sum() != 0 else 0,"2P",width=200, height=100)
-        st.plotly_chart(fig2)
-    with t3 : 
-        fig2 = f.plot_semi_circular_chart(df_resultat["3_R"].sum()/df_resultat["3_T"].sum() if df_resultat["3_T"].sum() != 0 else 0,"3P",width=200, height=100)
-        st.plotly_chart(fig2)
+    # with t1 : 
+    #     fig2 = f.plot_semi_circular_chart(df_resultat["1_R"].sum()/df_resultat["1_T"].sum() if df_resultat["1_T"].sum() != 0 else 0,"1P",width=200, height=100)
+    #     st.plotly_chart(fig2)
+    # with t2 : 
+    #     fig2 = f.plot_semi_circular_chart(df_resultat["2_R"].sum()/df_resultat["2_T"].sum() if df_resultat["2_T"].sum() != 0 else 0,"2P",width=200, height=100)
+    #     st.plotly_chart(fig2)
+    # with t3 : 
+    #     fig2 = f.plot_semi_circular_chart(df_resultat["3_R"].sum()/df_resultat["3_T"].sum() if df_resultat["3_T"].sum() != 0 else 0,"3P",width=200, height=100)
+    #     st.plotly_chart(fig2)
     
 
 
