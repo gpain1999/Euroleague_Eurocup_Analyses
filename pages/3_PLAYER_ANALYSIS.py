@@ -330,8 +330,8 @@ with col4:
 
 # Afficher le tableau stylé dans Streamlit
 st.header("Stats Joueur")
-st.dataframe(styled_df, use_container_width=True)
+st.dataframe(styled_df,height=50*len(df_resultat), use_container_width=True)
 
 
 st.header("Duo +/-")
-st.dataframe(styled_result_pm,height=60*len(result_pm), use_container_width=True)
+st.dataframe(styled_result_pm,height=50*len(result_pm), use_container_width=True)
