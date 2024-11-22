@@ -1552,7 +1552,16 @@ def process_dataframe(data_dir, competition, season, nb_groupe):
     new_exist.to_csv(already_exist_path, index=False)
 
 
-def get_aggregated_data(df, min_round, max_round, selected_teams = [],selected_opponents=[],selected_fields = [],selected_players = [],mode="CUMULATED",percent = "MADE"):
+def get_aggregated_data(df, 
+                        min_round, 
+                        max_round, 
+                        selected_teams = [],
+                        selected_opponents=[],
+                        selected_fields = [],
+                        selected_players = [],
+                        mode="CUMULATED",
+                        percent = "MADE",
+                        ranking_mode = False):
     selected_fields2 = selected_fields
 
     if selected_fields == [] :
