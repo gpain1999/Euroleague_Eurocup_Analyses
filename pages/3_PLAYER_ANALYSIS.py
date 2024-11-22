@@ -64,7 +64,7 @@ min_round, max_round = df["ROUND"].min(), df["ROUND"].max()
 st.sidebar.header("Paramètres")
 
 zoom = st.sidebar.slider(
-    "Choisissez une valeur de zoom",
+    "Choisissez une valeur de zoom pour les photos",
     min_value=0.5,
     max_value=1.0,
     step=0.1,
