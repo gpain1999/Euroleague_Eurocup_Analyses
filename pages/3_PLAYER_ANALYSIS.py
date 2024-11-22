@@ -337,8 +337,8 @@ with col4:
 
 # Afficher le tableau stylé dans Streamlit
 st.header("Stats Joueur")
-st.dataframe(styled_df,height=min(38*len(df_resultat),800), use_container_width=True)
+st.dataframe(styled_df,height=min(38*len(df_resultat),650), use_container_width=True)
 
 
 st.header("Duo +/-")
-st.dataframe(styled_result_pm,height=min(38*len(result_pm),800), use_container_width=True)
+st.dataframe(styled_result_pm,height=min(38*len(result_pm),650), use_container_width=True)

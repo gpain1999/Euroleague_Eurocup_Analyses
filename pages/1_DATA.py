@@ -111,6 +111,6 @@ if not df.empty:
 
 
     st.write("### Tableau")
-    st.dataframe(result_df, height=min(38*len(result_df),800),width=2000)  # Augmenter la hauteur du tableau
+    st.dataframe(result_df, height=min(38*len(result_df),900),width=2000)  # Augmenter la hauteur du tableau
 else:
     st.error("Les données ne sont pas chargées. Veuillez vérifier votre fichier source.")
