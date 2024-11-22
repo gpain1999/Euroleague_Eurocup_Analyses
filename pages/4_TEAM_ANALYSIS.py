@@ -59,6 +59,18 @@ min_round, max_round = df["ROUND"].min(), df["ROUND"].max()
 
 
 ######################### PARAM
+st.markdown(
+    """
+    <style>
+    [data-testid="stSidebar"] {
+        min-width: 150px; /* Largeur minimale */
+        max-width: 300px; /* Largeur maximale */
+        width: 225px; /* Largeur fixe */
+    }
+    </style>
+    """,
+    unsafe_allow_html=True
+)
 
 # Sidebar : Curseur pour sélectionner la plage de ROUND
 st.sidebar.header("Paramètres")
@@ -100,7 +112,7 @@ off_detail[colonnes_a_convertir] = off_detail[colonnes_a_convertir].astype('Int6
 off_detail = off_detail.sort_values(by = "ROUND",ascending=False)
 off_detail = off_detail.loc[:, (off_detail != "---").any(axis=0)]
 off_detail = off_detail.drop(columns = ["TEAM","NB_GAME"])
-
+win_counts = off_detail["WIN"].value_counts().to_dict()
 
 
 def_detail = f.get_aggregated_data(
@@ -115,7 +127,7 @@ def_detail = f.get_aggregated_data(
 def_detail[colonnes_a_convertir] = def_detail[colonnes_a_convertir].astype('Int64')
 def_detail = def_detail.sort_values(by = "ROUND",ascending=False)
 def_detail = def_detail.loc[:, (def_detail != "---").any(axis=0)]
-def_detail = def_detail.drop(columns = ["TEAM","NB_GAME"])
+def_detail = def_detail.drop(columns = ["OPPONENT","NB_GAME"])
 
 ################### STYLES
 
@@ -124,11 +136,15 @@ def highlight_win(row):
     color = 'background-color: #CCFFCC; color: black;' if row["WIN"] == "YES" else 'background-color: #FFCCCC; color: black;'
     return [color for _ in row.index]
 
+def highlight_win_o(row):
+    # Appliquer vert si WIN est "NO", rouge sinon
+    color = 'background-color: #FFCCCC; color: black;' if row["WIN"] == "YES" else 'background-color: #CCFFCC; color: black;'
+    return [color for _ in row.index]
 ###################### PRINT
 
 
 
-col1, col2 = st.columns([1, 9])
+col1, col2 = st.columns([1, 12])
 
 with col1 : 
 
@@ -137,9 +153,32 @@ with col1 :
     else:
         st.warning(f"Logo introuvable pour l'équipe : {CODETEAM}")
 
+    taille = int(25*zoom)
+    # Pour les victoires (YES)
+    st.markdown(
+        f'''
+        <p style="font-size:{taille}px; text-align: center; background-color: #CCFFCC; padding: 10px; border-radius: 5px;">
+            <b>{win_counts["YES"]}&nbsp;WINS</b>
+        </p>
+        ''',
+        unsafe_allow_html=True
+    )
+
+    # Pour les défaites (NO)
+    st.markdown(
+        f'''
+        <p style="font-size:{taille}px; text-align: center; background-color: #FFCCCC; padding: 10px; border-radius: 5px;">
+            <b>{win_counts["NO"]}&nbsp;LOSES</b>
+        </p>
+        ''',
+        unsafe_allow_html=True
+    )
+
+
+
 with col2 :
     off_detail_2 = off_detail.style.apply(highlight_win, axis=1).format(precision=1) 
-    def_detail_2 = def_detail.style.apply(highlight_win, axis=1).format(precision=1)  
+    def_detail_2 = def_detail.style.apply(highlight_win_o, axis=1).format(precision=1)  
 
     st.header("Stats Offensive")
     st.dataframe(off_detail_2,height=min(38*len(off_detail),650), use_container_width=True)

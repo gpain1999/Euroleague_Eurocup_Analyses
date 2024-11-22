@@ -54,6 +54,19 @@ with col2 :
     st.title("+/- Analysis - by gpain1999")
 
 # Paramètres interactifs
+
+st.markdown(
+    """
+    <style>
+    [data-testid="stSidebar"] {
+        min-width: 150px; /* Largeur minimale */
+        max-width: 300px; /* Largeur maximale */
+        width: 225px; /* Largeur fixe */
+    }
+    </style>
+    """,
+    unsafe_allow_html=True
+)
 st.sidebar.header("Paramètres")
 
 num_players = st.sidebar.number_input("SOLO/DUO/TRIO", min_value=1,max_value=3 ,value=2)

@@ -51,6 +51,18 @@ with col2 :
     st.title("Stats PER - by gpain1999")
 
 # Paramètres interactifs
+st.markdown(
+    """
+    <style>
+    [data-testid="stSidebar"] {
+        min-width: 150px; /* Largeur minimale */
+        max-width: 300px; /* Largeur maximale */
+        width: 225px; /* Largeur fixe */
+    }
+    </style>
+    """,
+    unsafe_allow_html=True
+)
 st.sidebar.header("Paramètres")
 
 selected_range = st.sidebar.slider(

@@ -60,6 +60,20 @@ with col2 :
 # Remplir les trous dans ROUND
 min_round, max_round = df["ROUND"].min(), df["ROUND"].max()
 
+
+st.markdown(
+    """
+    <style>
+    [data-testid="stSidebar"] {
+        min-width: 150px; /* Largeur minimale */
+        max-width: 300px; /* Largeur maximale */
+        width: 225px; /* Largeur fixe */
+    }
+    </style>
+    """,
+    unsafe_allow_html=True
+)
+
 # Sidebar : Curseur pour sélectionner la plage de ROUND
 st.sidebar.header("Paramètres")
 
