@@ -202,7 +202,8 @@ fig.update_layout(
         xanchor="center",
         x=0.5  # Centré horizontalement
     ),
-    margin=dict(l=50, r=50, t=50, b=100),  # Augmenter la marge inférieure pour la légende
+    margin=dict(l=50, r=50, t=50, b=100),
+      dragmode="pan"  
 )
 
 
@@ -328,7 +329,7 @@ with col1:
     
 
 with col2:
-    st.plotly_chart(fig, use_container_width=True)
+    st.plotly_chart(fig, use_container_width=True,static_plot=True)
     st.markdown(
         f'''
         <p style="font-size:25px; text-align: center;">
@@ -375,7 +376,8 @@ with col3:
             showgrid=False
         ),
         margin=dict(l=50, r=50, t=50, b=50),
-            showlegend=False
+            showlegend=False,
+            dragmode="pan"  
     )
     
     # Affichage des boxplots
