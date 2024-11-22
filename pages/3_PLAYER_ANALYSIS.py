@@ -63,6 +63,14 @@ min_round, max_round = df["ROUND"].min(), df["ROUND"].max()
 # Sidebar : Curseur pour sélectionner la plage de ROUND
 st.sidebar.header("Paramètres")
 
+zoom = st.sidebar.slider(
+    "Choisissez une valeur de zoom",
+    min_value=0.5,
+    max_value=1.0,
+    step=0.1,
+    value=0.7,  # Valeur initiale
+)
+
 selected_range = st.sidebar.slider(
     "Sélectionnez une plage de ROUND :",
     min_value=min_round,
@@ -299,20 +307,20 @@ with col1:
         team_logo_path = os.path.join(images_dir, f"{competition}_{season}_teams/{TEAM_PLAYER}.png")
 
         if os.path.exists(team_logo_path):
-            st.image(team_logo_path, caption=f"Équipe : {TEAM_PLAYER}", width=100)
+            st.image(team_logo_path, caption=f"Équipe : {TEAM_PLAYER}", width=int(100*zoom))
         else:
             st.warning(f"Logo introuvable pour l'équipe : {TEAM_PLAYER}")
 
-        fig2 = f.plot_semi_circular_chart(df_resultat["1_R"].sum()/df_resultat["1_T"].sum() if df_resultat["1_T"].sum() != 0 else 0,"1P",width=200, height=100)
+        fig2 = f.plot_semi_circular_chart(df_resultat["1_R"].sum()/df_resultat["1_T"].sum() if df_resultat["1_T"].sum() != 0 else 0,"1P",width=int(200*zoom), height=int(100*zoom))
         st.plotly_chart(fig2)
-        fig2 = f.plot_semi_circular_chart(df_resultat["2_R"].sum()/df_resultat["2_T"].sum() if df_resultat["2_T"].sum() != 0 else 0,"2P",width=200, height=100)
+        fig2 = f.plot_semi_circular_chart(df_resultat["2_R"].sum()/df_resultat["2_T"].sum() if df_resultat["2_T"].sum() != 0 else 0,"2P",width=int(200*zoom), height=int(100*zoom))
         st.plotly_chart(fig2)
-        fig2 = f.plot_semi_circular_chart(df_resultat["3_R"].sum()/df_resultat["3_T"].sum() if df_resultat["3_T"].sum() != 0 else 0,"3P",width=200, height=100)
+        fig2 = f.plot_semi_circular_chart(df_resultat["3_R"].sum()/df_resultat["3_T"].sum() if df_resultat["3_T"].sum() != 0 else 0,"3P",width=int(200*zoom), height=int(100*zoom))
         st.plotly_chart(fig2)
 
     with colb :
         if os.path.exists(player_image_path):
-            st.image(player_image_path, caption=f"#{NUMBER_PLAYER} {NAME_PLAYER}", width=350)
+            st.image(player_image_path, caption=f"#{NUMBER_PLAYER} {NAME_PLAYER}", width=int(350*zoom))
         else:
             st.warning(f"Image introuvable pour le joueur : {NAME_PLAYER}")
 
@@ -335,9 +343,10 @@ with col1:
 
 with col2:
     st.plotly_chart(fig, use_container_width=True,static_plot=True)
+    taille = int(25*zoom)
     st.markdown(
         f'''
-        <p style="font-size:25px; text-align: center;">
+        <p style="font-size:{taille}px; text-align: center;">
             <b>{avg_data[selected_stats].sum()} {selected_stats}/game&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             {avg_data["TIME_ON"].sum()} MIN/game</b>
         </p>
