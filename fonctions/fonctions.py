@@ -19,16 +19,19 @@ import warnings
 import numpy as np
 warnings.filterwarnings("ignore")
 import matplotlib.pyplot as plt
-import plotly.graph_objects as go
 import pandas as pd
 import threading
 import streamlit as st
+import plotly.graph_objects as go
 
-def plot_semi_circular_chart(value, t,width=600, height=300):
+def plot_semi_circular_chart(value, t, size=300, font_size=20,m=True):
     """
-    Create a semi-circular chart (top half only) with Plotly.
-    The size can be controlled with the `width` and `height` parameters.
+    Create a semi-circular chart that is perfectly square without unnecessary white space.
     """
+    if m : 
+        marg = size
+    else :
+        marg = 0
     # Validate input
     if not 0 <= value <= 1:
         raise ValueError("Value must be between 0 and 1.")
@@ -58,22 +61,33 @@ def plot_semi_circular_chart(value, t,width=600, height=300):
 
     # Add the percentage text in the center
     fig.update_layout(
+        autosize=True,
         annotations=[
             dict(
                 text=f"{t} : <b>{int(value_percentage)}%</b>",
-                x=0.5, y=0.4,
-                font_size=25,
+                x=0.5, y=0.2,  # Center the text in the top half
+                font_size=font_size,
                 showarrow=False
             )
         ],
-        # Adjust layout for the semi-circle
-        margin=dict(t=0, b=0, l=0, r=0),
-        width=width,  # Control the width of the graph
-        height=height,  # Control the height of the graph
+        # Set layout to remove unnecessary spaces
+        margin=dict(t=0, b=0, l=0, r=marg),
+        width=size,  # Ensure square dimensions
+        height=size,  # Ensure square dimensions
     )
 
-    # Restrict to the top half of the circle
-    fig.update_traces(rotation=270, pull=[0, 0, 0])  # Rotate to make green start on the top left
+    # Restrict to the top half of the circle and align properly
+    fig.update_traces(
+        rotation=270, 
+        pull=[0, 0, 0]
+    )  # Rotate to make green start on the top left
+
+    # Tighten the figure for perfect square export
+    fig.update_layout(
+        autosize=False,
+        paper_bgcolor="rgba(0,0,0,0)",  # Transparent background
+        plot_bgcolor="rgba(0,0,0,0)",  # Transparent plot area
+    )
 
     return fig
 

@@ -12,7 +12,7 @@ sys.path.append(os.path.join(os.path.dirname(__file__), '../fonctions'))
 images_dir = os.path.join(os.path.dirname(__file__), '..', 'images')  # Path to the images directory
 
 st.set_page_config(
-    page_title="PLAYER ANALYSIS",
+    page_title="TEAM ANALYSIS",
     layout="wide",  # Active le Wide mode par défaut
     initial_sidebar_state="expanded",  # Si vous avez une barre latérale
 )
@@ -72,6 +72,7 @@ st.markdown(
     unsafe_allow_html=True
 )
 
+
 # Sidebar : Curseur pour sélectionner la plage de ROUND
 st.sidebar.header("Paramètres")
 
@@ -119,7 +120,7 @@ def_detail = f.get_aggregated_data(
     df=df, min_round=selected_range[0], max_round=selected_range[1],
     selected_teams=[],
     selected_opponents=[CODETEAM],
-    selected_fields=["ROUND","TEAM"],
+    selected_fields=["ROUND","OPPONENT"],
     selected_players=[],
     mode="CUMULATED",
     percent="MADE"
@@ -128,6 +129,30 @@ def_detail[colonnes_a_convertir] = def_detail[colonnes_a_convertir].astype('Int6
 def_detail = def_detail.sort_values(by = "ROUND",ascending=False)
 def_detail = def_detail.loc[:, (def_detail != "---").any(axis=0)]
 def_detail = def_detail.drop(columns = ["OPPONENT","NB_GAME"])
+
+off_moyenne = f.get_aggregated_data(
+    df=df, min_round=selected_range[0], max_round=selected_range[1],
+    selected_teams=[CODETEAM],
+    selected_opponents=[],
+    selected_fields=["TEAM"],
+    selected_players=[],
+    mode="AVERAGE",
+    percent="MADE"
+)
+off_moyenne = off_moyenne.loc[:, (off_moyenne != "---").any(axis=0)]
+off_moyenne = off_moyenne.drop(columns = ["TEAM","NB_GAME","HOME","WIN","TIME_ON"])
+
+def_moyenne = f.get_aggregated_data(
+    df=df, min_round=selected_range[0], max_round=selected_range[1],
+    selected_teams=[],
+    selected_opponents=[CODETEAM],
+    selected_fields=["OPPONENT"],
+    selected_players=[],
+    mode="AVERAGE",
+    percent="MADE"
+)
+def_moyenne = def_moyenne.loc[:, (def_moyenne != "---").any(axis=0)]
+def_moyenne = def_moyenne.drop(columns = ["OPPONENT","NB_GAME","HOME","WIN","TIME_ON"])
 
 ################### STYLES
 
@@ -144,7 +169,7 @@ def highlight_win_o(row):
 
 
 
-col1, col2 = st.columns([1, 12])
+col1, col2 = st.columns([1, 7])
 
 with col1 : 
 
@@ -164,6 +189,8 @@ with col1 :
         unsafe_allow_html=True
     )
 
+
+
     # Pour les défaites (NO)
     st.markdown(
         f'''
@@ -174,15 +201,56 @@ with col1 :
         unsafe_allow_html=True
     )
 
+    cola, colb = st.columns([1, 1])
 
+    with cola :
+        
+        st.markdown(
+            f'''
+            <p style="font-size:{int(taille*0.75)}px; text-align: center;">
+                <b> % TEAM</b>
+            </p>
+            ''',
+            unsafe_allow_html=True
+        )
+
+        fig2 = f.plot_semi_circular_chart(off_detail["1_R"].sum()/off_detail["1_T"].sum() if off_detail["1_T"].sum() != 0 else 0,"1P",size=int(90*zoom), font_size=int(18*zoom))
+        st.plotly_chart(fig2,use_container_width=True)
+        fig2 = f.plot_semi_circular_chart(off_detail["2_R"].sum()/off_detail["2_T"].sum() if off_detail["2_T"].sum() != 0 else 0,"2P",size=int(90*zoom), font_size=int(18*zoom))
+        st.plotly_chart(fig2,use_container_width=True)
+        fig2 = f.plot_semi_circular_chart(off_detail["3_R"].sum()/off_detail["3_T"].sum() if off_detail["3_T"].sum() != 0 else 0,"3P",size=int(90*zoom), font_size=int(18*zoom))
+        st.plotly_chart(fig2,use_container_width=True)
+
+    with colb : 
+        st.markdown(
+            f'''
+            <p style="font-size:{int(taille*0.75)}px; text-align: center;">
+                <b> % OPPONENT</b>
+            </p>
+            ''',
+            unsafe_allow_html=True
+        )
+
+        fig2 = f.plot_semi_circular_chart(def_detail["1_R"].sum()/def_detail["1_T"].sum() if def_detail["1_T"].sum() != 0 else 0,"1P",size=int(90*zoom), font_size=int(18*zoom))
+        st.plotly_chart(fig2,use_container_width=True)
+        fig2 = f.plot_semi_circular_chart(def_detail["2_R"].sum()/def_detail["2_T"].sum() if def_detail["2_T"].sum() != 0 else 0,"2P",size=int(90*zoom), font_size=int(18*zoom))
+        st.plotly_chart(fig2,use_container_width=True)
+        fig2 = f.plot_semi_circular_chart(def_detail["3_R"].sum()/def_detail["3_T"].sum() if def_detail["3_T"].sum() != 0 else 0,"3P",size=int(90*zoom), font_size=int(18*zoom))
+        st.plotly_chart(fig2,use_container_width=True)
 
 with col2 :
+    st.header(f"Moyennes {CODETEAM}")
+    st.dataframe(off_moyenne,height=60, use_container_width=True)
+
+    st.header(f"Moyennes Adversaires")
+    st.dataframe(def_moyenne,height=60, use_container_width=True)
+
     off_detail_2 = off_detail.style.apply(highlight_win, axis=1).format(precision=1) 
     def_detail_2 = def_detail.style.apply(highlight_win_o, axis=1).format(precision=1)  
 
-    st.header("Stats Offensive")
+    st.header(f"Stats {CODETEAM}")
     st.dataframe(off_detail_2,height=min(38*len(off_detail),650), use_container_width=True)
-    st.header("Stats Defensive")
+    st.header("Stats Adversaires")
     st.dataframe(def_detail_2,height=min(38*len(def_detail),650), use_container_width=True)
     pass
 
