@@ -369,7 +369,7 @@ with col2 :
     st.header(f"Averages : {CODETEAM}")
     st.dataframe(team_moyenne,height=60, use_container_width=True,hide_index=True)
 
-    name, valu,_ = st.columns([1.5, 1,3])
+    name, valu,_ = st.columns([2, 1,3])
 
     with valu :
         DELTA = st.selectbox("COMPARAISON TYPE", options=["LEAGUE", "OPPONENTS"], index=0)
@@ -388,7 +388,7 @@ with col2 :
         lambda x: [color_delta(val, col, ['TO', 'CF', 'NCF'] ) for val, col in zip(x, x.index)], axis=1
     ).format(precision=1)
 
-    delta_moyenne_league_2 = delta_moyenne_league.style.apply(
+    delta_moyenne_league_2 = delta_moyenne_league.head(1).style.apply(
         lambda x: [color_delta(val, col, ['TO', 'CF', 'NCF'] ) for val, col in zip(x, x.index)], axis=1
     ).format(precision=1)
 
