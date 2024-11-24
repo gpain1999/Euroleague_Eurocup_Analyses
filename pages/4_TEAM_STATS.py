@@ -318,11 +318,11 @@ with col1 :
             unsafe_allow_html=True
         )
 
-        fig2 = f.plot_semi_circular_chart(team_detail["1_R"].sum()/team_detail["1_T"].sum() if team_detail["1_T"].sum() != 0 else 0,"1P",size=int(90*zoom), font_size=int(20*zoom))
+        fig2 = f.plot_semi_circular_chart(team_detail["1_R"].sum()/team_detail["1_T"].sum() if team_detail["1_T"].sum() != 0 else 0,"1P",size=int(120*zoom), font_size=int(20*zoom))
         st.plotly_chart(fig2,use_container_width=True)
-        fig2 = f.plot_semi_circular_chart(team_detail["2_R"].sum()/team_detail["2_T"].sum() if team_detail["2_T"].sum() != 0 else 0,"2P",size=int(90*zoom), font_size=int(20*zoom))
+        fig2 = f.plot_semi_circular_chart(team_detail["2_R"].sum()/team_detail["2_T"].sum() if team_detail["2_T"].sum() != 0 else 0,"2P",size=int(120*zoom), font_size=int(20*zoom))
         st.plotly_chart(fig2,use_container_width=True)
-        fig2 = f.plot_semi_circular_chart(team_detail["3_R"].sum()/team_detail["3_T"].sum() if team_detail["3_T"].sum() != 0 else 0,"3P",size=int(90*zoom), font_size=int(20*zoom))
+        fig2 = f.plot_semi_circular_chart(team_detail["3_R"].sum()/team_detail["3_T"].sum() if team_detail["3_T"].sum() != 0 else 0,"3P",size=int(120*zoom), font_size=int(20*zoom))
         st.plotly_chart(fig2,use_container_width=True)
 
     with colb : 

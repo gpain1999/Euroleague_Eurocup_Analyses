@@ -71,7 +71,7 @@ def plot_semi_circular_chart(value, t, size=300, font_size=20,m=True):
             )
         ],
         # Set layout to remove unnecessary spaces
-        margin=dict(t=0, b=0, l=0, r=marg),
+        margin=dict(t=0, b=0, l=0, r=0),
         width=size,  # Ensure square dimensions
         height=size,  # Ensure square dimensions
     )
