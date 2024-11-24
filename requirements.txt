@@ -5,4 +5,3 @@ euroleague_api
 Pillow==9.5.0
 plotly
 matplotlib
-math
