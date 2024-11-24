@@ -201,14 +201,25 @@ with col1 :
         unsafe_allow_html=True
     )
 
+    st.markdown(
+        f'''
+        <p style="font-size:{int(taille*0.9)}px; text-align: center; padding: 10pxs;">
+            <b>% SHOOTS</b>
+        </p>
+        ''',
+        unsafe_allow_html=True
+    )
+
     cola, colb = st.columns([1, 1])
+    
+
 
     with cola :
         
         st.markdown(
             f'''
             <p style="font-size:{int(taille*0.75)}px; text-align: center;">
-                <b> % TEAM</b>
+                <b> % {CODETEAM}</b>
             </p>
             ''',
             unsafe_allow_html=True
@@ -238,6 +249,42 @@ with col1 :
         fig2 = f.plot_semi_circular_chart(def_detail["3_R"].sum()/def_detail["3_T"].sum() if def_detail["3_T"].sum() != 0 else 0,"3P",size=int(90*zoom), font_size=int(20*zoom))
         st.plotly_chart(fig2,use_container_width=True)
 
+    st.markdown(
+        f'''
+        <p style="font-size:{int(taille*0.9)}px; text-align: center; padding: 10pxs;">
+            <b>% REBONDS</b>
+        </p>
+        ''',
+        unsafe_allow_html=True
+    )
+
+    cola, colb = st.columns([1, 1])
+    with cola :
+
+        st.markdown(
+            f'''
+            <p style="font-size:{int(taille*0.75)}px; text-align: center;">
+                <b> DEF. REB.</b>
+            </p>
+            ''',
+            unsafe_allow_html=True
+        )
+        fig2 = f.plot_semi_circular_chart(off_moyenne["DR"].sum()/(off_moyenne["DR"].sum() + def_moyenne["OR"].sum()),"BLA", size=int(90*zoom), font_size=int(20*zoom))
+        st.plotly_chart(fig2,use_container_width=True)
+    with colb :
+        
+        st.markdown(
+            f'''
+            <p style="font-size:{int(taille*0.75)}px; text-align: center;">
+                <b> OFF. REB.</b>
+            </p>
+            ''',
+            unsafe_allow_html=True
+        )
+        print(off_moyenne["OR"].sum()/(off_moyenne["OR"].sum() + def_moyenne["DR"].sum()))
+        fig2 = f.plot_semi_circular_chart(off_moyenne["OR"].sum()/(off_moyenne["OR"].sum() + def_moyenne["DR"].sum()),"BLA",size=int(90*zoom), font_size=int(20*zoom))
+        st.plotly_chart(fig2,use_container_width=True)
+
 with col2 :
     st.header(f"Moyennes {CODETEAM}")
     st.dataframe(off_moyenne,height=60, use_container_width=True)
@@ -252,5 +299,5 @@ with col2 :
     st.dataframe(off_detail_2,height=min(38*len(off_detail),650), use_container_width=True)
     st.header("Stats Adversaires")
     st.dataframe(def_detail_2,height=min(38*len(def_detail),650), use_container_width=True)
-    pass
+    
 
