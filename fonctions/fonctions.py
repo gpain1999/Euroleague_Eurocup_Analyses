@@ -64,7 +64,7 @@ def plot_semi_circular_chart(value, t, size=300, font_size=20,m=True):
         autosize=True,
         annotations=[
             dict(
-                text=f"{t} : <b>{int(value_percentage)}%</b>",
+                text=f"{t} : <b>{round(value_percentage)}%</b>",
                 x=0.5, y=0.2,  # Center the text in the top half
                 font_size=font_size,
                 showarrow=False
