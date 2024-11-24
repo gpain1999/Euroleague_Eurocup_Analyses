@@ -37,7 +37,7 @@ df = df[['ROUND', 'NB_GAME', 'TEAM', 'OPPONENT', 'HOME', 'WIN', 'NUMBER', 'PLAYE
          'TIME_ON', "I_PER", 'PER', 'PM_ON', 'PTS', 'DR', 'OR', 'TR', 'AS', 'ST', 'CO',
          '1_R', '1_T', '2_R', '2_T', '3_R', '3_T', 'TO', 'FP', 'CF', 'NCF']]
 
-col1, col2 = st.columns([1, 2])
+col1, col2,col3 = st.columns([1.2,2,1])
 
 with col1 : 
 
@@ -56,6 +56,19 @@ with col1 :
 
 with col2 : 
     st.title("Player Analysis - by gpain1999 ")
+
+with col3 :
+    # Filtrage dynamique des équipes
+    CODETEAM = st.selectbox("Équipe Sélectionnée", options=sorted(df["TEAM"].unique()) if not df.empty else [])
+
+    # Mise à jour dynamique des joueurs en fonction des équipes sélectionnées
+    if CODETEAM:
+        available_players = players[players["CODETEAM"].isin([CODETEAM])]["PLAYER"].unique()
+    else:
+        available_players = players["PLAYER"].unique()
+
+    selected_players = st.selectbox("Joueur Sélectionné", options=sorted(available_players))
+
 
 # Remplir les trous dans ROUND
 min_round, max_round = df["ROUND"].min(), df["ROUND"].max()
@@ -94,21 +107,10 @@ selected_range = st.sidebar.slider(
     step=1
 )
 
-# Filtrage dynamique des équipes
-CODETEAM = st.sidebar.selectbox("Équipe Sélectionnée", options=sorted(df["TEAM"].unique()) if not df.empty else [])
-
-# Mise à jour dynamique des joueurs en fonction des équipes sélectionnées
-if CODETEAM:
-    available_players = players[players["CODETEAM"].isin([CODETEAM])]["PLAYER"].unique()
-else:
-    available_players = players["PLAYER"].unique()
-
-selected_players = st.sidebar.selectbox("Joueur Sélectionné", options=sorted(available_players))
-
 selected_stats = st.sidebar.selectbox("Stat Sélectionné", options=["PER","I_PER","PTS","TR","AS","PM_ON"])
+
 window_size = st.sidebar.number_input("Moyenne glissante", min_value=1,max_value=max_round ,value=5)
 
-min_percent_in = st.sidebar.slider("Min. Time percent for +/- DUO", min_value=0, max_value=100, value=0)
 
 
 filtered_df = f.get_aggregated_data(
@@ -260,26 +262,7 @@ styled_df = df_resultat.style.apply(highlight_win, axis=1).format(precision=1)
 
 
 
-result_pm = f.analyse_io_2(data_dir = data_dir,
-                competition = competition,
-                season = season,
-                num_players = 2,
-                min_round = min_round,
-                max_round = max_round,
-                CODETEAM = [CODETEAM],
-                selected_players = [selected_players],
-                min_percent_in = min_percent_in)
 
-
-result_pm['P2'] = result_pm.apply(lambda row: row['P2'] if 
-                     (row['P1'] == selected_players)
-                     else row['P1'], axis=1)
-
-result_pm = result_pm.drop(columns = ["P1","TEAM","TIME_TEAM","PM_TEAM","OFF_TEAM_10","DEF_TEAM_10"])
-
-result_pm.insert(1,"PER_REL_ON", (result_pm["TIME_ON"]/(result_pm["TIME_ON"].sum()/4)*100).round(2) )
-
-result_pm = result_pm.sort_values(by = ["TIME_ON"],ascending = False).reset_index(drop = True)
 
 avg_data = f.get_aggregated_data(
     df, selected_range[0], selected_range[1],
@@ -302,8 +285,6 @@ def style_pm_on(value):
     else:
         return "background-color: #FFFFFF;color: black;"
 
-# Apply styling
-styled_result_pm = result_pm.style.applymap(style_pm_on, subset=["PM_ON", "DELTA_ON","PM_OFF","DELTA_OFF"]).format(precision=2) 
 
 
 player_image_path = os.path.join(images_dir, f"{competition}_{season}_players/{TEAM_PLAYER}_{PLAYER_ID}.png")
@@ -409,6 +390,39 @@ st.dataframe(styled_df,height=min(38*len(df_resultat),650), use_container_width=
 
 
 st.header("Duo +/-")
+
+col1, col2 = st.columns([1, 1])
+
+with col1 :
+
+    min_percent_in = st.slider("Minimum Time global percent together", min_value=0, max_value=100, value=0)
+with col2 :
+    min_percent_in_relative = st.slider("Minimum Time relative percent together", min_value=0, max_value=100, value=0)
+
+result_pm = f.analyse_io_2(data_dir = data_dir,
+                competition = competition,
+                season = season,
+                num_players = 2,
+                min_round = min_round,
+                max_round = max_round,
+                CODETEAM = [CODETEAM],
+                selected_players = [selected_players],
+                min_percent_in = min_percent_in)
+
+
+result_pm['P2'] = result_pm.apply(lambda row: row['P2'] if 
+                     (row['P1'] == selected_players)
+                     else row['P1'], axis=1)
+
+result_pm = result_pm.drop(columns = ["P1","TEAM","TIME_TEAM","PM_TEAM","OFF_TEAM_10","DEF_TEAM_10"])
+
+result_pm.insert(1,"PER_REL_ON", (result_pm["TIME_ON"]/(result_pm["TIME_ON"].sum()/4)*100).round(2) )
+
+result_pm = result_pm[result_pm["PER_REL_ON"]>=min_percent_in_relative]
+result_pm = result_pm.sort_values(by = ["TIME_ON"],ascending = False).reset_index(drop = True)
+# Apply styling
+styled_result_pm = result_pm.style.applymap(style_pm_on, subset=["PM_ON", "DELTA_ON","PM_OFF","DELTA_OFF"]).format(precision=2) 
+
 st.dataframe(styled_result_pm,height=min(38*len(result_pm),650), use_container_width=True,hide_index=True)
 
 

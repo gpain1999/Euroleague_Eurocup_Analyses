@@ -79,7 +79,7 @@ colonnes_a_convertir = ['PM_ON', 'PTS', 'DR', 'OR', 'TR', 'AS', 'ST', 'TO', '1_T
 
 ######################### DATA
 
-off_detail = f.get_aggregated_data(
+team_detail = f.get_aggregated_data(
     df=df, min_round=selected_range[0], max_round=selected_range[1],
     selected_teams=[CODETEAM],
     selected_opponents=[],
@@ -88,14 +88,14 @@ off_detail = f.get_aggregated_data(
     mode="CUMULATED",
     percent="MADE"
 )
-off_detail[colonnes_a_convertir] = off_detail[colonnes_a_convertir].astype('Int64')
-off_detail = off_detail.sort_values(by = "ROUND",ascending=False)
-off_detail = off_detail.loc[:, (off_detail != "---").any(axis=0)]
-off_detail = off_detail.drop(columns = ["TEAM","NB_GAME"])
-win_counts = off_detail["WIN"].value_counts().to_dict()
+team_detail[colonnes_a_convertir] = team_detail[colonnes_a_convertir].astype('Int64')
+team_detail = team_detail.sort_values(by = "ROUND",ascending=False)
+team_detail = team_detail.loc[:, (team_detail != "---").any(axis=0)]
+team_detail = team_detail.drop(columns = ["TEAM","NB_GAME"])
+win_counts = team_detail["WIN"].value_counts().to_dict()
 
 
-def_detail = f.get_aggregated_data(
+opp_detail = f.get_aggregated_data(
     df=df, min_round=selected_range[0], max_round=selected_range[1],
     selected_teams=[],
     selected_opponents=[CODETEAM],
@@ -104,12 +104,12 @@ def_detail = f.get_aggregated_data(
     mode="CUMULATED",
     percent="MADE"
 )
-def_detail[colonnes_a_convertir] = def_detail[colonnes_a_convertir].astype('Int64')
-def_detail = def_detail.sort_values(by = "ROUND",ascending=False)
-def_detail = def_detail.loc[:, (def_detail != "---").any(axis=0)]
-def_detail = def_detail.drop(columns = ["OPPONENT","NB_GAME"])
+opp_detail[colonnes_a_convertir] = opp_detail[colonnes_a_convertir].astype('Int64')
+opp_detail = opp_detail.sort_values(by = "ROUND",ascending=False)
+opp_detail = opp_detail.loc[:, (opp_detail != "---").any(axis=0)]
+opp_detail = opp_detail.drop(columns = ["OPPONENT","NB_GAME"])
 
-off_moyenne = f.get_aggregated_data(
+team_moyenne = f.get_aggregated_data(
     df=df, min_round=selected_range[0], max_round=selected_range[1],
     selected_teams=[CODETEAM],
     selected_opponents=[],
@@ -118,10 +118,10 @@ off_moyenne = f.get_aggregated_data(
     mode="AVERAGE",
     percent="MADE"
 )
-off_moyenne = off_moyenne.loc[:, (off_moyenne != "---").any(axis=0)]
-off_moyenne = off_moyenne.drop(columns = ["TEAM","NB_GAME","HOME","WIN","TIME_ON"])
+team_moyenne = team_moyenne.loc[:, (team_moyenne != "---").any(axis=0)]
+team_moyenne = team_moyenne.drop(columns = ["TEAM","NB_GAME","HOME","WIN","TIME_ON"])
 
-def_moyenne = f.get_aggregated_data(
+opp_moyenne = f.get_aggregated_data(
     df=df, min_round=selected_range[0], max_round=selected_range[1],
     selected_teams=[],
     selected_opponents=[CODETEAM],
@@ -130,10 +130,10 @@ def_moyenne = f.get_aggregated_data(
     mode="AVERAGE",
     percent="MADE"
 )
-def_moyenne = def_moyenne.loc[:, (def_moyenne != "---").any(axis=0)]
-def_moyenne = def_moyenne.drop(columns = ["OPPONENT","NB_GAME","HOME","WIN","TIME_ON"])
+opp_moyenne = opp_moyenne.loc[:, (opp_moyenne != "---").any(axis=0)]
+opp_moyenne = opp_moyenne.drop(columns = ["OPPONENT","NB_GAME","HOME","WIN","TIME_ON"])
 
-delta_moyenne = off_moyenne - def_moyenne
+delta_moyenne = team_moyenne - opp_moyenne
 
 ################### STYLES
 
@@ -247,11 +247,11 @@ with col1 :
             unsafe_allow_html=True
         )
 
-        fig2 = f.plot_semi_circular_chart(off_detail["1_R"].sum()/off_detail["1_T"].sum() if off_detail["1_T"].sum() != 0 else 0,"1P",size=int(90*zoom), font_size=int(20*zoom))
+        fig2 = f.plot_semi_circular_chart(team_detail["1_R"].sum()/team_detail["1_T"].sum() if team_detail["1_T"].sum() != 0 else 0,"1P",size=int(90*zoom), font_size=int(20*zoom))
         st.plotly_chart(fig2,use_container_width=True)
-        fig2 = f.plot_semi_circular_chart(off_detail["2_R"].sum()/off_detail["2_T"].sum() if off_detail["2_T"].sum() != 0 else 0,"2P",size=int(90*zoom), font_size=int(20*zoom))
+        fig2 = f.plot_semi_circular_chart(team_detail["2_R"].sum()/team_detail["2_T"].sum() if team_detail["2_T"].sum() != 0 else 0,"2P",size=int(90*zoom), font_size=int(20*zoom))
         st.plotly_chart(fig2,use_container_width=True)
-        fig2 = f.plot_semi_circular_chart(off_detail["3_R"].sum()/off_detail["3_T"].sum() if off_detail["3_T"].sum() != 0 else 0,"3P",size=int(90*zoom), font_size=int(20*zoom))
+        fig2 = f.plot_semi_circular_chart(team_detail["3_R"].sum()/team_detail["3_T"].sum() if team_detail["3_T"].sum() != 0 else 0,"3P",size=int(90*zoom), font_size=int(20*zoom))
         st.plotly_chart(fig2,use_container_width=True)
 
     with colb : 
@@ -264,11 +264,11 @@ with col1 :
             unsafe_allow_html=True
         )
 
-        fig2 = f.plot_semi_circular_chart(def_detail["1_R"].sum()/def_detail["1_T"].sum() if def_detail["1_T"].sum() != 0 else 0,"1P",size=int(90*zoom), font_size=int(20*zoom))
+        fig2 = f.plot_semi_circular_chart(opp_detail["1_R"].sum()/opp_detail["1_T"].sum() if opp_detail["1_T"].sum() != 0 else 0,"1P",size=int(90*zoom), font_size=int(20*zoom))
         st.plotly_chart(fig2,use_container_width=True)
-        fig2 = f.plot_semi_circular_chart(def_detail["2_R"].sum()/def_detail["2_T"].sum() if def_detail["2_T"].sum() != 0 else 0,"2P",size=int(90*zoom), font_size=int(20*zoom))
+        fig2 = f.plot_semi_circular_chart(opp_detail["2_R"].sum()/opp_detail["2_T"].sum() if opp_detail["2_T"].sum() != 0 else 0,"2P",size=int(90*zoom), font_size=int(20*zoom))
         st.plotly_chart(fig2,use_container_width=True)
-        fig2 = f.plot_semi_circular_chart(def_detail["3_R"].sum()/def_detail["3_T"].sum() if def_detail["3_T"].sum() != 0 else 0,"3P",size=int(90*zoom), font_size=int(20*zoom))
+        fig2 = f.plot_semi_circular_chart(opp_detail["3_R"].sum()/opp_detail["3_T"].sum() if opp_detail["3_T"].sum() != 0 else 0,"3P",size=int(90*zoom), font_size=int(20*zoom))
         st.plotly_chart(fig2,use_container_width=True)
 
     st.markdown(
@@ -291,7 +291,7 @@ with col1 :
             ''',
             unsafe_allow_html=True
         )
-        fig2 = f.plot_semi_circular_chart(off_moyenne["DR"].sum()/(off_moyenne["DR"].sum() + def_moyenne["OR"].sum()),"", size=int(90*zoom), font_size=int(20*zoom))
+        fig2 = f.plot_semi_circular_chart(team_moyenne["DR"].sum()/(team_moyenne["DR"].sum() + opp_moyenne["OR"].sum()),"", size=int(90*zoom), font_size=int(20*zoom))
         st.plotly_chart(fig2,use_container_width=True)
     with colb :
         
@@ -303,27 +303,27 @@ with col1 :
             ''',
             unsafe_allow_html=True
         )
-        fig2 = f.plot_semi_circular_chart(off_moyenne["OR"].sum()/(off_moyenne["OR"].sum() + def_moyenne["DR"].sum()),"",size=int(90*zoom), font_size=int(20*zoom))
+        fig2 = f.plot_semi_circular_chart(team_moyenne["OR"].sum()/(team_moyenne["OR"].sum() + opp_moyenne["DR"].sum()),"",size=int(90*zoom), font_size=int(20*zoom))
         st.plotly_chart(fig2,use_container_width=True)
 
 with col2 :
-    st.header(f"Averages {CODETEAM}")
-    st.dataframe(off_moyenne,height=60, use_container_width=True,hide_index=True)
+    st.header(f"Averages : {CODETEAM}")
+    st.dataframe(team_moyenne,height=60, use_container_width=True,hide_index=True)
 
-    st.header(f"Averages Opponents")
-    st.dataframe(def_moyenne,height=60, use_container_width=True,hide_index=True)
+    st.header(f"Averages : Opponents")
+    st.dataframe(opp_moyenne,height=60, use_container_width=True,hide_index=True)
 
     delta_moyenne_2 = delta_moyenne.style.apply(
-        lambda x: [color_delta(val, col, ['TO', 'FP', 'CF', 'NCF'] ) for val, col in zip(x, x.index)], axis=1
+        lambda x: [color_delta(val, col, ['TO', 'CF', 'NCF'] ) for val, col in zip(x, x.index)], axis=1
     ).format(precision=1)
-    st.header("Averages Delta")
+    st.header("Averages : Delta")
     st.dataframe(delta_moyenne_2,height=60, use_container_width=True,hide_index=True)
     
-    off_detail_2 = off_detail.style.apply(highlight_win, axis=1).format(precision=1) 
-    def_detail_2 = def_detail.style.apply(highlight_win_o, axis=1).format(precision=1)  
-    st.header(f"Stats GAME BY GAME {CODETEAM}")
-    st.dataframe(off_detail_2,height=min(38*len(off_detail),650), use_container_width=True,hide_index=True)
-    st.header("Stats GAME BY GAME Opponents")
-    st.dataframe(def_detail_2,height=min(38*len(def_detail),650), use_container_width=True,hide_index=True)
+    team_detail_2 = team_detail.style.apply(highlight_win, axis=1).format(precision=1) 
+    opp_detail_2 = opp_detail.style.apply(highlight_win_o, axis=1).format(precision=1)  
+    st.header(f"Stats GAME BY GAME : {CODETEAM}")
+    st.dataframe(team_detail_2,height=min(38*len(team_detail),650), use_container_width=True,hide_index=True)
+    st.header("Stats GAME BY GAME : Opponents")
+    st.dataframe(opp_detail_2,height=min(38*len(opp_detail),650), use_container_width=True,hide_index=True)
 
 
