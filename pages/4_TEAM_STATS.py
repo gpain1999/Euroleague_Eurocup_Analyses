@@ -104,6 +104,7 @@ opp_detail = f.get_aggregated_data(
     mode="CUMULATED",
     percent="MADE"
 )
+
 opp_detail[colonnes_a_convertir] = opp_detail[colonnes_a_convertir].astype('Int64')
 opp_detail = opp_detail.sort_values(by = "ROUND",ascending=False)
 opp_detail = opp_detail.loc[:, (opp_detail != "---").any(axis=0)]
