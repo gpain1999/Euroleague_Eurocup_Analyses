@@ -55,14 +55,37 @@ st.markdown(
     """
     <style>
     [data-testid="stSidebar"] {
-        min-width: 150px; /* Largeur minimale */
-        max-width: 300px; /* Largeur maximale */
-        width: 225px; /* Largeur fixe */
+        min-width: 60px; /* Largeur minimale */
+        max-width: 240px; /* Largeur maximale */
+        width: 120px; /* Largeur fixe */
     }
     </style>
     """,
     unsafe_allow_html=True
 )
+
+
+col1,col2,col3,col4 = st.columns([1,1,1,1]) 
+
+with col1 :
+    selected_fields = st.multiselect(
+        "Champs Sélectionnés",
+        options=["ROUND", "PLAYER", "TEAM", "OPPONENT"],
+        default=["PLAYER", "TEAM"]
+    )
+
+with col2 :
+
+    mode = st.selectbox("Méthode d'Agrégation", options=["CUMULATED", "AVERAGE"], index=0)
+
+with col3 :
+    percent = st.selectbox("Affichage des tirs", options=["MADE", "PERCENT"], index=0)
+
+with col4 :
+    I_MODE = st.checkbox("Activer le mode I_stats", value=False)
+
+
+
 st.sidebar.header("Paramètres")
 
 selected_range = st.sidebar.slider(
@@ -90,16 +113,8 @@ selected_players = st.sidebar.multiselect("Joueurs Sélectionnés", options=avai
 # Autres paramètres
 selected_opponents = st.sidebar.multiselect("Adversaires Sélectionnés", options=sorted(df["OPPONENT"].unique()) if not df.empty else [])
 
-selected_fields = st.sidebar.multiselect(
-    "Champs Sélectionnés",
-    options=["ROUND", "PLAYER", "TEAM", "OPPONENT"],
-    default=["PLAYER", "TEAM"]
-)
 
-mode = st.sidebar.selectbox("Méthode d'Agrégation", options=["CUMULATED", "AVERAGE"], index=0)
-percent = st.sidebar.selectbox("Affichage des tirs", options=["MADE", "PERCENT"], index=0)
 
-I_MODE = st.sidebar.checkbox("Activer le mode I_stats", value=False)
 
 
 stats_i = [ "PTS", "DR", "OR", "TR", "AS", "ST", "CO", "TO", "FP", "CF", "NCF"]
