@@ -109,6 +109,21 @@ opp_detail = opp_detail.sort_values(by = "ROUND",ascending=False)
 opp_detail = opp_detail.loc[:, (opp_detail != "---").any(axis=0)]
 opp_detail = opp_detail.drop(columns = ["OPPONENT","NB_GAME","TIME_ON"])
 
+
+league_detail = f.get_aggregated_data(
+    df=df, min_round=selected_range[0], max_round=selected_range[1],
+    selected_teams=[],
+    selected_opponents=[],
+    selected_fields=["ROUND","TEAM"],
+    selected_players=[],
+    mode="CUMULATED",
+    percent="MADE"
+)
+league_detail[colonnes_a_convertir] = league_detail[colonnes_a_convertir].astype('Int64')
+league_detail = league_detail.sort_values(by = "ROUND",ascending=False)
+league_detail = league_detail.loc[:, (league_detail != "---").any(axis=0)]
+league_detail = league_detail.drop(columns = ["TEAM","NB_GAME","TIME_ON"])
+
 team_moyenne = f.get_aggregated_data(
     df=df, min_round=selected_range[0], max_round=selected_range[1],
     selected_teams=[CODETEAM],
@@ -133,10 +148,27 @@ opp_moyenne = f.get_aggregated_data(
 opp_moyenne = opp_moyenne.loc[:, (opp_moyenne != "---").any(axis=0)]
 opp_moyenne = opp_moyenne.drop(columns = ["OPPONENT","NB_GAME","HOME","WIN","TIME_ON"])
 
-delta_moyenne = team_moyenne - opp_moyenne
+league_moyenne = f.get_aggregated_data(
+    df=df, min_round=selected_range[0], max_round=selected_range[1],
+    selected_teams=[],
+    selected_opponents=[],
+    selected_fields=["TEAM"],
+    selected_players=[],
+    mode="AVERAGE",
+    percent="MADE"
+)
+league_moyenne = league_moyenne.loc[:, (league_moyenne != "---").any(axis=0)]
+league_moyenne = league_moyenne.drop(columns = ["TEAM","NB_GAME","HOME","WIN","TIME_ON"])
 
-delta_moyenne = delta_moyenne.drop(columns = ["PM_ON"])
+c = (league_moyenne.columns)
+for col in c :
+    league_moyenne[c] = league_moyenne[c].mean().round(1)
 
+delta_moyenne_opp = team_moyenne - opp_moyenne
+delta_moyenne_opp = delta_moyenne_opp.drop(columns = ["PM_ON"])
+
+delta_moyenne_league = team_moyenne - league_moyenne
+delta_moyenne_league = delta_moyenne_league.drop(columns = ["PM_ON"])
 
 ################### STYLES
 
@@ -209,7 +241,7 @@ with col3 :
         st.markdown(
             f'''
             <p style="font-size:{taille}px; text-align: center; background-color: #CCFFCC;color: black; padding: 10px; border-radius: 5px;">
-                <b>{win_counts["YES"]}&nbsp;W</b>
+                <b>{win_counts["YES"]}&nbsp;WINS</b>
             </p>
             ''',
             unsafe_allow_html=True
@@ -218,7 +250,7 @@ with col3 :
         st.markdown(
             f'''
             <p style="font-size:{taille}px; text-align: center; background-color: #FFCCCC;color: black; padding: 10px; border-radius: 5px;">
-                <b>{win_counts["NO"]}&nbsp;L</b>
+                <b>{win_counts["NO"]}&nbsp;LOSES</b>
             </p>
             ''',
             unsafe_allow_html=True
@@ -332,6 +364,41 @@ with col6 :
         
 col1, col2 = st.columns([1.5, 7])
 
+
+with col2 :
+    st.header(f"Averages : {CODETEAM}")
+    st.dataframe(team_moyenne,height=60, use_container_width=True,hide_index=True)
+
+    name, valu,_ = st.columns([1.5, 1,3])
+
+    with valu :
+        DELTA = st.selectbox("COMPARAISON TYPE", options=["LEAGUE", "OPPONENTS"], index=0)
+
+    with name :
+        st.header(f"Averages {DELTA}")
+
+
+    if DELTA == "OPPONENTS" :
+
+        st.dataframe(opp_moyenne,height=60, use_container_width=True,hide_index=True)
+    else :
+        st.dataframe(league_moyenne,height=60, use_container_width=True,hide_index=True)
+
+    delta_moyenne_opp_2 = delta_moyenne_opp.style.apply(
+        lambda x: [color_delta(val, col, ['TO', 'CF', 'NCF'] ) for val, col in zip(x, x.index)], axis=1
+    ).format(precision=1)
+
+    delta_moyenne_league_2 = delta_moyenne_league.style.apply(
+        lambda x: [color_delta(val, col, ['TO', 'CF', 'NCF'] ) for val, col in zip(x, x.index)], axis=1
+    ).format(precision=1)
+
+    st.header(f"DELTA {CODETEAM} - {DELTA}")
+
+    if DELTA == "OPPONENTS" :
+        st.dataframe(delta_moyenne_opp_2,height=60, use_container_width=True,hide_index=True)
+    else : 
+        st.dataframe(delta_moyenne_league_2,height=60, use_container_width=True,hide_index=True)
+
 with col1 : 
 
 
@@ -368,21 +435,31 @@ with col1 :
         st.plotly_chart(fig2,use_container_width=True)
 
     with colb : 
+
         st.markdown(
             f'''
             <p style="font-size:{int(taille*0.75)}px; text-align: center;">
-                <b> % OPPONENTS</b>
+                <b> % {DELTA}</b>
             </p>
             ''',
             unsafe_allow_html=True
         )
 
-        fig2 = f.plot_semi_circular_chart(opp_detail["1_R"].sum()/opp_detail["1_T"].sum() if opp_detail["1_T"].sum() != 0 else 0,"1P",size=int(120*zoom), font_size=int(20*zoom))
-        st.plotly_chart(fig2,use_container_width=True)
-        fig2 = f.plot_semi_circular_chart(opp_detail["2_R"].sum()/opp_detail["2_T"].sum() if opp_detail["2_T"].sum() != 0 else 0,"2P",size=int(120*zoom), font_size=int(20*zoom))
-        st.plotly_chart(fig2,use_container_width=True)
-        fig2 = f.plot_semi_circular_chart(opp_detail["3_R"].sum()/opp_detail["3_T"].sum() if opp_detail["3_T"].sum() != 0 else 0,"3P",size=int(120*zoom), font_size=int(20*zoom))
-        st.plotly_chart(fig2,use_container_width=True)
+        if DELTA == "OPPONENTS" : 
+            fig2 = f.plot_semi_circular_chart(opp_detail["1_R"].sum()/opp_detail["1_T"].sum() if opp_detail["1_T"].sum() != 0 else 0,"1P",size=int(120*zoom), font_size=int(20*zoom))
+            st.plotly_chart(fig2,use_container_width=True)
+            fig2 = f.plot_semi_circular_chart(opp_detail["2_R"].sum()/opp_detail["2_T"].sum() if opp_detail["2_T"].sum() != 0 else 0,"2P",size=int(120*zoom), font_size=int(20*zoom))
+            st.plotly_chart(fig2,use_container_width=True)
+            fig2 = f.plot_semi_circular_chart(opp_detail["3_R"].sum()/opp_detail["3_T"].sum() if opp_detail["3_T"].sum() != 0 else 0,"3P",size=int(120*zoom), font_size=int(20*zoom))
+            st.plotly_chart(fig2,use_container_width=True)
+        else : 
+            fig2 = f.plot_semi_circular_chart(league_detail["1_R"].sum()/league_detail["1_T"].sum() if league_detail["1_T"].sum() != 0 else 0,"1P",size=int(120*zoom), font_size=int(20*zoom))
+            st.plotly_chart(fig2,use_container_width=True)
+            fig2 = f.plot_semi_circular_chart(league_detail["2_R"].sum()/league_detail["2_T"].sum() if league_detail["2_T"].sum() != 0 else 0,"2P",size=int(120*zoom), font_size=int(20*zoom))
+            st.plotly_chart(fig2,use_container_width=True)
+            fig2 = f.plot_semi_circular_chart(league_detail["3_R"].sum()/league_detail["3_T"].sum() if league_detail["3_T"].sum() != 0 else 0,"3P",size=int(120*zoom), font_size=int(20*zoom))
+            st.plotly_chart(fig2,use_container_width=True)            
+
 
     st.markdown(
         f'''
@@ -419,18 +496,7 @@ with col1 :
         fig2 = f.plot_semi_circular_chart(team_detail["OR"].sum()/(team_detail["OR"].sum() + opp_detail["DR"].sum()),"",size=int(120*zoom), font_size=int(20*zoom))
         st.plotly_chart(fig2,use_container_width=True)
 
-with col2 :
-    st.header(f"Averages : {CODETEAM}")
-    st.dataframe(team_moyenne,height=60, use_container_width=True,hide_index=True)
 
-    st.header(f"Averages : Opponents")
-    st.dataframe(opp_moyenne,height=60, use_container_width=True,hide_index=True)
-
-    delta_moyenne_2 = delta_moyenne.style.apply(
-        lambda x: [color_delta(val, col, ['TO', 'CF', 'NCF'] ) for val, col in zip(x, x.index)], axis=1
-    ).format(precision=1)
-    st.header("Averages : Delta")
-    st.dataframe(delta_moyenne_2,height=60, use_container_width=True,hide_index=True)
     
 team_detail_2 = team_detail.style.apply(highlight_win, axis=1).format(precision=1) 
 opp_detail_2 = opp_detail.style.apply(highlight_win_o, axis=1).format(precision=1)  

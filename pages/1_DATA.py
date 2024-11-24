@@ -142,6 +142,6 @@ if not df.empty:
     if 'NB_GAME' in result_df.columns and (result_df['NB_GAME'] == 1).all():
         result_df = result_df.drop(columns=['NB_GAME'])
 
-    st.dataframe(result_df, height=min(38 + 38*len(result_df),900),width=2000,hide_index=True)  # Augmenter la hauteur du tableau
+    st.dataframe(result_df, height=min(35 + 35*len(result_df),900),width=2000,hide_index=True)  # Augmenter la hauteur du tableau
 else:
     st.error("Les données ne sont pas chargées. Veuillez vérifier votre fichier source.")
