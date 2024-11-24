@@ -432,11 +432,11 @@ with col2 :
     st.header("Averages : Delta")
     st.dataframe(delta_moyenne_2,height=60, use_container_width=True,hide_index=True)
     
-    team_detail_2 = team_detail.style.apply(highlight_win, axis=1).format(precision=1) 
-    opp_detail_2 = opp_detail.style.apply(highlight_win_o, axis=1).format(precision=1)  
-    st.header(f"Stats GAME BY GAME : {CODETEAM}")
-    st.dataframe(team_detail_2,height=min(38*len(team_detail),650), use_container_width=True,hide_index=True)
-    st.header("Stats GAME BY GAME : Opponents")
-    st.dataframe(opp_detail_2,height=min(38*len(opp_detail),650), use_container_width=True,hide_index=True)
+team_detail_2 = team_detail.style.apply(highlight_win, axis=1).format(precision=1) 
+opp_detail_2 = opp_detail.style.apply(highlight_win_o, axis=1).format(precision=1)  
+st.header(f"Stats GAME BY GAME : {CODETEAM}")
+st.dataframe(team_detail_2,height=min(38*len(team_detail),650), use_container_width=True,hide_index=True)
+st.header("Stats GAME BY GAME : Opponents")
+st.dataframe(opp_detail_2,height=min(38*len(opp_detail),650), use_container_width=True,hide_index=True)
 
 
