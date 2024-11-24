@@ -48,7 +48,7 @@ with col1 :
 
 with col2 :    
     # Configuration de l'interface utilisateur
-    st.title("Stats PER - by gpain1999")
+    st.title("DATA BRUT - by gpain1999")
 
 # Paramètres interactifs
 st.markdown(

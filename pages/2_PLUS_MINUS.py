@@ -70,7 +70,6 @@ st.markdown(
 )
 st.sidebar.header("Paramètres")
 
-num_players = st.sidebar.number_input("SOLO/DUO/TRIO", min_value=1,max_value=3 ,value=2)
 
 min_round = st.sidebar.number_input("Round Minimum", min_value=1, value=1)
 max_round = st.sidebar.number_input("Round Maximum", min_value=min_round, value=34 if not df.empty else 1)
@@ -87,8 +86,14 @@ else:
 
 selected_players = st.sidebar.multiselect("Joueurs Sélectionnés", options=sorted(available_players))
 
-min_percent_in = st.sidebar.slider("Time percent min", min_value=0, max_value=100, value=0)
 
+col1,col2,col3,col4 = st.columns([1,1,1, 4])
+
+with col1 :
+    min_percent_in = st.slider("Minimum Time percent together ", min_value=0, max_value=100, value=0)
+
+with col3 :
+    num_players = st.number_input("SOLO/DUO/TRIO", min_value=1,max_value=3 ,value=2)
 
 
 # Mise à jour automatique des résultats
@@ -103,7 +108,6 @@ if not df.empty:
                    selected_players = selected_players,
                    min_percent_in = min_percent_in)
 
-    st.write("### +/- RESULTS")
     st.dataframe(result_df, height=min(38*len(result_df),900),width=2000,hide_index=True)  # Augmenter la hauteur du tableau
 else:
     st.error("Les données ne sont pas chargées. Veuillez vérifier votre fichier source.")
