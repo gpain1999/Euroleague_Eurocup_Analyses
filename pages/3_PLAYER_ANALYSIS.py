@@ -310,11 +310,11 @@ with col1:
         else:
             st.warning(f"Logo introuvable pour l'équipe : {TEAM_PLAYER}")
 
-        fig2 = f.plot_semi_circular_chart(df_resultat["1_R"].sum()/df_resultat["1_T"].sum() if df_resultat["1_T"].sum() != 0 else 0,"1P",size=int(100*zoom),m=False)
+        fig2 = f.plot_semi_circular_chart(df_resultat["1_R"].sum()/df_resultat["1_T"].sum() if df_resultat["1_T"].sum() != 0 else 0,"1P",size=int(100*zoom),font_size=17,m=False)
         st.plotly_chart(fig2)
-        fig2 = f.plot_semi_circular_chart(df_resultat["2_R"].sum()/df_resultat["2_T"].sum() if df_resultat["2_T"].sum() != 0 else 0,"2P",size=int(100*zoom),m=False)
+        fig2 = f.plot_semi_circular_chart(df_resultat["2_R"].sum()/df_resultat["2_T"].sum() if df_resultat["2_T"].sum() != 0 else 0,"2P",size=int(100*zoom),font_size=17,m=False)
         st.plotly_chart(fig2)
-        fig2 = f.plot_semi_circular_chart(df_resultat["3_R"].sum()/df_resultat["3_T"].sum() if df_resultat["3_T"].sum() != 0 else 0,"3P",size=int(100*zoom),m=False)
+        fig2 = f.plot_semi_circular_chart(df_resultat["3_R"].sum()/df_resultat["3_T"].sum() if df_resultat["3_T"].sum() != 0 else 0,"3P",size=int(100*zoom),font_size=17,m=False)
         st.plotly_chart(fig2)
 
         
