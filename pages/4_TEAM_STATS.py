@@ -207,12 +207,15 @@ with col3 :
 
 
 
-col1,col2 = st.columns([1,6])
+col1,col2,col3 = st.columns([1,1,5])
 
 with col1:
-    min_game = st.number_input("Minimum game played", min_value=1,max_value=max(team_detail["ROUND"]) ,value=math.ceil(max(team_detail["ROUND"])/2))
+    min_game = st.number_input("Minimum game played", min_value=1,max_value=max(team_detail["ROUND"]) ,value=math.ceil(max(team_detail["ROUND"])*0.6))
 
-col1, col2,col3,col4,col5 = st.columns([1,1,1,1,1])
+with col2 :
+    top = st.number_input("TOP", min_value=3,max_value=20 ,value=3)
+
+col1, col2,col3,col4,col5,col6 = st.columns([1,1,1,1,1,1])
 
 
 team_player_moyenne = f.get_aggregated_data(
@@ -229,27 +232,32 @@ team_player_moyenne= team_player_moyenne[team_player_moyenne["NB_GAME"]>=min_gam
 
 
 with col1 :
-    st.dataframe(team_player_moyenne[["PLAYER","PER","NB_GAME"]].sort_values(by = "PER",ascending = False).head(3)
-                 ,height=36*4, 
+    st.dataframe(team_player_moyenne[["PLAYER","PER"]].sort_values(by = "PER",ascending = False).head(top)
+                 ,height=36*(top+1), 
                  use_container_width=True,hide_index=True)
 
 
 with col2 :
-    st.dataframe(team_player_moyenne[["PLAYER","PTS","NB_GAME"]].sort_values(by = "PTS",ascending = False).head(3)
-                 ,height=36*4, 
+    st.dataframe(team_player_moyenne[["PLAYER","PTS"]].sort_values(by = "PTS",ascending = False).head(top)
+                 ,height=36*(top+1), 
                  use_container_width=True,hide_index=True)
 with col3 :
-    st.dataframe(team_player_moyenne[["PLAYER","TR","NB_GAME"]].sort_values(by = "TR",ascending = False).head(3)
-                 ,height=36*4, 
+    st.dataframe(team_player_moyenne[["PLAYER","TR"]].sort_values(by = "TR",ascending = False).head(top)
+                 ,height=36*(top+1), 
                  use_container_width=True,hide_index=True)
 
 with col4 :
-    st.dataframe(team_player_moyenne[["PLAYER","AS","NB_GAME"]].sort_values(by = "AS",ascending = False).head(3)
-                 ,height=36*4, 
+    st.dataframe(team_player_moyenne[["PLAYER","AS"]].sort_values(by = "AS",ascending = False).head(top)
+                 ,height=36*(top+1), 
                  use_container_width=True,hide_index=True)
 with col5 :
-    st.dataframe(team_player_moyenne[["PLAYER","CO","NB_GAME"]].sort_values(by = "CO",ascending = False).head(3)
-                 ,height=36*4, 
+    st.dataframe(team_player_moyenne[["PLAYER","CO"]].sort_values(by = "CO",ascending = False).head(top)
+                 ,height=36*(top+1), 
+                 use_container_width=True,hide_index=True)
+    
+with col6 :
+    st.dataframe(team_player_moyenne[["PLAYER","PM_ON"]].sort_values(by = "PM_ON",ascending = False).head(top)
+                 ,height=36*(top+1), 
                  use_container_width=True,hide_index=True)
 col1, col2 = st.columns([1, 7])
 
