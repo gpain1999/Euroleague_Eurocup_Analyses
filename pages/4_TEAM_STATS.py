@@ -199,10 +199,39 @@ with col2 :
         
 
 with col3 :
-    if os.path.exists(team_logo_path):
-        st.image(team_logo_path, caption=f"Équipe : {CODETEAM}", width=int(200*zoom))
-    else:
-        st.warning(f"Logo introuvable pour l'équipe : {CODETEAM}")
+    colA, colB = st.columns([1, 1])
+
+
+    taille = int(25*zoom)
+    # Pour les victoires (YES)
+
+    with colA :
+        st.markdown(
+            f'''
+            <p style="font-size:{taille}px; text-align: center; background-color: #CCFFCC;color: black; padding: 10px; border-radius: 5px;">
+                <b>{win_counts["YES"]}&nbsp;W</b>
+            </p>
+            ''',
+            unsafe_allow_html=True
+        )
+        # Pour les défaites (NO)
+        st.markdown(
+            f'''
+            <p style="font-size:{taille}px; text-align: center; background-color: #FFCCCC;color: black; padding: 10px; border-radius: 5px;">
+                <b>{win_counts["NO"]}&nbsp;L</b>
+            </p>
+            ''',
+            unsafe_allow_html=True
+        )
+
+
+    with colB :
+
+
+        if os.path.exists(team_logo_path):
+            st.image(team_logo_path, caption=f"Équipe : {CODETEAM}", width=int(200*zoom))
+        else:
+            st.warning(f"Logo introuvable pour l'équipe : {CODETEAM}")
 
 
 
@@ -264,28 +293,6 @@ col1, col2 = st.columns([1, 7])
 with col1 : 
 
 
-    taille = int(25*zoom)
-    # Pour les victoires (YES)
-    st.markdown(
-        f'''
-        <p style="font-size:{taille}px; text-align: center; background-color: #CCFFCC;color: black; padding: 10px; border-radius: 5px;">
-            <b>{win_counts["YES"]}&nbsp;WINS</b>
-        </p>
-        ''',
-        unsafe_allow_html=True
-    )
-
-
-
-    # Pour les défaites (NO)
-    st.markdown(
-        f'''
-        <p style="font-size:{taille}px; text-align: center; background-color: #FFCCCC;color: black; padding: 10px; border-radius: 5px;">
-            <b>{win_counts["NO"]}&nbsp;LOSES</b>
-        </p>
-        ''',
-        unsafe_allow_html=True
-    )
 
     st.markdown(
         f'''
