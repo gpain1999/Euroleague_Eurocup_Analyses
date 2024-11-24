@@ -81,8 +81,7 @@ with col2 :
 with col3 :
     percent = st.selectbox("Affichage des tirs", options=["MADE", "PERCENT"], index=0)
 
-with col4 :
-    I_MODE = st.checkbox("Activer le mode I_stats", value=False)
+
 
 
 
@@ -113,7 +112,7 @@ selected_players = st.sidebar.multiselect("Joueurs Sélectionnés", options=avai
 # Autres paramètres
 selected_opponents = st.sidebar.multiselect("Adversaires Sélectionnés", options=sorted(df["OPPONENT"].unique()) if not df.empty else [])
 
-
+I_MODE = st.sidebar.checkbox("Activer le mode I_stats", value=False)
 
 
 

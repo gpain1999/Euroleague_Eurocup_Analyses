@@ -135,7 +135,7 @@ opp_moyenne = opp_moyenne.drop(columns = ["OPPONENT","NB_GAME","HOME","WIN","TIM
 
 delta_moyenne = team_moyenne - opp_moyenne
 
-
+delta_moyenne = delta_moyenne.drop(columns = ["PM_ON"])
 
 
 ################### STYLES
