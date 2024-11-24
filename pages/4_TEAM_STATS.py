@@ -44,7 +44,7 @@ st.markdown(
     [data-testid="stSidebar"] {
         min-width: 60px; /* Largeur minimale */
         max-width: 240px; /* Largeur maximale */
-        width: 120px; /* Largeur fixe */
+        width: 100px; /* Largeur fixe */
     }
     </style>
     """,
@@ -183,8 +183,17 @@ with col1 :
         st.warning(f"L'image pour {competition} est introuvable à l'emplacement : {image_path}") 
 
 
-with col2 : 
-    st.title("Team Stats - by gpain1999 ")
+with col2 :
+    taille_titre = 70*zoom
+    st.markdown(
+        f'''
+        <p style="font-size:{int(taille_titre)}px; text-align: center; padding: 10pxs;">
+            <b>Team Stats - by gpain1999</b>
+        </p>
+        ''',
+        unsafe_allow_html=True
+    )
+        
 
 with col3 :
     if os.path.exists(team_logo_path):
@@ -291,7 +300,7 @@ with col1 :
             ''',
             unsafe_allow_html=True
         )
-        fig2 = f.plot_semi_circular_chart(team_moyenne["DR"].sum()/(team_moyenne["DR"].sum() + opp_moyenne["OR"].sum()),"", size=int(90*zoom), font_size=int(20*zoom))
+        fig2 = f.plot_semi_circular_chart(team_detail["DR"].sum()/(team_detail["DR"].sum() + opp_detail["OR"].sum()),"", size=int(90*zoom), font_size=int(20*zoom))
         st.plotly_chart(fig2,use_container_width=True)
     with colb :
         
@@ -303,7 +312,7 @@ with col1 :
             ''',
             unsafe_allow_html=True
         )
-        fig2 = f.plot_semi_circular_chart(team_moyenne["OR"].sum()/(team_moyenne["OR"].sum() + opp_moyenne["DR"].sum()),"",size=int(90*zoom), font_size=int(20*zoom))
+        fig2 = f.plot_semi_circular_chart(team_detail["OR"].sum()/(team_detail["OR"].sum() + opp_detail["DR"].sum()),"",size=int(90*zoom), font_size=int(20*zoom))
         st.plotly_chart(fig2,use_container_width=True)
 
 with col2 :

@@ -41,7 +41,6 @@ col1, col2,col3 = st.columns([1.2,2,1])
 
 with col1 : 
 
-
     try:
         image = Image.open(image_path)
         # Redimensionner l'image (par exemple, largeur de 300 pixels)
