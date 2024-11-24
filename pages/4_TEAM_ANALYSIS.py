@@ -90,7 +90,7 @@ team_logo_path = os.path.join(images_dir, f"{competition}_{season}_teams/{CODETE
 
 zoom = st.sidebar.slider(
     "Choisissez une valeur de zoom pour les photos",
-    min_value=0.5,
+    min_value=0.4,
     max_value=1.0,
     step=0.1,
     value=0.7,  # Valeur initiale
@@ -174,7 +174,7 @@ col1, col2 = st.columns([1, 7])
 with col1 : 
 
     if os.path.exists(team_logo_path):
-        st.image(team_logo_path, caption=f"Équipe : {CODETEAM}", width=int(100*zoom))
+        st.image(team_logo_path, caption=f"Équipe : {CODETEAM}", width=int(200*zoom))
     else:
         st.warning(f"Logo introuvable pour l'équipe : {CODETEAM}")
 
@@ -214,11 +214,11 @@ with col1 :
             unsafe_allow_html=True
         )
 
-        fig2 = f.plot_semi_circular_chart(off_detail["1_R"].sum()/off_detail["1_T"].sum() if off_detail["1_T"].sum() != 0 else 0,"1P",size=int(90*zoom), font_size=int(18*zoom))
+        fig2 = f.plot_semi_circular_chart(off_detail["1_R"].sum()/off_detail["1_T"].sum() if off_detail["1_T"].sum() != 0 else 0,"1P",size=int(90*zoom), font_size=int(20*zoom))
         st.plotly_chart(fig2,use_container_width=True)
-        fig2 = f.plot_semi_circular_chart(off_detail["2_R"].sum()/off_detail["2_T"].sum() if off_detail["2_T"].sum() != 0 else 0,"2P",size=int(90*zoom), font_size=int(18*zoom))
+        fig2 = f.plot_semi_circular_chart(off_detail["2_R"].sum()/off_detail["2_T"].sum() if off_detail["2_T"].sum() != 0 else 0,"2P",size=int(90*zoom), font_size=int(20*zoom))
         st.plotly_chart(fig2,use_container_width=True)
-        fig2 = f.plot_semi_circular_chart(off_detail["3_R"].sum()/off_detail["3_T"].sum() if off_detail["3_T"].sum() != 0 else 0,"3P",size=int(90*zoom), font_size=int(18*zoom))
+        fig2 = f.plot_semi_circular_chart(off_detail["3_R"].sum()/off_detail["3_T"].sum() if off_detail["3_T"].sum() != 0 else 0,"3P",size=int(90*zoom), font_size=int(20*zoom))
         st.plotly_chart(fig2,use_container_width=True)
 
     with colb : 
@@ -231,11 +231,11 @@ with col1 :
             unsafe_allow_html=True
         )
 
-        fig2 = f.plot_semi_circular_chart(def_detail["1_R"].sum()/def_detail["1_T"].sum() if def_detail["1_T"].sum() != 0 else 0,"1P",size=int(90*zoom), font_size=int(18*zoom))
+        fig2 = f.plot_semi_circular_chart(def_detail["1_R"].sum()/def_detail["1_T"].sum() if def_detail["1_T"].sum() != 0 else 0,"1P",size=int(90*zoom), font_size=int(20*zoom))
         st.plotly_chart(fig2,use_container_width=True)
-        fig2 = f.plot_semi_circular_chart(def_detail["2_R"].sum()/def_detail["2_T"].sum() if def_detail["2_T"].sum() != 0 else 0,"2P",size=int(90*zoom), font_size=int(18*zoom))
+        fig2 = f.plot_semi_circular_chart(def_detail["2_R"].sum()/def_detail["2_T"].sum() if def_detail["2_T"].sum() != 0 else 0,"2P",size=int(90*zoom), font_size=int(20*zoom))
         st.plotly_chart(fig2,use_container_width=True)
-        fig2 = f.plot_semi_circular_chart(def_detail["3_R"].sum()/def_detail["3_T"].sum() if def_detail["3_T"].sum() != 0 else 0,"3P",size=int(90*zoom), font_size=int(18*zoom))
+        fig2 = f.plot_semi_circular_chart(def_detail["3_R"].sum()/def_detail["3_T"].sum() if def_detail["3_T"].sum() != 0 else 0,"3P",size=int(90*zoom), font_size=int(20*zoom))
         st.plotly_chart(fig2,use_container_width=True)
 
 with col2 :

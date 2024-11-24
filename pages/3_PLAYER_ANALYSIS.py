@@ -79,7 +79,7 @@ st.sidebar.header("Paramètres")
 
 zoom = st.sidebar.slider(
     "Choisissez une valeur de zoom pour les photos",
-    min_value=0.5,
+    min_value=0.4,
     max_value=1.0,
     step=0.1,
     value=0.7,  # Valeur initiale
