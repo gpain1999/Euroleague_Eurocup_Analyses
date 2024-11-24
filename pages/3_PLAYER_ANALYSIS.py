@@ -309,7 +309,7 @@ player_image_path = os.path.join(images_dir, f"{competition}_{season}_players/{T
 
 
 st.header("Moyennes")
-st.dataframe(avg_data,height=60, use_container_width=True)
+st.dataframe(avg_data,height=60, use_container_width=True,hide_index=True)
 
 
 col1, col2, col3 = st.columns([3, 6, 4])
@@ -404,11 +404,11 @@ with col3:
 
 # Afficher le tableau stylé dans Streamlit
 st.header("Stats Joueur")
-st.dataframe(styled_df,height=min(38*len(df_resultat),650), use_container_width=True)
+st.dataframe(styled_df,height=min(38*len(df_resultat),650), use_container_width=True,hide_index=True)
 
 
 st.header("Duo +/-")
-st.dataframe(styled_result_pm,height=min(38*len(result_pm),650), use_container_width=True)
+st.dataframe(styled_result_pm,height=min(38*len(result_pm),650), use_container_width=True,hide_index=True)
 
 
 

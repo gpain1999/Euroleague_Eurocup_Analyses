@@ -21,8 +21,6 @@ st.set_page_config(
 import fonctions as f
 
 
-
-
 # Charger les données
 df = f.calcul_per2(data_dir, season, competition)
 df.insert(6, "I_PER", df["PER"] / df["TIME_ON"] ** 0.5)
@@ -135,6 +133,8 @@ def_moyenne = f.get_aggregated_data(
 def_moyenne = def_moyenne.loc[:, (def_moyenne != "---").any(axis=0)]
 def_moyenne = def_moyenne.drop(columns = ["OPPONENT","NB_GAME","HOME","WIN","TIME_ON"])
 
+delta_moyenne = off_moyenne - def_moyenne
+
 ################### STYLES
 
 def highlight_win(row):
@@ -146,6 +146,23 @@ def highlight_win_o(row):
     # Appliquer vert si WIN est "NO", rouge sinon
     color = 'background-color: #FFCCCC; color: black;' if row["WIN"] == "YES" else 'background-color: #CCFFCC; color: black;'
     return [color for _ in row.index]
+def color_delta(val, column_name, inverse_columns=None):
+    """
+    Applique une couleur au fond en fonction de la valeur et du nom de la colonne.
+    - Vert pour les valeurs positives et rouge pour les négatives par défaut.
+    - Logique inversée pour les colonnes spécifiées (inverse_columns).
+    """
+    if inverse_columns is None:
+        inverse_columns = []
+
+    if column_name in inverse_columns:
+        # Logique inversée
+        color = '#CCFFCC' if val < 0 else '#FFCCCC' if val > 0 else '#FFFFFF'
+    else:
+        # Logique par défaut
+        color = '#CCFFCC' if val > 0 else '#FFCCCC' if val < 0 else '#FFFFFF'
+    return f'background-color: {color}; color: black'
+
 ###################### PRINT
 
 image_path = f"images/{competition}.png"  # Chemin vers l'image
@@ -286,23 +303,27 @@ with col1 :
             ''',
             unsafe_allow_html=True
         )
-        print(off_moyenne["OR"].sum()/(off_moyenne["OR"].sum() + def_moyenne["DR"].sum()))
         fig2 = f.plot_semi_circular_chart(off_moyenne["OR"].sum()/(off_moyenne["OR"].sum() + def_moyenne["DR"].sum()),"",size=int(90*zoom), font_size=int(20*zoom))
         st.plotly_chart(fig2,use_container_width=True)
 
 with col2 :
     st.header(f"Moyennes {CODETEAM}")
-    st.dataframe(off_moyenne,height=60, use_container_width=True)
+    st.dataframe(off_moyenne,height=60, use_container_width=True,hide_index=True)
 
     st.header(f"Moyennes Adversaires")
-    st.dataframe(def_moyenne,height=60, use_container_width=True)
+    st.dataframe(def_moyenne,height=60, use_container_width=True,hide_index=True)
 
+    delta_moyenne_2 = delta_moyenne.style.apply(
+        lambda x: [color_delta(val, col, ['TO', 'FP', 'CF', 'NCF'] ) for val, col in zip(x, x.index)], axis=1
+    ).format(precision=1)
+    st.header("Moyennes Delta")
+    st.dataframe(delta_moyenne_2,height=60, use_container_width=True,hide_index=True)
+    
     off_detail_2 = off_detail.style.apply(highlight_win, axis=1).format(precision=1) 
     def_detail_2 = def_detail.style.apply(highlight_win_o, axis=1).format(precision=1)  
-
     st.header(f"Stats {CODETEAM}")
-    st.dataframe(off_detail_2,height=min(38*len(off_detail),650), use_container_width=True)
+    st.dataframe(off_detail_2,height=min(38*len(off_detail),650), use_container_width=True,hide_index=True)
     st.header("Stats Adversaires")
-    st.dataframe(def_detail_2,height=min(38*len(def_detail),650), use_container_width=True)
-    
+    st.dataframe(def_detail_2,height=min(38*len(def_detail),650), use_container_width=True,hide_index=True)
+
 
