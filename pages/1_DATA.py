@@ -42,7 +42,7 @@ with col1 :
         image = image.resize((max_width, int(image.height * (max_width / image.width))))
 
         # Afficher l'image redimensionnée
-        st.image(image, caption=f"Rapport pour {competition}")
+        st.image(image)
     except FileNotFoundError:
         st.warning(f"L'image pour {competition} est introuvable à l'emplacement : {image_path}") 
 

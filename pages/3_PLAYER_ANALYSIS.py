@@ -48,7 +48,7 @@ with col1 :
         image = image.resize((max_width, int(image.height * (max_width / image.width))))
 
         # Afficher l'image redimensionnée
-        st.image(image, caption=f"Rapport pour {competition}")
+        st.image(image)
     except FileNotFoundError:
         st.warning(f"L'image pour {competition} est introuvable à l'emplacement : {image_path}") 
 
@@ -303,7 +303,7 @@ with col1:
         team_logo_path = os.path.join(images_dir, f"{competition}_{season}_teams/{TEAM_PLAYER}.png")
 
         if os.path.exists(team_logo_path):
-            st.image(team_logo_path, caption=f"Équipe : {TEAM_PLAYER}", width=int(100*zoom))
+            st.image(team_logo_path, width=int(100*zoom))
         else:
             st.warning(f"Logo introuvable pour l'équipe : {TEAM_PLAYER}")
 
