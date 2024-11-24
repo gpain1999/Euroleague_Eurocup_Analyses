@@ -382,7 +382,7 @@ with col2 :
 
         st.dataframe(opp_moyenne,height=60, use_container_width=True,hide_index=True)
     else :
-        st.dataframe(league_moyenne,height=60, use_container_width=True,hide_index=True)
+        st.dataframe(league_moyenne.head(1),height=60, use_container_width=True,hide_index=True)
 
     delta_moyenne_opp_2 = delta_moyenne_opp.style.apply(
         lambda x: [color_delta(val, col, ['TO', 'CF', 'NCF'] ) for val, col in zip(x, x.index)], axis=1
