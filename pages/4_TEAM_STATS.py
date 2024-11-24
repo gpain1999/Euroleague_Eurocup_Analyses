@@ -4,7 +4,7 @@ import plotly.graph_objects as go
 import sys
 import os
 from PIL import Image
-
+import math
 season = 2024
 competition = "euroleague"
 data_dir = os.path.join(os.path.dirname(__file__), '../datas')
@@ -135,6 +135,9 @@ opp_moyenne = opp_moyenne.drop(columns = ["OPPONENT","NB_GAME","HOME","WIN","TIM
 
 delta_moyenne = team_moyenne - opp_moyenne
 
+
+
+
 ################### STYLES
 
 def highlight_win(row):
@@ -166,7 +169,7 @@ def color_delta(val, column_name, inverse_columns=None):
 ###################### PRINT
 
 image_path = f"images/{competition}.png"  # Chemin vers l'image
-col1, col2,col3 = st.columns([1, 2,1])
+col1, col2,col3 = st.columns([1, 3,1])
 
 with col1 : 
 
@@ -204,6 +207,50 @@ with col3 :
 
 
 
+col1,col2 = st.columns([1,6])
+
+with col1:
+    min_game = st.number_input("Minimum game played", min_value=1,max_value=max(team_detail["ROUND"]) ,value=math.ceil(max(team_detail["ROUND"])/2))
+
+col1, col2,col3,col4,col5 = st.columns([1,1,1,1,1])
+
+
+team_player_moyenne = f.get_aggregated_data(
+    df=df, min_round=selected_range[0], max_round=selected_range[1],
+    selected_teams=[CODETEAM],
+    selected_opponents=[],
+    selected_fields=["TEAM","PLAYER"],
+    selected_players=[],
+    mode="AVERAGE",
+    percent="MADE"
+)
+
+team_player_moyenne= team_player_moyenne[team_player_moyenne["NB_GAME"]>=min_game]
+
+
+with col1 :
+    st.dataframe(team_player_moyenne[["PLAYER","PER","NB_GAME"]].sort_values(by = "PER",ascending = False).head(3)
+                 ,height=36*4, 
+                 use_container_width=True,hide_index=True)
+
+
+with col2 :
+    st.dataframe(team_player_moyenne[["PLAYER","PTS","NB_GAME"]].sort_values(by = "PTS",ascending = False).head(3)
+                 ,height=36*4, 
+                 use_container_width=True,hide_index=True)
+with col3 :
+    st.dataframe(team_player_moyenne[["PLAYER","TR","NB_GAME"]].sort_values(by = "TR",ascending = False).head(3)
+                 ,height=36*4, 
+                 use_container_width=True,hide_index=True)
+
+with col4 :
+    st.dataframe(team_player_moyenne[["PLAYER","AS","NB_GAME"]].sort_values(by = "AS",ascending = False).head(3)
+                 ,height=36*4, 
+                 use_container_width=True,hide_index=True)
+with col5 :
+    st.dataframe(team_player_moyenne[["PLAYER","CO","NB_GAME"]].sort_values(by = "CO",ascending = False).head(3)
+                 ,height=36*4, 
+                 use_container_width=True,hide_index=True)
 col1, col2 = st.columns([1, 7])
 
 with col1 : 
