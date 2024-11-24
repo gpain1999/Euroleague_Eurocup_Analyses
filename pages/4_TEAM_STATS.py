@@ -184,7 +184,7 @@ with col1 :
 
 
 with col2 : 
-    st.title("Team Analysis - by gpain1999 ")
+    st.title("Team Stats - by gpain1999 ")
 
 with col3 :
     if os.path.exists(team_logo_path):
@@ -258,7 +258,7 @@ with col1 :
         st.markdown(
             f'''
             <p style="font-size:{int(taille*0.75)}px; text-align: center;">
-                <b> % OPPONENT</b>
+                <b> % OPPONENTS</b>
             </p>
             ''',
             unsafe_allow_html=True
@@ -307,23 +307,23 @@ with col1 :
         st.plotly_chart(fig2,use_container_width=True)
 
 with col2 :
-    st.header(f"Moyennes {CODETEAM}")
+    st.header(f"Averages {CODETEAM}")
     st.dataframe(off_moyenne,height=60, use_container_width=True,hide_index=True)
 
-    st.header(f"Moyennes Adversaires")
+    st.header(f"Averages Opponents")
     st.dataframe(def_moyenne,height=60, use_container_width=True,hide_index=True)
 
     delta_moyenne_2 = delta_moyenne.style.apply(
         lambda x: [color_delta(val, col, ['TO', 'FP', 'CF', 'NCF'] ) for val, col in zip(x, x.index)], axis=1
     ).format(precision=1)
-    st.header("Moyennes Delta")
+    st.header("Averages Delta")
     st.dataframe(delta_moyenne_2,height=60, use_container_width=True,hide_index=True)
     
     off_detail_2 = off_detail.style.apply(highlight_win, axis=1).format(precision=1) 
     def_detail_2 = def_detail.style.apply(highlight_win_o, axis=1).format(precision=1)  
-    st.header(f"Stats {CODETEAM}")
+    st.header(f"Stats GAME BY GAME {CODETEAM}")
     st.dataframe(off_detail_2,height=min(38*len(off_detail),650), use_container_width=True,hide_index=True)
-    st.header("Stats Adversaires")
+    st.header("Stats GAME BY GAME Opponents")
     st.dataframe(def_detail_2,height=min(38*len(def_detail),650), use_container_width=True,hide_index=True)
 
 

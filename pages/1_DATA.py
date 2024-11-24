@@ -65,7 +65,7 @@ st.markdown(
 )
 
 
-col1,col2,col3,col4 = st.columns([1,1,1,1]) 
+col1,col2,col3,col4 = st.columns([1.5,1,1,1]) 
 
 with col1 :
     selected_fields = st.multiselect(
@@ -140,9 +140,10 @@ if not df.empty:
                 # Renommer la colonne
                 result_df.rename(columns={s: f"I_{s}"}, inplace=True)
     
-
+    if 'NB_GAME' in result_df.columns and (result_df['NB_GAME'] == 1).all():
+        result_df = result_df.drop(columns=['NB_GAME'])
 
     st.write("### Tableau")
-    st.dataframe(result_df, height=min(38*len(result_df),900),width=2000,hide_index=True)  # Augmenter la hauteur du tableau
+    st.dataframe(result_df, height=min(38 + 38*len(result_df),900),width=2000,hide_index=True)  # Augmenter la hauteur du tableau
 else:
     st.error("Les données ne sont pas chargées. Veuillez vérifier votre fichier source.")
