@@ -12,7 +12,7 @@ sys.path.append(os.path.join(os.path.dirname(__file__), '../fonctions'))
 images_dir = os.path.join(os.path.dirname(__file__), '..', 'images')  # Path to the images directory
 
 st.set_page_config(
-    page_title="TEAM ANALYSIS",
+    page_title="TEAM STATS",
     layout="wide",  # Active le Wide mode par défaut
     initial_sidebar_state="expanded",  # Si vous avez une barre latérale
 )
@@ -20,26 +20,7 @@ st.set_page_config(
 
 import fonctions as f
 
-image_path = f"images/{competition}.png"  # Chemin vers l'image
-col1, col2 = st.columns([1, 2])
 
-with col1 : 
-
-
-    try:
-        image = Image.open(image_path)
-        # Redimensionner l'image (par exemple, largeur de 300 pixels)
-        max_width = 400
-        image = image.resize((max_width, int(image.height * (max_width / image.width))))
-
-        # Afficher l'image redimensionnée
-        st.image(image, caption=f"Rapport pour {competition}")
-    except FileNotFoundError:
-        st.warning(f"L'image pour {competition} est introuvable à l'emplacement : {image_path}") 
-
-
-with col2 : 
-    st.title("Team Analysis - by gpain1999 ")
 
 
 # Charger les données
@@ -167,22 +148,46 @@ def highlight_win_o(row):
     return [color for _ in row.index]
 ###################### PRINT
 
+image_path = f"images/{competition}.png"  # Chemin vers l'image
+col1, col2,col3 = st.columns([1, 2,1])
+
+with col1 : 
+
+
+    try:
+        image = Image.open(image_path)
+        # Redimensionner l'image (par exemple, largeur de 300 pixels)
+        max_width = 400
+        image = image.resize((max_width, int(image.height * (max_width / image.width))))
+
+        # Afficher l'image redimensionnée
+        st.image(image, caption=f"Rapport pour {competition}")
+    except FileNotFoundError:
+        st.warning(f"L'image pour {competition} est introuvable à l'emplacement : {image_path}") 
+
+
+with col2 : 
+    st.title("Team Analysis - by gpain1999 ")
+
+with col3 :
+    if os.path.exists(team_logo_path):
+        st.image(team_logo_path, caption=f"Équipe : {CODETEAM}", width=int(200*zoom))
+    else:
+        st.warning(f"Logo introuvable pour l'équipe : {CODETEAM}")
+
+
 
 
 col1, col2 = st.columns([1, 7])
 
 with col1 : 
 
-    if os.path.exists(team_logo_path):
-        st.image(team_logo_path, caption=f"Équipe : {CODETEAM}", width=int(200*zoom))
-    else:
-        st.warning(f"Logo introuvable pour l'équipe : {CODETEAM}")
 
     taille = int(25*zoom)
     # Pour les victoires (YES)
     st.markdown(
         f'''
-        <p style="font-size:{taille}px; text-align: center; background-color: #CCFFCC; padding: 10px; border-radius: 5px;">
+        <p style="font-size:{taille}px; text-align: center; background-color: #CCFFCC;color: black; padding: 10px; border-radius: 5px;">
             <b>{win_counts["YES"]}&nbsp;WINS</b>
         </p>
         ''',
@@ -194,7 +199,7 @@ with col1 :
     # Pour les défaites (NO)
     st.markdown(
         f'''
-        <p style="font-size:{taille}px; text-align: center; background-color: #FFCCCC; padding: 10px; border-radius: 5px;">
+        <p style="font-size:{taille}px; text-align: center; background-color: #FFCCCC;color: black; padding: 10px; border-radius: 5px;">
             <b>{win_counts["NO"]}&nbsp;LOSES</b>
         </p>
         ''',
@@ -269,7 +274,7 @@ with col1 :
             ''',
             unsafe_allow_html=True
         )
-        fig2 = f.plot_semi_circular_chart(off_moyenne["DR"].sum()/(off_moyenne["DR"].sum() + def_moyenne["OR"].sum()),"BLA", size=int(90*zoom), font_size=int(20*zoom))
+        fig2 = f.plot_semi_circular_chart(off_moyenne["DR"].sum()/(off_moyenne["DR"].sum() + def_moyenne["OR"].sum()),"", size=int(90*zoom), font_size=int(20*zoom))
         st.plotly_chart(fig2,use_container_width=True)
     with colb :
         
@@ -282,7 +287,7 @@ with col1 :
             unsafe_allow_html=True
         )
         print(off_moyenne["OR"].sum()/(off_moyenne["OR"].sum() + def_moyenne["DR"].sum()))
-        fig2 = f.plot_semi_circular_chart(off_moyenne["OR"].sum()/(off_moyenne["OR"].sum() + def_moyenne["DR"].sum()),"BLA",size=int(90*zoom), font_size=int(20*zoom))
+        fig2 = f.plot_semi_circular_chart(off_moyenne["OR"].sum()/(off_moyenne["OR"].sum() + def_moyenne["DR"].sum()),"",size=int(90*zoom), font_size=int(20*zoom))
         st.plotly_chart(fig2,use_container_width=True)
 
 with col2 :
