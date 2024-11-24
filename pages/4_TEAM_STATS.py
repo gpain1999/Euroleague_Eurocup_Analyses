@@ -229,7 +229,7 @@ with col3 :
 
 
         if os.path.exists(team_logo_path):
-            st.image(team_logo_path, caption=f"Équipe : {CODETEAM}", width=int(200*zoom))
+            st.image(team_logo_path,  width=int(200*zoom))
         else:
             st.warning(f"Logo introuvable pour l'équipe : {CODETEAM}")
 
