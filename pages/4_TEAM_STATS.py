@@ -239,7 +239,7 @@ with col3 :
 col1,col2,col3 = st.columns([1,1,5])
 
 with col1:
-    min_game = st.number_input("Minimum game played", min_value=1,max_value=max(team_detail["ROUND"]) ,value=math.ceil(max(team_detail["ROUND"])*0.6))
+    min_game = st.number_input("Minimum game played", min_value=1,max_value=selected_range[1] - selected_range[0] + 1 ,value=math.ceil((selected_range[1] - selected_range[0] + 1)*0.6))
 
 with col2 :
     top = st.number_input("TOP", min_value=3,max_value=20 ,value=3)
