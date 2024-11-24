@@ -37,36 +37,6 @@ df = df[['ROUND', 'NB_GAME', 'TEAM', 'OPPONENT', 'HOME', 'WIN', 'NUMBER', 'PLAYE
          'TIME_ON', "I_PER", 'PER', 'PM_ON', 'PTS', 'DR', 'OR', 'TR', 'AS', 'ST', 'CO',
          '1_R', '1_T', '2_R', '2_T', '3_R', '3_T', 'TO', 'FP', 'CF', 'NCF']]
 
-col1, col2,col3 = st.columns([1.2,2,1])
-
-with col1 : 
-
-    try:
-        image = Image.open(image_path)
-        # Redimensionner l'image (par exemple, largeur de 300 pixels)
-        max_width = 400
-        image = image.resize((max_width, int(image.height * (max_width / image.width))))
-
-        # Afficher l'image redimensionnée
-        st.image(image)
-    except FileNotFoundError:
-        st.warning(f"L'image pour {competition} est introuvable à l'emplacement : {image_path}") 
-
-
-with col2 : 
-    st.title("Player Analysis - by gpain1999 ")
-
-with col3 :
-    # Filtrage dynamique des équipes
-    CODETEAM = st.selectbox("Équipe Sélectionnée", options=sorted(df["TEAM"].unique()) if not df.empty else [])
-
-    # Mise à jour dynamique des joueurs en fonction des équipes sélectionnées
-    if CODETEAM:
-        available_players = players[players["CODETEAM"].isin([CODETEAM])]["PLAYER"].unique()
-    else:
-        available_players = players["PLAYER"].unique()
-
-    selected_players = st.selectbox("Joueur Sélectionné", options=sorted(available_players))
 
 
 # Remplir les trous dans ROUND
@@ -110,6 +80,37 @@ selected_stats = st.sidebar.selectbox("Stat Sélectionné", options=["PER","I_PE
 
 window_size = st.sidebar.number_input("Moyenne glissante", min_value=1,max_value=max_round ,value=5)
 
+col1, col2,col3 = st.columns([1.2,2,1])
+
+with col1 : 
+
+    try:
+        image = Image.open(image_path)
+        # Redimensionner l'image (par exemple, largeur de 300 pixels)
+        max_width = 400
+        image = image.resize((max_width, int(image.height * (max_width / image.width))))
+
+        # Afficher l'image redimensionnée
+        st.image(image)
+    except FileNotFoundError:
+        st.warning(f"L'image pour {competition} est introuvable à l'emplacement : {image_path}") 
+
+
+with col2 : 
+    st.title("Player Analysis - by gpain1999 ")
+
+with col3 :
+    # Filtrage dynamique des équipes
+    CODETEAM = st.selectbox("Équipe Sélectionnée", options=sorted(df["TEAM"].unique()) if not df.empty else [])
+
+    # Mise à jour dynamique des joueurs en fonction des équipes sélectionnées
+    if CODETEAM:
+        available_players = players[players["CODETEAM"].isin([CODETEAM])]["PLAYER"].unique()
+    else:
+        available_players = players["PLAYER"].unique()
+
+    selected_players = st.selectbox("Joueur Sélectionné", options=sorted(available_players))
+
 
 
 filtered_df = f.get_aggregated_data(
@@ -143,6 +144,8 @@ TEAM_PLAYER = filtered_df["TEAM"].to_list()[0]
 PLAYER_ID = players[(players["CODETEAM"] == TEAM_PLAYER) & (players["PLAYER"] == NAME_PLAYER)]["PLAYER_ID"].to_list()[0]
 
 filtered_df = filtered_df.drop(columns=["NB_GAME", "PLAYER", "#", "TEAM"])
+
+player_image_path = os.path.join(images_dir, f"{competition}_{season}_players/{TEAM_PLAYER}_{PLAYER_ID}.png")
 
 
 # Calcul de la moyenne glissante en tenant compte des rounds manquants
@@ -287,7 +290,6 @@ def style_pm_on(value):
 
 
 
-player_image_path = os.path.join(images_dir, f"{competition}_{season}_players/{TEAM_PLAYER}_{PLAYER_ID}.png")
 
 
 st.header("Averages")
