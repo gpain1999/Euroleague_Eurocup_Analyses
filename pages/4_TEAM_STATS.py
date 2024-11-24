@@ -91,7 +91,7 @@ team_detail = f.get_aggregated_data(
 team_detail[colonnes_a_convertir] = team_detail[colonnes_a_convertir].astype('Int64')
 team_detail = team_detail.sort_values(by = "ROUND",ascending=False)
 team_detail = team_detail.loc[:, (team_detail != "---").any(axis=0)]
-team_detail = team_detail.drop(columns = ["TEAM","NB_GAME"])
+team_detail = team_detail.drop(columns = ["TEAM","NB_GAME","TIME_ON"])
 win_counts = team_detail["WIN"].value_counts().to_dict()
 
 
@@ -107,7 +107,7 @@ opp_detail = f.get_aggregated_data(
 opp_detail[colonnes_a_convertir] = opp_detail[colonnes_a_convertir].astype('Int64')
 opp_detail = opp_detail.sort_values(by = "ROUND",ascending=False)
 opp_detail = opp_detail.loc[:, (opp_detail != "---").any(axis=0)]
-opp_detail = opp_detail.drop(columns = ["OPPONENT","NB_GAME"])
+opp_detail = opp_detail.drop(columns = ["OPPONENT","NB_GAME","TIME_ON"])
 
 team_moyenne = f.get_aggregated_data(
     df=df, min_round=selected_range[0], max_round=selected_range[1],
@@ -236,13 +236,17 @@ with col3 :
 
 
 
-col1,col2,col3 = st.columns([1,1,5])
+col1,col2,col3,col4 = st.columns([1,1,1,4])
 
 with col1:
     min_game = st.number_input("Minimum game played", min_value=1,max_value=selected_range[1] - selected_range[0] + 1 ,value=math.ceil((selected_range[1] - selected_range[0] + 1)*0.6))
 
 with col2 :
-    top = st.number_input("TOP", min_value=3,max_value=20 ,value=3)
+    TOP = st.selectbox("TOP or FLOP", options=["TOP", "FLOP"], index=0)
+    
+
+with col3 :
+    top = st.number_input(TOP, min_value=3,max_value=20 ,value=3)
 
 col1, col2,col3,col4,col5,col6 = st.columns([1,1,1,1,1,1])
 
@@ -261,34 +265,72 @@ team_player_moyenne= team_player_moyenne[team_player_moyenne["NB_GAME"]>=min_gam
 
 
 with col1 :
-    st.dataframe(team_player_moyenne[["PLAYER","PER"]].sort_values(by = "PER",ascending = False).head(top)
-                 ,height=36*(top+1), 
-                 use_container_width=True,hide_index=True)
+    if TOP=="TOP" : 
+        st.dataframe(team_player_moyenne[["PLAYER","PER"]].sort_values(by = "PER",ascending = False).head(top)
+                    ,height=36*(top+1), 
+                    use_container_width=True,hide_index=True)
+    
+    else : 
+        st.dataframe(team_player_moyenne[["PLAYER","PER"]].sort_values(by = "PER",ascending = True).head(top)
+                    ,height=36*(top+1), 
+                    use_container_width=True,hide_index=True)
 
 
 with col2 :
-    st.dataframe(team_player_moyenne[["PLAYER","PTS"]].sort_values(by = "PTS",ascending = False).head(top)
-                 ,height=36*(top+1), 
-                 use_container_width=True,hide_index=True)
-with col3 :
-    st.dataframe(team_player_moyenne[["PLAYER","TR"]].sort_values(by = "TR",ascending = False).head(top)
-                 ,height=36*(top+1), 
-                 use_container_width=True,hide_index=True)
+    if TOP=="TOP" : 
+        st.dataframe(team_player_moyenne[["PLAYER","PTS"]].sort_values(by = "PTS",ascending = False).head(top)
+                    ,height=36*(top+1), 
+                    use_container_width=True,hide_index=True)
+    
+    else : 
+        st.dataframe(team_player_moyenne[["PLAYER","PTS"]].sort_values(by = "PTS",ascending = True).head(top)
+                    ,height=36*(top+1), 
+                    use_container_width=True,hide_index=True)
 
+with col3 :
+    if TOP=="TOP" : 
+        st.dataframe(team_player_moyenne[["PLAYER","TR"]].sort_values(by = "TR",ascending = False).head(top)
+                    ,height=36*(top+1), 
+                    use_container_width=True,hide_index=True)
+    
+    else : 
+        st.dataframe(team_player_moyenne[["PLAYER","TR"]].sort_values(by = "TR",ascending = True).head(top)
+                    ,height=36*(top+1), 
+                    use_container_width=True,hide_index=True)
+        
 with col4 :
-    st.dataframe(team_player_moyenne[["PLAYER","AS"]].sort_values(by = "AS",ascending = False).head(top)
-                 ,height=36*(top+1), 
-                 use_container_width=True,hide_index=True)
+    if TOP=="TOP" : 
+        st.dataframe(team_player_moyenne[["PLAYER","AS"]].sort_values(by = "AS",ascending = False).head(top)
+                    ,height=36*(top+1), 
+                    use_container_width=True,hide_index=True)
+    
+    else : 
+        st.dataframe(team_player_moyenne[["PLAYER","AS"]].sort_values(by = "AS",ascending = True).head(top)
+                    ,height=36*(top+1), 
+                    use_container_width=True,hide_index=True)
 with col5 :
-    st.dataframe(team_player_moyenne[["PLAYER","CO"]].sort_values(by = "CO",ascending = False).head(top)
-                 ,height=36*(top+1), 
-                 use_container_width=True,hide_index=True)
+    if TOP=="TOP" : 
+        st.dataframe(team_player_moyenne[["PLAYER","CO"]].sort_values(by = "CO",ascending = False).head(top)
+                    ,height=36*(top+1), 
+                    use_container_width=True,hide_index=True)
+    
+    else : 
+        st.dataframe(team_player_moyenne[["PLAYER","CO"]].sort_values(by = "CO",ascending = True).head(top)
+                    ,height=36*(top+1), 
+                    use_container_width=True,hide_index=True)
     
 with col6 :
-    st.dataframe(team_player_moyenne[["PLAYER","PM_ON"]].sort_values(by = "PM_ON",ascending = False).head(top)
-                 ,height=36*(top+1), 
-                 use_container_width=True,hide_index=True)
-col1, col2 = st.columns([1, 7])
+    if TOP=="TOP" : 
+        st.dataframe(team_player_moyenne[["PLAYER","PM_ON"]].sort_values(by = "PM_ON",ascending = False).head(top)
+                    ,height=36*(top+1), 
+                    use_container_width=True,hide_index=True)
+    
+    else : 
+        st.dataframe(team_player_moyenne[["PLAYER","PM_ON"]].sort_values(by = "PM_ON",ascending = True).head(top)
+                    ,height=36*(top+1), 
+                    use_container_width=True,hide_index=True)
+        
+col1, col2 = st.columns([1.5, 7])
 
 with col1 : 
 
@@ -335,11 +377,11 @@ with col1 :
             unsafe_allow_html=True
         )
 
-        fig2 = f.plot_semi_circular_chart(opp_detail["1_R"].sum()/opp_detail["1_T"].sum() if opp_detail["1_T"].sum() != 0 else 0,"1P",size=int(90*zoom), font_size=int(20*zoom))
+        fig2 = f.plot_semi_circular_chart(opp_detail["1_R"].sum()/opp_detail["1_T"].sum() if opp_detail["1_T"].sum() != 0 else 0,"1P",size=int(120*zoom), font_size=int(20*zoom))
         st.plotly_chart(fig2,use_container_width=True)
-        fig2 = f.plot_semi_circular_chart(opp_detail["2_R"].sum()/opp_detail["2_T"].sum() if opp_detail["2_T"].sum() != 0 else 0,"2P",size=int(90*zoom), font_size=int(20*zoom))
+        fig2 = f.plot_semi_circular_chart(opp_detail["2_R"].sum()/opp_detail["2_T"].sum() if opp_detail["2_T"].sum() != 0 else 0,"2P",size=int(120*zoom), font_size=int(20*zoom))
         st.plotly_chart(fig2,use_container_width=True)
-        fig2 = f.plot_semi_circular_chart(opp_detail["3_R"].sum()/opp_detail["3_T"].sum() if opp_detail["3_T"].sum() != 0 else 0,"3P",size=int(90*zoom), font_size=int(20*zoom))
+        fig2 = f.plot_semi_circular_chart(opp_detail["3_R"].sum()/opp_detail["3_T"].sum() if opp_detail["3_T"].sum() != 0 else 0,"3P",size=int(120*zoom), font_size=int(20*zoom))
         st.plotly_chart(fig2,use_container_width=True)
 
     st.markdown(
@@ -362,7 +404,7 @@ with col1 :
             ''',
             unsafe_allow_html=True
         )
-        fig2 = f.plot_semi_circular_chart(team_detail["DR"].sum()/(team_detail["DR"].sum() + opp_detail["OR"].sum()),"", size=int(90*zoom), font_size=int(20*zoom))
+        fig2 = f.plot_semi_circular_chart(team_detail["DR"].sum()/(team_detail["DR"].sum() + opp_detail["OR"].sum()),"", size=int(120*zoom), font_size=int(20*zoom))
         st.plotly_chart(fig2,use_container_width=True)
     with colb :
         
@@ -374,7 +416,7 @@ with col1 :
             ''',
             unsafe_allow_html=True
         )
-        fig2 = f.plot_semi_circular_chart(team_detail["OR"].sum()/(team_detail["OR"].sum() + opp_detail["DR"].sum()),"",size=int(90*zoom), font_size=int(20*zoom))
+        fig2 = f.plot_semi_circular_chart(team_detail["OR"].sum()/(team_detail["OR"].sum() + opp_detail["DR"].sum()),"",size=int(120*zoom), font_size=int(20*zoom))
         st.plotly_chart(fig2,use_container_width=True)
 
 with col2 :

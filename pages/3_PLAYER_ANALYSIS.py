@@ -228,6 +228,7 @@ fig.update_layout(
         x=0.5  # Centré horizontalement
     ),
     margin=dict(l=50, r=50, t=50, b=100),
+    height=375,
       dragmode="pan"  
 )
 
@@ -289,7 +290,7 @@ def style_pm_on(value):
 player_image_path = os.path.join(images_dir, f"{competition}_{season}_players/{TEAM_PLAYER}_{PLAYER_ID}.png")
 
 
-st.header("Moyennes")
+st.header("Averages")
 st.dataframe(avg_data,height=60, use_container_width=True,hide_index=True)
 
 
@@ -313,6 +314,8 @@ with col1:
         st.plotly_chart(fig2)
         fig2 = f.plot_semi_circular_chart(df_resultat["3_R"].sum()/df_resultat["3_T"].sum() if df_resultat["3_T"].sum() != 0 else 0,"3P",size=int(100*zoom),m=False)
         st.plotly_chart(fig2)
+
+        
 
     with colb :
         if os.path.exists(player_image_path):
@@ -373,6 +376,7 @@ with col3:
             showgrid=False
         ),
         margin=dict(l=50, r=50, t=50, b=50),
+        height=400,
         showlegend=False,
         dragmode="pan"
     )
