@@ -69,7 +69,7 @@ col1,col2,col3,col4 = st.columns([1.5,1,1,1])
 
 with col1 :
     selected_fields = st.multiselect(
-        "Champs Sélectionnés",
+        "GROUP BY",
         options=["ROUND", "PLAYER", "TEAM", "OPPONENT"],
         default=["PLAYER", "TEAM"]
     )
