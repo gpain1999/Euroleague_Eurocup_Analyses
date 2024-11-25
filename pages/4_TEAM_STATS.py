@@ -272,112 +272,132 @@ with col3 :
 
 
 
-
-col1,col2,col3,col4 = st.columns([1,1,1,4])
-
-with col1:
-    min_game = st.number_input("Minimum game played", min_value=1,max_value=selected_range[1] - selected_range[0] + 1 ,value=math.ceil((selected_range[1] - selected_range[0] + 1)*0.6))
-
-with col2 :
-    TOP = st.selectbox("TOP or FLOP", options=["TOP", "FLOP"], index=0)
-    
-
-with col3 :
-    top = st.number_input(TOP, min_value=3,max_value=20 ,value=3)
-
-col1, col2,col3,col4,col5,col6 = st.columns([1,1,1,1,1,1])
-
-
-team_player_moyenne = f.get_aggregated_data(
-    df=df, min_round=selected_range[0], max_round=selected_range[1],
-    selected_teams=[CODETEAM],
-    selected_opponents=[],
-    selected_fields=["TEAM","PLAYER"],
-    selected_players=[],
-    mode="AVERAGE",
-    percent="MADE"
-)
-
-team_player_moyenne= team_player_moyenne[team_player_moyenne["NB_GAME"]>=min_game]
-
-
-with col1 :
-    if TOP=="TOP" : 
-        st.dataframe(team_player_moyenne[["PLAYER","PER"]].sort_values(by = "PER",ascending = False).head(top)
-                    ,height=36*(top+1), 
-                    use_container_width=True,hide_index=True)
-    
-    else : 
-        st.dataframe(team_player_moyenne[["PLAYER","PER"]].sort_values(by = "PER",ascending = True).head(top)
-                    ,height=36*(top+1), 
-                    use_container_width=True,hide_index=True)
-
-
-with col2 :
-    if TOP=="TOP" : 
-        st.dataframe(team_player_moyenne[["PLAYER","PTS"]].sort_values(by = "PTS",ascending = False).head(top)
-                    ,height=36*(top+1), 
-                    use_container_width=True,hide_index=True)
-    
-    else : 
-        st.dataframe(team_player_moyenne[["PLAYER","PTS"]].sort_values(by = "PTS",ascending = True).head(top)
-                    ,height=36*(top+1), 
-                    use_container_width=True,hide_index=True)
-
-with col3 :
-    if TOP=="TOP" : 
-        st.dataframe(team_player_moyenne[["PLAYER","TR"]].sort_values(by = "TR",ascending = False).head(top)
-                    ,height=36*(top+1), 
-                    use_container_width=True,hide_index=True)
-    
-    else : 
-        st.dataframe(team_player_moyenne[["PLAYER","TR"]].sort_values(by = "TR",ascending = True).head(top)
-                    ,height=36*(top+1), 
-                    use_container_width=True,hide_index=True)
-        
-with col4 :
-    if TOP=="TOP" : 
-        st.dataframe(team_player_moyenne[["PLAYER","AS"]].sort_values(by = "AS",ascending = False).head(top)
-                    ,height=36*(top+1), 
-                    use_container_width=True,hide_index=True)
-    
-    else : 
-        st.dataframe(team_player_moyenne[["PLAYER","AS"]].sort_values(by = "AS",ascending = True).head(top)
-                    ,height=36*(top+1), 
-                    use_container_width=True,hide_index=True)
-with col5 :
-    if TOP=="TOP" : 
-        st.dataframe(team_player_moyenne[["PLAYER","CO"]].sort_values(by = "CO",ascending = False).head(top)
-                    ,height=36*(top+1), 
-                    use_container_width=True,hide_index=True)
-    
-    else : 
-        st.dataframe(team_player_moyenne[["PLAYER","CO"]].sort_values(by = "CO",ascending = True).head(top)
-                    ,height=36*(top+1), 
-                    use_container_width=True,hide_index=True)
-    
-with col6 :
-    if TOP=="TOP" : 
-        st.dataframe(team_player_moyenne[["PLAYER","PM_ON"]].sort_values(by = "PM_ON",ascending = False).head(top)
-                    ,height=36*(top+1), 
-                    use_container_width=True,hide_index=True)
-    
-    else : 
-        st.dataframe(team_player_moyenne[["PLAYER","PM_ON"]].sort_values(by = "PM_ON",ascending = True).head(top)
-                    ,height=36*(top+1), 
-                    use_container_width=True,hide_index=True)
-        
 col1, col2 = st.columns([1.5, 7])
 
-
 with col2 :
+    
+
+    col11,col21,col31,col41,col51 = st.columns([1,1,1,1,3])
+
+    with col11:
+        min_game = st.number_input("Minimum game played", min_value=1,max_value=selected_range[1] - selected_range[0] + 1 ,value=math.ceil((selected_range[1] - selected_range[0] + 1)*0.6))
+
+    with col21 :
+        TOP = st.selectbox("TOP or FLOP", options=["TOP", "FLOP"], index=0)
+        
+    with col31 :
+        top = st.number_input(TOP, min_value=3,max_value=20 ,value=3)
+    
+    with col41 :
+        DELTA = st.selectbox("COMPARAISON TYPE", options=["LEAGUE", "OPPONENTS"], index=0)
+
+
+    col12, col22,col32,col42,col52= st.columns([1,1,1,1,1])
+
+
+    team_player_moyenne = f.get_aggregated_data(
+        df=df, min_round=selected_range[0], max_round=selected_range[1],
+        selected_teams=[CODETEAM],
+        selected_opponents=[],
+        selected_fields=["TEAM","PLAYER"],
+        selected_players=[],
+        mode="AVERAGE",
+        percent="MADE"
+    )
+
+    team_player_moyenne= team_player_moyenne[team_player_moyenne["NB_GAME"]>=min_game]
+
+
+    with col12 :
+        if TOP=="TOP" : 
+            st.dataframe(team_player_moyenne[["PLAYER","PER"]].sort_values(by = "PER",ascending = False).head(top)
+                        ,height=36*(top+1), 
+                        use_container_width=True,hide_index=True)
+            
+            st.dataframe(team_player_moyenne[["PLAYER","I_PER"]].sort_values(by = "I_PER",ascending = False).head(top)
+                        ,height=36*(top+1), 
+                        use_container_width=True,hide_index=True)   
+        else : 
+            st.dataframe(team_player_moyenne[["PLAYER","PER"]].sort_values(by = "PER",ascending = True).head(top)
+                        ,height=36*(top+1), 
+                        use_container_width=True,hide_index=True)
+            st.dataframe(team_player_moyenne[["PLAYER","I_PER"]].sort_values(by = "I_PER",ascending = True).head(top)
+                        ,height=36*(top+1), 
+                        use_container_width=True,hide_index=True)
+
+    with col22 :
+        if TOP=="TOP" : 
+            st.dataframe(team_player_moyenne[["PLAYER","PTS"]].sort_values(by = "PTS",ascending = False).head(top)
+                        ,height=36*(top+1), 
+                        use_container_width=True,hide_index=True)
+            st.dataframe(team_player_moyenne[["PLAYER","PM_ON"]].sort_values(by = "PM_ON",ascending = False).head(top)
+                        ,height=36*(top+1), 
+                        use_container_width=True,hide_index=True)
+                   
+        else : 
+            st.dataframe(team_player_moyenne[["PLAYER","PTS"]].sort_values(by = "PTS",ascending = True).head(top)
+                        ,height=36*(top+1), 
+                        use_container_width=True,hide_index=True)
+            st.dataframe(team_player_moyenne[["PLAYER","PM_ON"]].sort_values(by = "PM_ON",ascending = True).head(top)
+                        ,height=36*(top+1), 
+                        use_container_width=True,hide_index=True)
+    with col32 :
+        if TOP=="TOP" : 
+            st.dataframe(team_player_moyenne[["PLAYER","TR"]].sort_values(by = "TR",ascending = False).head(top)
+                        ,height=36*(top+1), 
+                        use_container_width=True,hide_index=True)
+            st.dataframe(team_player_moyenne[["PLAYER","TIME_ON"]].sort_values(by = "TIME_ON",ascending = False).head(top)
+                        ,height=36*(top+1), 
+                        use_container_width=True,hide_index=True)       
+        else : 
+            st.dataframe(team_player_moyenne[["PLAYER","TR"]].sort_values(by = "TR",ascending = True).head(top)
+                        ,height=36*(top+1), 
+                        use_container_width=True,hide_index=True)
+            st.dataframe(team_player_moyenne[["PLAYER","TIME_ON"]].sort_values(by = "TIME_ON",ascending = True).head(top)
+                        ,height=36*(top+1), 
+                        use_container_width=True,hide_index=True)   
+    with col42 :
+        if TOP=="TOP" : 
+            st.dataframe(team_player_moyenne[["PLAYER","AS"]].sort_values(by = "AS",ascending = False).head(top)
+                        ,height=36*(top+1), 
+                        use_container_width=True,hide_index=True)
+            st.dataframe(team_player_moyenne[["PLAYER","TO"]].sort_values(by = "TO",ascending = False).head(top)
+                        ,height=36*(top+1), 
+                        use_container_width=True,hide_index=True)
+                   
+        else : 
+            st.dataframe(team_player_moyenne[["PLAYER","AS"]].sort_values(by = "AS",ascending = True).head(top)
+                        ,height=36*(top+1), 
+                        use_container_width=True,hide_index=True)
+            st.dataframe(team_player_moyenne[["PLAYER","TO"]].sort_values(by = "TO",ascending = True).head(top)
+                        ,height=36*(top+1), 
+                        use_container_width=True,hide_index=True)
+    with col52 :
+        if TOP=="TOP" : 
+            st.dataframe(team_player_moyenne[["PLAYER","CO"]].sort_values(by = "CO",ascending = False).head(top)
+                        ,height=36*(top+1), 
+                        use_container_width=True,hide_index=True)
+            st.dataframe(team_player_moyenne[["PLAYER","ST"]].sort_values(by = "ST",ascending = False).head(top)
+                        ,height=36*(top+1), 
+                        use_container_width=True,hide_index=True)       
+        else : 
+            st.dataframe(team_player_moyenne[["PLAYER","CO"]].sort_values(by = "CO",ascending = True).head(top)
+                        ,height=36*(top+1), 
+                        use_container_width=True,hide_index=True)
+            st.dataframe(team_player_moyenne[["PLAYER","ST"]].sort_values(by = "ST",ascending = True).head(top)
+                        ,height=36*(top+1), 
+                        use_container_width=True,hide_index=True)     
+
+            
+
+
     st.header(f"Averages : {CODETEAM}")
     st.dataframe(team_moyenne,height=60, use_container_width=True,hide_index=True)
 
     name, valu,_ = st.columns([2, 1,3])
 
     with valu :
-        DELTA = st.selectbox("COMPARAISON TYPE", options=["LEAGUE", "OPPONENTS"], index=0)
+        pass
 
     with name :
         st.header(f"Averages {DELTA}")
@@ -516,10 +536,55 @@ with col1 :
 
             fig2 = f.plot_semi_circular_chart(team_league_detail["OR"].sum()/(team_league_detail["OR"].sum() + team_league_detail["DR"].sum()),"OFF. REB.",size=int(120*zoom), font_size=int(20*zoom))
             st.plotly_chart(fig2,use_container_width=True)    
-
     
+    st.markdown(
+        f'''
+        <p style="font-size:{int(taille*0.9)}px; text-align: center; padding: 10pxs;">
+            <b>% CARE BALL</b>
+        </p>
+        ''',
+        unsafe_allow_html=True
+    )
+    cola, colb = st.columns([1, 1])
+    with cola :
+
+        st.markdown(
+            f'''
+            <p style="font-size:{int(taille*0.75)}px; text-align: center;">
+                <b> {CODETEAM}</b>
+            </p>
+            ''',
+            unsafe_allow_html=True
+        )
+        shot_T = team_detail_select["1_T"].sum()/2 + team_detail_select["2_T"].sum() + team_detail_select["3_T"].sum()
+        TO = team_detail_select["TO"].sum()
+        fig2 = f.plot_semi_circular_chart(shot_T/(shot_T+TO),"SHOOT/TO", size=int(120*zoom), font_size=int(20*zoom))
+        st.plotly_chart(fig2,use_container_width=True)
+
+    with colb :
+        st.markdown(
+            f'''
+            <p style="font-size:{int(taille*0.75)}px; text-align: center;">
+                <b> {DELTA}</b>
+            </p>
+            ''',
+            unsafe_allow_html=True
+        )
+        if DELTA == "OPPONENTS" :
+            shot_T = opp_detail_select["1_T"].sum()/2 + opp_detail_select["2_T"].sum() + opp_detail_select["3_T"].sum()
+            TO = opp_detail_select["TO"].sum()
+
+
+        else :
+            shot_T = team_league_detail["1_T"].sum()/2 + team_league_detail["2_T"].sum() + team_league_detail["3_T"].sum()
+            TO = team_league_detail["TO"].sum()
+
+        fig2 = f.plot_semi_circular_chart(shot_T/(shot_T+TO),"SHOOT/TO", size=int(120*zoom), font_size=int(20*zoom))
+        st.plotly_chart(fig2,use_container_width=True)
+
 team_detail_select_2 = team_detail_select.style.apply(highlight_win, axis=1).format(precision=1) 
-opp_detail_select_2 = opp_detail_select.style.apply(highlight_win_o, axis=1).format(precision=1)  
+opp_detail_select_2 = opp_detail_select.style.apply(highlight_win_o, axis=1).format(precision=1)
+
 st.header(f"Stats GAME BY GAME : {CODETEAM}")
 st.dataframe(team_detail_select_2,height=min(38*len(team_detail_select),650), use_container_width=True,hide_index=True)
 st.header("Stats GAME BY GAME : Opponents")
