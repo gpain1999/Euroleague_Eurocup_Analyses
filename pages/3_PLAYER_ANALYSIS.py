@@ -47,7 +47,6 @@ notation['COULEUR'] = notation['CLASS'].map(lambda x: palette[int(x)])
 
 notation = notation.sort_values(by = "NOTE",ascending = False)
 
-print(notation)
 
 image_path = f"images/{competition}.png"  # Chemin vers l'image
 
@@ -104,7 +103,7 @@ selected_range = st.sidebar.slider(
     step=1
 )
 
-selected_stats = st.sidebar.selectbox("Stat Sélectionné", options=["PER","I_PER","PTS","TR","AS","PM_ON"])
+selected_stats = st.sidebar.selectbox("Stat Sélectionné", options=["PER","I_PER","PTS","TR","AS","PM_ON","ST"])
 
 window_size = st.sidebar.number_input("Moyenne glissante", min_value=1,max_value=max_round ,value=5)
 
