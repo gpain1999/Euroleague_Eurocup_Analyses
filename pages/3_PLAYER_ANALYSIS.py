@@ -136,8 +136,10 @@ with col3 :
         available_players = players[players["CODETEAM"].isin([CODETEAM])]["PLAYER"].unique()
     else:
         available_players = players["PLAYER"].unique()
-
-    selected_players = st.selectbox("Joueur Sélectionné", options=sorted(available_players),index=sorted(available_players).index(notation["PLAYER"].to_list()[0]))
+    if CODETEAM == notation["CODETEAM"].to_list()[0] :
+        selected_players = st.selectbox("Joueur Sélectionné", options=sorted(available_players),index=sorted(available_players).index(notation["PLAYER"].to_list()[0]))
+    else :
+        selected_players = st.selectbox("Joueur Sélectionné", options=sorted(available_players))
 
 
 
