@@ -335,7 +335,7 @@ with col1:
         team_logo_path = os.path.join(images_dir, f"{competition}_{season}_teams/{TEAM_PLAYER}.png")
 
         if os.path.exists(team_logo_path):
-            st.image(team_logo_path, width=int(250*zoom))
+            st.image(team_logo_path, width=int(180*zoom))
         else:
             st.warning(f"Logo introuvable pour l'équipe : {TEAM_PLAYER}")
 
