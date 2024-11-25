@@ -206,7 +206,7 @@ def color_delta(val, column_name, inverse_columns=None):
 ###################### PRINT
 
 image_path = f"images/{competition}.png"  # Chemin vers l'image
-col1, col2,col3 = st.columns([1, 3,1])
+col1, col2,col3 = st.columns([1.5, 3,1])
 
 with col1 : 
 
@@ -214,7 +214,7 @@ with col1 :
     try:
         image = Image.open(image_path)
         # Redimensionner l'image (par exemple, largeur de 300 pixels)
-        max_width = 400
+        max_width = 600
         image = image.resize((max_width, int(image.height * (max_width / image.width))))
 
         # Afficher l'image redimensionnée
