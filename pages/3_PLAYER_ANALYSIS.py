@@ -348,7 +348,7 @@ with col1:
         )
 
         if os.path.exists(player_image_path):
-            st.image(player_image_path, caption=f"#{NUMBER_PLAYER} {NAME_PLAYER}", width=int(350*zoom))
+            st.image(player_image_path, caption=f"#{NUMBER_PLAYER} {NAME_PLAYER}", width=int(330*zoom))
         else:
             st.warning(f"Image introuvable pour le joueur : {NAME_PLAYER}")
 
