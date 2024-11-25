@@ -62,12 +62,9 @@ selected_range = st.sidebar.slider(
 )
 
 # Filtrage dynamique des équipes
-HOMETEAM = st.sidebar.selectbox("HOME TEAM", options=sorted(df["TEAM"].unique()) if not df.empty else [],index = 0)
-HOMETEAM_logo_path = os.path.join(images_dir, f"{competition}_{season}_teams/{HOMETEAM}.png")
 
 # Filtrage dynamique des équipes
-AWAYTEAM = st.sidebar.selectbox("AWAY TEAM", options=sorted(df["TEAM"].unique()) if not df.empty else [],index = 1)
-AWAYTEAM_logo_path = os.path.join(images_dir, f"{competition}_{season}_teams/{AWAYTEAM}.png")
+
 
 zoom = st.sidebar.slider(
     "Choisissez une valeur de zoom pour les photos",
@@ -108,3 +105,25 @@ with col2 :
         unsafe_allow_html=True
     )
         
+
+col1, col2,col3,col4,col5 = st.columns([3,1,2,1,3])
+
+with col2:
+    HOMETEAM = st.selectbox("HOME TEAM", options=sorted(df["TEAM"].unique()) if not df.empty else [],index = 0)
+    HOMETEAM_logo_path = os.path.join(images_dir, f"{competition}_{season}_teams/{HOMETEAM}.png")
+
+    st.image(HOMETEAM_logo_path,  width=int(200*zoom))
+
+with col3 :
+    st.markdown(
+            f'''
+            <p style="font-size:{int(70*zoom)}px; text-align: center; color: black; padding: 10px;">
+                <b>-</b>
+            </p>
+            ''',
+            unsafe_allow_html=True
+        )
+with col4 :
+    AWAYTEAM = st.selectbox("AWAY TEAM", options=sorted(df["TEAM"].unique()) if not df.empty else [],index = 1)
+    AWAYTEAM_logo_path = os.path.join(images_dir, f"{competition}_{season}_teams/{AWAYTEAM}.png")
+    st.image(AWAYTEAM_logo_path,  width=int(200*zoom))
