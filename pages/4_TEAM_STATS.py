@@ -444,7 +444,7 @@ with col1 :
         st.markdown(
             f'''
             <p style="font-size:{int(taille*0.75)}px; text-align: center;">
-                <b> % {CODETEAM}</b>
+                <b>{CODETEAM}</b>
             </p>
             ''',
             unsafe_allow_html=True
@@ -462,7 +462,7 @@ with col1 :
         st.markdown(
             f'''
             <p style="font-size:{int(taille*0.75)}px; text-align: center;">
-                <b> % {DELTA}</b>
+                <b>{DELTA}</b>
             </p>
             ''',
             unsafe_allow_html=True
@@ -540,7 +540,7 @@ with col1 :
     st.markdown(
         f'''
         <p style="font-size:{int(taille*0.9)}px; text-align: center; padding: 10pxs;">
-            <b>% CARE BALL</b>
+            <b>% BALL CARE </b>
         </p>
         ''',
         unsafe_allow_html=True
