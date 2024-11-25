@@ -70,7 +70,7 @@ df = df[['ROUND', 'NB_GAME', 'TEAM', 'OPPONENT', 'HOME', 'WIN', 'NUMBER', 'PLAYE
 min_round, max_round = df["ROUND"].min(), df["ROUND"].max()
 
 
-# Paramètres interactifs
+# SETTINGS interactifs
 st.markdown(
     """
     <style>
@@ -85,7 +85,7 @@ st.markdown(
 )
 
 # Sidebar : Curseur pour sélectionner la plage de ROUND
-st.sidebar.header("Paramètres")
+st.sidebar.header("SETTINGS")
 
 zoom = st.sidebar.slider(
     "Choisissez une valeur de zoom pour les photos",

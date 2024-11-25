@@ -53,9 +53,8 @@ with col2 :
     # Configuration de l'interface utilisateur
     st.title("+/- Analysis - by gpain1999")
 
-# Paramètres interactifs
 
-# Paramètres interactifs
+# SETTINGS interactifs
 st.markdown(
     """
     <style>
@@ -68,7 +67,7 @@ st.markdown(
     """,
     unsafe_allow_html=True
 )
-st.sidebar.header("Paramètres")
+st.sidebar.header("SETTINGS")
 
 
 min_round = st.sidebar.number_input("Round Minimum", min_value=1, value=1)

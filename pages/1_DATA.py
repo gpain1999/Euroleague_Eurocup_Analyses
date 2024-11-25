@@ -51,7 +51,7 @@ with col2 :
     # Configuration de l'interface utilisateur
     st.title("DATA BRUT - by gpain1999")
 
-# Paramètres interactifs
+# SETTINGS interactifs
 st.markdown(
     """
     <style>
@@ -86,7 +86,7 @@ with col3 :
 
 
 
-st.sidebar.header("Paramètres")
+st.sidebar.header("SETTINGS")
 
 selected_range = st.sidebar.slider(
     "Sélectionnez une plage de ROUND :",

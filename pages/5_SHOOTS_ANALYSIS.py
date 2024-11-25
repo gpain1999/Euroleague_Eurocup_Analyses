@@ -54,7 +54,7 @@ with col2 :
 
 
 ######################### PARAM
-st.sidebar.header("Paramètres")
+st.sidebar.header("SETTINGS")
 
 selected_range = st.sidebar.slider(
     "Sélectionnez une plage de ROUND :",
@@ -86,7 +86,7 @@ else:
 
 selected_players = st.sidebar.multiselect("Joueurs Sélectionnés", options=available_players)
 
-# Paramètres interactifs
+# SETTINGS interactifs
 st.markdown(
     """
     <style>

@@ -51,7 +51,7 @@ st.markdown(
 )
 
 # Sidebar : Curseur pour sélectionner la plage de ROUND
-st.sidebar.header("Paramètres")
+st.sidebar.header("SETTINGS")
 
 selected_range = st.sidebar.slider(
     "Sélectionnez une plage de ROUND :",
