@@ -587,7 +587,5 @@ opp_detail_select_2 = opp_detail_select.style.apply(highlight_win_o, axis=1).for
 
 st.header(f"Stats GAME BY GAME : {CODETEAM}")
 st.dataframe(team_detail_select_2,height=min(38*len(team_detail_select),650), use_container_width=True,hide_index=True)
-st.header("Stats GAME BY GAME : Opponents")
+st.header("Stats GAME BY GAME : OPPONENTS")
 st.dataframe(opp_detail_select_2,height=min(38*len(opp_detail_select),650), use_container_width=True,hide_index=True)
-
-

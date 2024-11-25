@@ -45,6 +45,9 @@ notation['CLASS'] = pd.qcut(notation['NOTE'], q=13, labels=range(13))
 # Attribuer une couleur en fonction de la classe
 notation['COULEUR'] = notation['CLASS'].map(lambda x: palette[int(x)])
 
+notation = notation.sort_values(by = "NOTE",ascending = False)
+
+print(notation)
 
 image_path = f"images/{competition}.png"  # Chemin vers l'image
 
@@ -126,7 +129,7 @@ with col2 :
 
 with col3 :
     # Filtrage dynamique des équipes
-    CODETEAM = st.selectbox("Équipe Sélectionnée", options=sorted(df["TEAM"].unique()) if not df.empty else [])
+    CODETEAM = st.selectbox("Équipe Sélectionnée", options=sorted(df["TEAM"].unique()) if not df.empty else [],index=sorted(df["TEAM"].unique()).index(notation["CODETEAM"].to_list()[0]))
 
     # Mise à jour dynamique des joueurs en fonction des équipes sélectionnées
     if CODETEAM:
@@ -134,7 +137,7 @@ with col3 :
     else:
         available_players = players["PLAYER"].unique()
 
-    selected_players = st.selectbox("Joueur Sélectionné", options=sorted(available_players))
+    selected_players = st.selectbox("Joueur Sélectionné", options=sorted(available_players),index=sorted(available_players).index(notation["PLAYER"].to_list()[0]))
 
 
 
