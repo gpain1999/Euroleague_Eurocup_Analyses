@@ -22,10 +22,25 @@ st.set_page_config(
 import fonctions as f
 
 notation =f.analyse_per(data_dir,competition,season,R = [],CODETEAM = [])
-palette = ['#ff0000', '#ff4000', '#ff8000', '#ffbf00', '#ffff00', '#bfff00', '#80ff00','40ff00','00ff00']
+palette = [
+    "#FF0000",  # Rouge vif
+    "#FF3300",  # Rouge-orangé
+    "#FF6600",  # Orange foncé
+    "#FF9900",  # Orange
+    "#FFCC00",  # Jaune-orange
+    "#FFFF00",  # Jaune vif
+    "#CCFF00",  # Jaune-vert
+    "#99FF00",  # Vert citron
+    "#66FF00",  # Vert clair
+    "#33FF00",  # Vert tendre
+    "#00FF00",  # Vert vif
+    "#00CC00",  # Vert moyen
+    "#009900"   # Vert profond
+]
+
 
 # Diviser les données en 7 classes égales en nombre
-notation['CLASS'] = pd.qcut(notation['NOTE'], q=9, labels=range(9))
+notation['CLASS'] = pd.qcut(notation['NOTE'], q=13, labels=range(13))
 
 # Attribuer une couleur en fonction de la classe
 notation['COULEUR'] = notation['CLASS'].map(lambda x: palette[int(x)])
