@@ -22,6 +22,14 @@ st.set_page_config(
 import fonctions as f
 
 notation =f.analyse_per(data_dir,competition,season,R = [],CODETEAM = [])
+palette = ['#ff0000', '#ff5500', '#ffaa00', '#ffff00', '#aaff00', '#55ff00', '#00ff00']
+
+# Diviser les données en 7 classes égales en nombre
+notation['CLASS'] = pd.qcut(notation['NOTE'], q=7, labels=range(7))
+
+# Attribuer une couleur en fonction de la classe
+notation['COULEUR'] = notation['CLASS'].map(lambda x: palette[int(x)])
+
 
 image_path = f"images/{competition}.png"  # Chemin vers l'image
 
@@ -325,10 +333,15 @@ with col1:
         
 
     with colb :
+        # Récupérer la note et la couleur associée pour le joueur
+        player_note = notation.loc[(notation["CODETEAM"] == CODETEAM) & (notation["PLAYER"] == NAME_PLAYER), "NOTE"].to_list()[0]
+        player_color = notation.loc[(notation["CODETEAM"] == CODETEAM) & (notation["PLAYER"] == NAME_PLAYER), "COULEUR"].to_list()[0]
+
+        # Intégrer la couleur dans le markdown
         st.markdown(
             f'''
-            <p style="font-size:{int(40*zoom)}px; text-align: center;">
-                <b>NOTE : {round(notation[(notation["CODETEAM"]==CODETEAM)&(notation["PLAYER"]==NAME_PLAYER)]["NOTE"].to_list()[0])}</b>
+            <p style="font-size:{int(40*zoom)}px; text-align: center; color: {player_color};">
+                <b>NOTE : {round(player_note)}</b>
             </p>
             ''',
             unsafe_allow_html=True
