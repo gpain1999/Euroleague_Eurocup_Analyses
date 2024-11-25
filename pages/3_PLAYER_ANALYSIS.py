@@ -21,6 +21,8 @@ st.set_page_config(
 
 import fonctions as f
 
+notation =f.analyse_per(data_dir,competition,season,R = [],CODETEAM = [])
+
 image_path = f"images/{competition}.png"  # Chemin vers l'image
 
 players = pd.read_csv(os.path.join(data_dir, f"{competition}_idplayers_{season}.csv"))
@@ -303,12 +305,15 @@ with col1:
 
     with cola : 
 
+
         team_logo_path = os.path.join(images_dir, f"{competition}_{season}_teams/{TEAM_PLAYER}.png")
 
         if os.path.exists(team_logo_path):
             st.image(team_logo_path, width=int(100*zoom))
         else:
             st.warning(f"Logo introuvable pour l'équipe : {TEAM_PLAYER}")
+
+
 
         fig2 = f.plot_semi_circular_chart(df_resultat["1_R"].sum()/df_resultat["1_T"].sum() if df_resultat["1_T"].sum() != 0 else 0,"1P",size=int(120*zoom),font_size=int(20*zoom),m=False)
         st.plotly_chart(fig2)
@@ -320,6 +325,15 @@ with col1:
         
 
     with colb :
+        st.markdown(
+            f'''
+            <p style="font-size:{int(40*zoom)}px; text-align: center;">
+                <b>NOTE : {round(notation[(notation["CODETEAM"]==CODETEAM)&(notation["PLAYER"]==NAME_PLAYER)]["NOTE"].to_list()[0])}</b>
+            </p>
+            ''',
+            unsafe_allow_html=True
+        )
+
         if os.path.exists(player_image_path):
             st.image(player_image_path, caption=f"#{NUMBER_PLAYER} {NAME_PLAYER}", width=int(350*zoom))
         else:
