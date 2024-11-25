@@ -33,6 +33,6 @@ except FileNotFoundError:
     st.warning(f"L'image pour {competition} est introuvable à l'emplacement : {image_path}") 
 
 st.title("Application Euroleague - by gpain1999")
-st.sidebar.success("Choisissez une page ci-dessus.")
+#st.sidebar.success("Choisissez une page ci-dessus.")
 
 
