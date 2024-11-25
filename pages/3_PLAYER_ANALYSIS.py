@@ -317,7 +317,7 @@ def style_pm_on(value):
 
 
 
-st.header("AVERAGES")
+st.header(f"AVERAGES : {NAME_PLAYER} ")
 st.dataframe(avg_data,height=60, use_container_width=True,hide_index=True)
 
 
@@ -438,7 +438,7 @@ st.dataframe(styled_df,height=min(38*len(df_resultat),650), use_container_width=
 
 st.header(f"Duo +/- with {NAME_PLAYER}")
 
-col1, col2,col3 = st.columns([1, 1,1])
+col1, col2,col3 = st.columns([1, 1,2])
 
 with col1 :
 
