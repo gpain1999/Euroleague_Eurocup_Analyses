@@ -69,7 +69,7 @@ team_logo_path = os.path.join(images_dir, f"{competition}_{season}_teams/{CODETE
 
 zoom = st.sidebar.slider(
     "Choisissez une valeur de zoom pour les photos",
-    min_value=0.4,
+    min_value=0.3,
     max_value=1.0,
     step=0.1,
     value=0.7,  # Valeur initiale
