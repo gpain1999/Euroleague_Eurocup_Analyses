@@ -280,7 +280,7 @@ with col2 :
     col11,col21,col31,col41,col51 = st.columns([1,1,1,1,3])
 
     with col11:
-        min_game = st.number_input("Minimum game played", min_value=1,max_value=selected_range[1] - selected_range[0] + 1 ,value=math.ceil((selected_range[1] - selected_range[0] + 1)*0.55))
+        min_game = st.number_input("Minimum game played", min_value=1,max_value=selected_range[1] - selected_range[0] + 1 ,value=math.ceil((selected_range[1] - selected_range[0] + 1)*0.51))
 
     with col21 :
         TOP = st.selectbox("TOP or FLOP", options=["TOP", "FLOP"], index=0)
