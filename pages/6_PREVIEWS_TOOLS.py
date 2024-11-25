@@ -68,3 +68,43 @@ HOMETEAM_logo_path = os.path.join(images_dir, f"{competition}_{season}_teams/{HO
 # Filtrage dynamique des équipes
 AWAYTEAM = st.sidebar.selectbox("AWAY TEAM", options=sorted(df["TEAM"].unique()) if not df.empty else [],index = 1)
 AWAYTEAM_logo_path = os.path.join(images_dir, f"{competition}_{season}_teams/{AWAYTEAM}.png")
+
+zoom = st.sidebar.slider(
+    "Choisissez une valeur de zoom pour les photos",
+    min_value=0.3,
+    max_value=1.0,
+    step=0.1,
+    value=0.7,  # Valeur initiale
+)
+
+###################### PRINT
+
+image_path = f"images/{competition}.png"  # Chemin vers l'image
+col1, col2,col3 = st.columns([1.5, 3,1])
+
+with col1 : 
+
+
+    try:
+        image = Image.open(image_path)
+        # Redimensionner l'image (par exemple, largeur de 300 pixels)
+        max_width = 600
+        image = image.resize((max_width, int(image.height * (max_width / image.width))))
+
+        # Afficher l'image redimensionnée
+        st.image(image)
+    except FileNotFoundError:
+        st.warning(f"L'image pour {competition} est introuvable à l'emplacement : {image_path}") 
+
+
+with col2 :
+    taille_titre = 70*zoom
+    st.markdown(
+        f'''
+        <p style="font-size:{int(taille_titre)}px; text-align: center; padding: 10pxs;">
+            <b>PREVIEWS TOOLS - by gpain1999</b>
+        </p>
+        ''',
+        unsafe_allow_html=True
+    )
+        
