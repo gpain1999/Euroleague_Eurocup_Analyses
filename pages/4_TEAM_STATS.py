@@ -245,7 +245,7 @@ with col3 :
     with colA :
         st.markdown(
             f'''
-            <p style="font-size:{taille}px; text-align: center; background-color: #CCFFCC;color: black; padding: 10px; border-radius: 5px;">
+            <p style="font-size:{taille}px; text-align: center; background-color: #00ff00;color: black; padding: 10px; border-radius: 5px;">
                 <b>{win_counts["YES"]}&nbsp;WINS</b>
             </p>
             ''',
@@ -254,7 +254,7 @@ with col3 :
         # Pour les défaites (NO)
         st.markdown(
             f'''
-            <p style="font-size:{taille}px; text-align: center; background-color: #FFCCCC;color: black; padding: 10px; border-radius: 5px;">
+            <p style="font-size:{taille}px; text-align: center; background-color: #ff0000;color: black; padding: 10px; border-radius: 5px;">
                 <b>{win_counts["NO"]}&nbsp;LOSES</b>
             </p>
             ''',
