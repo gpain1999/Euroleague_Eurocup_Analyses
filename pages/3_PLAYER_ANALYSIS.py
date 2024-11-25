@@ -417,13 +417,13 @@ with col3:
 
 
 # Afficher le tableau stylé dans Streamlit
-st.header("Stats Joueur")
+st.header(f"Stats : {NAME_PLAYER}")
 st.dataframe(styled_df,height=min(38*len(df_resultat),650), use_container_width=True,hide_index=True)
 
 
-st.header("Duo +/-")
+st.header(f"Duo +/- with {NAME_PLAYER}")
 
-col1, col2 = st.columns([1, 1])
+col1, col2,col3 = st.columns([1, 1,1])
 
 with col1 :
 
