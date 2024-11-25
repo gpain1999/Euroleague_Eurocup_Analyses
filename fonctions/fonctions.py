@@ -51,7 +51,7 @@ def plot_semi_circular_chart(value, t, size=300, font_size=20,m=True):
     fig.add_trace(go.Pie(
         values=[filled_portion, empty_portion, placeholder],
         labels=["Rempli", "Vide", ""],  # Empty label for the placeholder
-        marker=dict(colors=["#CCFFCC", "#FFCCCC", "rgba(0,0,0,0)"]),  # Transparent for placeholder
+        marker=dict(colors=["#00ff00", "#ff0000", "rgba(0,0,0,0)"]),  # Transparent for placeholder
         textinfo="none",  # Hide text on the slices
         hole=0.5,
         direction="clockwise",
