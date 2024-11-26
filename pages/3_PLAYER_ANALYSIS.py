@@ -347,7 +347,7 @@ with col2:
     # Mise à jour du layout
     fig.update_layout(
         autosize=True,
-        title=f'#{NUMBER_PLAYER} {NAME_PLAYER} ({TEAM_PLAYER}) : {selected_stats} et Minutes',
+        title=f'#{NUMBER_PLAYER} {NAME_PLAYER} ({TEAM_PLAYER}) : {avg_data[selected_stats].sum()} {selected_stats} /game & {avg_data["TIME_ON"].sum()} MIN/game ',
         xaxis=dict(
             title="ROUND",
             showgrid=False,
@@ -379,22 +379,13 @@ with col2:
             x=0.5  # Centré horizontalement
         ),
         margin=dict(l=50, r=50, t=50, b=100),
-        height=375,
+        height=500,
         dragmode="pan"  
     )
 
 
     st.plotly_chart(fig, use_container_width=True,static_plot=True)
-    taille = int(25*zoom)
-    st.markdown(
-        f'''
-        <p style="font-size:{taille}px; text-align: center;">
-            <b>{avg_data[selected_stats].sum()} {selected_stats}/game&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            {avg_data["TIME_ON"].sum()} MIN/game</b>
-        </p>
-        ''',
-        unsafe_allow_html=True
-    )
+
 
 with col3:
     # Création des boxplots avec Plotly Graph Objects
