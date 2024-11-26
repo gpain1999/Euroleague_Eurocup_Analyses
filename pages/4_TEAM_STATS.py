@@ -574,7 +574,6 @@ with col1 :
             shot_T = opp_detail_select["1_T"].sum()/2 + opp_detail_select["2_T"].sum() + opp_detail_select["3_T"].sum()
             TO = opp_detail_select["TO"].sum()
 
-
         else :
             shot_T = team_league_detail["1_T"].sum()/2 + team_league_detail["2_T"].sum() + team_league_detail["3_T"].sum()
             TO = team_league_detail["TO"].sum()
@@ -587,5 +586,6 @@ opp_detail_select_2 = opp_detail_select.style.apply(highlight_win_o, axis=1).for
 
 st.header(f"Stats GAME BY GAME : {CODETEAM}")
 st.dataframe(team_detail_select_2,height=min(38*len(team_detail_select),650), use_container_width=True,hide_index=True)
+
 st.header("Stats GAME BY GAME : OPPONENTS")
 st.dataframe(opp_detail_select_2,height=min(38*len(opp_detail_select),650), use_container_width=True,hide_index=True)

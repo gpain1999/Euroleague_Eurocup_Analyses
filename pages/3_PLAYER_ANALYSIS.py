@@ -65,6 +65,7 @@ df = df[['ROUND', 'NB_GAME', 'TEAM', 'OPPONENT', 'HOME', 'WIN', 'NUMBER', 'PLAYE
          '1_R', '1_T', '2_R', '2_T', '3_R', '3_T', 'TO', 'FP', 'CF', 'NCF']]
 
 
+print(min(df["I_PER"]),max(df["I_PER"]))
 
 # Remplir les trous dans ROUND
 min_round, max_round = df["ROUND"].min(), df["ROUND"].max()
@@ -106,7 +107,12 @@ selected_range = st.sidebar.slider(
 selected_stats = st.sidebar.selectbox("Stat Sélectionné", options=["PER","I_PER","PTS","TR","AS","PM_ON","ST"])
 
 window_size = st.sidebar.number_input("Moyenne glissante", min_value=1,max_value=max_round ,value=5)
+# Calcul des min et max pour les axes
+min_selected_stats = df[selected_stats].min()
+max_selected_stats = df[selected_stats].max()
 
+min_time_on = df["TIME_ON"].min()
+max_time_on = df["TIME_ON"].max()
 col1, col2,col3 = st.columns([1.2,2,1])
 
 with col1 : 
@@ -188,82 +194,6 @@ def calculate_moving_average(df, column, round_column, window_size):
 
 # Ajout de la colonne "moving_avg"
 filtered_df["moving_avg"] = calculate_moving_average(filtered_df, selected_stats, "ROUND",window_size)
-
-# Création du graphique avec la nouvelle courbe de moyenne glissante
-fig = go.Figure()
-
-# Barres pour les stats
-for i, row in filtered_df.iterrows():
-    color = "green" if row["WIN"] == "YES" else "red"
-    fig.add_trace(go.Bar(
-        x=[row["ROUND"]],
-        y=[row[selected_stats]],
-        marker_color=color,
-        yaxis="y1",
-        showlegend=False
-    ))
-
-# Courbe pour les minutes
-fig.add_trace(go.Scatter(
-    x=filtered_df["ROUND"],
-    y=filtered_df["TIME_ON"],
-    mode="lines+markers",
-    line=dict(color='blue', width=2),
-    marker=dict(size=8, symbol="circle", color="blue"),
-    yaxis="y2",
-    showlegend=True,
-    name="Minutes jouées"
-))
-
-# Nouvelle courbe pour la moyenne glissante
-fig.add_trace(go.Scatter(
-    x=filtered_df["ROUND"],
-    y=filtered_df["moving_avg"],
-    mode="lines+markers",
-    line=dict(color='orange', width=2, dash="dot"),
-    marker=dict(size=8, symbol="square", color="orange"),
-    yaxis="y1",
-    showlegend=True,
-    name=f"{selected_stats} Moyenne glissante ({window_size} derniers rounds)"
-))
-
-# Mise à jour du layout
-fig.update_layout(
-    autosize=True,
-    title=f'#{NUMBER_PLAYER} {NAME_PLAYER} ({TEAM_PLAYER}) : {selected_stats} et Minutes',
-    xaxis=dict(
-        title="ROUND",
-        showgrid=False,
-        tickmode='linear',
-        tick0=min(filtered_df["ROUND"]),
-    ),
-    yaxis=dict(
-        title=selected_stats,
-        titlefont=dict(color="grey"),
-        tickfont=dict(color="grey"),
-        showgrid=True,
-        gridcolor="rgba(200,200,200,0.3)",
-    ),
-    yaxis2=dict(
-        title="Minutes",
-        titlefont=dict(color="grey"),
-        tickfont=dict(color="grey"),
-        overlaying="y",
-        side="right",
-        showgrid=False
-    ),
-    legend=dict(
-        orientation="h",  # Horizontal layout
-        yanchor="top",
-        y=-0.3,  # Position sous le graphique
-        xanchor="center",
-        x=0.5  # Centré horizontalement
-    ),
-    margin=dict(l=50, r=50, t=50, b=100),
-    height=375,
-      dragmode="pan"  
-)
-
 
 def highlight_win(row):
     # Appliquer vert si WIN est "YES", rouge sinon
@@ -375,6 +305,85 @@ with col_image :
     
 
 with col2:
+
+    # Création du graphique avec la nouvelle courbe de moyenne glissante
+    fig = go.Figure()
+
+    # Barres pour les stats
+    for i, row in filtered_df.iterrows():
+        color = "green" if row["WIN"] == "YES" else "red"
+        fig.add_trace(go.Bar(
+            x=[row["ROUND"]],
+            y=[row[selected_stats]],
+            marker_color=color,
+            yaxis="y1",
+            showlegend=False
+        ))
+
+    # Courbe pour les minutes
+    fig.add_trace(go.Scatter(
+        x=filtered_df["ROUND"],
+        y=filtered_df["TIME_ON"],
+        mode="lines+markers",
+        line=dict(color='blue', width=2),
+        marker=dict(size=8, symbol="circle", color="blue"),
+        yaxis="y2",
+        showlegend=True,
+        name="Minutes jouées"
+    ))
+
+    # Nouvelle courbe pour la moyenne glissante
+    fig.add_trace(go.Scatter(
+        x=filtered_df["ROUND"],
+        y=filtered_df["moving_avg"],
+        mode="lines+markers",
+        line=dict(color='orange', width=2, dash="dot"),
+        marker=dict(size=8, symbol="square", color="orange"),
+        yaxis="y1",
+        showlegend=True,
+        name=f"{selected_stats} Moyenne glissante ({window_size} derniers rounds)"
+    ))
+
+    # Mise à jour du layout
+    fig.update_layout(
+        autosize=True,
+        title=f'#{NUMBER_PLAYER} {NAME_PLAYER} ({TEAM_PLAYER}) : {selected_stats} et Minutes',
+        xaxis=dict(
+            title="ROUND",
+            showgrid=False,
+            tickmode='linear',
+            tick0=min(filtered_df["ROUND"]),
+        ),
+        yaxis=dict(
+            title=selected_stats,
+            titlefont=dict(color="grey"),
+            tickfont=dict(color="grey"),
+            showgrid=True,
+            gridcolor="rgba(200,200,200,0.3)",
+            range=[min_selected_stats, max_selected_stats],  # Fixation de la plage
+        ),
+        yaxis2=dict(
+            title="Minutes",
+            titlefont=dict(color="grey"),
+            tickfont=dict(color="grey"),
+            overlaying="y",
+            side="right",
+            showgrid=False,
+            range=[min_time_on, max_time_on],  # Fixation de la plage
+        ),
+        legend=dict(
+            orientation="h",  # Layout horizontal
+            yanchor="top",
+            y=-0.3,  # Position sous le graphique
+            xanchor="center",
+            x=0.5  # Centré horizontalement
+        ),
+        margin=dict(l=50, r=50, t=50, b=100),
+        height=375,
+        dragmode="pan"  
+    )
+
+
     st.plotly_chart(fig, use_container_width=True,static_plot=True)
     taille = int(25*zoom)
     st.markdown(
@@ -417,7 +426,8 @@ with col3:
         title=f"Distribution de {selected_stats} (Global et par résultat)",
         yaxis=dict(
             title=selected_stats,
-            showgrid=True
+            showgrid=True,
+            range=[min_selected_stats, max_selected_stats]
         ),
         xaxis=dict(
             title="Catégories",

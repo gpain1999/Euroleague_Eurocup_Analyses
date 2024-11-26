@@ -119,3 +119,57 @@ with col4 :
     AWAYTEAM = st.selectbox("AWAY TEAM", options=sorted(df["TEAM"].unique()) if not df.empty else [],index = 1)
     AWAYTEAM_logo_path = os.path.join(images_dir, f"{competition}_{season}_teams/{AWAYTEAM}.png")
     st.image(AWAYTEAM_logo_path,  width=int(200*zoom))
+
+
+col1,col2,col4,col6,col7 = st.columns([1,1,1,1,1])
+taille = 20*zoom
+
+with col1 :
+    st.markdown(
+        f'''
+        <p style="font-size:{int(taille)}px; text-align: center; padding: 10pxs;">
+            <b>OFFENSIVE </b>
+        </p>
+        ''',
+        unsafe_allow_html=True
+    )
+
+with col2 :
+    st.markdown(
+        f'''
+        <p style="font-size:{int(taille)}px; text-align: center; padding: 10pxs;">
+            <b>DEFENSIVE </b>
+        </p>
+        ''',
+        unsafe_allow_html=True
+    )
+
+with col4 :
+    st.markdown(
+        f'''
+        <p style="font-size:{int(taille)}px; text-align: center; padding: 10pxs;">
+            <b>DELTA </b>
+        </p>
+        ''',
+        unsafe_allow_html=True
+    )
+
+with col6 :
+    st.markdown(
+        f'''
+        <p style="font-size:{int(taille)}px; text-align: center; padding: 10pxs;">
+            <b>OFFENSIVE </b>
+        </p>
+        ''',
+        unsafe_allow_html=True
+    )
+
+with col7 :
+    st.markdown(
+        f'''
+        <p style="font-size:{int(taille)}px; text-align: center; padding: 10pxs;">
+            <b>DEFENSIVE </b>
+        </p>
+        ''',
+        unsafe_allow_html=True
+    )
