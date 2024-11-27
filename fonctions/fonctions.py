@@ -24,6 +24,119 @@ import threading
 import streamlit as st
 import plotly.graph_objects as go
 
+def evol_score(data_dir,competition,season) : 
+    df_pbp = pd.read_csv(os.path.join(data_dir, f"{competition}_pbp_{season}.csv"))
+    df_gs = pd.read_csv(os.path.join(data_dir, f"{competition}_gs_{season}.csv"))
+
+    columns = [
+        "Season","ROUND", "Gamecode", "TEAM","OPPONENT", "WIN", "HOME"
+    ] + [f"P{i}" for i in range(1, 25)]
+
+    # Création d'un dataframe vide avec ces colonnes
+    df_evol_score = pd.DataFrame(columns=columns)
+
+
+    for gc in list(df_pbp["Gamecode"].unique()) : 
+
+        df_pbp2 = df_pbp[df_pbp["Gamecode"] == gc].reset_index(drop = True)
+        df_gs2 = df_gs[df_gs["Gamecode"] == gc].reset_index(drop = True)
+
+
+        df_pbp2.loc[:, "NUMBEROFPLAY"] = range(len(df_pbp2))
+
+
+        code = [df_gs2["local.club.code"].to_list()[0],df_gs2["road.club.code"].to_list()[0]]
+        score = [df_gs2["local.score"].to_list()[0],df_gs2["road.score"].to_list()[0]]
+
+
+
+        df_pbp2['PERIOD'] = df_pbp2['PERIOD'].apply(lambda x: x if x in [1, 2, 3, 4] else 4 + 0.5 * (x - 4)).astype(float)
+
+        game_duration = pd.to_timedelta(max(df_pbp2['PERIOD']) *10,unit = "minutes")
+
+        df_pbp2 = df_pbp2[
+            df_pbp2['POINTS_A'].notna() |
+            df_pbp2['POINTS_B'].notna() |
+            (df_pbp2['PLAYINFO'] == 'Out') |
+            (df_pbp2['PLAYINFO'] == 'In')
+        ].reset_index(drop = True)
+
+        df_pbp2['MARKERTIME'] = pd.to_timedelta('00:' + df_pbp2['MARKERTIME'])
+
+        df_pbp2['MARKERTIME'] = pd.to_timedelta(10,unit = "minutes") - df_pbp2['MARKERTIME'] + pd.to_timedelta(10 * (df_pbp2['PERIOD']-1), unit='minutes')
+
+        df_pbp2['MARKERTIME'] = pd.to_timedelta(df_pbp2['MARKERTIME']).dt.total_seconds() / 60
+
+
+        ##### POINTS_A
+        # Remplacer les NaN au début de la colonne par 0
+        first_valid_index = df_pbp2['POINTS_A'].first_valid_index()  # Trouver le premier index valide
+        if first_valid_index is not None:  # S'il y a au moins un valide
+            df_pbp2.loc[:first_valid_index-1, 'POINTS_A'] = df_pbp2.loc[:first_valid_index-1, 'POINTS_A'].fillna(0)
+
+        # Remplacer les autres NaN par la dernière valeur non NaN
+        df_pbp2['POINTS_A'] = df_pbp2['POINTS_A'].ffill().astype(int)
+
+
+        ##### POINTS_B
+        # Remplacer les NaN au début de la colonne par 0
+        first_valid_index = df_pbp2['POINTS_B'].first_valid_index()  # Trouver le premier index valide
+        if first_valid_index is not None:  # S'il y a au moins un valide
+            df_pbp2.loc[:first_valid_index-1, 'POINTS_B'] = df_pbp2.loc[:first_valid_index-1, 'POINTS_B'].fillna(0)
+
+        # Remplacer les autres NaN par la dernière valeur non NaN
+        df_pbp2['POINTS_B'] = df_pbp2['POINTS_B'].ffill().astype(int)
+
+
+        # Calcul du nombre de périodes
+        nb_per = math.ceil(df_pbp2['MARKERTIME'].max() / 2.5)
+
+        # Génération des évolutions de POINTS_A
+        evol_point_a = []
+        evol_point_b = []
+
+        for i in range(1, nb_per + 1):
+            filtred_indices = df_pbp2[df_pbp2['MARKERTIME'] > i * 2.5].index
+            if not filtred_indices.empty:
+                evol_point_a.append(df_pbp2.loc[filtred_indices[0] - 1, 'POINTS_A'])
+                evol_point_b.append(df_pbp2.loc[filtred_indices[0] - 1, 'POINTS_B'])
+
+            else:
+                # Si aucun n'est vrai, prendre le maximum de POINTS_A
+                evol_point_a.append(df_pbp2['POINTS_A'].max())
+                evol_point_b.append(df_pbp2['POINTS_B'].max())
+                sa = df_pbp2['POINTS_A'].max()
+                sb = df_pbp2['POINTS_B'].max()
+                break  # Arrêter si plus aucun seuil supérieur n'est trouvé
+
+        while len(evol_point_a) < 24:
+            evol_point_a.append(None)
+        while len(evol_point_b) < 24:
+            evol_point_b.append(None)
+
+
+        df_result = pd.DataFrame(
+            [evol_point_a, evol_point_b], 
+            columns=[f'P{i}' for i in range(1, 25)]
+        )
+
+        df_result.insert(0,"HOME",["YES","NO"])
+        df_result.insert(0,"WIN",[sa>sb,sb>sa])
+        df_result['WIN'] = df_result['WIN'].replace({True: 'YES', False: 'NO'})
+        df_result.insert(0,"OPPONENT",[df_gs2["road.club.code"].to_list()[0],df_gs2["local.club.code"].to_list()[0]])
+        df_result.insert(0,"TEAM",[df_gs2["local.club.code"].to_list()[0],df_gs2["road.club.code"].to_list()[0]])
+        df_result.insert(0,"Gamecode",[df_gs2["Gamecode"].to_list()[0],df_gs2["Gamecode"].to_list()[0]])
+        if competition == "euroleague" : 
+            df_result.insert(0,"ROUND",[(df_gs2["Gamecode"].to_list()[0] - 1) // 9 + 1,(df_gs2["Gamecode"].to_list()[0] - 1) // 9 + 1])
+        else :
+            df_result.insert(0,"ROUND",[(df_gs2["Gamecode"].to_list()[0] - 1) // 9 + 1,(df_gs2["Gamecode"].to_list()[0] - 1) // 10 + 1])
+
+        df_result.insert(0,"Season",[df_gs2["Season"].to_list()[0],df_gs2["Season"].to_list()[0]])
+        df_evol_score = pd.concat([df_evol_score, df_result], ignore_index=True)
+
+
+    df_evol_score.to_csv(os.path.join(data_dir, f"{competition}_evolscore_{season}.csv"))
+    
 def plot_semi_circular_chart(value, t, size=300, font_size=20,m=True):
     """
     Create a semi-circular chart that is perfectly square without unnecessary white space.
