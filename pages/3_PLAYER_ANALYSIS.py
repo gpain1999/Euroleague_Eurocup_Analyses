@@ -65,7 +65,6 @@ df = df[['ROUND', 'NB_GAME', 'TEAM', 'OPPONENT', 'HOME', 'WIN', 'NUMBER', 'PLAYE
          '1_R', '1_T', '2_R', '2_T', '3_R', '3_T', 'TO', 'FP', 'CF', 'NCF']]
 
 
-print(min(df["I_PER"]),max(df["I_PER"]))
 
 # Remplir les trous dans ROUND
 min_round, max_round = df["ROUND"].min(), df["ROUND"].max()
@@ -279,6 +278,16 @@ with col1:
     fig2 = f.plot_semi_circular_chart(df_resultat["3_R"].sum()/df_resultat["3_T"].sum() if df_resultat["3_T"].sum() != 0 else 0,"3P",size=int(120*zoom),font_size=int(20*zoom),m=False)
     st.plotly_chart(fig2)
 
+    st.markdown(
+        f'''
+        <p style="font-size:{int(25*zoom)}px; text-align: center; ">
+            <b>SCORE PER 10 mins</b>
+        </p>
+        ''',
+        unsafe_allow_html=True
+    )
+
+
         
 
 with col_image :
@@ -301,6 +310,31 @@ with col_image :
     else:
         st.warning(f"Image introuvable pour le joueur : {NAME_PLAYER}")
 
+    result_pm_solo = f.analyse_io_2(data_dir = data_dir,
+                    competition = competition,
+                    season = season,
+                    num_players = 1,
+                    min_round = min_round,
+                    max_round = max_round,
+                    CODETEAM = [CODETEAM],
+                    selected_players = [selected_players],
+                    min_percent_in = 0)
+
+    st.markdown(
+        f'''
+        <p style="font-size:{int(25*zoom)}px; text-align: left;">
+            <b style="margin-right: {int(25*zoom)}px;">ON :</b> 
+            <span style="margin-right: {int(25*zoom)}px;">{round(result_pm_solo["OFF_ON_10"].to_list()[0],1)}</span> 
+            <span style="margin-right: {int(25*zoom)}px;">-</span> 
+            {round(result_pm_solo["DEF_ON_10"].to_list()[0],1)}<br>
+            <b style="margin-right: {int(25*zoom)}px;">OFF :</b> 
+            <span style="margin-right: {int(25*zoom)}px;">{round(result_pm_solo["OFF_OFF_10"].to_list()[0],1)}</span> 
+            <span style="margin-right: {int(25*zoom)}px;">-</span> 
+            {round(result_pm_solo["DEF_OFF_10"].to_list()[0],1)}
+        </p>
+        ''',
+        unsafe_allow_html=True
+    )
 
     
 
@@ -347,7 +381,7 @@ with col2:
     # Mise à jour du layout
     fig.update_layout(
         autosize=True,
-        title=f'#{NUMBER_PLAYER} {NAME_PLAYER} ({TEAM_PLAYER}) : {avg_data[selected_stats].sum()} {selected_stats} /game & {avg_data["TIME_ON"].sum()} MIN/game ',
+        title=f'#{NUMBER_PLAYER} {NAME_PLAYER} ({TEAM_PLAYER}) AVG: {avg_data[selected_stats].sum()} {selected_stats}  ON {avg_data["TIME_ON"].sum()} MIN ',
         xaxis=dict(
             title="ROUND",
             showgrid=False,
@@ -460,6 +494,7 @@ result_pm = f.analyse_io_2(data_dir = data_dir,
                 CODETEAM = [CODETEAM],
                 selected_players = [selected_players],
                 min_percent_in = min_percent_in)
+
 
 
 result_pm['P2'] = result_pm.apply(lambda row: row['P2'] if 
