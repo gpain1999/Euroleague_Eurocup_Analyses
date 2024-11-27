@@ -618,7 +618,7 @@ with cola :
             marker=dict(color=colors),  # Couleurs dynamiques
         )
     )
-    for i in range(3, len(labels), 4):  # Indices toutes les 4 barres (commençant à 3)
+    for i in range(3, len(labels)-1, 4):  # Indices toutes les 4 barres (commençant à 3)
         fig.add_shape(
             type="line",
             x0=labels[i] + 1.25,
@@ -667,7 +667,7 @@ with colb :
             marker=dict(color=colors),  # Couleurs dynamiques
         )
     )
-    for i in range(3, len(labels), 4):  # Indices toutes les 4 barres (commençant à 3)
+    for i in range(3, len(labels)-1, 4):  # Indices toutes les 4 barres (commençant à 3)
         fig.add_shape(
             type="line",
             x0=labels[i] + 1.25,
