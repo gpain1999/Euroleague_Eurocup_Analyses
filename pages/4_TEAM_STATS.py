@@ -5,6 +5,8 @@ import sys
 import os
 from PIL import Image
 import math
+import matplotlib.pyplot as plt
+
 season = 2024
 competition = "euroleague"
 data_dir = os.path.join(os.path.dirname(__file__), '../datas')
@@ -589,3 +591,82 @@ st.dataframe(team_detail_select_2,height=min(38*len(team_detail_select),650), us
 
 st.header("Stats GAME BY GAME : OPPONENTS")
 st.dataframe(opp_detail_select_2,height=min(38*len(opp_detail_select),650), use_container_width=True,hide_index=True)
+
+
+st.header("SCORE EVOLUTION")
+periode,cumul = f.team_evol_score(CODETEAM,min_round,max_round,data_dir,competition,season)
+
+cola,_, colb = st.columns([2,1, 2]) 
+
+with cola :
+    # Noms des barres
+    labels = [i * 2.5 for i in range(1, len(periode) + 1)]
+
+    # Couleurs conditionnelles
+    colors = ['green' if val > 0 else 'red' if val < 0 else 'yellow' for val in periode]
+
+    # Création de la figure
+    fig = go.Figure()
+
+    # Ajout des barres
+    fig.add_trace(
+        go.Bar(
+            x=labels,
+            y=periode,
+            marker=dict(color=colors),  # Couleurs dynamiques
+        )
+    )
+
+    # Mise en page
+    fig.update_layout(
+        title="Average Delta score per periode of 2:30 mins",
+        xaxis_title="Minutes",
+        yaxis_title="Delta",
+        xaxis=dict(tickmode='linear'),
+        plot_bgcolor="rgba(0,0,0,0)",  # Fond transparent
+        paper_bgcolor="rgba(0,0,0,0)", # Papier transparent (si mode sombre Streamlit)
+        font=dict(size=12),
+    )
+
+    # Affichage dans Streamlit
+    st.plotly_chart(fig)
+
+with _ :
+    if os.path.exists(team_logo_path):
+        st.image(team_logo_path,  width=int(500*zoom))
+    else:
+        st.warning(f"Logo introuvable pour l'équipe : {CODETEAM}")
+
+
+with colb :
+    # Noms des barres
+    labels = [i * 2.5 for i in range(1, len(cumul) + 1)]
+
+    # Couleurs conditionnelles
+    colors = ['green' if val > 0 else 'red' if val < 0 else 'yellow' for val in cumul]
+
+    # Création de la figure
+    fig = go.Figure()
+
+    # Ajout des barres
+    fig.add_trace(
+        go.Bar(
+            x=labels,
+            y=cumul,
+            marker=dict(color=colors),  # Couleurs dynamiques
+        )
+    )
+
+    # Mise en page
+    fig.update_layout(
+        title="Average Delta score live",
+        xaxis_title="Minutes",
+        yaxis_title="Delta",
+        xaxis=dict(tickmode='linear'),
+        plot_bgcolor="rgba(0,0,0,0)",  # Fond transparent
+        paper_bgcolor="rgba(0,0,0,0)", # Papier transparent (si mode sombre Streamlit)
+        font=dict(size=12)
+    )
+
+    # Affichage dans Streamlit
+    st.plotly_chart(fig)
