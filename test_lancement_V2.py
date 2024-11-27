@@ -34,5 +34,3 @@ except FileNotFoundError:
 
 st.title("Application Euroleague - by gpain1999")
 #st.sidebar.success("Choisissez une page ci-dessus.")
-
-

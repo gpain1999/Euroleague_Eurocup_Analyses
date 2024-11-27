@@ -902,6 +902,8 @@ def recuperation_pbp(competition, season, data_dir, round_=None):
                     # Récupérer les données pour le gamecode spécifique
                     try : 
                         sub = pbp_.get_game_play_by_play_data(season=season, gamecode=gc)
+                        sub['PERIOD'] = (sub['PLAYINFO'] == 'Begin Period').cumsum()
+
                         if "End Game" in sub["PLAYINFO"].values:
                             # Concaténer les nouvelles données avec _pbp
                             _pbp = pd.concat([_pbp, sub], ignore_index=True)
@@ -912,6 +914,8 @@ def recuperation_pbp(competition, season, data_dir, round_=None):
                     try : 
                         _pbp = _pbp[_pbp["Gamecode"]!=gc]
                         sub = pbp_.get_game_play_by_play_data(season=season, gamecode=gc)
+                        sub['PERIOD'] = (sub['PLAYINFO'] == 'Begin Period').cumsum()
+
                         # Concaténer les nouvelles données avec _pbp
                         _pbp = pd.concat([_pbp, sub], ignore_index=True)
                     except :
@@ -928,6 +932,7 @@ def recuperation_pbp(competition, season, data_dir, round_=None):
     else:
         # Récupérer les données en utilisant PlayByPlay
         _pbp = pbp_.get_game_play_by_play_data_single_season(season=season)
+        _pbp['PERIOD'] = (_pbp['PLAYINFO'] == 'Begin Period').cumsum()
 
         if competition == "euroleague" : 
             _pbp.loc[:,"Round"] =(_pbp["Gamecode"] - 1) // 9 + 1
