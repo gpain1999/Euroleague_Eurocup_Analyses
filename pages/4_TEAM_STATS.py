@@ -616,6 +616,15 @@ with cola :
             marker=dict(color=colors),  # Couleurs dynamiques
         )
     )
+    for i in range(3, len(labels), 4):  # Indices toutes les 4 barres (commençant à 3)
+        fig.add_shape(
+            type="line",
+            x0=labels[i] + 1.25,
+            y0=min(periode) - 1,  # Commence un peu en dessous de la valeur min
+            x1=labels[i] + 1.25,
+            y1=max(periode) + 1,  # Va un peu au-dessus de la valeur max
+            line=dict(color="yellow", dash="dot", width=2)  # Ligne pointillée jaune
+        )
 
     # Mise en page
     fig.update_layout(
@@ -633,7 +642,7 @@ with cola :
 
 with _ :
     if os.path.exists(team_logo_path):
-        st.image(team_logo_path,  width=int(500*zoom))
+        st.image(team_logo_path,  width=int(450*zoom))
     else:
         st.warning(f"Logo introuvable pour l'équipe : {CODETEAM}")
 
@@ -656,7 +665,15 @@ with colb :
             marker=dict(color=colors),  # Couleurs dynamiques
         )
     )
-
+    for i in range(3, len(labels), 4):  # Indices toutes les 4 barres (commençant à 3)
+        fig.add_shape(
+            type="line",
+            x0=labels[i] + 1.25,
+            y0=min(cumul) - 1,  # Commence un peu en dessous de la valeur min
+            x1=labels[i] + 1.25,
+            y1=max(cumul) + 1,  # Va un peu au-dessus de la valeur max
+            line=dict(color="yellow", dash="dot", width=2)  # Ligne pointillée jaune
+        )
     # Mise en page
     fig.update_layout(
         title="Average Delta score live",
