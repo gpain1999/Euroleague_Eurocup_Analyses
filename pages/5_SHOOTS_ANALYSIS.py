@@ -67,13 +67,21 @@ selected_range = st.sidebar.slider(
 min_round = selected_range[0]
 max_round = selected_range[1]
 
-col1, col2,_ = st.columns([1, 1,2])
+col1, col2,col3,col4,col5 = st.columns([2, 2,1,1,1])
 
 with col1 : 
     mode = st.selectbox("Méthode d'Agrégation", options=["CUMULATED", "AVERAGE"], index=0)
 with col2 : 
 
     gp = st.selectbox("GROUP BY", options=["PLAYER", "TEAM"], index=0)
+
+with col3 : 
+    M1 = st.checkbox("Stats 1P", value=True)
+    M2 = st.checkbox("Stats 2P", value=True)
+    M3 = st.checkbox("Stats 3P", value=True)
+
+ 
+
 
 # Filtrage dynamique des équipes
 selected_teams = st.sidebar.multiselect("Équipes Sélectionnées", options=sorted(df["TEAM"].unique()) if not df.empty else [])
@@ -112,23 +120,28 @@ result_df = f.get_aggregated_data(
     percent="MADE"
 )
 
-result_df["1_P"] = (result_df["1_R"]/result_df["1_T"]*100).round(1)
-result_df["2_P"] = (result_df["2_R"]/result_df["2_T"]*100).round(1)
-result_df["3_P"] = (result_df["3_R"]/result_df["3_T"]*100).round(1)
-result_df["INF_1P"] = (((result_df["1_R"] / result_df["1_T"]) - 0.674 * ((((result_df["1_R"] / result_df["1_T"])) * (1 - ((result_df["1_R"] / result_df["1_T"]))))/(result_df["1_T"]))**0.5)*100).round(1)
-result_df["SUP_1P"] = (((result_df["1_R"] / result_df["1_T"]) + 0.674 * ((((result_df["1_R"] / result_df["1_T"])) * (1 - ((result_df["1_R"] / result_df["1_T"]))))/(result_df["1_T"]))**0.5)*100).round(1)
+col_to_return = ["NB_GAME","TEAM","WIN","#","PLAYER","TIME_ON"]
 
-result_df["INF_2P"]= (((result_df["2_R"] / result_df["2_T"]) - 0.674 *((((result_df["2_R"] / result_df["2_T"])) * (1 - ((result_df["2_R"] / result_df["2_T"]))))/(result_df["2_T"]))**0.5)*100).round(1)
-result_df["SUP_2P"]= (((result_df["2_R"] / result_df["2_T"]) + 0.674 *((((result_df["2_R"] / result_df["2_T"])) * (1 - ((result_df["2_R"] / result_df["2_T"]))))/(result_df["2_T"]))**0.5)*100).round(1)
+if M1 : 
+    result_df["1_P"] = (result_df["1_R"]/result_df["1_T"]*100).round(1)
+    result_df["INF_1P"] = (((result_df["1_R"] / result_df["1_T"]) - 0.674 * ((((result_df["1_R"] / result_df["1_T"])) * (1 - ((result_df["1_R"] / result_df["1_T"]))))/(result_df["1_T"]))**0.5)*100).round(1)
+    result_df["SUP_1P"] = (((result_df["1_R"] / result_df["1_T"]) + 0.674 * ((((result_df["1_R"] / result_df["1_T"])) * (1 - ((result_df["1_R"] / result_df["1_T"]))))/(result_df["1_T"]))**0.5)*100).round(1)
+    col_to_return = col_to_return + ["1_R","1_T","INF_1P","1_P","SUP_1P"]
 
-result_df["INF_3P"]= (((result_df["3_R"] / result_df["3_T"]) - 0.674 *((((result_df["3_R"] / result_df["3_T"])) * (1 - ((result_df["3_R"] / result_df["3_T"]))))/(result_df["3_T"]))**0.5)*100).round(1)
-result_df["SUP_3P"]= (((result_df["3_R"] / result_df["3_T"]) + 0.674 *((((result_df["3_R"] / result_df["3_T"])) * (1 - ((result_df["3_R"] / result_df["3_T"]))))/(result_df["3_T"]))**0.5)*100).round(1)
+if M2 :
+    result_df["2_P"] = (result_df["2_R"]/result_df["2_T"]*100).round(1)
+    result_df["INF_2P"]= (((result_df["2_R"] / result_df["2_T"]) - 0.674 *((((result_df["2_R"] / result_df["2_T"])) * (1 - ((result_df["2_R"] / result_df["2_T"]))))/(result_df["2_T"]))**0.5)*100).round(1)
+    result_df["SUP_2P"]= (((result_df["2_R"] / result_df["2_T"]) + 0.674 *((((result_df["2_R"] / result_df["2_T"])) * (1 - ((result_df["2_R"] / result_df["2_T"]))))/(result_df["2_T"]))**0.5)*100).round(1)
+    col_to_return = col_to_return + ["2_R","2_T","INF_2P","2_P","SUP_2P"]
+
+if M3 :
+    result_df["3_P"] = (result_df["3_R"]/result_df["3_T"]*100).round(1)
+    result_df["INF_3P"]= (((result_df["3_R"] / result_df["3_T"]) - 0.674 *((((result_df["3_R"] / result_df["3_T"])) * (1 - ((result_df["3_R"] / result_df["3_T"]))))/(result_df["3_T"]))**0.5)*100).round(1)
+    result_df["SUP_3P"]= (((result_df["3_R"] / result_df["3_T"]) + 0.674 *((((result_df["3_R"] / result_df["3_T"])) * (1 - ((result_df["3_R"] / result_df["3_T"]))))/(result_df["3_T"]))**0.5)*100).round(1)
+    col_to_return = col_to_return + ["3_R","3_T","INF_3P","3_P","SUP_3P"]
 
 
-result_df = result_df[["NB_GAME","TEAM","WIN","#","PLAYER","TIME_ON",
-                       "1_R","1_T","INF_1P","1_P","SUP_1P",
-                       "2_R","2_T","INF_2P","2_P","SUP_2P",
-                       "3_R","3_T","INF_3P","3_P","SUP_3P"]]
+result_df = result_df[col_to_return]
 result_df = result_df.loc[:, (result_df != "---").any(axis=0)]
 
 ################### STYLES
