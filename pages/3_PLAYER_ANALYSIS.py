@@ -96,7 +96,7 @@ zoom = st.sidebar.slider(
 )
 
 selected_range = st.sidebar.slider(
-    "Sélectionnez une plage de ROUND :",
+    "Select a ROUND range:",
     min_value=min_round,
     max_value=max_round,
     value=(min_round, max_round),

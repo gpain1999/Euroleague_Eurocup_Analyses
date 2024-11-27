@@ -89,7 +89,7 @@ with col3 :
 st.sidebar.header("SETTINGS")
 
 selected_range = st.sidebar.slider(
-    "Sélectionnez une plage de ROUND :",
+    "Select a ROUND range:",
     min_value=1,
     max_value=df["ROUND"].max(),
     value=(1, df["ROUND"].max()),
