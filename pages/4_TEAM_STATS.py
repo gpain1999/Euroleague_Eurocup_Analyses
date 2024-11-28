@@ -594,7 +594,7 @@ st.dataframe(opp_detail_select_2,height=min(38*len(opp_detail_select),650), use_
 
 
 st.header("SCORE EVOLUTION")
-periode,cumul = f.team_evol_score(CODETEAM,min_round,max_round,data_dir,competition,season)
+periode,cumul = f.team_evol_score(CODETEAM,selected_range[0],selected_range[1],data_dir,competition,season)
 periode = periode[:16]
 cumul = cumul[:16]
 
