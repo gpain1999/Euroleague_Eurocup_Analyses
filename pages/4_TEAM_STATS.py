@@ -630,6 +630,7 @@ with cola :
 
     # Mise en page
     fig.update_layout(
+        autosize=True,
         title="Average Delta score per periode of 2:30 mins",
         xaxis_title="Minutes",
         yaxis_title="Delta",
@@ -678,6 +679,7 @@ with colb :
         )
     # Mise en page
     fig.update_layout(
+        autosize=True,
         title="Average Delta score live",
         xaxis_title="Minutes",
         yaxis_title="Delta",
