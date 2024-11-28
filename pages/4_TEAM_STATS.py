@@ -96,6 +96,10 @@ team_detail_select = team_detail_select.sort_values(by = "ROUND",ascending=False
 team_detail_select = team_detail_select.loc[:, (team_detail_select != "---").any(axis=0)]
 team_detail_select = team_detail_select.drop(columns = ["TEAM","NB_GAME","TIME_ON"])
 win_counts = team_detail_select["WIN"].value_counts().to_dict()
+if "YES" not in win_counts:
+    win_counts["YES"] = 0
+if "NO" not in win_counts:
+    win_counts["NO"] = 0
 
 
 opp_detail_select = f.get_aggregated_data(
