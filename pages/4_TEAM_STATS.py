@@ -602,7 +602,7 @@ periode,cumul = f.team_evol_score(CODETEAM,selected_range[0],selected_range[1],d
 periode = periode[:16]
 cumul = cumul[:16]
 
-cola,_, colb = st.columns([2,1, 2]) 
+cola,_, colb = st.columns([2,0.75, 2]) 
 
 with cola :
     # Noms des barres
@@ -635,7 +635,7 @@ with cola :
     # Mise en page
     fig.update_layout(
         autosize=True,
-        width = 600,
+        width = 500,
         title="Average Delta score per periode of 2:30 mins",
         xaxis_title="Minutes",
         yaxis_title="Delta",
@@ -685,7 +685,7 @@ with colb :
     # Mise en page
     fig.update_layout(
         autosize=True,
-        width = 700,
+        width = 500,
         title="Average Delta score live",
         xaxis_title="Minutes",
         yaxis_title="Delta",
