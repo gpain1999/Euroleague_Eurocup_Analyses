@@ -635,7 +635,7 @@ with cola :
     # Mise en page
     fig.update_layout(
         autosize=True,
-        height = 700,
+        width = 600,
         title="Average Delta score per periode of 2:30 mins",
         xaxis_title="Minutes",
         yaxis_title="Delta",
@@ -650,7 +650,7 @@ with cola :
 
 with _ :
     if os.path.exists(team_logo_path):
-        st.image(team_logo_path,  width=int(450*zoom))
+        st.image(team_logo_path,  width=int(300*zoom))
     else:
         st.warning(f"Logo introuvable pour l'équipe : {CODETEAM}")
 
@@ -685,7 +685,7 @@ with colb :
     # Mise en page
     fig.update_layout(
         autosize=True,
-        height = 700,
+        width = 700,
         title="Average Delta score live",
         xaxis_title="Minutes",
         yaxis_title="Delta",
