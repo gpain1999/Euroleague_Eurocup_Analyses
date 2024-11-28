@@ -625,12 +625,13 @@ with cola :
             y0=min(periode) - 1,  # Commence un peu en dessous de la valeur min
             x1=labels[i] + 1.25,
             y1=max(periode) + 1,  # Va un peu au-dessus de la valeur max
-            line=dict(color="yellow", dash="dot", width=2)  # Ligne pointillée jaune
+            line=dict(color="grey", dash="dot", width=2)  # Ligne pointillée jaune
         )
 
     # Mise en page
     fig.update_layout(
         autosize=True,
+        height = 700,
         title="Average Delta score per periode of 2:30 mins",
         xaxis_title="Minutes",
         yaxis_title="Delta",
@@ -675,11 +676,12 @@ with colb :
             y0=min(cumul) - 1,  # Commence un peu en dessous de la valeur min
             x1=labels[i] + 1.25,
             y1=max(cumul) + 1,  # Va un peu au-dessus de la valeur max
-            line=dict(color="yellow", dash="dot", width=2)  # Ligne pointillée jaune
+            line=dict(color="grey", dash="dot", width=2)  # Ligne pointillée jaune
         )
     # Mise en page
     fig.update_layout(
         autosize=True,
+        height = 700,
         title="Average Delta score live",
         xaxis_title="Minutes",
         yaxis_title="Delta",
