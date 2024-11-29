@@ -587,30 +587,13 @@ with col1 :
         fig2 = f.plot_semi_circular_chart(shot_T/(shot_T+TO),"SHOOT/TO", size=int(120*zoom), font_size=int(20*zoom))
         st.plotly_chart(fig2,use_container_width=True)
 
-team_detail_select_2 = team_detail_select.style.apply(highlight_win, axis=1).format(precision=1) 
-opp_detail_select_2 = opp_detail_select.style.apply(highlight_win_o, axis=1).format(precision=1)
+    MM = st.selectbox("DELTA SCORE CALCUL", options=["MEAN", "MEDIAN"], index=0)
 
-st.header(f"Stats GAME BY GAME : {CODETEAM}")
-st.dataframe(team_detail_select_2,height=min(38*len(team_detail_select),650), use_container_width=True,hide_index=True)
+   
 
-st.header("Stats GAME BY GAME : OPPONENTS")
-st.dataframe(opp_detail_select_2,height=min(38*len(opp_detail_select),650), use_container_width=True,hide_index=True)
+cola, colb,vide = st.columns([1,1,1]) 
 
 
-st.header("SCORE EVOLUTION")
-#type
-
-
-
-cola,_, colb,vide = st.columns([1.5,0.75,1.5,1]) 
-
-with _ :
-    MM = st.selectbox("MEAN OR MEDIAN", options=["MEAN", "MEDIAN"], index=0)
-
-    if os.path.exists(team_logo_path):
-        st.image(team_logo_path,  width=int(300*zoom))
-    else:
-        st.warning(f"Logo introuvable pour l'équipe : {CODETEAM}")
 
 periode,cumul = f.team_evol_score(CODETEAM,selected_range[0],selected_range[1],data_dir,competition,season,type = MM)
 periode = periode[:16]
@@ -712,3 +695,16 @@ with colb :
 
     # Affichage dans Streamlit
     st.plotly_chart(fig)
+
+team_detail_select_2 = team_detail_select.style.apply(highlight_win, axis=1).format(precision=1) 
+opp_detail_select_2 = opp_detail_select.style.apply(highlight_win_o, axis=1).format(precision=1)
+
+st.header(f"Stats GAME BY GAME : {CODETEAM}")
+st.dataframe(team_detail_select_2,height=min(38*len(team_detail_select),650), use_container_width=True,hide_index=True)
+
+st.header("Stats GAME BY GAME : OPPONENTS")
+st.dataframe(opp_detail_select_2,height=min(38*len(opp_detail_select),650), use_container_width=True,hide_index=True)
+
+
+st.header("SCORE EVOLUTION")
+#type
