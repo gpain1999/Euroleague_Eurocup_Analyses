@@ -280,7 +280,7 @@ with col1:
 
     st.markdown(
         f'''
-        <p style="font-size:{int(25*zoom)}px; text-align: center; ">
+        <p style="font-size:{int(20*zoom)}px; text-align: center; ">
             <b>SCORE PER 10 mins</b>
         </p>
         ''',
