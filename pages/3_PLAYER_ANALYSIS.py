@@ -254,7 +254,7 @@ st.header(f"AVERAGES : {NAME_PLAYER} ")
 st.dataframe(avg_data,height=60, use_container_width=True,hide_index=True)
 
 
-col1,col_image, col2, col3 = st.columns([1,2, 6, 4])
+col1,col_image, col2, col3 = st.columns([1.2,2, 6, 4])
 
 with col1:
     cola, colb= st.columns([0.5,2])
