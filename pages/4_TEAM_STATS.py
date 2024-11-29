@@ -598,11 +598,23 @@ st.dataframe(opp_detail_select_2,height=min(38*len(opp_detail_select),650), use_
 
 
 st.header("SCORE EVOLUTION")
-periode,cumul = f.team_evol_score(CODETEAM,selected_range[0],selected_range[1],data_dir,competition,season)
+#type
+
+
+
+cola,_, colb,vide = st.columns([1.5,0.75,1.5,1]) 
+
+with _ :
+    MM = st.selectbox("MEAN OR MEDIAN", options=["MEAN", "MEDIAN"], index=0)
+
+    if os.path.exists(team_logo_path):
+        st.image(team_logo_path,  width=int(300*zoom))
+    else:
+        st.warning(f"Logo introuvable pour l'équipe : {CODETEAM}")
+
+periode,cumul = f.team_evol_score(CODETEAM,selected_range[0],selected_range[1],data_dir,competition,season,type = MM)
 periode = periode[:16]
 cumul = cumul[:16]
-
-cola,_, colb = st.columns([2,0.75, 2]) 
 
 with cola :
     # Noms des barres
@@ -635,24 +647,23 @@ with cola :
     # Mise en page
     fig.update_layout(
         autosize=True,
-        width = 500,
-        title="Average Delta score per periode of 2:30 mins",
+        width=int(600*zoom),
+        height=int(600*zoom),
+        title=f"{MM} Delta score per periode of 2:30 mins",
         xaxis_title="Minutes",
         yaxis_title="Delta",
-        xaxis=dict(tickmode='linear'),
+        xaxis=dict(
+            tickmode='linear',
+            showticklabels=False  # Supprime les labels sur l'axe X
+        ),
         plot_bgcolor="rgba(0,0,0,0)",  # Fond transparent
-        paper_bgcolor="rgba(0,0,0,0)", # Papier transparent (si mode sombre Streamlit)
+        paper_bgcolor="rgba(0,0,0,0)",  # Papier transparent (mode sombre Streamlit)
         font=dict(size=12),
     )
 
     # Affichage dans Streamlit
     st.plotly_chart(fig)
 
-with _ :
-    if os.path.exists(team_logo_path):
-        st.image(team_logo_path,  width=int(300*zoom))
-    else:
-        st.warning(f"Logo introuvable pour l'équipe : {CODETEAM}")
 
 
 with colb :
@@ -685,14 +696,18 @@ with colb :
     # Mise en page
     fig.update_layout(
         autosize=True,
-        width = 500,
-        title="Average Delta score live",
+        width = int(600*zoom),
+        height = int(600*zoom),
+        title=f"{MM} Delta score live",
         xaxis_title="Minutes",
         yaxis_title="Delta",
-        xaxis=dict(tickmode='linear'),
+        xaxis=dict(
+            tickmode='linear',
+            showticklabels=False  # Supprime les labels sur l'axe X
+        ),
         plot_bgcolor="rgba(0,0,0,0)",  # Fond transparent
         paper_bgcolor="rgba(0,0,0,0)", # Papier transparent (si mode sombre Streamlit)
-        font=dict(size=12)
+        font=dict(size=12),
     )
 
     # Affichage dans Streamlit

@@ -24,7 +24,7 @@ import threading
 import streamlit as st
 import plotly.graph_objects as go
 
-def team_evol_score(team,min_round,max_round,data_dir,competition,season) :
+def team_evol_score(team,min_round,max_round,data_dir,competition,season,type = "MEAN") :
     df_evol_score = pd.read_csv(os.path.join(data_dir, f"{competition}_evolscore_{season}.csv"))
 
     team_df = df_evol_score[(df_evol_score["TEAM"]==team)&(df_evol_score["ROUND"]>=min_round)&(df_evol_score["ROUND"]<=max_round)]
@@ -32,8 +32,13 @@ def team_evol_score(team,min_round,max_round,data_dir,competition,season) :
 
 
     columns_p = [f'P{i}' for i in range(1, 25)]
-    team_df_mean_values = list(team_df[columns_p].mean(skipna=True))
-    opp_df_mean_values = list(opp_df[columns_p].mean(skipna=True))
+    if type != "MEAN" :
+        team_df_mean_values = list(team_df[columns_p].median(skipna=True))
+        opp_df_mean_values = list(opp_df[columns_p].median(skipna=True))
+    else : 
+        team_df_mean_values = list(team_df[columns_p].mean(skipna=True))
+        opp_df_mean_values = list(opp_df[columns_p].mean(skipna=True))
+        
     cumul_df_mean_values = [round(a-b,3) for a,b in zip(team_df_mean_values,opp_df_mean_values)]
     periode_mean_values = [cumul_df_mean_values[0]] + [round(cumul_df_mean_values[i] - cumul_df_mean_values[i-1],3) for i in range(1, len(cumul_df_mean_values))]
 
