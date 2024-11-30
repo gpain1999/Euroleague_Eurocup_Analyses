@@ -1,9 +1,9 @@
-name: Run Code Recup Script Hourly
+name: Run Code Recup Script Nightly
 
 on:
   workflow_dispatch:  # Permet un déclenchement manuel
   schedule:
-    - cron: '0 * * * *'  # Exécution toutes les heures
+    - cron: '30 22 * * 2-5'  # Exécution à 22h30 UTC (23h30 heure française)
 
 jobs:
   run-script:
