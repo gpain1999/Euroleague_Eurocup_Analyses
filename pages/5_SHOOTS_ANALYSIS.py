@@ -121,23 +121,31 @@ result_df = f.get_aggregated_data(
 )
 
 col_to_return = ["NB_GAME","TEAM","WIN","#","PLAYER","TIME_ON"]
+import numpy as np
 
 if M1 : 
     result_df["1_P"] = (result_df["1_R"]/result_df["1_T"]*100).round(1)
-    result_df["INF_1P"] = (((result_df["1_R"] / result_df["1_T"]) - 0.674 * ((((result_df["1_R"] / result_df["1_T"])) * (1 - ((result_df["1_R"] / result_df["1_T"]))))/(result_df["1_T"]))**0.5)*100).round(1)
-    result_df["SUP_1P"] = (((result_df["1_R"] / result_df["1_T"]) + 0.674 * ((((result_df["1_R"] / result_df["1_T"])) * (1 - ((result_df["1_R"] / result_df["1_T"]))))/(result_df["1_T"]))**0.5)*100).round(1)
+    #result_df["INF_1P"] = (((result_df["1_R"] / result_df["1_T"]) - 0.674 * ((((result_df["1_R"] / result_df["1_T"])) * (1 - ((result_df["1_R"] / result_df["1_T"]))))/(result_df["1_T"]))**0.5)*100).round(1)
+    result_df["INF_1P"] = (np.clip((result_df["1_R"] / result_df["1_T"]) - np.clip((0.5 - (result_df["1_T"])/200),0,0.5),0,1)*100).round(1)
+    result_df["SUP_1P"] = (np.clip((result_df["1_R"] / result_df["1_T"]) + np.clip((0.5 - (result_df["1_T"])/200),0,0.5),0,1)*100).round(1)
+    #result_df["SUP_1P"] = (((result_df["1_R"] / result_df["1_T"]) + 0.674 * ((((result_df["1_R"] / result_df["1_T"])) * (1 - ((result_df["1_R"] / result_df["1_T"]))))/(result_df["1_T"]))**0.5)*100).round(1)
     col_to_return = col_to_return + ["1_R","1_T","INF_1P","1_P","SUP_1P"]
 
 if M2 :
     result_df["2_P"] = (result_df["2_R"]/result_df["2_T"]*100).round(1)
-    result_df["INF_2P"]= (((result_df["2_R"] / result_df["2_T"]) - 0.674 *((((result_df["2_R"] / result_df["2_T"])) * (1 - ((result_df["2_R"] / result_df["2_T"]))))/(result_df["2_T"]))**0.5)*100).round(1)
-    result_df["SUP_2P"]= (((result_df["2_R"] / result_df["2_T"]) + 0.674 *((((result_df["2_R"] / result_df["2_T"])) * (1 - ((result_df["2_R"] / result_df["2_T"]))))/(result_df["2_T"]))**0.5)*100).round(1)
+    # result_df["INF_2P"]= (((result_df["2_R"] / result_df["2_T"]) - 0.674 *((((result_df["2_R"] / result_df["2_T"])) * (1 - ((result_df["2_R"] / result_df["2_T"]))))/(result_df["2_T"]))**0.5)*100).round(1)
+    # result_df["SUP_2P"]= (((result_df["2_R"] / result_df["2_T"]) + 0.674 *((((result_df["2_R"] / result_df["2_T"])) * (1 - ((result_df["2_R"] / result_df["2_T"]))))/(result_df["2_T"]))**0.5)*100).round(1)
+    result_df["INF_2P"] = (np.clip((result_df["2_R"] / result_df["2_T"]) - np.clip((0.5 - (result_df["2_T"])/200),0,0.5),0,1)*100).round(1)
+    result_df["SUP_2P"] = (np.clip((result_df["2_R"] / result_df["2_T"]) + np.clip((0.5 - (result_df["2_T"])/200),0,0.5),0,1)*100).round(1)
+
     col_to_return = col_to_return + ["2_R","2_T","INF_2P","2_P","SUP_2P"]
 
 if M3 :
     result_df["3_P"] = (result_df["3_R"]/result_df["3_T"]*100).round(1)
-    result_df["INF_3P"]= (((result_df["3_R"] / result_df["3_T"]) - 0.674 *((((result_df["3_R"] / result_df["3_T"])) * (1 - ((result_df["3_R"] / result_df["3_T"]))))/(result_df["3_T"]))**0.5)*100).round(1)
-    result_df["SUP_3P"]= (((result_df["3_R"] / result_df["3_T"]) + 0.674 *((((result_df["3_R"] / result_df["3_T"])) * (1 - ((result_df["3_R"] / result_df["3_T"]))))/(result_df["3_T"]))**0.5)*100).round(1)
+    # result_df["INF_3P"]= (((result_df["3_R"] / result_df["3_T"]) - 0.674 *((((result_df["3_R"] / result_df["3_T"])) * (1 - ((result_df["3_R"] / result_df["3_T"]))))/(result_df["3_T"]))**0.5)*100).round(1)
+    # result_df["SUP_3P"]= (((result_df["3_R"] / result_df["3_T"]) + 0.674 *((((result_df["3_R"] / result_df["3_T"])) * (1 - ((result_df["3_R"] / result_df["3_T"]))))/(result_df["3_T"]))**0.5)*100).round(1)
+    result_df["INF_3P"] = (np.clip((result_df["3_R"] / result_df["3_T"]) - np.clip((0.5 - (result_df["3_T"])/200),0,0.5),0,1)*100).round(1)
+    result_df["SUP_3P"] = (np.clip((result_df["3_R"] / result_df["3_T"]) + np.clip((0.5 - (result_df["3_T"])/200),0,0.5),0,1)*100).round(1)
     col_to_return = col_to_return + ["3_R","3_T","INF_3P","3_P","SUP_3P"]
 
 
