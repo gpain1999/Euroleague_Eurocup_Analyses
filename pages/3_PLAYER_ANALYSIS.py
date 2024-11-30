@@ -21,32 +21,6 @@ st.set_page_config(
 
 import fonctions as f
 
-notation =f.analyse_per(data_dir,competition,season,R = [],CODETEAM = [])
-palette = [
-    "#FF0000",  # Rouge vif
-    "#FF3300",  # Rouge-orangé
-    "#FF6600",  # Orange foncé
-    "#FF9900",  # Orange
-    "#FFCC00",  # Jaune-orange
-    "#FFFF00",  # Jaune vif
-    "#CCFF00",  # Jaune-vert
-    "#99FF00",  # Vert citron
-    "#66FF00",  # Vert clair
-    "#33FF00",  # Vert tendre
-    "#00FF00",  # Vert vif
-    "#00CC00",  # Vert moyen
-    "#009900"   # Vert profond
-]
-
-
-# Diviser les données en 7 classes égales en nombre
-notation['CLASS'] = pd.qcut(notation['NOTE'], q=13, labels=range(13))
-
-# Attribuer une couleur en fonction de la classe
-notation['COULEUR'] = notation['CLASS'].map(lambda x: palette[int(x)])
-
-notation = notation.sort_values(by = "NOTE",ascending = False)
-
 
 image_path = f"images/{competition}.png"  # Chemin vers l'image
 
@@ -102,6 +76,32 @@ selected_range = st.sidebar.slider(
     value=(min_round, max_round),
     step=1
 )
+notation =f.analyse_per(data_dir,competition,season,R = [i for i in range(selected_range[0],selected_range[1])],CODETEAM = [])
+palette = [
+    "#FF0000",  # Rouge vif
+    "#FF3300",  # Rouge-orangé
+    "#FF6600",  # Orange foncé
+    "#FF9900",  # Orange
+    "#FFCC00",  # Jaune-orange
+    "#FFFF00",  # Jaune vif
+    "#CCFF00",  # Jaune-vert
+    "#99FF00",  # Vert citron
+    "#66FF00",  # Vert clair
+    "#33FF00",  # Vert tendre
+    "#00FF00",  # Vert vif
+    "#00CC00",  # Vert moyen
+    "#009900"   # Vert profond
+]
+
+
+# Diviser les données en 7 classes égales en nombre
+notation['CLASS'] = pd.qcut(notation['NOTE'], q=13, labels=range(13))
+
+# Attribuer une couleur en fonction de la classe
+notation['COULEUR'] = notation['CLASS'].map(lambda x: palette[int(x)])
+
+notation = notation.sort_values(by = "NOTE",ascending = False)
+
 
 selected_stats = st.sidebar.selectbox("Stat Sélectionné", options=["PER","I_PER","PTS","TR","AS","PM_ON","ST"])
 

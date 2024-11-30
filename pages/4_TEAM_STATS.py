@@ -181,6 +181,36 @@ delta_moyenne_opp = delta_moyenne_opp.drop(columns = ["PM_ON"])
 delta_moyenne_league = team_moyenne - league_moyenne
 delta_moyenne_league = delta_moyenne_league.drop(columns = ["PM_ON"])
 
+
+
+notation =f.analyse_per(data_dir,competition,season,R = [i for i in range(selected_range[0],selected_range[1])],CODETEAM = [])
+palette = [
+    "#FF0000",  # Rouge vif
+    "#FF3300",  # Rouge-orangé
+    "#FF6600",  # Orange foncé
+    "#FF9900",  # Orange
+    "#FFCC00",  # Jaune-orange
+    "#FFFF00",  # Jaune vif
+    "#CCFF00",  # Jaune-vert
+    "#99FF00",  # Vert citron
+    "#66FF00",  # Vert clair
+    "#33FF00",  # Vert tendre
+    "#00FF00",  # Vert vif
+    "#00CC00",  # Vert moyen
+    "#009900"   # Vert profond
+]
+
+
+# Diviser les données en 7 classes égales en nombre
+notation['CLASS'] = pd.qcut(notation['NOTE'], q=13, labels=range(13))
+
+# Attribuer une couleur en fonction de la classe
+notation['COULEUR'] = notation['CLASS'].map(lambda x: palette[int(x)])
+
+notation = notation.sort_values(by = "NOTE",ascending = False)
+
+notation = notation[notation["CODETEAM"] == CODETEAM].reset_index(drop = True)
+
 ################### STYLES
 
 def highlight_win(row):
@@ -591,7 +621,7 @@ with col1 :
 
    
 
-cola, colb,vide = st.columns([1,1,1]) 
+cola, colb,mvp,vide = st.columns([1,1,0.5,1]) 
 
 
 
@@ -695,6 +725,31 @@ with colb :
 
     # Affichage dans Streamlit
     st.plotly_chart(fig)
+
+with mvp :
+    print(notation)
+    player_note = notation["NOTE"].to_list()[0]
+    player_color = notation["COULEUR"].to_list()[0]
+    NAME_PLAYER = notation["PLAYER"].to_list()[0]
+    NUMBER_PLAYER = notation["NUMBER"].to_list()[0]
+    PLAYER_ID = notation["PLAYER_ID"].to_list()[0]
+    player_image_path = os.path.join(images_dir, f"{competition}_{season}_players/{CODETEAM}_{PLAYER_ID}.png")
+
+    # Intégrer la couleur dans le markdown
+    st.markdown(
+        f'''
+        <p style="font-size:{int(40*zoom)}px; text-align: center; color: {player_color};">
+            <b> MVP NOTE : {round(player_note)}</b>
+        </p>
+        ''',
+        unsafe_allow_html=True
+    )
+
+    if os.path.exists(player_image_path):
+        st.image(player_image_path, caption=f"#{NUMBER_PLAYER} {NAME_PLAYER}", width=int(330*zoom))
+    else:
+        st.warning(f"Image introuvable pour le joueur : {NAME_PLAYER}")
+
 
 team_detail_select_2 = team_detail_select.style.apply(highlight_win, axis=1).format(precision=1) 
 opp_detail_select_2 = opp_detail_select.style.apply(highlight_win_o, axis=1).format(precision=1)
