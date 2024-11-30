@@ -13,6 +13,7 @@ competition = "euroleague"
 round_ = 12
 
 
+
 try : 
 
     f.recuperation_gs(competition,season,data_dir,round_=round_)

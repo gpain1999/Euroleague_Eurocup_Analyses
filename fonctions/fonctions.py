@@ -821,7 +821,7 @@ def calcul_per(data_dir,season,competition) :
         'ST': 1.33,
         'FTA': -1,
         'FV': 0.5,
-        'CMU': -1.5,
+        'CMU': -1.25,
         'CMD': -1.25,
         'CMTI': -1.25,
         'CMT': -1.25,
