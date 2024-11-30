@@ -207,9 +207,26 @@ notation['CLASS'] = pd.qcut(notation['NOTE'], q=13, labels=range(13))
 # Attribuer une couleur en fonction de la classe
 notation['COULEUR'] = notation['CLASS'].map(lambda x: palette[int(x)])
 
-notation = notation.sort_values(by = "NOTE",ascending = False)
+notation = notation[notation["CODETEAM"] == CODETEAM].sort_values(by = "NOTE",ascending = False).reset_index(drop = True)
 
-notation = notation[notation["CODETEAM"] == CODETEAM].reset_index(drop = True)
+MVP_NOTE = notation["NOTE"].to_list()[0]
+MVP_COLOR = notation["COULEUR"].to_list()[0]
+NAME_MVP = notation["PLAYER"].to_list()[0]
+NUMBER_MVP = notation["NUMBER"].to_list()[0]
+MVP_ID = notation["PLAYER_ID"].to_list()[0]
+mvp_image_path = os.path.join(images_dir, f"{competition}_{season}_players/{CODETEAM}_{MVP_ID}.png")
+
+mvp_stat = f.get_aggregated_data(
+    df=df, min_round=selected_range[0], max_round=selected_range[1],
+    selected_teams=[CODETEAM],
+    selected_opponents=[],
+    selected_fields=["TEAM","ROUND","PLAYER"],
+    selected_players=[NAME_MVP],
+    mode="CUMULATED",
+    percent="MADE"
+)
+
+
 
 ################### STYLES
 
@@ -621,7 +638,7 @@ with col1 :
 
    
 
-cola, colb,mvp,vide = st.columns([1,1,0.5,1]) 
+cola, colb,mvp,vide = st.columns([1,1,1,1]) 
 
 
 
@@ -727,29 +744,41 @@ with colb :
     st.plotly_chart(fig)
 
 with mvp :
-    print(notation)
-    player_note = notation["NOTE"].to_list()[0]
-    player_color = notation["COULEUR"].to_list()[0]
-    NAME_PLAYER = notation["PLAYER"].to_list()[0]
-    NUMBER_PLAYER = notation["NUMBER"].to_list()[0]
-    PLAYER_ID = notation["PLAYER_ID"].to_list()[0]
-    player_image_path = os.path.join(images_dir, f"{competition}_{season}_players/{CODETEAM}_{PLAYER_ID}.png")
-
-    # Intégrer la couleur dans le markdown
+            # Intégrer la couleur dans le markdown
     st.markdown(
-        f'''
-        <p style="font-size:{int(40*zoom)}px; text-align: center; color: {player_color};">
-            <b> MVP NOTE : {round(player_note)}</b>
-        </p>
-        ''',
-        unsafe_allow_html=True
-    )
+            f'''
+            <p style="font-size:{int(40*zoom)}px; text-align: center; color: {MVP_COLOR};">
+                <b> MVP NOTE : {round(MVP_NOTE)}</b>
+            </p>
+            ''',
+            unsafe_allow_html=True
+        )
+    mvp_photo, mvp_shoots = st.columns([1,0.7]) 
 
-    if os.path.exists(player_image_path):
-        st.image(player_image_path, caption=f"#{NUMBER_PLAYER} {NAME_PLAYER}", width=int(330*zoom))
-    else:
-        st.warning(f"Image introuvable pour le joueur : {NAME_PLAYER}")
+    with mvp_photo :
 
+
+
+        if os.path.exists(mvp_image_path):
+            st.image(mvp_image_path, caption=f"#{NUMBER_MVP} {NAME_MVP}", width=int(330*zoom))
+        else:
+            st.warning(f"Image introuvable pour le joueur : {NAME_MVP}")
+
+    with mvp_shoots :
+        fig2 = f.plot_semi_circular_chart(mvp_stat["1_R"].sum()/mvp_stat["1_T"].sum() if mvp_stat["1_T"].sum() != 0 else 0,"1P",size=int(120*zoom),font_size=int(20*zoom),m=False)
+        st.plotly_chart(fig2)
+        fig2 = f.plot_semi_circular_chart(mvp_stat["2_R"].sum()/mvp_stat["2_T"].sum() if mvp_stat["2_T"].sum() != 0 else 0,"2P",size=int(120*zoom),font_size=int(20*zoom),m=False)
+        st.plotly_chart(fig2)
+        fig2 = f.plot_semi_circular_chart(mvp_stat["3_R"].sum()/mvp_stat["3_T"].sum() if mvp_stat["3_T"].sum() != 0 else 0,"3P",size=int(120*zoom),font_size=int(20*zoom),m=False)
+        st.plotly_chart(fig2)
+        st.markdown(
+            f'''
+            <p style="font-size:{int(30*zoom)}px; text-align: left; color: {MVP_COLOR};">
+                <b> {round(mvp_stat["PER"].mean(),1)} PER /G</b>
+            </p>
+            ''',
+            unsafe_allow_html=True
+        )
 
 team_detail_select_2 = team_detail_select.style.apply(highlight_win, axis=1).format(precision=1) 
 opp_detail_select_2 = opp_detail_select.style.apply(highlight_win_o, axis=1).format(precision=1)
