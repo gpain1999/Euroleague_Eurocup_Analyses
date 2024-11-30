@@ -686,25 +686,25 @@ def calcul_per2(data_dir,season,competition) :
 
     # Dictionnaire des scores pour chaque PLAYTYPE
     playtype_scores = {
-        'D': 0.75,
-        '2FGA': -0.8,
-        '2FGM': 1.5,
+        'D': 0.8,
+        '2FGA': -0.75,
+        '2FGM': 1.6,
         'AS': 0.8,
         'RV': 0.5,
         'CM': -0.5,
-        '3FGA': -0.6,
-        'FTM': 0.75,
-        '3FGM': 2.25,
-        'O': 1.25,
-        'TO': -1.33,
+        '3FGA': -0.5,
+        'FTM': 0.8,
+        '3FGM': 2.4,
+        'O': 1.2,
+        'TO': -1.25,
         'ST': 1.33,
-        'FTA': -0.7,
+        'FTA': -1,
         'FV': 0.5,
         'CMU': -1.5,
         'CMD': -1.25,
         'CMTI': -1.25,
         'CMT': -1.25,
-        'OF': -1.33
+        'OF': -1.25
     }
 
     if competition == "euroleague" : 
@@ -807,25 +807,25 @@ def calcul_per(data_dir,season,competition) :
 
 
     coefficients = {
-        'D': 0.75,
-        '2FGA': -0.8,
+        'D': 0.8,
+        '2FGA': -0.75,
         '2FGM': 1.5,
         'AS': 0.8,
         'RV': 0.5,
         'CM': -0.5,
-        '3FGA': -0.6,
+        '3FGA': -0.5,
         'FTM': 0.75,
         '3FGM': 2.25,
-        'O': 1.25,
-        'TO': -1.5,
-        'ST': 1.5,
-        'FTA': -0.7,
+        'O': 1.2,
+        'TO': -1.25,
+        'ST': 1.33,
+        'FTA': -1,
         'FV': 0.5,
         'CMU': -1.5,
-        'CMD': -1.5,
-        'CMTI': -1.5,
-        'CMT': -1.5,
-        'OF': -1.5
+        'CMD': -1.25,
+        'CMTI': -1.25,
+        'CMT': -1.25,
+        'OF': -1.25
     }
 
     # Création de la nouvelle colonne 'Nouveau_Coeff' en utilisant map et en attribuant 0 par défaut si non trouvé
