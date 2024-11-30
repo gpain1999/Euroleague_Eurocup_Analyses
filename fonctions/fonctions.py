@@ -807,7 +807,7 @@ def calcul_per(data_dir,season,competition) :
 
 
     coefficients = {
-        'D': 0.8,
+        'D': 0.85,
         '2FGA': -0.75,
         '2FGM': 1.5,
         'AS': 0.8,
@@ -816,7 +816,7 @@ def calcul_per(data_dir,season,competition) :
         '3FGA': -0.5,
         'FTM': 0.75,
         '3FGM': 2.25,
-        'O': 1.2,
+        'O': 1.35,
         'TO': -1.25,
         'ST': 1.33,
         'FTA': -1,
