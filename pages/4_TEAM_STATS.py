@@ -206,8 +206,8 @@ notation['CLASS'] = pd.qcut(notation['NOTE'], q=13, labels=range(13))
 
 # Attribuer une couleur en fonction de la classe
 notation['COULEUR'] = notation['CLASS'].map(lambda x: palette[int(x)])
-
-notation = notation[notation["CODETEAM"] == CODETEAM].sort_values(by = "NOTE",ascending = False).reset_index(drop = True)
+print(notation.columns)
+notation = notation[notation["CODETEAM"] == CODETEAM].sort_values(by = "IRS",ascending = False).reset_index(drop = True)
 
 MVP_NOTE = notation["NOTE"].to_list()[0]
 MVP_COLOR = notation["COULEUR"].to_list()[0]

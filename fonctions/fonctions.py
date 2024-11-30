@@ -647,7 +647,7 @@ def analyse_per(data_dir,competition,season,R = [],CODETEAM = []) :
     df_result = df_result.sort_values(by = ["NOTE","PER"], ascending=[False,False]).reset_index(drop=True)
     df_result.insert(0,"RANK",range(1,len(df_result)+1))
     df_result["PER"] = df_result["PER"].round(2)
-    df_result["IRS"] = df_result["IRS"].round(2)
+    df_result["IRS"] = df_result["IRS"].round(3)
     df_result["TIME_ON"] = df_result["TIME_ON"].round(2)
     df_result["NUMBER"] = df_result["NUMBER"].astype(int)
     #df_result = df_result.drop(["PER_MOYEN"],axis=1)
