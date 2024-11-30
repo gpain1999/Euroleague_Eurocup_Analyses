@@ -634,18 +634,26 @@ with col1 :
         fig2 = f.plot_semi_circular_chart(shot_T/(shot_T+TO),"SHOOT/TO", size=int(120*zoom), font_size=int(20*zoom))
         st.plotly_chart(fig2,use_container_width=True)
 
-    MM = st.selectbox("DELTA SCORE CALCUL", options=["MEAN", "MEDIAN"], index=0)
 
    
 
-cola, colb,mvp,vide = st.columns([1,1,1,1]) 
+vide,cola, colb,mvp = st.columns([1,1,1,1]) 
 
 
+
+
+
+with vide :
+    MM = st.selectbox("DELTA SCORE CALCUL", options=["MEAN", "MEDIAN"], index=1)
+    if os.path.exists(team_logo_path):
+        st.image(team_logo_path,  width=int(420*zoom))
+    else:
+        st.warning(f"Logo introuvable pour l'équipe : {CODETEAM}")
+    
 
 periode,cumul = f.team_evol_score(CODETEAM,selected_range[0],selected_range[1],data_dir,competition,season,type = MM)
 periode = periode[:16]
 cumul = cumul[:16]
-
 with cola :
     # Noms des barres
     labels = [i * 2.5 for i in range(1, len(periode) + 1)]
