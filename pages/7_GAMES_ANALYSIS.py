@@ -394,7 +394,14 @@ with colb :
 
 
     with good_bad :
-        st.header(f"KEYS STATS {team_local}")
+        st.markdown(
+            f'''
+            <p style="font-size:{int(40*zoom)}px; text-align: left;">
+                <b>{team_local} - KEYS STATS</b>
+            </p>
+            ''',
+            unsafe_allow_html=True
+        )
         local_df = pd.DataFrame({
             'BEST': local_top_values,
             'WORST': local_bottom_values
@@ -405,7 +412,14 @@ with colb :
         st.dataframe(local_df,hide_index=True,width=500,height=int(36*6))
 
 
-        st.header(f"KEYS STATS {team_road}")
+        st.markdown(
+            f'''
+            <p style="font-size:{int(40*zoom)}px; text-align: left;">
+                <b>{team_road} - KEYS STATS</b>
+            </p>
+            ''',
+            unsafe_allow_html=True
+        )
         road_df = pd.DataFrame({
             'BEST': road_top_values,
             'WORST': road_bottom_values
