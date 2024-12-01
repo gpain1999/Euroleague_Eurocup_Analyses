@@ -120,7 +120,7 @@ def stats_important(r,team_local,team_road,df) :
     # Coefficients pour appliquer aux colonnes
     coefficients = {
         'DR': 0.85, 'OR': 1.35, 'AS': 0.8, 'ST': 1.33, 'CO': 0.6,
-        '1_R': 1, '2_R': 2, '3_R': 3, '1_L': -0.9, '2_L': -0.75, '3_L': -0.5,
+        '1_R': 1, '2_R': 2, '3_R': 3, '1_L': -0.6, '2_L': -0.75, '3_L': -0.5,
         'TO': -1.25, 'PTS_C': -0.5, 'FP': 0.5, 'CF': -0.5, 'NCF': -1.25
     }
 
@@ -966,7 +966,7 @@ def calcul_per(data_dir,season,competition) :
         'O': 1.35,
         'TO': -1.25,
         'ST': 1.33,
-        'FTA': -0.9,
+        'FTA': -0.7,
         'FV': 0.5,
         'CMU': -1.25,
         'CMD': -1.25,
