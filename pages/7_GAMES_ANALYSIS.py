@@ -91,6 +91,17 @@ team_road = match.group(3)
 local_logo_path = os.path.join(images_dir, f"{competition}_{season}_teams/{team_local}.png")
 road_logo_path = os.path.join(images_dir, f"{competition}_{season}_teams/{team_road}.png")
 
+player_stat = f.get_aggregated_data(
+    df=df, min_round=r, max_round=r,
+    selected_teams=[team_local,team_road],
+    selected_opponents=[],
+    selected_fields=["TEAM","PLAYER"],
+    selected_players=[],
+    mode="CUMULATED",
+    percent="MADE"
+)
+player_stat = player_stat.sort_values(by = "TIME_ON",ascending = False)
+
 ############################### DATA ###################################################
 
 periode,cumul = f.team_evol_score(team_local,r,r,data_dir,competition,season,type = "MEAN")
@@ -147,7 +158,7 @@ with t2 :
             unsafe_allow_html=True
         )
 
-cola, colb,vide = st.columns([1, 1,2])
+cola, colb = st.columns([1, 6])
 
 
 with cola :
@@ -181,8 +192,8 @@ with cola :
     # Mise en page
     fig.update_layout(
         autosize=True,
-        width=int(600*zoom),
-        height=int(600*zoom),
+        width=int(500*zoom),
+        height=int(500*zoom),
         title=f"Average Delta score per periode of 2:30 mins",
         xaxis_title="Minutes",
         yaxis_title="Delta",
@@ -227,8 +238,8 @@ with cola :
     # Mise en page
     fig.update_layout(
         autosize=True,
-        width = int(600*zoom),
-        height = int(600*zoom),
+        width = int(500*zoom),
+        height = int(500*zoom),
         title=f"Average Delta score live",
         xaxis_title="Minutes",
         yaxis_title="Delta",
@@ -243,3 +254,8 @@ with cola :
 
     # Affichage dans Streamlit
     st.plotly_chart(fig)
+
+with colb :
+    t = st.selectbox("TEAM", options=[team_local,team_road], index=0)
+    player_stat = player_stat[player_stat["TEAM"]==t].drop(columns = ["TEAM","ROUND","NB_GAME","OPPONENT","HOME","WIN"])
+    st.dataframe(player_stat, height=min(36 + 36*len(player_stat),900),width=2000,hide_index=True)
