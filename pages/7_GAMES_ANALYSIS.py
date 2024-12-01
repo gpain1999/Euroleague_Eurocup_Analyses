@@ -24,24 +24,6 @@ st.set_page_config(
 image_path = f"images/{competition}.png"  # Chemin vers l'image
 
 
-col1, col2 = st.columns([1, 2])
-
-with col1 : 
-    try:
-        image = Image.open(image_path)
-        # Redimensionner l'image (par exemple, largeur de 300 pixels)
-        max_width = 400
-        image = image.resize((max_width, int(image.height * (max_width / image.width))))
-
-        # Afficher l'image redimensionnée
-        st.image(image)
-    except FileNotFoundError:
-        st.warning(f"L'image pour {competition} est introuvable à l'emplacement : {image_path}") 
-
-with col2 : 
-
-    # Configuration de l'interface utilisateur
-    st.title("Game Analysis - by gpain1999")
 
 
 # SETTINGS interactifs
@@ -93,6 +75,8 @@ else :
 game_list = gs[gs['GAME'].str.contains(str(SUB), na=False)]['GAME'].tolist()
 GAME = st.sidebar.selectbox("GAMES", options=game_list, index=len(game_list)-1)
 
+with_game = gs[gs["GAME"]==GAME].reset_index(drop = True)
+
 # Utiliser une expression régulière pour extraire les valeurs
 match = re.match(r"R(\d+)\s*:\s*([A-Za-z]+)\s*-\s*([A-Za-z]+)", GAME)
 
@@ -104,3 +88,158 @@ r = int(match.group(1))
 team_local = match.group(2)
 team_road = match.group(3)
 
+local_logo_path = os.path.join(images_dir, f"{competition}_{season}_teams/{team_local}.png")
+road_logo_path = os.path.join(images_dir, f"{competition}_{season}_teams/{team_road}.png")
+
+############################### DATA ###################################################
+
+periode,cumul = f.team_evol_score(team_local,r,r,data_dir,competition,season,type = "MEAN")
+
+
+############################ PRINT ########################################################
+
+col1, col2,t1,t2 = st.columns([1, 2.5,0.5,0.5])
+
+with col1 : 
+    try:
+        image = Image.open(image_path)
+        # Redimensionner l'image (par exemple, largeur de 300 pixels)
+        max_width = 400
+        image = image.resize((max_width, int(image.height * (max_width / image.width))))
+
+        # Afficher l'image redimensionnée
+        st.image(image)
+    except FileNotFoundError:
+        st.warning(f"L'image pour {competition} est introuvable à l'emplacement : {image_path}") 
+    
+
+with col2 : 
+
+    # Configuration de l'interface utilisateur
+    st.title("Game Analysis - by gpain1999")
+
+with t1 :
+    if os.path.exists(local_logo_path):
+        st.image(local_logo_path,  width=int(200*zoom))
+    else:
+        st.warning(f"Logo introuvable pour l'équipe : {team_local}")
+    st.markdown(
+            f'''
+            <p style="font-size:{int(40*zoom)}px; text-align: center;">
+                <b>{with_game["LOCAL_SCORE"].to_list()[0]}</b>
+            </p>
+            ''',
+            unsafe_allow_html=True
+        )
+    
+
+with t2 :
+    if os.path.exists(road_logo_path):
+        st.image(road_logo_path,  width=int(200*zoom))
+    else:
+        st.warning(f"Logo introuvable pour l'équipe : {team_road}")
+    st.markdown(
+            f'''
+            <p style="font-size:{int(40*zoom)}px; text-align: center;">
+                <b>{with_game["ROAD_SCORE"].to_list()[0]}</b>
+            </p>
+            ''',
+            unsafe_allow_html=True
+        )
+
+cola, colb,vide = st.columns([1, 1,2])
+
+
+with cola :
+    # Noms des barres
+    labels = [i * 2.5 for i in range(1, len(periode) + 1)]
+
+    # Couleurs conditionnelles
+    colors = ['green' if val > 0 else 'red' if val < 0 else 'yellow' for val in periode]
+
+    # Création de la figure
+    fig = go.Figure()
+
+    # Ajout des barres
+    fig.add_trace(
+        go.Bar(
+            x=labels,
+            y=periode,
+            marker=dict(color=colors),  # Couleurs dynamiques
+        )
+    )
+    for i in range(3, len(labels)-1, 4):  # Indices toutes les 4 barres (commençant à 3)
+        fig.add_shape(
+            type="line",
+            x0=labels[i] + 1.25,
+            y0=min(periode) - 1,  # Commence un peu en dessous de la valeur min
+            x1=labels[i] + 1.25,
+            y1=max(periode) + 1,  # Va un peu au-dessus de la valeur max
+            line=dict(color="grey", dash="dot", width=2)  # Ligne pointillée jaune
+        )
+
+    # Mise en page
+    fig.update_layout(
+        autosize=True,
+        width=int(600*zoom),
+        height=int(600*zoom),
+        title=f"Average Delta score per periode of 2:30 mins",
+        xaxis_title="Minutes",
+        yaxis_title="Delta",
+        xaxis=dict(
+            tickmode='linear',
+            showticklabels=False  # Supprime les labels sur l'axe X
+        ),
+        plot_bgcolor="rgba(0,0,0,0)",  # Fond transparent
+        paper_bgcolor="rgba(0,0,0,0)",  # Papier transparent (mode sombre Streamlit)
+        font=dict(size=12),
+    )
+
+    # Affichage dans Streamlit
+    st.plotly_chart(fig)
+
+    # Noms des barres
+    labels = [i * 2.5 for i in range(1, len(cumul) + 1)]
+
+    # Couleurs conditionnelles
+    colors = ['green' if val > 0 else 'red' if val < 0 else 'yellow' for val in cumul]
+
+    # Création de la figure
+    fig = go.Figure()
+
+    # Ajout des barres
+    fig.add_trace(
+        go.Bar(
+            x=labels,
+            y=cumul,
+            marker=dict(color=colors),  # Couleurs dynamiques
+        )
+    )
+    for i in range(3, len(labels)-1, 4):  # Indices toutes les 4 barres (commençant à 3)
+        fig.add_shape(
+            type="line",
+            x0=labels[i] + 1.25,
+            y0=min(cumul) - 1,  # Commence un peu en dessous de la valeur min
+            x1=labels[i] + 1.25,
+            y1=max(cumul) + 1,  # Va un peu au-dessus de la valeur max
+            line=dict(color="grey", dash="dot", width=2)  # Ligne pointillée jaune
+        )
+    # Mise en page
+    fig.update_layout(
+        autosize=True,
+        width = int(600*zoom),
+        height = int(600*zoom),
+        title=f"Average Delta score live",
+        xaxis_title="Minutes",
+        yaxis_title="Delta",
+        xaxis=dict(
+            tickmode='linear',
+            showticklabels=False  # Supprime les labels sur l'axe X
+        ),
+        plot_bgcolor="rgba(0,0,0,0)",  # Fond transparent
+        paper_bgcolor="rgba(0,0,0,0)", # Papier transparent (si mode sombre Streamlit)
+        font=dict(size=12),
+    )
+
+    # Affichage dans Streamlit
+    st.plotly_chart(fig)
