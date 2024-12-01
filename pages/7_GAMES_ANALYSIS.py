@@ -246,6 +246,13 @@ def colorize_pm_on(row):
     
     return [color for _ in row.index]
 
+# Appliquer un style aux colonnes
+def style_good(val):
+    return 'background-color: #CCFFCC; font-weight: bold'  # Colonne 'good' en vert et gras
+
+def style_bad(val):
+    return 'background-color: #FFCCCC; font-weight: bold'  # Colonne 'bad' en rouge et gras
+
 ############################ PRINT ########################################################
 
 col1, col2,t1,t2 = st.columns([1, 2.5,0.5,0.5])
@@ -374,56 +381,30 @@ with cola :
 
 with colb :
 
-    good,bad,s1,s2,s3,s4,s5 = st.columns([0.15,0.15,0.14,0.14,0.14,0.14,0.14])
+    good_bad,s1,s2,s3,s4,s5 = st.columns([0.25,0.15,0.15,0.15,0.15,0.15])
 
 
 
 
-    with good :
-        st.markdown('<h1 style="text-align: right;">KEYS</h1>', unsafe_allow_html=True)
+    with good_bad :
+        st.header(f"KEYS STATS {team_local}")
+        local_df = pd.DataFrame({
+            'BEST': local_top_values,
+            'WORST': local_bottom_values
+        })
 
-        st.header(team_local)
-        for i in local_top_values :
-            st.markdown(
-            f'''
-            <p style="font-size:{int(25*zoom)}px; text-align: left; color : green">
-                <b> {i}</b>
-            </p>
-            ''',
-            unsafe_allow_html=True
-        )
-        st.header(team_road)
-        for i in road_top_values :
-            st.markdown(
-            f'''
-            <p style="font-size:{int(25*zoom)}px; text-align: left; color : green">
-                <b> {i}</b>
-            </p>
-            ''',
-            unsafe_allow_html=True
-        )    
-    with bad :
-        st.markdown('<h1 style="text-align: left;">STATS</h1>', unsafe_allow_html=True)
-        st.header(f" ")
-        for i in local_bottom_values :
-            st.markdown(
-            f'''
-            <p style="font-size:{int(25*zoom)}px; text-align: left; color : red">
-                <b> {i}</b>
-            </p>
-            ''',
-            unsafe_allow_html=True
-        )
-        st.header(" ")
-        for i in road_bottom_values :
-            st.markdown(
-            f'''
-            <p style="font-size:{int(25*zoom)}px; text-align: left; color : red">
-                <b> {i}</b>
-            </p>
-            ''',
-            unsafe_allow_html=True
-        )           
+        local_df = local_df.style.applymap(style_good, subset=['BEST']).applymap(style_bad, subset=['WORST'])
+        
+        st.dataframe(local_df,hide_index=True)
+
+
+        st.header(f"KEYS STATS {team_road}")
+        road_df = pd.DataFrame({
+            'BEST': road_top_values,
+            'WORST': road_bottom_values
+        })
+        road_df = road_df.style.applymap(style_good, subset=['BEST']).applymap(style_bad, subset=['WORST'])
+        st.dataframe(road_df,hide_index=True)
 
 
     with s1 :

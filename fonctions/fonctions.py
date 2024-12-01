@@ -55,7 +55,7 @@ def process_dataframes(df_list):
         df.drop(columns=[f"{col}_R" for col in ['1', '2', '3']] + [f"{col}_L" for col in ['1', '2', '3']], inplace=True)
 
 # Fonction pour extraire les noms des colonnes 'top' et 'bottom' selon les critères
-def get_top_and_bottom_column_names(df, n=4):
+def get_top_and_bottom_column_names(df, n=5):
     top_values = df.unstack()
     top_values = top_values[top_values > 0].nlargest(n)
     top_columns = [col for col, _ in top_values.index if col != "NCF"]
@@ -74,7 +74,7 @@ def extract_column_values(columns, stats_df):
             extracted_values.append(f"{stats_df.loc[0, f'{column}_R']}/{stats_df.loc[0, f'{column}_T']} {column}-PTS")
 
         elif column == "PTS_C" :
-            extracted_values.append(f"{stats_df.loc[0, column]} PTS CONCEDED")
+            extracted_values.append(f"{stats_df.loc[0, column]} PTS CONC.")
 
         else:
             extracted_values.append(f"{stats_df.loc[0, column]} {column}")
@@ -155,17 +155,17 @@ def stats_important(r,team_local,team_road,df) :
     road_bottom_values = extract_column_values(road_bottom_columns, road_stats)
 
     # Compléter les listes manuellement
-    if len(local_top_values) < 4:
-        local_top_values += ["--"] * (4 - len(local_top_values))
+    if len(local_top_values) < 5:
+        local_top_values += ["--"] * (5 - len(local_top_values))
 
-    if len(local_bottom_values) < 4:
-        local_bottom_values += ["--"] * (4 - len(local_bottom_values))
+    if len(local_bottom_values) < 5:
+        local_bottom_values += ["--"] * (5 - len(local_bottom_values))
 
-    if len(road_top_values) < 4:
-        road_top_values += ["--"] * (4 - len(road_top_values))
+    if len(road_top_values) < 5:
+        road_top_values += ["--"] * (5 - len(road_top_values))
 
-    if len(road_bottom_values) < 4:
-        road_bottom_values += ["--"] * (4 - len(road_bottom_values))
+    if len(road_bottom_values) < 5:
+        road_bottom_values += ["--"] * (5 - len(road_bottom_values))
         
     return local_top_values,local_bottom_values,road_top_values,road_bottom_values
 
