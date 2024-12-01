@@ -337,7 +337,7 @@ with cola :
         .apply(highlight_columns, axis=1, dataframe=data_TABLEAU)
         .set_table_styles([{'selector': 'td', 'props': [('font-size', '5px')]}])  # Taille globale
     )    
-    st.dataframe(styled_data_TABLEAU,hide_index=True,width=500)
+    st.dataframe(styled_data_TABLEAU,hide_index=True,width=500,height=115)
 
     # Noms des barres
     labels = [i * 2.5 for i in range(1, len(data_delta) + 1)]
