@@ -395,7 +395,7 @@ with colb :
 
         local_df = local_df.style.applymap(style_good, subset=['BEST']).applymap(style_bad, subset=['WORST'])
         
-        st.dataframe(local_df,hide_index=True)
+        st.dataframe(local_df,hide_index=True,width=500,height=int(36*6))
 
 
         st.header(f"KEYS STATS {team_road}")
@@ -404,7 +404,7 @@ with colb :
             'WORST': road_bottom_values
         })
         road_df = road_df.style.applymap(style_good, subset=['BEST']).applymap(style_bad, subset=['WORST'])
-        st.dataframe(road_df,hide_index=True)
+        st.dataframe(road_df,hide_index=True,width=500,height=36*6)
 
 
     with s1 :
