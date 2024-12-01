@@ -233,6 +233,17 @@ def highlight_columns(row, dataframe):
             else:
                 styles.append("")
     return styles
+
+def colorize_pm_on(row):
+    if row["PM_ON"] > 0:
+        color = 'background-color: #CCFFCC; color: black'  # Vert clair
+    elif row["PM_ON"] < 0:
+        color = 'background-color: #FFCCCC; color: black'  # Rouge clair
+    else:
+        color = 'background-color: white; color: black'  # Blanc
+    
+    return [color for _ in row.index]
+
 ############################ PRINT ########################################################
 
 col1, col2,t1,t2 = st.columns([1, 2.5,0.5,0.5])
@@ -299,7 +310,7 @@ with cola :
         periode_local = [team_local] + periode_local
         periode_road = [team_road] + periode_road
         data_TABLEAU = pd.DataFrame([periode_local, periode_road], columns=col_tab[0:len(periode_local)])
-        
+
     else : 
         data_delta = cumul
         cumul_local = [team_local] + cumul_local
@@ -310,7 +321,7 @@ with cola :
         .apply(highlight_columns, axis=1, dataframe=data_TABLEAU)
         .set_table_styles([{'selector': 'td', 'props': [('font-size', '5px')]}])  # Taille globale
     )    
-    st.dataframe(styled_data_TABLEAU,hide_index=True)
+    st.dataframe(styled_data_TABLEAU,hide_index=True,width=500)
 
     # Noms des barres
     labels = [i * 2.5 for i in range(1, len(data_delta) + 1)]
@@ -381,8 +392,8 @@ with colb :
         # Intégrer la couleur dans le markdown
         st.markdown(
             f'''
-            <p style="font-size:{int(18*zoom)}px; text-align: center;">
-                <b>BEST LOSER : {BL_data["I_PER"].to_list()[0]} I_PER</b>
+            <p style="font-size:{int(23*zoom)}px; text-align: center;">
+                <b>BEST LO : {BL_data["I_PER"].to_list()[0]} I_PER</b>
             </p>
             ''',
             unsafe_allow_html=True
@@ -652,8 +663,29 @@ with cola :
         st.plotly_chart(fig2,use_container_width=True)
 
 with colb :
-    t = st.selectbox("TEAM", options=[team_local,team_road], index=0)
-    player_stat = player_stat[player_stat["TEAM"]==t].drop(columns = ["TEAM","ROUND","NB_GAME","OPPONENT","HOME","WIN"])
-    player_stat = player_stat.sort_values(by = "TIME_ON",ascending = False)
+    C1, C2 = st.columns([1, 1])
+    with C1 :
+        t = st.selectbox("TEAM", options=[team_local,team_road], index=0)
+    with C2 :
+        affichage = st.selectbox("AFFICHAGE", options=["BOXESCORE","+/- DUO"], index=0)
 
-    st.dataframe(player_stat, height=min(36 + 36*len(player_stat),13*36),width=2000,hide_index=True)
+    if affichage == "BOXESCORE" :
+        data_aff = player_stat[player_stat["TEAM"]==t].drop(columns = ["TEAM","ROUND","NB_GAME","OPPONENT","HOME","WIN"]).sort_values(by = "TIME_ON",ascending = False)
+        st.dataframe(data_aff, height=min(36 + 36*len(data_aff),16*36),width=2000,hide_index=True)
+    else :
+        data_aff = f.analyse_io_2(data_dir = data_dir,
+                    competition = competition,
+                    season = season,
+                    num_players = 2,
+                        min_round = r,
+                        max_round = r,
+                    CODETEAM = [t],
+                    selected_players = [],
+                    min_percent_in = 0).drop(columns = ["TEAM"]).sort_values(by = "TIME_ON",ascending = False)[['P1', 'P2', 'PERCENT_ON', 'TIME_ON', 'PM_ON', 'OFF_ON_10', 'DEF_ON_10',
+       'DELTA_ON', 'PERCENT_OFF', 'TIME_OFF', 'PM_OFF', 'OFF_OFF_10',
+       'DEF_OFF_10', 'DELTA_OFF']]
+        
+        data_aff2 = data_aff.style.apply(colorize_pm_on, axis=1).format(precision=1)
+        st.dataframe(data_aff2, height=min(36 + 36*len(data_aff),17*36),width=2000,hide_index=True)
+    
+
