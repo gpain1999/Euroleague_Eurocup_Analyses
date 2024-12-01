@@ -210,6 +210,8 @@ CO_ID = players[(players["CODETEAM"] == TEAM_CO) & (players["PLAYER"] == NAME_CO
 CO_image_path = os.path.join(images_dir, f"{competition}_{season}_players/{TEAM_CO}_{CO_ID}.png")
 
 
+local_top_values,local_bottom_values,road_top_values,road_bottom_values = f.stats_important(r,team_local,team_road,df)
+print(local_top_values,local_bottom_values,road_top_values,road_bottom_values)
 ############################# STYLE ####################################################
 
 
@@ -372,7 +374,57 @@ with cola :
 
 with colb :
 
-    _,s1,s2,s3,s4,s5 = st.columns([0.35,0.13,0.13,0.13,0.13,0.13])
+    good,bad,s1,s2,s3,s4,s5 = st.columns([0.15,0.15,0.14,0.14,0.14,0.14,0.14])
+
+
+
+
+    with good :
+        st.markdown('<h1 style="text-align: right;">KEYS</h1>', unsafe_allow_html=True)
+
+        st.header(team_local)
+        for i in local_top_values :
+            st.markdown(
+            f'''
+            <p style="font-size:{int(25*zoom)}px; text-align: left; color : green">
+                <b> {i}</b>
+            </p>
+            ''',
+            unsafe_allow_html=True
+        )
+        st.header(team_road)
+        for i in road_top_values :
+            st.markdown(
+            f'''
+            <p style="font-size:{int(25*zoom)}px; text-align: left; color : green">
+                <b> {i}</b>
+            </p>
+            ''',
+            unsafe_allow_html=True
+        )    
+    with bad :
+        st.markdown('<h1 style="text-align: left;">STATS</h1>', unsafe_allow_html=True)
+        st.header(f"")
+        for i in local_bottom_values :
+            st.markdown(
+            f'''
+            <p style="font-size:{int(25*zoom)}px; text-align: left; color : red">
+                <b> {i}</b>
+            </p>
+            ''',
+            unsafe_allow_html=True
+        )
+        st.header("")
+        for i in road_bottom_values :
+            st.markdown(
+            f'''
+            <p style="font-size:{int(25*zoom)}px; text-align: left; color : red">
+                <b> {i}</b>
+            </p>
+            ''',
+            unsafe_allow_html=True
+        )           
+
 
     with s1 :
         # Intégrer la couleur dans le markdown

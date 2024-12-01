@@ -24,6 +24,152 @@ import threading
 import streamlit as st
 import plotly.graph_objects as go
 
+# Récupérer les statistiques agrégées pour l'équipe locale et l'équipe visiteuse
+def get_aggregated_stats(df, round_value, team, opponent=None):
+    return get_aggregated_data(
+        df, round_value, round_value,
+        selected_teams=[team],
+        selected_opponents=opponent if opponent else [],
+        selected_fields=["TEAM", "ROUND"],
+        selected_players=[],
+        mode="CUMULATED",
+        percent="MADE"
+    )
+# Créer les colonnes '1_L', '2_L', '3_L' pour local_stats et road_stats
+def add_delta_columns(stats_df):
+    for col in ["1", "2", "3"]:
+        stats_df[f"{col}_L"] = stats_df[f"{col}_T"] - stats_df[f"{col}_R"]
+    return stats_df
+
+# Fonction pour appliquer les coefficients
+def apply_coefficients(stats_df, coefficients):
+    for column, coef in coefficients.items():
+        stats_df[column] = (stats_df[column] * coef).round(3)
+    return stats_df
+
+# Création des colonnes '1', '2', '3' et suppression des colonnes intermédiaires
+def process_dataframes(df_list):
+    for df in df_list:
+        for col in ['1', '2', '3']:
+            df[col] = df[f"{col}_R"] + df[f"{col}_L"]
+        df.drop(columns=[f"{col}_R" for col in ['1', '2', '3']] + [f"{col}_L" for col in ['1', '2', '3']], inplace=True)
+
+# Fonction pour extraire les noms des colonnes 'top' et 'bottom' selon les critères
+def get_top_and_bottom_column_names(df, n=4):
+    top_values = df.unstack()
+    top_values = top_values[top_values > 0].nlargest(n)
+    top_columns = [col for col, _ in top_values.index if col != "NCF"]
+    
+    bottom_values = df.unstack()
+    bottom_values = bottom_values[bottom_values < 0].nsmallest(n)
+    bottom_columns = [col for col, _ in bottom_values.index]
+    
+    return top_columns, bottom_columns
+
+# Fonction pour récupérer les valeurs avec un formatage spécial pour '1', '2', '3'
+def extract_column_values(columns, stats_df):
+    extracted_values = []
+    for column in columns:
+        if column in ['1', '2', '3']:
+            extracted_values.append(f"{stats_df.loc[0, f'{column}_R']}/{stats_df.loc[0, f'{column}_T']} {column}-PTS")
+
+        elif column == "PTS_C" :
+            extracted_values.append(f"{stats_df.loc[0, column]} PTS CONCEDED")
+
+        else:
+            extracted_values.append(f"{stats_df.loc[0, column]} {column}")
+    return extracted_values
+
+
+def stats_important(r,team_local,team_road,df) : 
+    local_stats = get_aggregated_stats(df, r, team_local)
+    road_stats = get_aggregated_stats(df, r, team_road)
+
+
+
+    local_stats = add_delta_columns(local_stats)
+    road_stats = add_delta_columns(road_stats)
+
+    # Mettre à jour la colonne "PTS_C" dans local_stats et road_stats
+    local_stats["PTS_C"] = road_stats["PTS"]
+    road_stats["PTS_C"] = local_stats["PTS"]
+
+    # Calculer les moyennes pour mean_stats
+    mean_stats = get_aggregated_data(
+        df, 1, 34,
+        selected_teams=[],
+        selected_opponents=[],
+        selected_fields=["TEAM", "ROUND"],
+        selected_players=[],
+        mode="AVERAGE",
+        percent="MADE"
+    )
+
+    # Ajouter les colonnes '1_L', '2_L', '3_L' à mean_stats
+    mean_stats = add_delta_columns(mean_stats)
+    mean_stats["PTS_C"] = mean_stats["PTS"]
+
+    # Liste des colonnes à traiter
+    columns_to_average = ["PTS_C", "DR", "OR", "AS", "ST", "CO", 
+                        "1_R", "1_L", "2_R", "2_L", "3_R", "3_L", 
+                        "TO", "FP", "CF", "NCF"]
+
+    # Calcul des moyennes arrondies et ajout dans un DataFrame
+    mean_stats = mean_stats[columns_to_average].mean().round(3).to_frame().T
+
+    # Coefficients pour appliquer aux colonnes
+    coefficients = {
+        'DR': 0.85, 'OR': 1.35, 'AS': 0.8, 'ST': 1.33, 'CO': 0.6,
+        '1_R': 1, '2_R': 2, '3_R': 3, '1_L': -0.9, '2_L': -0.75, '3_L': -0.5,
+        'TO': -1.25, 'PTS_C': -0.5, 'FP': 0.5, 'CF': -0.5, 'NCF': -1.25
+    }
+
+
+
+    local_coeff = apply_coefficients(local_stats.copy()[columns_to_average], coefficients)
+    road_coeff = apply_coefficients(road_stats.copy()[columns_to_average], coefficients)
+    mean_coeff = apply_coefficients(mean_stats.copy()[columns_to_average], coefficients)
+
+    # Calcul des deltas
+    local_delta = (local_coeff - mean_coeff).round(3)
+    road_delta = (road_coeff - mean_coeff).round(3)
+
+    # Liste des DataFrames à traiter
+    dataframes = [local_coeff, road_coeff, mean_coeff, local_delta, road_delta]
+
+
+    process_dataframes(dataframes)
+
+
+
+    # Extraire les colonnes top et bottom pour local_delta et road_delta
+    local_top_columns, local_bottom_columns = get_top_and_bottom_column_names(local_delta)
+    road_top_columns, road_bottom_columns = get_top_and_bottom_column_names(road_delta)
+
+
+
+    # Extraire les valeurs formatées
+    local_top_values = extract_column_values(local_top_columns, local_stats)
+    local_bottom_values = extract_column_values(local_bottom_columns, local_stats)
+    road_top_values = extract_column_values(road_top_columns, road_stats)
+    road_bottom_values = extract_column_values(road_bottom_columns, road_stats)
+
+    # Compléter les listes manuellement
+    if len(local_top_values) < 4:
+        local_top_values += ["--"] * (4 - len(local_top_values))
+
+    if len(local_bottom_values) < 4:
+        local_bottom_values += ["--"] * (4 - len(local_bottom_values))
+
+    if len(road_top_values) < 4:
+        road_top_values += ["--"] * (4 - len(road_top_values))
+
+    if len(road_bottom_values) < 4:
+        road_bottom_values += ["--"] * (4 - len(road_bottom_values))
+        
+    return local_top_values,local_bottom_values,road_top_values,road_bottom_values
+
+
 def team_evol_score(team,min_round,max_round,data_dir,competition,season,type = "MEAN") :
     df_evol_score = pd.read_csv(os.path.join(data_dir, f"{competition}_evolscore_{season}.csv"))
 
