@@ -76,7 +76,7 @@ if RECHERCHE == "ROUND" :
 else :
     SUB = st.sidebar.selectbox("TEAMS", options=sorted(df["TEAM"].unique()), index=0)
 
-game_list = gs[gs['GAME'].str.contains(str(SUB), na=False)]['GAME'].tolist()
+game_list = gs[gs['GAME'].str.contains("R"+str(SUB), na=False)]['GAME'].tolist()
 GAME = st.sidebar.selectbox("GAMES", options=game_list, index=len(game_list)-1)
 
 with_game = gs[gs["GAME"]==GAME].reset_index(drop = True)
