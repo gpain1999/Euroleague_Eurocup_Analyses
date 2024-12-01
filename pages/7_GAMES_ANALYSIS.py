@@ -211,7 +211,6 @@ CO_image_path = os.path.join(images_dir, f"{competition}_{season}_players/{TEAM_
 
 
 local_top_values,local_bottom_values,road_top_values,road_bottom_values = f.stats_important(r,team_local,team_road,df)
-print(local_top_values,local_bottom_values,road_top_values,road_bottom_values)
 ############################# STYLE ####################################################
 
 
@@ -281,6 +280,7 @@ with col2 :
         ''',
         unsafe_allow_html=True
     )
+
 
 with t1 :
     if os.path.exists(local_logo_path):
