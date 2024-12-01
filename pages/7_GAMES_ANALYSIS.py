@@ -253,7 +253,7 @@ with t2 :
             unsafe_allow_html=True
         )
 
-cola, colb = st.columns([1, 6])
+cola, colb = st.columns([0.2, 0.8])
 
 
 with cola :
@@ -334,11 +334,11 @@ with cola :
             unsafe_allow_html=True
         )
 
-        fig2 = f.plot_semi_circular_chart(local_player_stat["1_R"].sum()/local_player_stat["1_T"].sum() if local_player_stat["1_T"].sum() != 0 else 0,"1P",size=int(85*zoom), font_size=int(20*zoom))
+        fig2 = f.plot_semi_circular_chart(local_player_stat["1_R"].sum()/local_player_stat["1_T"].sum() if local_player_stat["1_T"].sum() != 0 else 0,"1P",size=int(95*zoom), font_size=int(22*zoom))
         st.plotly_chart(fig2,use_container_width=True)
-        fig2 = f.plot_semi_circular_chart(local_player_stat["2_R"].sum()/local_player_stat["2_T"].sum() if local_player_stat["2_T"].sum() != 0 else 0,"2P",size=int(85*zoom), font_size=int(20*zoom))
+        fig2 = f.plot_semi_circular_chart(local_player_stat["2_R"].sum()/local_player_stat["2_T"].sum() if local_player_stat["2_T"].sum() != 0 else 0,"2P",size=int(95*zoom), font_size=int(22*zoom))
         st.plotly_chart(fig2,use_container_width=True)
-        fig2 = f.plot_semi_circular_chart(local_player_stat["3_R"].sum()/local_player_stat["3_T"].sum() if local_player_stat["3_T"].sum() != 0 else 0,"3P",size=int(85*zoom), font_size=int(20*zoom))
+        fig2 = f.plot_semi_circular_chart(local_player_stat["3_R"].sum()/local_player_stat["3_T"].sum() if local_player_stat["3_T"].sum() != 0 else 0,"3P",size=int(95*zoom), font_size=int(22*zoom))
         st.plotly_chart(fig2,use_container_width=True)
 
     with shoot_road :
@@ -352,11 +352,11 @@ with cola :
             unsafe_allow_html=True
         )
 
-        fig2 = f.plot_semi_circular_chart(road_player_stat["1_R"].sum()/road_player_stat["1_T"].sum() if road_player_stat["1_T"].sum() != 0 else 0,"1P",size=int(85*zoom), font_size=int(20*zoom))
+        fig2 = f.plot_semi_circular_chart(road_player_stat["1_R"].sum()/road_player_stat["1_T"].sum() if road_player_stat["1_T"].sum() != 0 else 0,"1P",size=int(95*zoom), font_size=int(22*zoom))
         st.plotly_chart(fig2,use_container_width=True)
-        fig2 = f.plot_semi_circular_chart(road_player_stat["2_R"].sum()/road_player_stat["2_T"].sum() if road_player_stat["2_T"].sum() != 0 else 0,"2P",size=int(85*zoom), font_size=int(20*zoom))
+        fig2 = f.plot_semi_circular_chart(road_player_stat["2_R"].sum()/road_player_stat["2_T"].sum() if road_player_stat["2_T"].sum() != 0 else 0,"2P",size=int(95*zoom), font_size=int(22*zoom))
         st.plotly_chart(fig2,use_container_width=True)
-        fig2 = f.plot_semi_circular_chart(road_player_stat["3_R"].sum()/road_player_stat["3_T"].sum() if road_player_stat["3_T"].sum() != 0 else 0,"3P",size=int(85*zoom), font_size=int(20*zoom))
+        fig2 = f.plot_semi_circular_chart(road_player_stat["3_R"].sum()/road_player_stat["3_T"].sum() if road_player_stat["3_T"].sum() != 0 else 0,"3P",size=int(95*zoom), font_size=int(22*zoom))
         st.plotly_chart(fig2,use_container_width=True)
 
     st.markdown(
@@ -379,13 +379,13 @@ with cola :
             ''',
             unsafe_allow_html=True
         )
-        fig2 = f.plot_semi_circular_chart(local_player_stat["DR"].sum()/(local_player_stat["DR"].sum() + road_player_stat["OR"].sum()),"DEF.", size=int(85*zoom), font_size=int(20*zoom))
+        fig2 = f.plot_semi_circular_chart(local_player_stat["DR"].sum()/(local_player_stat["DR"].sum() + road_player_stat["OR"].sum()),"DEF.", size=int(95*zoom), font_size=int(22*zoom))
         st.plotly_chart(fig2,use_container_width=True)
 
-        fig2 = f.plot_semi_circular_chart(local_player_stat["OR"].sum()/(local_player_stat["OR"].sum() + road_player_stat["DR"].sum()),"OFF.",size=int(85*zoom), font_size=int(20*zoom))
+        fig2 = f.plot_semi_circular_chart(local_player_stat["OR"].sum()/(local_player_stat["OR"].sum() + road_player_stat["DR"].sum()),"OFF.",size=int(95*zoom), font_size=int(22*zoom))
         st.plotly_chart(fig2,use_container_width=True)
 
-        fig2 = f.plot_semi_circular_chart(local_player_stat["TR"].sum()/(local_player_stat["TR"].sum() + road_player_stat["TR"].sum()),"TOT",size=int(85*zoom), font_size=int(20*zoom))
+        fig2 = f.plot_semi_circular_chart(local_player_stat["TR"].sum()/(local_player_stat["TR"].sum() + road_player_stat["TR"].sum()),"TOT",size=int(95*zoom), font_size=int(22*zoom))
         st.plotly_chart(fig2,use_container_width=True)
 
     with reb_road :
@@ -397,13 +397,13 @@ with cola :
             ''',
             unsafe_allow_html=True
         )
-        fig2 = f.plot_semi_circular_chart(road_player_stat["DR"].sum()/(road_player_stat["DR"].sum() + local_player_stat["OR"].sum()),"DEF.", size=int(85*zoom), font_size=int(20*zoom))
+        fig2 = f.plot_semi_circular_chart(road_player_stat["DR"].sum()/(road_player_stat["DR"].sum() + local_player_stat["OR"].sum()),"DEF.", size=int(95*zoom), font_size=int(22*zoom))
         st.plotly_chart(fig2,use_container_width=True)
 
-        fig2 = f.plot_semi_circular_chart(road_player_stat["OR"].sum()/(road_player_stat["OR"].sum() + local_player_stat["DR"].sum()),"OFF.",size=int(85*zoom), font_size=int(20*zoom))
+        fig2 = f.plot_semi_circular_chart(road_player_stat["OR"].sum()/(road_player_stat["OR"].sum() + local_player_stat["DR"].sum()),"OFF.",size=int(95*zoom), font_size=int(22*zoom))
         st.plotly_chart(fig2,use_container_width=True)
 
-        fig2 = f.plot_semi_circular_chart(road_player_stat["TR"].sum()/(local_player_stat["TR"].sum() + road_player_stat["TR"].sum()),"TOT",size=int(85*zoom), font_size=int(20*zoom))
+        fig2 = f.plot_semi_circular_chart(road_player_stat["TR"].sum()/(local_player_stat["TR"].sum() + road_player_stat["TR"].sum()),"TOT",size=int(95*zoom), font_size=int(22*zoom))
         st.plotly_chart(fig2,use_container_width=True)
     st.markdown(
         f'''
@@ -427,7 +427,7 @@ with cola :
         )
         shot_T = local_player_stat["1_T"].sum()/2 + local_player_stat["2_T"].sum() + local_player_stat["3_T"].sum()
         TO = local_player_stat["TO"].sum()
-        fig2 = f.plot_semi_circular_chart(shot_T/(shot_T+TO),"BC", size=int(85*zoom), font_size=int(20*zoom))
+        fig2 = f.plot_semi_circular_chart(shot_T/(shot_T+TO),"BC", size=int(95*zoom), font_size=int(22*zoom))
         st.plotly_chart(fig2,use_container_width=True)
 
     with cb_road :
@@ -441,7 +441,7 @@ with cola :
         )
         shot_T = road_player_stat["1_T"].sum()/2 + road_player_stat["2_T"].sum() + road_player_stat["3_T"].sum()
         TO = road_player_stat["TO"].sum()
-        fig2 = f.plot_semi_circular_chart(shot_T/(shot_T+TO),"BC", size=int(85*zoom), font_size=int(20*zoom))
+        fig2 = f.plot_semi_circular_chart(shot_T/(shot_T+TO),"BC", size=int(95*zoom), font_size=int(22*zoom))
         st.plotly_chart(fig2,use_container_width=True)
 with colb :
 
