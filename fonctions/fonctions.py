@@ -48,11 +48,11 @@ def apply_coefficients(stats_df, coefficients):
     return stats_df
 
 # Création des colonnes '1', '2', '3' et suppression des colonnes intermédiaires
-def process_dataframes(df_list):
-    for df in df_list:
-        for col in ['1', '2', '3']:
-            df[col] = df[f"{col}_R"] + df[f"{col}_L"]
-        df.drop(columns=[f"{col}_R" for col in ['1', '2', '3']] + [f"{col}_L" for col in ['1', '2', '3']], inplace=True)
+def process_dataframes(df):
+    for col in ['1', '2', '3']:
+        df[col] = df[f"{col}_R"] + df[f"{col}_L"]
+    df.drop(columns=[f"{col}_R" for col in ['1', '2', '3']] + [f"{col}_L" for col in ['1', '2', '3']], inplace=True)
+    return df
 
 # Fonction pour extraire les noms des colonnes 'top' et 'bottom' selon les critères
 def get_top_and_bottom_column_names(df, n=5):
@@ -128,18 +128,19 @@ def stats_important(r,team_local,team_road,df) :
 
     local_coeff = apply_coefficients(local_stats.copy()[columns_to_average], coefficients)
     road_coeff = apply_coefficients(road_stats.copy()[columns_to_average], coefficients)
+    print(road_coeff)
     mean_coeff = apply_coefficients(mean_stats.copy()[columns_to_average], coefficients)
 
     # Calcul des deltas
     local_delta = (local_coeff - mean_coeff).round(3)
     road_delta = (road_coeff - mean_coeff).round(3)
 
-    # Liste des DataFrames à traiter
-    dataframes = [local_coeff, road_coeff, mean_coeff, local_delta, road_delta]
 
-
-    process_dataframes(dataframes)
-
+    local_coeff = process_dataframes(local_coeff)
+    road_coeff = process_dataframes(road_coeff)
+    mean_coeff = process_dataframes(mean_coeff)
+    local_delta = process_dataframes(local_delta)
+    road_delta = process_dataframes(road_delta)
 
 
     # Extraire les colonnes top et bottom pour local_delta et road_delta

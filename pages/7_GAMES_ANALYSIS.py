@@ -227,11 +227,11 @@ def highlight_columns(row, dataframe):
             max_val = dataframe[col].max()
             min_val = dataframe[col].min()
             if row[col] == max_val and row[col] == min_val:  # Égalité
-                styles.append("background-color: yellow")
+                styles.append("background-color: yellow ; color: black")
             elif row[col] == max_val:
-                styles.append("background-color: #CCFFCC")
+                styles.append("background-color: #CCFFCC ; color: black")
             elif row[col] == min_val:
-                styles.append("background-color: #FFCCCC")
+                styles.append("background-color: #FFCCCC ; color: black")
             else:
                 styles.append("")
     return styles
@@ -248,10 +248,10 @@ def colorize_pm_on(row):
 
 # Appliquer un style aux colonnes
 def style_good(val):
-    return 'background-color: #CCFFCC; font-weight: bold'  # Colonne 'good' en vert et gras
+    return 'background-color: #CCFFCC; font-weight: bold ; color: black'  # Colonne 'good' en vert et gras
 
 def style_bad(val):
-    return 'background-color: #FFCCCC; font-weight: bold'  # Colonne 'bad' en rouge et gras
+    return 'background-color: #FFCCCC; font-weight: bold ; color: black'  # Colonne 'bad' en rouge et gras
 
 ############################ PRINT ########################################################
 
