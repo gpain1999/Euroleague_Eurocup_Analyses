@@ -404,7 +404,7 @@ with colb :
         )    
     with bad :
         st.markdown('<h1 style="text-align: left;">STATS</h1>', unsafe_allow_html=True)
-        st.header(f"")
+        st.header(f" ")
         for i in local_bottom_values :
             st.markdown(
             f'''
@@ -414,7 +414,7 @@ with colb :
             ''',
             unsafe_allow_html=True
         )
-        st.header("")
+        st.header(" ")
         for i in road_bottom_values :
             st.markdown(
             f'''
