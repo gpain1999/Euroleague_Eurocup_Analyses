@@ -39,6 +39,9 @@ st.markdown(
     """,
     unsafe_allow_html=True
 )
+
+
+
 ###################### DATA INIT ################################
 
 # Charger les données
@@ -102,6 +105,9 @@ player_stat = f.get_aggregated_data(
 )
 player_stat = player_stat.sort_values(by = "TIME_ON",ascending = False)
 
+local_player_stat = player_stat[player_stat["TEAM"]==team_local]
+road_player_stat = player_stat[player_stat["TEAM"]==team_road]
+
 ############################### DATA ###################################################
 
 periode,cumul = f.team_evol_score(team_local,r,r,data_dir,competition,season,type = "MEAN")
@@ -162,11 +168,17 @@ cola, colb = st.columns([1, 6])
 
 
 with cola :
+    type_delta = st.selectbox("DELTA", options=["CUMULATED","PER PERIODE"], index=0)
+
+    if type_delta == "PER PERIODE" :
+        data_delta = periode
+    else : 
+        data_delta = cumul
     # Noms des barres
-    labels = [i * 2.5 for i in range(1, len(periode) + 1)]
+    labels = [i * 2.5 for i in range(1, len(data_delta) + 1)]
 
     # Couleurs conditionnelles
-    colors = ['green' if val > 0 else 'red' if val < 0 else 'yellow' for val in periode]
+    colors = ['green' if val > 0 else 'red' if val < 0 else 'yellow' for val in data_delta]
 
     # Création de la figure
     fig = go.Figure()
@@ -175,7 +187,7 @@ with cola :
     fig.add_trace(
         go.Bar(
             x=labels,
-            y=periode,
+            y=data_delta,
             marker=dict(color=colors),  # Couleurs dynamiques
         )
     )
@@ -183,9 +195,9 @@ with cola :
         fig.add_shape(
             type="line",
             x0=labels[i] + 1.25,
-            y0=min(periode) - 1,  # Commence un peu en dessous de la valeur min
+            y0=min(data_delta) - 1,  # Commence un peu en dessous de la valeur min
             x1=labels[i] + 1.25,
-            y1=max(periode) + 1,  # Va un peu au-dessus de la valeur max
+            y1=max(data_delta) + 1,  # Va un peu au-dessus de la valeur max
             line=dict(color="grey", dash="dot", width=2)  # Ligne pointillée jaune
         )
 
@@ -194,7 +206,7 @@ with cola :
         autosize=True,
         width=int(500*zoom),
         height=int(500*zoom),
-        title=f"Average Delta score per periode of 2:30 mins",
+        title=f"DELTA {type_delta}",
         xaxis_title="Minutes",
         yaxis_title="Delta",
         xaxis=dict(
@@ -209,53 +221,135 @@ with cola :
     # Affichage dans Streamlit
     st.plotly_chart(fig)
 
-    # Noms des barres
-    labels = [i * 2.5 for i in range(1, len(cumul) + 1)]
-
-    # Couleurs conditionnelles
-    colors = ['green' if val > 0 else 'red' if val < 0 else 'yellow' for val in cumul]
-
-    # Création de la figure
-    fig = go.Figure()
-
-    # Ajout des barres
-    fig.add_trace(
-        go.Bar(
-            x=labels,
-            y=cumul,
-            marker=dict(color=colors),  # Couleurs dynamiques
-        )
-    )
-    for i in range(3, len(labels)-1, 4):  # Indices toutes les 4 barres (commençant à 3)
-        fig.add_shape(
-            type="line",
-            x0=labels[i] + 1.25,
-            y0=min(cumul) - 1,  # Commence un peu en dessous de la valeur min
-            x1=labels[i] + 1.25,
-            y1=max(cumul) + 1,  # Va un peu au-dessus de la valeur max
-            line=dict(color="grey", dash="dot", width=2)  # Ligne pointillée jaune
-        )
-    # Mise en page
-    fig.update_layout(
-        autosize=True,
-        width = int(500*zoom),
-        height = int(500*zoom),
-        title=f"Average Delta score live",
-        xaxis_title="Minutes",
-        yaxis_title="Delta",
-        xaxis=dict(
-            tickmode='linear',
-            showticklabels=False  # Supprime les labels sur l'axe X
-        ),
-        plot_bgcolor="rgba(0,0,0,0)",  # Fond transparent
-        paper_bgcolor="rgba(0,0,0,0)", # Papier transparent (si mode sombre Streamlit)
-        font=dict(size=12),
+    st.markdown(
+        f'''
+        <p style="font-size:{int(35*zoom)}px; text-align: center; padding: 10pxs;">
+            <b>% SHOOTS</b>
+        </p>
+        ''',
+        unsafe_allow_html=True
     )
 
-    # Affichage dans Streamlit
-    st.plotly_chart(fig)
+    shoot_local, shoot_road = st.columns([1, 1])
 
+    with shoot_local :
+        
+        st.markdown(
+            f'''
+            <p style="font-size:{int(30*zoom)}px; text-align: center;">
+                <b>{team_local}</b>
+            </p>
+            ''',
+            unsafe_allow_html=True
+        )
+
+        fig2 = f.plot_semi_circular_chart(local_player_stat["1_R"].sum()/local_player_stat["1_T"].sum() if local_player_stat["1_T"].sum() != 0 else 0,"1P",size=int(85*zoom), font_size=int(20*zoom))
+        st.plotly_chart(fig2,use_container_width=True)
+        fig2 = f.plot_semi_circular_chart(local_player_stat["2_R"].sum()/local_player_stat["2_T"].sum() if local_player_stat["2_T"].sum() != 0 else 0,"2P",size=int(85*zoom), font_size=int(20*zoom))
+        st.plotly_chart(fig2,use_container_width=True)
+        fig2 = f.plot_semi_circular_chart(local_player_stat["3_R"].sum()/local_player_stat["3_T"].sum() if local_player_stat["3_T"].sum() != 0 else 0,"3P",size=int(85*zoom), font_size=int(20*zoom))
+        st.plotly_chart(fig2,use_container_width=True)
+
+    with shoot_road :
+        
+        st.markdown(
+            f'''
+            <p style="font-size:{int(30*zoom)}px; text-align: center;">
+                <b>{team_road}</b>
+            </p>
+            ''',
+            unsafe_allow_html=True
+        )
+
+        fig2 = f.plot_semi_circular_chart(road_player_stat["1_R"].sum()/road_player_stat["1_T"].sum() if road_player_stat["1_T"].sum() != 0 else 0,"1P",size=int(85*zoom), font_size=int(20*zoom))
+        st.plotly_chart(fig2,use_container_width=True)
+        fig2 = f.plot_semi_circular_chart(road_player_stat["2_R"].sum()/road_player_stat["2_T"].sum() if road_player_stat["2_T"].sum() != 0 else 0,"2P",size=int(85*zoom), font_size=int(20*zoom))
+        st.plotly_chart(fig2,use_container_width=True)
+        fig2 = f.plot_semi_circular_chart(road_player_stat["3_R"].sum()/road_player_stat["3_T"].sum() if road_player_stat["3_T"].sum() != 0 else 0,"3P",size=int(85*zoom), font_size=int(20*zoom))
+        st.plotly_chart(fig2,use_container_width=True)
+
+    st.markdown(
+        f'''
+        <p style="font-size:{int(35*zoom)}px; text-align: center; padding: 10pxs;">
+            <b>% REBONDS</b>
+        </p>
+        ''',
+        unsafe_allow_html=True
+    )
+
+    reb_local, reb_road = st.columns([1, 1])
+
+    with reb_local :
+        st.markdown(
+            f'''
+            <p style="font-size:{int(30*zoom)}px; text-align: center;">
+                <b> {team_local}</b>
+            </p>
+            ''',
+            unsafe_allow_html=True
+        )
+        fig2 = f.plot_semi_circular_chart(local_player_stat["DR"].sum()/(local_player_stat["DR"].sum() + road_player_stat["OR"].sum()),"DEF.", size=int(85*zoom), font_size=int(20*zoom))
+        st.plotly_chart(fig2,use_container_width=True)
+
+        fig2 = f.plot_semi_circular_chart(local_player_stat["OR"].sum()/(local_player_stat["OR"].sum() + road_player_stat["DR"].sum()),"OFF.",size=int(85*zoom), font_size=int(20*zoom))
+        st.plotly_chart(fig2,use_container_width=True)
+
+    with reb_road :
+        st.markdown(
+            f'''
+            <p style="font-size:{int(30*zoom)}px; text-align: center;">
+                <b> {team_road}</b>
+            </p>
+            ''',
+            unsafe_allow_html=True
+        )
+        fig2 = f.plot_semi_circular_chart(road_player_stat["DR"].sum()/(road_player_stat["DR"].sum() + local_player_stat["OR"].sum()),"DEF.", size=int(85*zoom), font_size=int(20*zoom))
+        st.plotly_chart(fig2,use_container_width=True)
+
+        fig2 = f.plot_semi_circular_chart(road_player_stat["OR"].sum()/(road_player_stat["OR"].sum() + local_player_stat["DR"].sum()),"OFF.",size=int(85*zoom), font_size=int(20*zoom))
+        st.plotly_chart(fig2,use_container_width=True)
+
+    st.markdown(
+        f'''
+        <p style="font-size:{int(35*zoom)}px; text-align: center; padding: 10pxs;">
+            <b>% BALL CARE </b>
+        </p>
+        ''',
+        unsafe_allow_html=True
+    )
+
+    cb_local, cb_road = st.columns([1, 1])
+    with cb_local :
+
+        st.markdown(
+            f'''
+            <p style="font-size:{int(int(30*zoom))}px; text-align: center;">
+                <b> {team_local}</b>
+            </p>
+            ''',
+            unsafe_allow_html=True
+        )
+        shot_T = local_player_stat["1_T"].sum()/2 + local_player_stat["2_T"].sum() + local_player_stat["3_T"].sum()
+        TO = local_player_stat["TO"].sum()
+        fig2 = f.plot_semi_circular_chart(shot_T/(shot_T+TO),"BC", size=int(85*zoom), font_size=int(20*zoom))
+        st.plotly_chart(fig2,use_container_width=True)
+
+    with cb_road :
+        st.markdown(
+            f'''
+            <p style="font-size:{int(int(30*zoom))}px; text-align: center;">
+                <b> {team_road}</b>
+            </p>
+            ''',
+            unsafe_allow_html=True
+        )
+        shot_T = road_player_stat["1_T"].sum()/2 + road_player_stat["2_T"].sum() + road_player_stat["3_T"].sum()
+        TO = road_player_stat["TO"].sum()
+        fig2 = f.plot_semi_circular_chart(shot_T/(shot_T+TO),"BC", size=int(85*zoom), font_size=int(20*zoom))
+        st.plotly_chart(fig2,use_container_width=True)
 with colb :
     t = st.selectbox("TEAM", options=[team_local,team_road], index=0)
     player_stat = player_stat[player_stat["TEAM"]==t].drop(columns = ["TEAM","ROUND","NB_GAME","OPPONENT","HOME","WIN"])
-    st.dataframe(player_stat, height=min(36 + 36*len(player_stat),900),width=2000,hide_index=True)
+    player_stat = player_stat.sort_values(by = "TIME_ON",ascending = False)
+
+    st.dataframe(player_stat, height=min(36 + 36*len(player_stat),13*36),width=2000,hide_index=True)
