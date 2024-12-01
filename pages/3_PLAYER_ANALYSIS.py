@@ -129,7 +129,15 @@ with col1 :
 
 
 with col2 : 
-    st.title("Player Analysis - by gpain1999 ")
+    taille_titre = 70*0.7
+    st.markdown(
+        f'''
+        <p style="font-size:{int(taille_titre)}px; text-align: center; padding: 10pxs;">
+            <b>Player Analysis - by gpain1999</b>
+        </p>
+        ''',
+        unsafe_allow_html=True
+    )
 
 with col3 :
     # Filtrage dynamique des équipes
