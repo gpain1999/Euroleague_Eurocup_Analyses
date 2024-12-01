@@ -97,8 +97,15 @@ road_logo_path = os.path.join(images_dir, f"{competition}_{season}_teams/{team_r
 
 ############################### DATA ###################################################
 
-periode,cumul = f.team_evol_score(team_local,r,r,data_dir,competition,season,type = "MEAN")
+periode,cumul,cumul_local,cumul_road = f.team_evol_score(team_local,r,r,data_dir,competition,season,type = "MEAN")
+cumul_local = [int(x) for x in cumul_local if not math.isnan(x)]
+cumul_road = [int(x) for x in cumul_road if not math.isnan(x)]
 
+cumul_local = [cumul_local[i+1] for i in range(0, len(cumul_local), 2)]
+cumul_road = [cumul_road[i+1] for i in range(0, len(cumul_road), 2)]
+
+periode_local = [int(cumul_local[0])] + [int(cumul_local[i] - cumul_local[i-1]) for i in range(1, len(cumul_local))]
+periode_road = [int(cumul_road[0])] + [int(cumul_road[i] - cumul_road[i-1]) for i in range(1, len(cumul_road))]
 
 player_stat = f.get_aggregated_data(
     df=df, min_round=r, max_round=r,
@@ -202,6 +209,30 @@ TEAM_CO = CO_data["TEAM"].to_list()[0]
 CO_ID = players[(players["CODETEAM"] == TEAM_CO) & (players["PLAYER"] == NAME_CO)]["PLAYER_ID"].to_list()[0]
 CO_image_path = os.path.join(images_dir, f"{competition}_{season}_players/{TEAM_CO}_{CO_ID}.png")
 
+
+############################# STYLE ####################################################
+
+
+
+
+def highlight_columns(row, dataframe):
+    styles = []
+    for col in dataframe.columns:
+        if col == "TEAM":
+            # Pas de coloration pour TEAM
+            styles.append("")
+        else:
+            max_val = dataframe[col].max()
+            min_val = dataframe[col].min()
+            if row[col] == max_val and row[col] == min_val:  # Égalité
+                styles.append("background-color: yellow")
+            elif row[col] == max_val:
+                styles.append("background-color: #CCFFCC")
+            elif row[col] == min_val:
+                styles.append("background-color: #FFCCCC")
+            else:
+                styles.append("")
+    return styles
 ############################ PRINT ########################################################
 
 col1, col2,t1,t2 = st.columns([1, 2.5,0.5,0.5])
@@ -253,18 +284,34 @@ with t2 :
             unsafe_allow_html=True
         )
 
-cola, colb = st.columns([0.2, 0.8])
+cola, colb = st.columns([0.3, 0.7])
 
 
 with cola :
 
-
     type_delta = st.selectbox("DELTA", options=["CUMULATED","PER PERIODE"], index=0)
+
+    col_tab = ["TEAM","5","10","15","20","25","30","35","40","45","50","55","60"]
 
     if type_delta == "PER PERIODE" :
         data_delta = periode
+
+        periode_local = [team_local] + periode_local
+        periode_road = [team_road] + periode_road
+        data_TABLEAU = pd.DataFrame([periode_local, periode_road], columns=col_tab[0:len(periode_local)])
+        
     else : 
         data_delta = cumul
+        cumul_local = [team_local] + cumul_local
+        cumul_road = [team_road] + cumul_road
+        data_TABLEAU = pd.DataFrame([cumul_local, cumul_road], columns=col_tab[0:len(cumul_local)])
+    styled_data_TABLEAU = (
+        data_TABLEAU.style
+        .apply(highlight_columns, axis=1, dataframe=data_TABLEAU)
+        .set_table_styles([{'selector': 'td', 'props': [('font-size', '5px')]}])  # Taille globale
+    )    
+    st.dataframe(styled_data_TABLEAU,hide_index=True)
+
     # Noms des barres
     labels = [i * 2.5 for i in range(1, len(data_delta) + 1)]
 
@@ -295,7 +342,7 @@ with cola :
     # Mise en page
     fig.update_layout(
         autosize=True,
-        width=int(500*zoom),
+        width=int(600*zoom),
         height=int(500*zoom),
         title=f"DELTA {type_delta}",
         xaxis_title="Minutes",
@@ -312,6 +359,166 @@ with cola :
     # Affichage dans Streamlit
     st.plotly_chart(fig)
 
+with colb :
+
+    _,s1,s2,s3,s4,s5 = st.columns([0.35,0.13,0.13,0.13,0.13,0.13])
+
+    with s1 :
+        # Intégrer la couleur dans le markdown
+        st.markdown(
+            f'''
+            <p style="font-size:{int(27*zoom)}px; text-align: center;">
+                <b>MVP : {mvp_data["I_PER"].to_list()[0]} I_PER</b>
+            </p>
+            ''',
+            unsafe_allow_html=True
+        )
+
+        if os.path.exists(mvp_image_path):
+            st.image(mvp_image_path, caption=f"#{NUMBER_MVP} {NAME_MVP}", width=int(250*zoom))
+        else:
+            st.warning(f"Image introuvable pour le joueur : {NAME_MVP}")
+        # Intégrer la couleur dans le markdown
+        st.markdown(
+            f'''
+            <p style="font-size:{int(18*zoom)}px; text-align: center;">
+                <b>BEST LOSER : {BL_data["I_PER"].to_list()[0]} I_PER</b>
+            </p>
+            ''',
+            unsafe_allow_html=True
+        )
+
+        if os.path.exists(BL_image_path):
+            st.image(BL_image_path, caption=f"#{NUMBER_BL} {NAME_BL}", width=int(250*zoom))
+        else:
+            st.warning(f"Image introuvable pour le joueur : {NAME_BL}")
+
+    with s2 :
+        # Intégrer la couleur dans le markdown
+        st.markdown(
+            f'''
+            <p style="font-size:{int(22*zoom)}px; text-align: center;">
+                <b>MOST PTS : {PTS_data["PTS"].to_list()[0]} PTS</b>
+            </p>
+            ''',
+            unsafe_allow_html=True
+        )
+
+        if os.path.exists(PTS_image_path):
+            st.image(PTS_image_path, caption=f"#{NUMBER_PTS} {NAME_PTS}", width=int(250*zoom))
+        else:
+            st.warning(f"Image introuvable pour le joueur : {NAME_PTS}")
+
+        # Intégrer la couleur dans le markdown
+        st.markdown(
+            f'''
+            <p style="font-size:{int(27*zoom)}px; text-align: center;">
+                <b>MOST +/- : {int(PM_ON_data["PM_ON"].to_list()[0])}</b>
+            </p>
+            ''',
+            unsafe_allow_html=True
+        )
+
+        if os.path.exists(PM_ON_image_path):
+            st.image(PM_ON_image_path, caption=f"#{NUMBER_PM_ON} {NAME_PM_ON}", width=int(250*zoom))
+        else:
+            st.warning(f"Image introuvable pour le joueur : {NAME_PM_ON}")
+
+    with s3 :
+        # Intégrer la couleur dans le markdown
+        st.markdown(
+            f'''
+            <p style="font-size:{int(27*zoom)}px; text-align: center;">
+                <b>MOST DR : {DR_data["DR"].to_list()[0]} DR</b>
+            </p>
+            ''',
+            unsafe_allow_html=True
+        )
+
+        if os.path.exists(DR_image_path):
+            st.image(DR_image_path, caption=f"#{NUMBER_DR} {NAME_DR}", width=int(250*zoom))
+        else:
+            st.warning(f"Image introuvable pour le joueur : {NAME_DR}")
+
+        st.markdown(
+            f'''
+            <p style="font-size:{int(27*zoom)}px; text-align: center;">
+                <b>MOST OR : {OR_data["OR"].to_list()[0]} OR</b>
+            </p>
+            ''',
+            unsafe_allow_html=True
+        )
+
+        if os.path.exists(OR_image_path):
+            st.image(OR_image_path, caption=f"#{NUMBER_OR} {NAME_OR}", width=int(250*zoom))
+        else:
+            st.warning(f"Image introuvable pour le joueur : {NAME_OR}")
+            
+    with s4 :
+        # Intégrer la couleur dans le markdown
+        st.markdown(
+            f'''
+            <p style="font-size:{int(27*zoom)}px; text-align: center;">
+                <b>MOST AS : {AS_data["AS"].to_list()[0]} AS</b>
+            </p>
+            ''',
+            unsafe_allow_html=True
+        )
+
+        if os.path.exists(AS_image_path):
+            st.image(AS_image_path, caption=f"#{NUMBER_AS} {NAME_AS}", width=int(250*zoom))
+        else:
+            st.warning(f"Image introuvable pour le joueur : {NAME_AS}")
+
+        # Intégrer la couleur dans le markdown
+        st.markdown(
+            f'''
+            <p style="font-size:{int(27*zoom)}px; text-align: center;">
+                <b>MOST TO : {TO_data["TO"].to_list()[0]} TO</b>
+            </p>
+            ''',
+            unsafe_allow_html=True
+        )
+
+        if os.path.exists(TO_image_path):
+            st.image(TO_image_path, caption=f"#{NUMBER_TO} {NAME_TO}", width=int(250*zoom))
+        else:
+            st.warning(f"Image introuvable pour le joueur : {NAME_TO}")
+
+    with s5 :
+        # Intégrer la couleur dans le markdown
+        st.markdown(
+            f'''
+            <p style="font-size:{int(27*zoom)}px; text-align: center;">
+                <b>MOST ST : {ST_data["ST"].to_list()[0]} ST</b>
+            </p>
+            ''',
+            unsafe_allow_html=True
+        )
+
+        if os.path.exists(ST_image_path):
+            st.image(ST_image_path, caption=f"#{NUMBER_ST} {NAME_ST}", width=int(250*zoom))
+        else:
+            st.warning(f"Image introuvable pour le joueur : {NAME_ST}")
+
+        # Intégrer la couleur dans le markdown
+        st.markdown(
+            f'''
+            <p style="font-size:{int(27*zoom)}px; text-align: center;">
+                <b>MOST CO : {CO_data["CO"].to_list()[0]} CO</b>
+            </p>
+            ''',
+            unsafe_allow_html=True
+        )
+
+        if os.path.exists(CO_image_path):
+            st.image(CO_image_path, caption=f"#{NUMBER_CO} {NAME_CO}", width=int(250*zoom))
+        else:
+            st.warning(f"Image introuvable pour le joueur : {NAME_CO}")
+
+cola, colb = st.columns([0.2, 0.8])
+
+with cola :
     st.markdown(
         f'''
         <p style="font-size:{int(35*zoom)}px; text-align: center; padding: 10pxs;">
@@ -443,163 +650,8 @@ with cola :
         TO = road_player_stat["TO"].sum()
         fig2 = f.plot_semi_circular_chart(shot_T/(shot_T+TO),"BC", size=int(95*zoom), font_size=int(22*zoom))
         st.plotly_chart(fig2,use_container_width=True)
+
 with colb :
-
-    _,s1,s2,s3,s4,s5 = st.columns([2,1,1,1,1,1])
-
-    with s1 :
-        # Intégrer la couleur dans le markdown
-        st.markdown(
-            f'''
-            <p style="font-size:{int(30*zoom)}px; text-align: center;">
-                <b>MVP : {mvp_data["I_PER"].to_list()[0]} I_PER</b>
-            </p>
-            ''',
-            unsafe_allow_html=True
-        )
-
-        if os.path.exists(mvp_image_path):
-            st.image(mvp_image_path, caption=f"#{NUMBER_MVP} {NAME_MVP}", width=int(330*zoom))
-        else:
-            st.warning(f"Image introuvable pour le joueur : {NAME_MVP}")
-        # Intégrer la couleur dans le markdown
-        st.markdown(
-            f'''
-            <p style="font-size:{int(25*zoom)}px; text-align: center;">
-                <b>BEST LOSER : {BL_data["I_PER"].to_list()[0]} I_PER</b>
-            </p>
-            ''',
-            unsafe_allow_html=True
-        )
-
-        if os.path.exists(BL_image_path):
-            st.image(BL_image_path, caption=f"#{NUMBER_BL} {NAME_BL}", width=int(330*zoom))
-        else:
-            st.warning(f"Image introuvable pour le joueur : {NAME_BL}")
-
-    with s2 :
-        # Intégrer la couleur dans le markdown
-        st.markdown(
-            f'''
-            <p style="font-size:{int(30*zoom)}px; text-align: center;">
-                <b>MOST PTS : {PTS_data["PTS"].to_list()[0]} PTS</b>
-            </p>
-            ''',
-            unsafe_allow_html=True
-        )
-
-        if os.path.exists(PTS_image_path):
-            st.image(PTS_image_path, caption=f"#{NUMBER_PTS} {NAME_PTS}", width=int(330*zoom))
-        else:
-            st.warning(f"Image introuvable pour le joueur : {NAME_PTS}")
-
-        # Intégrer la couleur dans le markdown
-        st.markdown(
-            f'''
-            <p style="font-size:{int(30*zoom)}px; text-align: center;">
-                <b>MOST +/- : {int(PM_ON_data["PM_ON"].to_list()[0])}</b>
-            </p>
-            ''',
-            unsafe_allow_html=True
-        )
-
-        if os.path.exists(PM_ON_image_path):
-            st.image(PM_ON_image_path, caption=f"#{NUMBER_PM_ON} {NAME_PM_ON}", width=int(330*zoom))
-        else:
-            st.warning(f"Image introuvable pour le joueur : {NAME_PM_ON}")
-
-    with s3 :
-        # Intégrer la couleur dans le markdown
-        st.markdown(
-            f'''
-            <p style="font-size:{int(30*zoom)}px; text-align: center;">
-                <b>MOST DR : {DR_data["DR"].to_list()[0]} DR</b>
-            </p>
-            ''',
-            unsafe_allow_html=True
-        )
-
-        if os.path.exists(DR_image_path):
-            st.image(DR_image_path, caption=f"#{NUMBER_DR} {NAME_DR}", width=int(330*zoom))
-        else:
-            st.warning(f"Image introuvable pour le joueur : {NAME_DR}")
-
-        st.markdown(
-            f'''
-            <p style="font-size:{int(30*zoom)}px; text-align: center;">
-                <b>MOST OR : {OR_data["OR"].to_list()[0]} OR</b>
-            </p>
-            ''',
-            unsafe_allow_html=True
-        )
-
-        if os.path.exists(OR_image_path):
-            st.image(OR_image_path, caption=f"#{NUMBER_OR} {NAME_OR}", width=int(330*zoom))
-        else:
-            st.warning(f"Image introuvable pour le joueur : {NAME_OR}")
-            
-    with s4 :
-        # Intégrer la couleur dans le markdown
-        st.markdown(
-            f'''
-            <p style="font-size:{int(30*zoom)}px; text-align: center;">
-                <b>MOST AS : {AS_data["AS"].to_list()[0]} AS</b>
-            </p>
-            ''',
-            unsafe_allow_html=True
-        )
-
-        if os.path.exists(AS_image_path):
-            st.image(AS_image_path, caption=f"#{NUMBER_AS} {NAME_AS}", width=int(330*zoom))
-        else:
-            st.warning(f"Image introuvable pour le joueur : {NAME_AS}")
-
-        # Intégrer la couleur dans le markdown
-        st.markdown(
-            f'''
-            <p style="font-size:{int(30*zoom)}px; text-align: center;">
-                <b>MOST TO : {TO_data["TO"].to_list()[0]} TO</b>
-            </p>
-            ''',
-            unsafe_allow_html=True
-        )
-
-        if os.path.exists(TO_image_path):
-            st.image(TO_image_path, caption=f"#{NUMBER_TO} {NAME_TO}", width=int(330*zoom))
-        else:
-            st.warning(f"Image introuvable pour le joueur : {NAME_TO}")
-
-    with s5 :
-        # Intégrer la couleur dans le markdown
-        st.markdown(
-            f'''
-            <p style="font-size:{int(30*zoom)}px; text-align: center;">
-                <b>MOST ST : {ST_data["ST"].to_list()[0]} ST</b>
-            </p>
-            ''',
-            unsafe_allow_html=True
-        )
-
-        if os.path.exists(ST_image_path):
-            st.image(ST_image_path, caption=f"#{NUMBER_ST} {NAME_ST}", width=int(330*zoom))
-        else:
-            st.warning(f"Image introuvable pour le joueur : {NAME_ST}")
-
-        # Intégrer la couleur dans le markdown
-        st.markdown(
-            f'''
-            <p style="font-size:{int(30*zoom)}px; text-align: center;">
-                <b>MOST CO : {CO_data["CO"].to_list()[0]} CO</b>
-            </p>
-            ''',
-            unsafe_allow_html=True
-        )
-
-        if os.path.exists(CO_image_path):
-            st.image(CO_image_path, caption=f"#{NUMBER_CO} {NAME_CO}", width=int(330*zoom))
-        else:
-            st.warning(f"Image introuvable pour le joueur : {NAME_CO}")
-
     t = st.selectbox("TEAM", options=[team_local,team_road], index=0)
     player_stat = player_stat[player_stat["TEAM"]==t].drop(columns = ["TEAM","ROUND","NB_GAME","OPPONENT","HOME","WIN"])
     player_stat = player_stat.sort_values(by = "TIME_ON",ascending = False)

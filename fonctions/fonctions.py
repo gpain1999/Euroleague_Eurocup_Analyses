@@ -42,7 +42,7 @@ def team_evol_score(team,min_round,max_round,data_dir,competition,season,type = 
     cumul_df_mean_values = [round(a-b,3) for a,b in zip(team_df_mean_values,opp_df_mean_values)]
     periode_mean_values = [cumul_df_mean_values[0]] + [round(cumul_df_mean_values[i] - cumul_df_mean_values[i-1],3) for i in range(1, len(cumul_df_mean_values))]
 
-    return [x for x in periode_mean_values if not math.isnan(x)],[x for x in cumul_df_mean_values if not math.isnan(x)]
+    return [x for x in periode_mean_values if not math.isnan(x)],[x for x in cumul_df_mean_values if not math.isnan(x)],team_df_mean_values,opp_df_mean_values
 
 def evol_score(data_dir,competition,season) : 
     df_pbp = pd.read_csv(os.path.join(data_dir, f"{competition}_pbp_{season}.csv"))

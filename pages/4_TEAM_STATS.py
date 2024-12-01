@@ -651,7 +651,7 @@ with vide :
         st.warning(f"Logo introuvable pour l'équipe : {CODETEAM}")
     
 
-periode,cumul = f.team_evol_score(CODETEAM,selected_range[0],selected_range[1],data_dir,competition,season,type = MM)
+periode,cumul,_,_ = f.team_evol_score(CODETEAM,selected_range[0],selected_range[1],data_dir,competition,season,type = MM)
 periode = periode[:16]
 cumul = cumul[:16]
 with cola :
