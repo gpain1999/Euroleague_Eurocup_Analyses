@@ -686,6 +686,6 @@ with colb :
        'DEF_OFF_10', 'DELTA_OFF']]
         
         data_aff2 = data_aff.style.apply(colorize_pm_on, axis=1).format(precision=1)
-        st.dataframe(data_aff2, height=min(36 + 36*len(data_aff),17*36),width=2000,hide_index=True)
+        st.dataframe(data_aff2, height=min(36 + 36*len(data_aff),22*36),width=2000,hide_index=True)
     
 
