@@ -436,7 +436,7 @@ with colb :
 
         st.markdown(
             f'''
-            <p style="font-size:{int(27*zoom)}px; text-align: center; background-color: #00ff00;color: black; padding: 10px; border-radius: 5px;">
+            <p style="font-size:{int(27*zoom)}px; text-align: center; background-color: #00ff00;color: black; padding: 5px; border-radius: 5px;">
                 <b>MVP : {mvp_data["I_PER"].to_list()[0]} I_PER</b>
             </p>
             ''',
@@ -451,7 +451,7 @@ with colb :
 
         st.markdown(
             f'''
-            <p style="font-size:{int(23*zoom)}px; text-align: center; background-color: #00ff00;color: black; padding: 10px; border-radius: 5px;">
+            <p style="font-size:{int(23*zoom)}px; text-align: center; background-color: #00ff00;color: black; padding: 5px; border-radius: 5px;">
                 <b>BEST LO : {BL_data["I_PER"].to_list()[0]} I_PER</b>
             </p>
             ''',
@@ -468,7 +468,7 @@ with colb :
 
         st.markdown(
             f'''
-            <p style="font-size:{int(23*zoom)}px; text-align: center; background-color: #00ff00;color: black; padding: 10px; border-radius: 5px;">
+            <p style="font-size:{int(23*zoom)}px; text-align: center; background-color: #00ff00;color: black; padding: 5px; border-radius: 5px;">
                 <b>MOST PTS : {PTS_data["PTS"].to_list()[0]} PTS</b>
             </p>
             ''',
@@ -483,7 +483,7 @@ with colb :
 
         st.markdown(
             f'''
-            <p style="font-size:{int(27*zoom)}px; text-align: center; background-color: #00ff00;color: black; padding: 10px; border-radius: 5px;">
+            <p style="font-size:{int(27*zoom)}px; text-align: center; background-color: #00ff00;color: black; padding: 5px; border-radius: 5px;">
                 <b>MOST +/- : {int(PM_ON_data["PM_ON"].to_list()[0])}</b>
             </p>
             ''',
@@ -498,7 +498,7 @@ with colb :
 
         st.markdown(
             f'''
-            <p style="font-size:{int(26*zoom)}px; text-align: center; background-color: #00ff00;color: black; padding: 10px; border-radius: 5px;">
+            <p style="font-size:{int(26*zoom)}px; text-align: center; background-color: #00ff00;color: black; padding: 5px; border-radius: 5px;">
                 <b>{DR_data["DR"].to_list()[0]} DR</b>
             </p>
             ''',
@@ -515,7 +515,7 @@ with colb :
 
         st.markdown(
             f'''
-            <p style="font-size:{int(27*zoom)}px; text-align: center; background-color: #00ff00;color: black; padding: 10px; border-radius: 5px;">
+            <p style="font-size:{int(27*zoom)}px; text-align: center; background-color: #00ff00;color: black; padding: 5px; border-radius: 5px;">
                 <b>MOST OR : {OR_data["OR"].to_list()[0]} OR</b>
             </p>
             ''',
@@ -531,7 +531,7 @@ with colb :
         # Intégrer la couleur dans le markdown
         st.markdown(
             f'''
-            <p style="font-size:{int(27*zoom)}px; text-align: center; background-color: #00ff00;color: black; padding: 10px; border-radius: 5px;">
+            <p style="font-size:{int(27*zoom)}px; text-align: center; background-color: #00ff00;color: black; padding: 5px; border-radius: 5px;">
                 <b>MOST AS : {AS_data["AS"].to_list()[0]} AS</b>
             </p>
             ''',
@@ -546,7 +546,7 @@ with colb :
         # Intégrer la couleur dans le markdown
         st.markdown(
             f'''
-            <p style="font-size:{int(27*zoom)}px; text-align: center; background-color: #00ff00;color: black; padding: 10px; border-radius: 5px;">
+            <p style="font-size:{int(27*zoom)}px; text-align: center; background-color: #00ff00;color: black; padding: 5px; border-radius: 5px;">
                 <b>MOST TO : {TO_data["TO"].to_list()[0]} TO</b>
             </p>
             ''',
@@ -562,7 +562,7 @@ with colb :
         # Intégrer la couleur dans le markdown
         st.markdown(
             f'''
-            <p style="font-size:{int(27*zoom)}px; text-align: center; background-color: #00ff00;color: black; padding: 10px; border-radius: 5px;">
+            <p style="font-size:{int(27*zoom)}px; text-align: center; background-color: #00ff00;color: black; padding: 5px; border-radius: 5px;">
                 <b>MOST ST : {ST_data["ST"].to_list()[0]} ST</b>
             </p>
             ''',
@@ -577,7 +577,7 @@ with colb :
         # Intégrer la couleur dans le markdown
         st.markdown(
             f'''
-            <p style="font-size:{int(27*zoom)}px; text-align: center; background-color: #00ff00;color: black; padding: 10px; border-radius: 5px;">
+            <p style="font-size:{int(27*zoom)}px; text-align: center; background-color: #00ff00;color: black; padding: 5px; border-radius: 5px;">
                 <b>MOST CO : {CO_data["CO"].to_list()[0]} CO</b>
             </p>
             ''',

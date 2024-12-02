@@ -57,6 +57,8 @@ st.markdown(
 # Sidebar : Curseur pour sélectionner la plage de ROUND
 st.sidebar.header("SETTINGS")
 
+DELTA = st.sidebar.selectbox("COMPARAISON TYPE", options=["LEAGUE", "OPPONENTS"], index=0)
+
 selected_range = st.sidebar.slider(
     "Select a ROUND range:",
     min_value=min_round,
@@ -342,7 +344,8 @@ with col2 :
         top = st.number_input(TOP, min_value=3,max_value=20 ,value=3)
     
     with col41 :
-        DELTA = st.selectbox("COMPARAISON TYPE", options=["LEAGUE", "OPPONENTS"], index=0)
+        pass
+        
 
 
     col12, col22,col32,col42,col52= st.columns([1,1,1,1,1])
@@ -637,7 +640,7 @@ with col1 :
 
    
 
-delta_graph,cola, colb,mvp = st.columns([1,1,1,1]) 
+delta_graph,cola, colb,colc,mvp = st.columns([1,0.666,0.666,0.666,1]) 
 
 
 
@@ -715,7 +718,7 @@ with cola :
         
         st.markdown(
             f'''
-            <p style="font-size:{int(40*zoom)}px; text-align: center;">
+            <p style="font-size:{int(30*zoom)}px; text-align: center;">
                 <b> SHOOTS REPARTITION {CODETEAM} </b>
             </p>
             ''',
@@ -741,63 +744,79 @@ with cola :
             unsafe_allow_html=True
         )
 
+        st.markdown(
+            f'''
+            <p style="font-size:{int(30*zoom)}px; text-align: center;">
+                <b> RATIO AS/TO {CODETEAM} </b>
+            </p>
+            ''',
+            unsafe_allow_html=True
+        )
 
+        st.markdown(
+            f'''
+            <p style="font-size:{taille}px; text-align: center; background-color: #00ff00;color: black; padding: 10px; border-radius: 5px;">
+                <b>{round(team_moyenne["AS"].mean()/team_moyenne["TO"].mean(),2)}&nbsp; OF AS/TO</b>
+            </p>
+            ''',
+            unsafe_allow_html=True
+        )
 
 with colb :
     
     st.markdown(
             f'''
-            <p style="font-size:{int(40*zoom)}px; text-align: center;">
-                <b> SHOOTS REPARTITION {DELTA} </b>
+            <p style="font-size:{int(30*zoom)}px; text-align: center;">
+                <b> {DELTA} </b>
             </p>
             ''',
             unsafe_allow_html=True
         )
     if DELTA == "OPPONENTS" :
-
-        st.markdown(
-            f'''
-            <p style="font-size:{taille}px; text-align: center; background-color: #ff0000;color: black; padding: 10px; border-radius: 5px;">
-                <b>{round(100*(opp_moyenne["2_T"].mean()/(opp_moyenne["2_T"].mean()+opp_moyenne["3_T"].mean())),1)}&nbsp;% OF 2PTS</b>
-            </p>
-            ''',
-            unsafe_allow_html=True
-        )
-        # Pour les défaites (NO)
-        st.markdown(
-            f'''
-            <p style="font-size:{taille}px; text-align: center; background-color: #ff0000;color: black; padding: 10px; border-radius: 5px;">
-                <b>{round(100*(opp_moyenne["3_T"].mean()/(opp_moyenne["2_T"].mean()+opp_moyenne["3_T"].mean())),1)}&nbsp;% OF 3PTS</b>
-            </p>
-            ''',
-            unsafe_allow_html=True
-        )
-
+        data = opp_moyenne
     else :
-        st.markdown(
-            f'''
-            <p style="font-size:{taille}px; text-align: center; background-color: #ff0000;color: black; padding: 10px; border-radius: 5px;">
-                <b>{round(100*(league_moyenne["2_T"].mean()/(league_moyenne["2_T"].mean()+league_moyenne["3_T"].mean())),1)}&nbsp;% OF 2PTS</b>
-            </p>
-            ''',
-            unsafe_allow_html=True
-        )
-        # Pour les défaites (NO)
-        st.markdown(
-            f'''
-            <p style="font-size:{taille}px; text-align: center; background-color: #ff0000;color: black; padding: 10px; border-radius: 5px;">
-                <b>{round(100*(league_moyenne["3_T"].mean()/(league_moyenne["2_T"].mean()+league_moyenne["3_T"].mean())),1)}&nbsp;% OF 3PTS</b>
-            </p>
-            ''',
-            unsafe_allow_html=True
-        )
+        data = league_moyenne
 
+    st.markdown(
+        f'''
+        <p style="font-size:{taille}px; text-align: center; background-color: #ff0000;color: black; padding: 10px; border-radius: 5px;">
+            <b>{round(100*(data["2_T"].mean()/(data["2_T"].mean()+data["3_T"].mean())),1)}&nbsp;% OF 2PTS</b>
+        </p>
+        ''',
+        unsafe_allow_html=True
+    )
+    # Pour les défaites (NO)
+    st.markdown(
+        f'''
+        <p style="font-size:{taille}px; text-align: center; background-color: #ff0000;color: black; padding: 10px; border-radius: 5px;">
+            <b>{round(100*(data["3_T"].mean()/(data["2_T"].mean()+data["3_T"].mean())),1)}&nbsp;% OF 3PTS</b>
+        </p>
+        ''',
+        unsafe_allow_html=True
+    )
+    st.markdown(
+            f'''
+            <p style="font-size:{int(30*zoom)}px; text-align: center;">
+                <b> {DELTA} </b>
+            </p>
+            ''',
+            unsafe_allow_html=True
+        )
+    st.markdown(
+            f'''
+            <p style="font-size:{taille}px; text-align: center; background-color: #ff0000;color: black; padding: 10px; border-radius: 5px;">
+                <b>{round(data["AS"].mean()/data["TO"].mean(),2)}&nbsp; OF AS/TO</b>
+            </p>
+            ''',
+            unsafe_allow_html=True
+        )
+    
 with mvp :
             # Intégrer la couleur dans le markdown
     st.markdown(
             f'''
-            <p style="font-size:{int(40*zoom)}px; text-align: center; color: {MVP_COLOR};">
-                <b> MVP NOTE : {round(MVP_NOTE)}</b>
+            <p style="font-size:{int(40*zoom)}px; text-align: center; background-color: {MVP_COLOR};color: black; padding: 6px; border-radius: 5px;">
+                <b> BEST PLAYER NOTE : {round(MVP_NOTE)}</b>
             </p>
             ''',
             unsafe_allow_html=True
@@ -822,7 +841,7 @@ with mvp :
         st.plotly_chart(fig2)
         st.markdown(
             f'''
-            <p style="font-size:{int(30*zoom)}px; text-align: left; color: {MVP_COLOR};">
+            <p style="font-size:{int(30*zoom)}px; text-align: center; background-color: {MVP_COLOR};color: black; padding: 6px; border-radius: 5px;">
                 <b> {round(mvp_stat["PER"].mean(),1)} PER /G</b>
             </p>
             ''',

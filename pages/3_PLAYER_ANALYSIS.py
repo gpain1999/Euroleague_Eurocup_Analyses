@@ -306,7 +306,7 @@ with col_image :
     # Intégrer la couleur dans le markdown
     st.markdown(
         f'''
-        <p style="font-size:{int(40*zoom)}px; text-align: center; color: {player_color};">
+        <p style="font-size:{int(40*zoom)}px; text-align: center; background-color: {player_color};color: black; padding: 2px; border-radius: 5px;">
             <b>NOTE : {round(player_note)}</b>
         </p>
         ''',
