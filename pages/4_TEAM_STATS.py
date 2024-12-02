@@ -453,7 +453,7 @@ with col2 :
         pass
 
     with name :
-        st.header(f"Averages {DELTA}")
+        st.header(f"Averages : {DELTA}")
 
 
     if DELTA == "OPPONENTS" :
@@ -637,29 +637,35 @@ with col1 :
 
    
 
-vide,cola, colb,mvp = st.columns([1,1,1,1]) 
+delta_graph,cola, colb,mvp = st.columns([1,1,1,1]) 
 
 
 
 
 
-with vide :
-    MM = st.selectbox("DELTA SCORE CALCUL", options=["MEAN", "MEDIAN"], index=1)
-    if os.path.exists(team_logo_path):
-        st.image(team_logo_path,  width=int(420*zoom))
-    else:
-        st.warning(f"Logo introuvable pour l'équipe : {CODETEAM}")
-    
+with delta_graph :
+    c1,c2 = st.columns([1,1]) 
 
-periode,cumul,_,_ = f.team_evol_score(CODETEAM,selected_range[0],selected_range[1],data_dir,competition,season,type = MM)
-periode = periode[:16]
-cumul = cumul[:16]
-with cola :
+    with c1 :
+        MM = st.selectbox("DELTA MODE", options=["MEAN", "MEDIAN"], index=1)
+    with c2 :
+        type_delta = st.selectbox("DELTA TYPE", options=["CUMULATED","PER PERIODE"], index=0)
+
+
+    periode,cumul,_,_ = f.team_evol_score(CODETEAM,selected_range[0],selected_range[1],data_dir,competition,season,type = MM)
+    periode = periode[:16]
+    cumul = cumul[:16]
+
+    if type_delta == "PER PERIODE" :
+        data_delta = periode
+
+    else : 
+        data_delta = cumul
     # Noms des barres
     labels = [i * 2.5 for i in range(1, len(periode) + 1)]
 
     # Couleurs conditionnelles
-    colors = ['green' if val > 0 else 'red' if val < 0 else 'yellow' for val in periode]
+    colors = ['green' if val > 0 else 'red' if val < 0 else 'yellow' for val in data_delta]
 
     # Création de la figure
     fig = go.Figure()
@@ -668,7 +674,7 @@ with cola :
     fig.add_trace(
         go.Bar(
             x=labels,
-            y=periode,
+            y=data_delta,
             marker=dict(color=colors),  # Couleurs dynamiques
         )
     )
@@ -676,9 +682,9 @@ with cola :
         fig.add_shape(
             type="line",
             x0=labels[i] + 1.25,
-            y0=min(periode) - 1,  # Commence un peu en dessous de la valeur min
+            y0=min(data_delta) - 1,  # Commence un peu en dessous de la valeur min
             x1=labels[i] + 1.25,
-            y1=max(periode) + 1,  # Va un peu au-dessus de la valeur max
+            y1=max(data_delta) + 1,  # Va un peu au-dessus de la valeur max
             line=dict(color="grey", dash="dot", width=2)  # Ligne pointillée jaune
         )
 
@@ -687,7 +693,7 @@ with cola :
         autosize=True,
         width=int(600*zoom),
         height=int(600*zoom),
-        title=f"{MM} Delta score per periode of 2:30 mins",
+        title=f"{MM} Delta score",
         xaxis_title="Minutes",
         yaxis_title="Delta",
         xaxis=dict(
@@ -704,52 +710,87 @@ with cola :
 
 
 
+
+with cola :
+        
+        st.markdown(
+            f'''
+            <p style="font-size:{int(40*zoom)}px; text-align: center;">
+                <b> SHOOTS REPARTITION {CODETEAM} </b>
+            </p>
+            ''',
+            unsafe_allow_html=True
+        )
+                
+        
+        st.markdown(
+            f'''
+            <p style="font-size:{taille}px; text-align: center; background-color: #00ff00;color: black; padding: 10px; border-radius: 5px;">
+                <b>{round(100*(team_moyenne["2_T"].mean()/(team_moyenne["2_T"].mean()+team_moyenne["3_T"].mean())),1)}&nbsp;% OF 2PTS</b>
+            </p>
+            ''',
+            unsafe_allow_html=True
+        )
+        # Pour les défaites (NO)
+        st.markdown(
+            f'''
+            <p style="font-size:{taille}px; text-align: center; background-color: #00ff00;color: black; padding: 10px; border-radius: 5px;">
+                <b>{round(100*(team_moyenne["3_T"].mean()/(team_moyenne["2_T"].mean()+team_moyenne["3_T"].mean())),1)}&nbsp;% OF 3PTS</b>
+            </p>
+            ''',
+            unsafe_allow_html=True
+        )
+
+
+
 with colb :
-    # Noms des barres
-    labels = [i * 2.5 for i in range(1, len(cumul) + 1)]
-
-    # Couleurs conditionnelles
-    colors = ['green' if val > 0 else 'red' if val < 0 else 'yellow' for val in cumul]
-
-    # Création de la figure
-    fig = go.Figure()
-
-    # Ajout des barres
-    fig.add_trace(
-        go.Bar(
-            x=labels,
-            y=cumul,
-            marker=dict(color=colors),  # Couleurs dynamiques
+    
+    st.markdown(
+            f'''
+            <p style="font-size:{int(40*zoom)}px; text-align: center;">
+                <b> SHOOTS REPARTITION {DELTA} </b>
+            </p>
+            ''',
+            unsafe_allow_html=True
         )
-    )
-    for i in range(3, len(labels)-1, 4):  # Indices toutes les 4 barres (commençant à 3)
-        fig.add_shape(
-            type="line",
-            x0=labels[i] + 1.25,
-            y0=min(cumul) - 1,  # Commence un peu en dessous de la valeur min
-            x1=labels[i] + 1.25,
-            y1=max(cumul) + 1,  # Va un peu au-dessus de la valeur max
-            line=dict(color="grey", dash="dot", width=2)  # Ligne pointillée jaune
-        )
-    # Mise en page
-    fig.update_layout(
-        autosize=True,
-        width = int(600*zoom),
-        height = int(600*zoom),
-        title=f"{MM} Delta score live",
-        xaxis_title="Minutes",
-        yaxis_title="Delta",
-        xaxis=dict(
-            tickmode='linear',
-            showticklabels=False  # Supprime les labels sur l'axe X
-        ),
-        plot_bgcolor="rgba(0,0,0,0)",  # Fond transparent
-        paper_bgcolor="rgba(0,0,0,0)", # Papier transparent (si mode sombre Streamlit)
-        font=dict(size=12),
-    )
+    if DELTA == "OPPONENTS" :
 
-    # Affichage dans Streamlit
-    st.plotly_chart(fig)
+        st.markdown(
+            f'''
+            <p style="font-size:{taille}px; text-align: center; background-color: #ff0000;color: black; padding: 10px; border-radius: 5px;">
+                <b>{round(100*(opp_moyenne["2_T"].mean()/(opp_moyenne["2_T"].mean()+opp_moyenne["3_T"].mean())),1)}&nbsp;% OF 2PTS</b>
+            </p>
+            ''',
+            unsafe_allow_html=True
+        )
+        # Pour les défaites (NO)
+        st.markdown(
+            f'''
+            <p style="font-size:{taille}px; text-align: center; background-color: #ff0000;color: black; padding: 10px; border-radius: 5px;">
+                <b>{round(100*(opp_moyenne["3_T"].mean()/(opp_moyenne["2_T"].mean()+opp_moyenne["3_T"].mean())),1)}&nbsp;% OF 3PTS</b>
+            </p>
+            ''',
+            unsafe_allow_html=True
+        )
+
+    else :
+        st.markdown(
+            f'''
+            <p style="font-size:{taille}px; text-align: center; background-color: #ff0000;color: black; padding: 10px; border-radius: 5px;">
+                <b>{round(100*(league_moyenne["2_T"].mean()/(league_moyenne["2_T"].mean()+league_moyenne["3_T"].mean())),1)}&nbsp;% OF 2PTS</b>
+            </p>
+            ''',
+            unsafe_allow_html=True
+        )
+        # Pour les défaites (NO)
+        st.markdown(
+            f'''
+            <p style="font-size:{taille}px; text-align: center; background-color: #ff0000;color: black; padding: 10px; border-radius: 5px;">
+                <b>{round(100*(league_moyenne["3_T"].mean()/(league_moyenne["2_T"].mean()+league_moyenne["3_T"].mean())),1)}&nbsp;% OF 3PTS</b>
+            </p>
+            ''',
+            unsafe_allow_html=True
+        )
 
 with mvp :
             # Intégrer la couleur dans le markdown
