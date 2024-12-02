@@ -27,18 +27,6 @@ image_path = f"images/{competition}.png"  # Chemin vers l'image
 
 
 # SETTINGS interactifs
-st.markdown(
-    """
-    <style>
-    [data-testid="stSidebar"] {
-        min-width: 60px; /* Largeur minimale */
-        max-width: 240px; /* Largeur maximale */
-        width: 120px; /* Largeur fixe */
-    }
-    </style>
-    """,
-    unsafe_allow_html=True
-)
 
 
 
@@ -451,8 +439,8 @@ with colb :
 
         st.markdown(
             f'''
-            <p style="font-size:{int(23*zoom)}px; text-align: center; background-color: #00ff00;color: black; padding: 5px; border-radius: 5px;">
-                <b>BEST LO : {BL_data["I_PER"].to_list()[0]} I_PER</b>
+            <p style="font-size:{int(25*zoom)}px; text-align: center; background-color: #00ff00;color: black; padding: 5px; border-radius: 5px;">
+                <b>MVP LO : {BL_data["I_PER"].to_list()[0]} I_PER</b>
             </p>
             ''',
             unsafe_allow_html=True
@@ -484,7 +472,7 @@ with colb :
         st.markdown(
             f'''
             <p style="font-size:{int(27*zoom)}px; text-align: center; background-color: #00ff00;color: black; padding: 5px; border-radius: 5px;">
-                <b>MOST +/- : {int(PM_ON_data["PM_ON"].to_list()[0])}</b>
+                <b>{int(PM_ON_data["PM_ON"].to_list()[0])} +/-</b>
             </p>
             ''',
             unsafe_allow_html=True
