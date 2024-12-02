@@ -728,7 +728,7 @@ with cola :
         
         st.markdown(
             f'''
-            <p style="font-size:{taille}px; text-align: center; background-color: #00ff00;color: black; padding: 10px; border-radius: 5px;">
+            <p style="font-size:{taille}px; text-align: center; background-color: #00ff00;color: black; padding: 8px; border-radius: 5px;">
                 <b>{round(100*(team_moyenne["2_T"].mean()/(team_moyenne["2_T"].mean()+team_moyenne["3_T"].mean())),1)}&nbsp;% OF 2PTS</b>
             </p>
             ''',
@@ -737,7 +737,7 @@ with cola :
         # Pour les défaites (NO)
         st.markdown(
             f'''
-            <p style="font-size:{taille}px; text-align: center; background-color: #00ff00;color: black; padding: 10px; border-radius: 5px;">
+            <p style="font-size:{taille}px; text-align: center; background-color: #00ff00;color: black; padding: 8px; border-radius: 5px;">
                 <b>{round(100*(team_moyenne["3_T"].mean()/(team_moyenne["2_T"].mean()+team_moyenne["3_T"].mean())),1)}&nbsp;% OF 3PTS</b>
             </p>
             ''',
@@ -755,8 +755,25 @@ with cola :
 
         st.markdown(
             f'''
-            <p style="font-size:{taille}px; text-align: center; background-color: #00ff00;color: black; padding: 10px; border-radius: 5px;">
+            <p style="font-size:{taille}px; text-align: center; background-color: #00ff00;color: black; padding: 8px; border-radius: 5px;">
                 <b>{round(team_moyenne["AS"].mean()/team_moyenne["TO"].mean(),2)}&nbsp; OF AS/TO</b>
+            </p>
+            ''',
+            unsafe_allow_html=True
+        )
+        st.markdown(
+            f'''
+            <p style="font-size:{int(30*zoom)}px; text-align: center;">
+                <b> SHOOTS PER GAME {CODETEAM} </b>
+            </p>
+            ''',
+            unsafe_allow_html=True
+        )
+
+        st.markdown(
+            f'''
+            <p style="font-size:{taille}px; text-align: center; background-color: #00ff00;color: black; padding: 8px; border-radius: 5px;">
+                <b>{round(team_moyenne["2_T"].mean()+team_moyenne["3_T"].mean(),2)}&nbsp; SHOOTS + {round(team_moyenne["1_T"].mean(),1)}&nbsp; FT</b>
             </p>
             ''',
             unsafe_allow_html=True
@@ -779,7 +796,7 @@ with colb :
 
     st.markdown(
         f'''
-        <p style="font-size:{taille}px; text-align: center; background-color: #ff0000;color: black; padding: 10px; border-radius: 5px;">
+        <p style="font-size:{taille}px; text-align: center; background-color: #ff0000;color: black; padding: 8px; border-radius: 5px;">
             <b>{round(100*(data["2_T"].mean()/(data["2_T"].mean()+data["3_T"].mean())),1)}&nbsp;% OF 2PTS</b>
         </p>
         ''',
@@ -788,7 +805,7 @@ with colb :
     # Pour les défaites (NO)
     st.markdown(
         f'''
-        <p style="font-size:{taille}px; text-align: center; background-color: #ff0000;color: black; padding: 10px; border-radius: 5px;">
+        <p style="font-size:{taille}px; text-align: center; background-color: #ff0000;color: black; padding: 8px; border-radius: 5px;">
             <b>{round(100*(data["3_T"].mean()/(data["2_T"].mean()+data["3_T"].mean())),1)}&nbsp;% OF 3PTS</b>
         </p>
         ''',
@@ -804,13 +821,28 @@ with colb :
         )
     st.markdown(
             f'''
-            <p style="font-size:{taille}px; text-align: center; background-color: #ff0000;color: black; padding: 10px; border-radius: 5px;">
+            <p style="font-size:{taille}px; text-align: center; background-color: #ff0000;color: black; padding: 8px; border-radius: 5px;">
                 <b>{round(data["AS"].mean()/data["TO"].mean(),2)}&nbsp; OF AS/TO</b>
             </p>
             ''',
             unsafe_allow_html=True
         )
-    
+    st.markdown(
+            f'''
+            <p style="font-size:{int(30*zoom)}px; text-align: center;">
+                <b> {DELTA} </b>
+            </p>
+            ''',
+            unsafe_allow_html=True
+        )
+    st.markdown(
+            f'''
+            <p style="font-size:{taille}px; text-align: center; background-color: #ff0000;color: black; padding: 8px; border-radius: 5px;">
+                <b>{round(data["2_T"].mean()+data["3_T"].mean(),2)}&nbsp; SHOOTS + {round(data["1_T"].mean(),1)}&nbsp; FT</b>
+            </p>
+            ''',
+            unsafe_allow_html=True
+        )
 with mvp :
             # Intégrer la couleur dans le markdown
     st.markdown(

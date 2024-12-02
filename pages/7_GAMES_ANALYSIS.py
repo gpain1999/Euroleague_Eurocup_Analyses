@@ -468,8 +468,8 @@ with colb :
 
         st.markdown(
             f'''
-            <p style="font-size:{int(23*zoom)}px; text-align: center; background-color: #00ff00;color: black; padding: 5px; border-radius: 5px;">
-                <b>MOST PTS : {PTS_data["PTS"].to_list()[0]} PTS</b>
+            <p style="font-size:{int(27*zoom)}px; text-align: center; background-color: #00ff00;color: black; padding: 5px; border-radius: 5px;">
+                <b>{PTS_data["PTS"].to_list()[0]} POINTS</b>
             </p>
             ''',
             unsafe_allow_html=True
@@ -498,8 +498,8 @@ with colb :
 
         st.markdown(
             f'''
-            <p style="font-size:{int(26*zoom)}px; text-align: center; background-color: #00ff00;color: black; padding: 5px; border-radius: 5px;">
-                <b>{DR_data["DR"].to_list()[0]} DR</b>
+            <p style="font-size:{int(27*zoom)}px; text-align: center; background-color: #00ff00;color: black; padding: 5px; border-radius: 5px;">
+                <b>{DR_data["DR"].to_list()[0]} DEF. REB.</b>
             </p>
             ''',
             unsafe_allow_html=True
@@ -516,7 +516,7 @@ with colb :
         st.markdown(
             f'''
             <p style="font-size:{int(27*zoom)}px; text-align: center; background-color: #00ff00;color: black; padding: 5px; border-radius: 5px;">
-                <b>MOST OR : {OR_data["OR"].to_list()[0]} OR</b>
+                <b>{OR_data["OR"].to_list()[0]} OFF. REB.</b>
             </p>
             ''',
             unsafe_allow_html=True
@@ -532,7 +532,7 @@ with colb :
         st.markdown(
             f'''
             <p style="font-size:{int(27*zoom)}px; text-align: center; background-color: #00ff00;color: black; padding: 5px; border-radius: 5px;">
-                <b>MOST AS : {AS_data["AS"].to_list()[0]} AS</b>
+                <b>{AS_data["AS"].to_list()[0]} ASSISTS</b>
             </p>
             ''',
             unsafe_allow_html=True
@@ -547,7 +547,7 @@ with colb :
         st.markdown(
             f'''
             <p style="font-size:{int(27*zoom)}px; text-align: center; background-color: #ff0000;color: black; padding: 5px; border-radius: 5px;">
-                <b>MOST TO : {TO_data["TO"].to_list()[0]} TO</b>
+                <b>{TO_data["TO"].to_list()[0]} TURNOVERS</b>
             </p>
             ''',
             unsafe_allow_html=True
@@ -563,7 +563,7 @@ with colb :
         st.markdown(
             f'''
             <p style="font-size:{int(27*zoom)}px; text-align: center; background-color: #00ff00;color: black; padding: 5px; border-radius: 5px;">
-                <b>MOST ST : {ST_data["ST"].to_list()[0]} ST</b>
+                <b>{ST_data["ST"].to_list()[0]} STEALS</b>
             </p>
             ''',
             unsafe_allow_html=True
@@ -578,7 +578,7 @@ with colb :
         st.markdown(
             f'''
             <p style="font-size:{int(27*zoom)}px; text-align: center; background-color: #00ff00;color: black; padding: 5px; border-radius: 5px;">
-                <b>MOST CO : {CO_data["CO"].to_list()[0]} CO</b>
+                <b>{CO_data["CO"].to_list()[0]} BLOCKS</b>
             </p>
             ''',
             unsafe_allow_html=True
