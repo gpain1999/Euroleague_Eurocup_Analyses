@@ -653,8 +653,15 @@ with cola :
         fig2 = f.plot_semi_circular_chart(local_player_stat["OR"].sum()/(local_player_stat["OR"].sum() + road_player_stat["DR"].sum()),"OFF.",size=int(95*zoom), font_size=int(22*zoom))
         st.plotly_chart(fig2,use_container_width=True)
 
-        fig2 = f.plot_semi_circular_chart(local_player_stat["TR"].sum()/(local_player_stat["TR"].sum() + road_player_stat["TR"].sum()),"TOT",size=int(95*zoom), font_size=int(22*zoom))
-        st.plotly_chart(fig2,use_container_width=True)
+        st.markdown(
+            f'''
+            <p style="font-size:20px; text-align: center; background-color: grey;color: black; padding: 8px; border-radius: 5px;">
+                <b>{round((local_player_stat["DR"].sum()/(local_player_stat["DR"].sum() + road_player_stat["OR"].sum()))*1/0.7+(local_player_stat["OR"].sum()/(local_player_stat["OR"].sum() + road_player_stat["DR"].sum()))*1/0.3,2)}</b>
+                <b> REB. PERF </b>
+            </p>
+            ''',
+            unsafe_allow_html=True
+        )
 
     with reb_road :
         st.markdown(
@@ -671,8 +678,15 @@ with cola :
         fig2 = f.plot_semi_circular_chart(road_player_stat["OR"].sum()/(road_player_stat["OR"].sum() + local_player_stat["DR"].sum()),"OFF.",size=int(95*zoom), font_size=int(22*zoom))
         st.plotly_chart(fig2,use_container_width=True)
 
-        fig2 = f.plot_semi_circular_chart(road_player_stat["TR"].sum()/(local_player_stat["TR"].sum() + road_player_stat["TR"].sum()),"TOT",size=int(95*zoom), font_size=int(22*zoom))
-        st.plotly_chart(fig2,use_container_width=True)
+        st.markdown(
+            f'''
+            <p style="font-size:20px; text-align: center; background-color: grey;color: black; padding: 8px; border-radius: 5px;">
+                <b>{round((road_player_stat["DR"].sum()/(road_player_stat["DR"].sum() + local_player_stat["OR"].sum()))*1/0.7+(road_player_stat["OR"].sum()/(road_player_stat["OR"].sum() + local_player_stat["DR"].sum()))*1/0.3,2)}</b>
+                <b> REB. PERF </b>
+            </p>
+            ''',
+            unsafe_allow_html=True
+        )
     st.markdown(
         f'''
         <p style="font-size:{int(35*zoom)}px; text-align: center; padding: 10pxs;">
