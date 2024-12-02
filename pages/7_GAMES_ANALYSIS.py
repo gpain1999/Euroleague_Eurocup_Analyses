@@ -73,10 +73,13 @@ zoom = st.sidebar.slider(
 RECHERCHE = st.sidebar.selectbox("SEARCH", options=["ROUND","TEAM"], index=0)
 if RECHERCHE == "ROUND" : 
     SUB = st.sidebar.number_input("ROUND", min_value=gs["ROUND"].min(),max_value=gs["ROUND"].max() ,value=gs["ROUND"].max())
+    game_list = gs[gs['GAME'].str.contains("R"+str(SUB), na=False)]['GAME'].tolist()
+
 else :
     SUB = st.sidebar.selectbox("TEAMS", options=sorted(df["TEAM"].unique()), index=0)
+    game_list = gs[gs['GAME'].str.contains(str(SUB), na=False)]['GAME'].tolist()
 
-game_list = gs[gs['GAME'].str.contains("R"+str(SUB), na=False)]['GAME'].tolist()
+
 GAME = st.sidebar.selectbox("GAMES", options=game_list, index=len(game_list)-1)
 
 with_game = gs[gs["GAME"]==GAME].reset_index(drop = True)
