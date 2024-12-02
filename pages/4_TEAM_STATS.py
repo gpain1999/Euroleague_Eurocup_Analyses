@@ -858,5 +858,4 @@ st.header("Stats GAME BY GAME : OPPONENTS")
 st.dataframe(opp_detail_select_2,height=min(38*len(opp_detail_select),650), use_container_width=True,hide_index=True)
 
 
-st.header("SCORE EVOLUTION")
 #type

@@ -330,20 +330,27 @@ with col_image :
 
     st.markdown(
         f'''
-        <p style="font-size:{int(25*zoom)}px; text-align: left;">
-            <b style="margin-right: {int(25*zoom)}px;">ON :</b> 
-            <span style="margin-right: {int(25*zoom)}px;">{round(result_pm_solo["OFF_ON_10"].to_list()[0],1)}</span> 
-            <span style="margin-right: {int(25*zoom)}px;">-</span> 
-            {round(result_pm_solo["DEF_ON_10"].to_list()[0],1)}<br>
-            <b style="margin-right: {int(25*zoom)}px;">OFF :</b> 
-            <span style="margin-right: {int(25*zoom)}px;">{round(result_pm_solo["OFF_OFF_10"].to_list()[0],1)}</span> 
-            <span style="margin-right: {int(25*zoom)}px;">-</span> 
-            {round(result_pm_solo["DEF_OFF_10"].to_list()[0],1)}
+    <p style="font-size:{int(35*zoom)}px; text-align: center; background-color: green;color: black; padding: 2px; border-radius: 5px;">
+            <b style="margin-right: {int(24*zoom)}px;">ON :</b> 
+            <span style="margin-right: {int(24*zoom)}px;">{round(result_pm_solo["OFF_ON_10"].to_list()[0],1)}</span> 
+            <span style="margin-right: {int(24*zoom)}px;">-</span> 
+            {round(result_pm_solo["DEF_ON_10"].to_list()[0],1)}
         </p>
         ''',
         unsafe_allow_html=True
     )
 
+    st.markdown(
+        f'''
+    <p style="font-size:{int(35*zoom)}px; text-align: center; background-color: red;color: black; padding: 2px; border-radius: 5px;">
+            <b style="margin-right: {int(24*zoom)}px;">OFF :</b> 
+            <span style="margin-right: {int(24*zoom)}px;">{round(result_pm_solo["OFF_OFF_10"].to_list()[0],1)}</span> 
+            <span style="margin-right: {int(24*zoom)}px;">-</span> 
+            {round(result_pm_solo["DEF_OFF_10"].to_list()[0],1)}
+        </p>
+        ''',
+        unsafe_allow_html=True
+    )
     
 
 with col2:

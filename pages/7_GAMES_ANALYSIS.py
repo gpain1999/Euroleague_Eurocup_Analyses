@@ -436,7 +436,7 @@ with colb :
 
         st.markdown(
             f'''
-            <p style="font-size:{int(27*zoom)}px; text-align: center; background-color: #00ff00;color: black; padding: 5px; border-radius: 5px;">
+            <p style="font-size:{int(27*zoom)}px; text-align: center; background-color: gold;color: black; padding: 5px; border-radius: 5px;">
                 <b>MVP : {mvp_data["I_PER"].to_list()[0]} I_PER</b>
             </p>
             ''',
@@ -546,7 +546,7 @@ with colb :
         # Intégrer la couleur dans le markdown
         st.markdown(
             f'''
-            <p style="font-size:{int(27*zoom)}px; text-align: center; background-color: #00ff00;color: black; padding: 5px; border-radius: 5px;">
+            <p style="font-size:{int(27*zoom)}px; text-align: center; background-color: #ff0000;color: black; padding: 5px; border-radius: 5px;">
                 <b>MOST TO : {TO_data["TO"].to_list()[0]} TO</b>
             </p>
             ''',
