@@ -577,7 +577,7 @@ with colb :
         else:
             st.warning(f"Image introuvable pour le joueur : {NAME_CO}")
 
-cola, colb = st.columns([0.2, 0.8])
+cola, colb = st.columns([0.18, 0.82])
 
 with cola :
     st.markdown(
