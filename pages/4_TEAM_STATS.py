@@ -193,21 +193,24 @@ palette = [
     "#FF9900",  # Orange
     "#FFCC00",  # Jaune-orange
     "#FFFF00",  # Jaune vif
-    "#CCFF00",  # Jaune-vert
+    "#CCFF00",  # Jaune-vert clair
     "#99FF00",  # Vert citron
     "#66FF00",  # Vert clair
     "#33FF00",  # Vert tendre
     "#00FF00",  # Vert vif
+    "#00E600",  # Vert moyen vif
     "#00CC00",  # Vert moyen
+    "#00B300",  # Vert profond clair
     "#009900"   # Vert profond
 ]
 
 
 # Diviser les données en 7 classes égales en nombre
-notation['CLASS'] = pd.qcut(notation['NOTE'], q=13, labels=range(13))
+notation['CLASS'] = pd.qcut(notation['NOTE'], q=15, labels=range(15))
 
 # Attribuer une couleur en fonction de la classe
 notation['COULEUR'] = notation['CLASS'].map(lambda x: palette[int(x)])
+
 print(notation.columns)
 notation = notation[notation["CODETEAM"] == CODETEAM].sort_values(by = "IRS",ascending = False).reset_index(drop = True)
 
@@ -640,7 +643,7 @@ with col1 :
 
    
 
-delta_graph,cola, colb,colc,mvp = st.columns([1,0.666,0.666,0.666,1]) 
+delta_graph,cola, colb,mvp,colc = st.columns([1,0.666,0.666,0.9,0.766]) 
 
 
 
@@ -715,18 +718,20 @@ with delta_graph :
 
 
 with cola :
-        
         st.markdown(
-            f'''
-            <p style="font-size:{int(30*zoom)}px; text-align: center;">
-                <b> SHOOTS REPARTITION {CODETEAM} </b>
-            </p>
-            ''',
-            unsafe_allow_html=True
-        )
-                
-        
-        st.markdown(
+                f'''
+                <p style="font-size:{int(30*zoom)}px; text-align: center;">
+                    <b> SHOOTS REPART {CODETEAM} </b>
+                </p>
+                ''',
+                unsafe_allow_html=True
+            )
+        a,b = st.columns([1,1])
+
+        with a :
+
+
+            st.markdown(
             f'''
             <p style="font-size:{taille}px; text-align: center; background-color: #00ff00;color: black; padding: 8px; border-radius: 5px;">
                 <b>{round(100*(team_moyenne["2_T"].mean()/(team_moyenne["2_T"].mean()+team_moyenne["3_T"].mean())),1)}&nbsp;% OF 2PTS</b>
@@ -734,15 +739,18 @@ with cola :
             ''',
             unsafe_allow_html=True
         )
-        # Pour les défaites (NO)
-        st.markdown(
-            f'''
-            <p style="font-size:{taille}px; text-align: center; background-color: #00ff00;color: black; padding: 8px; border-radius: 5px;">
-                <b>{round(100*(team_moyenne["3_T"].mean()/(team_moyenne["2_T"].mean()+team_moyenne["3_T"].mean())),1)}&nbsp;% OF 3PTS</b>
-            </p>
-            ''',
-            unsafe_allow_html=True
-        )
+            
+
+        with b : 
+        
+            st.markdown(
+                f'''
+                <p style="font-size:{taille}px; text-align: center; background-color: #00ff00;color: black; padding: 8px; border-radius: 5px;">
+                    <b>{round(100*(team_moyenne["3_T"].mean()/(team_moyenne["2_T"].mean()+team_moyenne["3_T"].mean())),1)}&nbsp;% OF 3PTS</b>
+                </p>
+                ''',
+                unsafe_allow_html=True
+            )
 
         st.markdown(
             f'''
@@ -794,23 +802,27 @@ with colb :
     else :
         data = league_moyenne
 
-    st.markdown(
-        f'''
-        <p style="font-size:{taille}px; text-align: center; background-color: #ff0000;color: black; padding: 8px; border-radius: 5px;">
-            <b>{round(100*(data["2_T"].mean()/(data["2_T"].mean()+data["3_T"].mean())),1)}&nbsp;% OF 2PTS</b>
-        </p>
-        ''',
-        unsafe_allow_html=True
-    )
-    # Pour les défaites (NO)
-    st.markdown(
-        f'''
-        <p style="font-size:{taille}px; text-align: center; background-color: #ff0000;color: black; padding: 8px; border-radius: 5px;">
-            <b>{round(100*(data["3_T"].mean()/(data["2_T"].mean()+data["3_T"].mean())),1)}&nbsp;% OF 3PTS</b>
-        </p>
-        ''',
-        unsafe_allow_html=True
-    )
+    a,b = st.columns([1,1])
+    with a :
+        st.markdown(
+            f'''
+            <p style="font-size:{taille}px; text-align: center; background-color: #ff0000;color: black; padding: 8px; border-radius: 5px;">
+                <b>{round(100*(data["2_T"].mean()/(data["2_T"].mean()+data["3_T"].mean())),1)}&nbsp;% OF 2PTS</b>
+            </p>
+            ''',
+            unsafe_allow_html=True
+        )
+
+    with b : 
+        # Pour les défaites (NO)
+        st.markdown(
+            f'''
+            <p style="font-size:{taille}px; text-align: center; background-color: #ff0000;color: black; padding: 8px; border-radius: 5px;">
+                <b>{round(100*(data["3_T"].mean()/(data["2_T"].mean()+data["3_T"].mean())),1)}&nbsp;% OF 3PTS</b>
+            </p>
+            ''',
+            unsafe_allow_html=True
+        )
     st.markdown(
             f'''
             <p style="font-size:{int(30*zoom)}px; text-align: center;">
@@ -879,7 +891,63 @@ with mvp :
             ''',
             unsafe_allow_html=True
         )
-
+with colc :
+    st.markdown(
+            f'''
+            <p style="font-size:{int(35*zoom)}px; text-align: center; background-color: {notation["COULEUR"].to_list()[1]};color: black; padding: 6px; border-radius: 4.5px;">
+                <b> {notation["PLAYER"].to_list()[1]} : {round(notation["NOTE"].to_list()[1])}</b>
+            </p>
+            ''',
+            unsafe_allow_html=True
+        )
+    st.markdown(
+            f'''
+            <p style="font-size:{int(35*zoom)}px; text-align: center; background-color: {notation["COULEUR"].to_list()[2]};color: black; padding: 6px; border-radius: 4.5px;">
+                <b> {notation["PLAYER"].to_list()[2]} : {round(notation["NOTE"].to_list()[2])}</b>
+            </p>
+            ''',
+            unsafe_allow_html=True
+        )
+    st.markdown(
+            f'''
+            <p style="font-size:{int(35*zoom)}px; text-align: center; background-color: {notation["COULEUR"].to_list()[3]};color: black; padding: 6px; border-radius: 4.5px;">
+                <b> {notation["PLAYER"].to_list()[3]} : {round(notation["NOTE"].to_list()[3])}</b>
+            </p>
+            ''',
+            unsafe_allow_html=True
+        )
+    st.markdown(
+            f'''
+            <p style="font-size:{int(35*zoom)}px; text-align: center; background-color: {notation["COULEUR"].to_list()[4]};color: black; padding: 6px; border-radius: 4.5px;">
+                <b> {notation["PLAYER"].to_list()[4]} : {round(notation["NOTE"].to_list()[4])}</b>
+            </p>
+            ''',
+            unsafe_allow_html=True
+        )    
+    st.markdown(
+            f'''
+            <p style="font-size:{int(35*zoom)}px; text-align: center; background-color: {notation["COULEUR"].to_list()[5]};color: black; padding: 6px; border-radius: 4.5px;">
+                <b> {notation["PLAYER"].to_list()[5]} : {round(notation["NOTE"].to_list()[5])}</b>
+            </p>
+            ''',
+            unsafe_allow_html=True
+        )  
+    st.markdown(
+            f'''
+            <p style="font-size:{int(35*zoom)}px; text-align: center; background-color: {notation["COULEUR"].to_list()[6]};color: black; padding: 6px; border-radius: 4.5px;">
+                <b> {notation["PLAYER"].to_list()[6]} : {round(notation["NOTE"].to_list()[6])}</b>
+            </p>
+            ''',
+            unsafe_allow_html=True
+        )  
+    st.markdown(
+            f'''
+            <p style="font-size:{int(35*zoom)}px; text-align: center; background-color: {notation["COULEUR"].to_list()[7]};color: black; padding: 6px; border-radius: 4.5px;">
+                <b> {notation["PLAYER"].to_list()[7]} : {round(notation["NOTE"].to_list()[7])}</b>
+            </p>
+            ''',
+            unsafe_allow_html=True
+        ) 
 team_detail_select_2 = team_detail_select.style.apply(highlight_win, axis=1).format(precision=1) 
 opp_detail_select_2 = opp_detail_select.style.apply(highlight_win_o, axis=1).format(precision=1)
 

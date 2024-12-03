@@ -84,18 +84,20 @@ palette = [
     "#FF9900",  # Orange
     "#FFCC00",  # Jaune-orange
     "#FFFF00",  # Jaune vif
-    "#CCFF00",  # Jaune-vert
+    "#CCFF00",  # Jaune-vert clair
     "#99FF00",  # Vert citron
     "#66FF00",  # Vert clair
     "#33FF00",  # Vert tendre
     "#00FF00",  # Vert vif
+    "#00E600",  # Vert moyen vif
     "#00CC00",  # Vert moyen
+    "#00B300",  # Vert profond clair
     "#009900"   # Vert profond
 ]
 
 
 # Diviser les données en 7 classes égales en nombre
-notation['CLASS'] = pd.qcut(notation['NOTE'], q=13, labels=range(13))
+notation['CLASS'] = pd.qcut(notation['NOTE'], q=15, labels=range(15))
 
 # Attribuer une couleur en fonction de la classe
 notation['COULEUR'] = notation['CLASS'].map(lambda x: palette[int(x)])
