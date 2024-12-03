@@ -655,7 +655,7 @@ with delta_graph :
     with c1 :
         MM = st.selectbox("DELTA MODE", options=["MEAN", "MEDIAN"], index=1)
     with c2 :
-        type_delta = st.selectbox("DELTA TYPE", options=["CUMULATED","PER PERIODE"], index=0)
+        type_delta = st.selectbox("DELTA TYPE", options=["CUMULATED","PER PERIODE"], index=1)
 
 
     periode,cumul,_,_ = f.team_evol_score(CODETEAM,selected_range[0],selected_range[1],data_dir,competition,season,type = MM)
