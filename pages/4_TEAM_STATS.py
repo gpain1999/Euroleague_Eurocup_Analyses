@@ -643,7 +643,7 @@ with col1 :
 
    
 
-delta_graph,cola, colb,mvp,colc = st.columns([1,0.666,0.666,0.9,0.766]) 
+delta_graph,cola, colb,mvp,vide,colc = st.columns([1,0.666,0.666,0.9,0.1,0.666]) 
 
 
 
@@ -894,7 +894,7 @@ with mvp :
 with colc :
     st.markdown(
             f'''
-            <p style="font-size:{int(35*zoom)}px; text-align: center; background-color: {notation["COULEUR"].to_list()[1]};color: black; padding: 6px; border-radius: 4.5px;">
+            <p style="font-size:{int(30*zoom)}px; text-align: center; background-color: {notation["COULEUR"].to_list()[1]};color: black; padding: 6px; border-radius: 4.5px;">
                 <b> {notation["PLAYER"].to_list()[1]} : {round(notation["NOTE"].to_list()[1])}</b>
             </p>
             ''',
@@ -902,7 +902,7 @@ with colc :
         )
     st.markdown(
             f'''
-            <p style="font-size:{int(35*zoom)}px; text-align: center; background-color: {notation["COULEUR"].to_list()[2]};color: black; padding: 6px; border-radius: 4.5px;">
+            <p style="font-size:{int(30*zoom)}px; text-align: center; background-color: {notation["COULEUR"].to_list()[2]};color: black; padding: 6px; border-radius: 4.5px;">
                 <b> {notation["PLAYER"].to_list()[2]} : {round(notation["NOTE"].to_list()[2])}</b>
             </p>
             ''',
@@ -910,7 +910,7 @@ with colc :
         )
     st.markdown(
             f'''
-            <p style="font-size:{int(35*zoom)}px; text-align: center; background-color: {notation["COULEUR"].to_list()[3]};color: black; padding: 6px; border-radius: 4.5px;">
+            <p style="font-size:{int(30*zoom)}px; text-align: center; background-color: {notation["COULEUR"].to_list()[3]};color: black; padding: 6px; border-radius: 4.5px;">
                 <b> {notation["PLAYER"].to_list()[3]} : {round(notation["NOTE"].to_list()[3])}</b>
             </p>
             ''',
@@ -918,7 +918,7 @@ with colc :
         )
     st.markdown(
             f'''
-            <p style="font-size:{int(35*zoom)}px; text-align: center; background-color: {notation["COULEUR"].to_list()[4]};color: black; padding: 6px; border-radius: 4.5px;">
+            <p style="font-size:{int(30*zoom)}px; text-align: center; background-color: {notation["COULEUR"].to_list()[4]};color: black; padding: 6px; border-radius: 4.5px;">
                 <b> {notation["PLAYER"].to_list()[4]} : {round(notation["NOTE"].to_list()[4])}</b>
             </p>
             ''',
@@ -926,7 +926,7 @@ with colc :
         )    
     st.markdown(
             f'''
-            <p style="font-size:{int(35*zoom)}px; text-align: center; background-color: {notation["COULEUR"].to_list()[5]};color: black; padding: 6px; border-radius: 4.5px;">
+            <p style="font-size:{int(30*zoom)}px; text-align: center; background-color: {notation["COULEUR"].to_list()[5]};color: black; padding: 6px; border-radius: 4.5px;">
                 <b> {notation["PLAYER"].to_list()[5]} : {round(notation["NOTE"].to_list()[5])}</b>
             </p>
             ''',
@@ -934,7 +934,7 @@ with colc :
         )  
     st.markdown(
             f'''
-            <p style="font-size:{int(35*zoom)}px; text-align: center; background-color: {notation["COULEUR"].to_list()[6]};color: black; padding: 6px; border-radius: 4.5px;">
+            <p style="font-size:{int(30*zoom)}px; text-align: center; background-color: {notation["COULEUR"].to_list()[6]};color: black; padding: 6px; border-radius: 4.5px;">
                 <b> {notation["PLAYER"].to_list()[6]} : {round(notation["NOTE"].to_list()[6])}</b>
             </p>
             ''',
@@ -942,7 +942,7 @@ with colc :
         )  
     st.markdown(
             f'''
-            <p style="font-size:{int(35*zoom)}px; text-align: center; background-color: {notation["COULEUR"].to_list()[7]};color: black; padding: 6px; border-radius: 4.5px;">
+            <p style="font-size:{int(30*zoom)}px; text-align: center; background-color: {notation["COULEUR"].to_list()[7]};color: black; padding: 6px; border-radius: 4.5px;">
                 <b> {notation["PLAYER"].to_list()[7]} : {round(notation["NOTE"].to_list()[7])}</b>
             </p>
             ''',

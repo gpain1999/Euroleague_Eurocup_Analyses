@@ -785,11 +785,11 @@ def analyse_per(data_dir,competition,season,R = [],CODETEAM = []) :
     ecart_type_actuel = df_result['IRS'].std()
 
     # Transformation des valeurs pour ajuster la moyenne à 75 et l'écart type à 10
-    df_result['NOTE'] = 75 + 5 * ((df_result['IRS'] - moyenne_actuelle) / ecart_type_actuel)
+    df_result['NOTE'] = 75 + 7.5 * ((df_result['IRS'] - moyenne_actuelle) / ecart_type_actuel)
     df_result['NOTE'] = np.clip(df_result['NOTE'], 50, 100)
     moyenne_actuelle = df_result['NOTE'].mean()
     ecart_type_actuel = df_result['NOTE'].std()
-    df_result['NOTE'] = (75 + 5 * ((df_result['NOTE'] - moyenne_actuelle) / ecart_type_actuel)).round(1)
+    df_result['NOTE'] = (75 + 7.5 * ((df_result['NOTE'] - moyenne_actuelle) / ecart_type_actuel)).round(1)
     df_result['NOTE'] = np.clip(df_result['NOTE'], 50, 100)
     df_result = df_result.sort_values(by = ["NOTE","PER"], ascending=[False,False]).reset_index(drop=True)
     df_result.insert(0,"RANK",range(1,len(df_result)+1))
