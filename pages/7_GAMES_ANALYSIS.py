@@ -387,7 +387,7 @@ with colb :
     with good_bad :
         st.markdown(
             f'''
-            <p style="font-size:{int(40*zoom)}px; text-align: left;">
+            <p style="font-size:{int(30*zoom)}px; text-align: center; background-color: blue;color: white; padding: 4px; border-radius: 5px;">
                 <b>{team_local} - KEYS STATS</b>
             </p>
             ''',
@@ -405,7 +405,7 @@ with colb :
 
         st.markdown(
             f'''
-            <p style="font-size:{int(40*zoom)}px; text-align: left;">
+            <p style="font-size:{int(30*zoom)}px; text-align: center; background-color: yellow;color: black; padding: 4px; border-radius: 5px;">
                 <b>{team_road} - KEYS STATS</b>
             </p>
             ''',
@@ -580,14 +580,7 @@ with colb :
 cola, colb = st.columns([0.18, 0.82])
 
 with cola :
-    st.markdown(
-        f'''
-        <p style="font-size:{int(35*zoom)}px; text-align: center; padding: 10pxs;">
-            <b>SHOOTS</b>
-        </p>
-        ''',
-        unsafe_allow_html=True
-    )
+
 
     shoot_local, shoot_road = st.columns([1, 1])
 
@@ -601,7 +594,22 @@ with cola :
             ''',
             unsafe_allow_html=True
         )
-
+        st.markdown(
+            f'''
+            <p style="font-size:{22*zoom}px; text-align: center; background-color: blue;color: white; padding: 8px; border-radius: 5px;">
+                <b>{round(local_player_stat["2_T"].sum()+local_player_stat["3_T"].sum(),2)}&nbsp; SHOOTS</b>
+            </p>
+            ''',
+            unsafe_allow_html=True
+        )
+        st.markdown(
+            f'''
+            <p style="font-size:{22*zoom}px; text-align: center; background-color: blue;color: white; padding: 8px; border-radius: 5px;">
+                <b>{round(local_player_stat["1_T"].sum(),1)}&nbsp; FT</b>
+            </p>
+            ''',
+            unsafe_allow_html=True
+        )
         fig2 = f.plot_semi_circular_chart(local_player_stat["1_R"].sum()/local_player_stat["1_T"].sum() if local_player_stat["1_T"].sum() != 0 else 0,"1P",size=int(95*zoom), font_size=int(22*zoom))
         st.plotly_chart(fig2,use_container_width=True)
         fig2 = f.plot_semi_circular_chart(local_player_stat["2_R"].sum()/local_player_stat["2_T"].sum() if local_player_stat["2_T"].sum() != 0 else 0,"2P",size=int(95*zoom), font_size=int(22*zoom))
@@ -609,14 +617,6 @@ with cola :
         fig2 = f.plot_semi_circular_chart(local_player_stat["3_R"].sum()/local_player_stat["3_T"].sum() if local_player_stat["3_T"].sum() != 0 else 0,"3P",size=int(95*zoom), font_size=int(22*zoom))
         st.plotly_chart(fig2,use_container_width=True)
         
-        st.markdown(
-            f'''
-            <p style="font-size:{22*zoom}px; text-align: center; background-color: blue;color: white; padding: 8px; border-radius: 5px;">
-                <b>{round(local_player_stat["2_T"].sum()+local_player_stat["3_T"].sum(),2)}&nbsp; SHOOTS + {round(local_player_stat["1_T"].sum(),1)}&nbsp; FT</b>
-            </p>
-            ''',
-            unsafe_allow_html=True
-        )
 
         st.markdown(
             f'''
@@ -651,7 +651,22 @@ with cola :
             ''',
             unsafe_allow_html=True
         )
-
+        st.markdown(
+            f'''
+            <p style="font-size:{22*zoom}px; text-align: center; background-color: yellow;color: black; padding: 8px; border-radius: 5px;">
+                <b>{round(road_player_stat["2_T"].sum()+road_player_stat["3_T"].sum(),2)}&nbsp; SHOOTS</b>
+            </p>
+            ''',
+            unsafe_allow_html=True
+        )
+        st.markdown(
+            f'''
+            <p style="font-size:{22*zoom}px; text-align: center; background-color: yellow;color: black; padding: 8px; border-radius: 5px;">
+                <b>{round(road_player_stat["1_T"].sum(),1)}&nbsp; FT</b>
+            </p>
+            ''',
+            unsafe_allow_html=True
+        )
         fig2 = f.plot_semi_circular_chart(road_player_stat["1_R"].sum()/road_player_stat["1_T"].sum() if road_player_stat["1_T"].sum() != 0 else 0,"1P",size=int(95*zoom), font_size=int(22*zoom))
         st.plotly_chart(fig2,use_container_width=True)
         fig2 = f.plot_semi_circular_chart(road_player_stat["2_R"].sum()/road_player_stat["2_T"].sum() if road_player_stat["2_T"].sum() != 0 else 0,"2P",size=int(95*zoom), font_size=int(22*zoom))
@@ -659,14 +674,7 @@ with cola :
         fig2 = f.plot_semi_circular_chart(road_player_stat["3_R"].sum()/road_player_stat["3_T"].sum() if road_player_stat["3_T"].sum() != 0 else 0,"3P",size=int(95*zoom), font_size=int(22*zoom))
         st.plotly_chart(fig2,use_container_width=True)
 
-        st.markdown(
-            f'''
-            <p style="font-size:{22*zoom}px; text-align: center; background-color: yellow;color: black; padding: 8px; border-radius: 5px;">
-                <b>{round(road_player_stat["2_T"].sum()+road_player_stat["3_T"].sum(),2)}&nbsp; SHOOTS + {round(road_player_stat["1_T"].sum(),1)}&nbsp; FT</b>
-            </p>
-            ''',
-            unsafe_allow_html=True
-        )
+
         st.markdown(
             f'''
             <p style="font-size:{22*zoom}px; text-align: center; background-color: yellow;color: black; padding: 8px; border-radius: 5px;">

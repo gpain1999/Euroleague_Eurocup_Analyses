@@ -12,8 +12,6 @@ season = 2024
 competition = "euroleague"
 round_ = 13
 
-f.calcul_per(data_dir = data_dir, season = season , competition = competition)
-f.calcul_per_global(data_dir = data_dir, season = season , competition = competition)
 
 try : 
 

@@ -788,6 +788,24 @@ with cola :
             unsafe_allow_html=True
         )
 
+        st.markdown(
+            f'''
+            <p style="font-size:{int(25*zoom)}px; text-align: center;">
+                <b> BUCKETS WITH ASSISTS {CODETEAM} </b>
+            </p>
+            ''',
+            unsafe_allow_html=True
+        )
+
+        st.markdown(
+            f'''
+            <p style="font-size:{taille}px; text-align: center; background-color: #00ff00;color: black; padding: 8px; border-radius: 5px;">
+                <b>{round(100*team_moyenne["AS"].mean()/(team_moyenne["2_R"].mean()+team_moyenne["3_R"].mean()),1)}&nbsp; %</b>
+            </p>
+            ''',
+            unsafe_allow_html=True
+        )
+
 with colb :
     
     st.markdown(
@@ -856,6 +874,23 @@ with colb :
             ''',
             unsafe_allow_html=True
         )
+
+    st.markdown(
+            f'''
+            <p style="font-size:{int(25*zoom)}px; text-align: center;">
+                <b> {DELTA} </b>
+            </p>
+            ''',
+            unsafe_allow_html=True
+        )
+    st.markdown(
+            f'''
+            <p style="font-size:{taille}px; text-align: center; background-color: #ff0000;color: black; padding: 8px; border-radius: 5px;">
+                <b>{round(100*data["AS"].mean()/(data["2_R"].mean()+data["3_R"].mean()),1)}&nbsp; %</b>
+            </p>
+            ''',
+            unsafe_allow_html=True
+    )
 with mvp :
             # Intégrer la couleur dans le markdown
     st.markdown(
