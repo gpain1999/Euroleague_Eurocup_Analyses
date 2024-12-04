@@ -77,6 +77,7 @@ selected_range = st.sidebar.slider(
     step=1
 )
 notation =f.analyse_per(data_dir,competition,season,R = [i for i in range(selected_range[0],selected_range[1])],CODETEAM = [])
+
 palette = [
     "#FF0000",  
     "#FF4C00",  
@@ -84,10 +85,8 @@ palette = [
     "#FF9200",  
     "#FFAF00",  
     "#FFCA00", 
-    "#FFE500",  
-    
+    "#FFE500",
     "#FFFF00",  
-    
     "#D9F213",  
     "#B5E422", 
     "#93D52E",  
@@ -119,7 +118,6 @@ max_time_on = df["TIME_ON"].max()
 col1, col2,col3 = st.columns([1.2,2,1])
 
 with col1 : 
-
     try:
         image = Image.open(image_path)
         # Redimensionner l'image (par exemple, largeur de 300 pixels)
@@ -133,7 +131,7 @@ with col1 :
 
 
 with col2 : 
-    taille_titre = 70*0.7
+    taille_titre = 70*zoom
     st.markdown(
         f'''
         <p style="font-size:{int(taille_titre)}px; text-align: center; padding: 10pxs;">

@@ -128,7 +128,6 @@ def stats_important(r,team_local,team_road,df) :
 
     local_coeff = apply_coefficients(local_stats.copy()[columns_to_average], coefficients)
     road_coeff = apply_coefficients(road_stats.copy()[columns_to_average], coefficients)
-    print(road_coeff)
     mean_coeff = apply_coefficients(mean_stats.copy()[columns_to_average], coefficients)
 
     # Calcul des deltas

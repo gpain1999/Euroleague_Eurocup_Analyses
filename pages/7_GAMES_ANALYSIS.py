@@ -583,7 +583,7 @@ with cola :
     st.markdown(
         f'''
         <p style="font-size:{int(35*zoom)}px; text-align: center; padding: 10pxs;">
-            <b>% SHOOTS</b>
+            <b>SHOOTS</b>
         </p>
         ''',
         unsafe_allow_html=True
@@ -608,6 +608,28 @@ with cola :
         st.plotly_chart(fig2,use_container_width=True)
         fig2 = f.plot_semi_circular_chart(local_player_stat["3_R"].sum()/local_player_stat["3_T"].sum() if local_player_stat["3_T"].sum() != 0 else 0,"3P",size=int(95*zoom), font_size=int(22*zoom))
         st.plotly_chart(fig2,use_container_width=True)
+        
+        st.markdown(
+            f'''
+            <p style="font-size:{20*zoom}px; text-align: center; background-color: grey;color: black; padding: 8px; border-radius: 5px;">
+                <b>{round(local_player_stat["2_T"].sum()+local_player_stat["3_T"].sum(),2)}&nbsp; SHOOTS + {round(local_player_stat["1_T"].sum(),1)}&nbsp; FT</b>
+            </p>
+            ''',
+            unsafe_allow_html=True
+        )
+        shot_T = local_player_stat["1_T"].sum()/2 + local_player_stat["2_T"].sum() + local_player_stat["3_T"].sum()
+        TO = local_player_stat["TO"].sum()
+
+        st.markdown(
+            f'''
+            <p style="font-size:{25*zoom}px; text-align: center; background-color: grey;color: black; padding: 8px; border-radius: 5px;">
+                <b>{round(100*shot_T/(shot_T+TO),1)} % BALL CARE</b>
+            </p>
+            ''',
+            unsafe_allow_html=True
+        )
+
+
 
     with shoot_road :
         
@@ -626,6 +648,27 @@ with cola :
         st.plotly_chart(fig2,use_container_width=True)
         fig2 = f.plot_semi_circular_chart(road_player_stat["3_R"].sum()/road_player_stat["3_T"].sum() if road_player_stat["3_T"].sum() != 0 else 0,"3P",size=int(95*zoom), font_size=int(22*zoom))
         st.plotly_chart(fig2,use_container_width=True)
+
+        st.markdown(
+            f'''
+            <p style="font-size:{20*zoom}px; text-align: center; background-color: grey;color: black; padding: 8px; border-radius: 5px;">
+                <b>{round(road_player_stat["2_T"].sum()+road_player_stat["3_T"].sum(),2)}&nbsp; SHOOTS + {round(road_player_stat["1_T"].sum(),1)}&nbsp; FT</b>
+            </p>
+            ''',
+            unsafe_allow_html=True
+        )
+
+        shot_T = road_player_stat["1_T"].sum()/2 + road_player_stat["2_T"].sum() + road_player_stat["3_T"].sum()
+        TO = road_player_stat["TO"].sum()
+
+        st.markdown(
+            f'''
+            <p style="font-size:{25*zoom}px; text-align: center; background-color: grey;color: black; padding: 8px; border-radius: 5px;">
+                <b>{round(100*shot_T/(shot_T+TO),1)} % BALL CARE</b>
+            </p>
+            ''',
+            unsafe_allow_html=True
+        )
 
     st.markdown(
         f'''
@@ -655,7 +698,7 @@ with cola :
 
         st.markdown(
             f'''
-            <p style="font-size:20px; text-align: center; background-color: grey;color: black; padding: 8px; border-radius: 5px;">
+            <p style="font-size:{25*zoom}px; text-align: center; background-color: grey;color: black; padding: 8px; border-radius: 5px;">
                 <b>{round((local_player_stat["DR"].sum()/(local_player_stat["DR"].sum() + road_player_stat["OR"].sum()))*1/0.7+(local_player_stat["OR"].sum()/(local_player_stat["OR"].sum() + road_player_stat["DR"].sum()))*1/0.3,2)}</b>
                 <b> REB. PERF </b>
             </p>
@@ -680,51 +723,13 @@ with cola :
 
         st.markdown(
             f'''
-            <p style="font-size:20px; text-align: center; background-color: grey;color: black; padding: 8px; border-radius: 5px;">
+            <p style="font-size:{25*zoom}px; text-align: center; background-color: grey;color: black; padding: 8px; border-radius: 5px;">
                 <b>{round((road_player_stat["DR"].sum()/(road_player_stat["DR"].sum() + local_player_stat["OR"].sum()))*1/0.7+(road_player_stat["OR"].sum()/(road_player_stat["OR"].sum() + local_player_stat["DR"].sum()))*1/0.3,2)}</b>
                 <b> REB. PERF </b>
             </p>
             ''',
             unsafe_allow_html=True
         )
-    st.markdown(
-        f'''
-        <p style="font-size:{int(35*zoom)}px; text-align: center; padding: 10pxs;">
-            <b>% BALL CARE </b>
-        </p>
-        ''',
-        unsafe_allow_html=True
-    )
-
-    cb_local, cb_road = st.columns([1, 1])
-    with cb_local :
-
-        st.markdown(
-            f'''
-            <p style="font-size:{int(int(30*zoom))}px; text-align: center;">
-                <b> {team_local}</b>
-            </p>
-            ''',
-            unsafe_allow_html=True
-        )
-        shot_T = local_player_stat["1_T"].sum()/2 + local_player_stat["2_T"].sum() + local_player_stat["3_T"].sum()
-        TO = local_player_stat["TO"].sum()
-        fig2 = f.plot_semi_circular_chart(shot_T/(shot_T+TO),"BC", size=int(95*zoom), font_size=int(22*zoom))
-        st.plotly_chart(fig2,use_container_width=True)
-
-    with cb_road :
-        st.markdown(
-            f'''
-            <p style="font-size:{int(int(30*zoom))}px; text-align: center;">
-                <b> {team_road}</b>
-            </p>
-            ''',
-            unsafe_allow_html=True
-        )
-        shot_T = road_player_stat["1_T"].sum()/2 + road_player_stat["2_T"].sum() + road_player_stat["3_T"].sum()
-        TO = road_player_stat["TO"].sum()
-        fig2 = f.plot_semi_circular_chart(shot_T/(shot_T+TO),"BC", size=int(95*zoom), font_size=int(22*zoom))
-        st.plotly_chart(fig2,use_container_width=True)
 
 with colb :
     C1, C2 = st.columns([1, 1])
