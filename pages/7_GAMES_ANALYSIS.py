@@ -334,7 +334,7 @@ with cola :
     labels = [i * 2.5 for i in range(1, len(data_delta) + 1)]
 
     # Couleurs conditionnelles
-    colors = ['green' if val > 0 else 'red' if val < 0 else 'yellow' for val in data_delta]
+    colors = ['blue' if val > 0 else 'yellow' if val < 0 else 'red' for val in data_delta]
 
     # Création de la figure
     fig = go.Figure()
@@ -611,18 +611,28 @@ with cola :
         
         st.markdown(
             f'''
-            <p style="font-size:{20*zoom}px; text-align: center; background-color: grey;color: black; padding: 8px; border-radius: 5px;">
+            <p style="font-size:{22*zoom}px; text-align: center; background-color: blue;color: white; padding: 8px; border-radius: 5px;">
                 <b>{round(local_player_stat["2_T"].sum()+local_player_stat["3_T"].sum(),2)}&nbsp; SHOOTS + {round(local_player_stat["1_T"].sum(),1)}&nbsp; FT</b>
             </p>
             ''',
             unsafe_allow_html=True
         )
+
+        st.markdown(
+            f'''
+            <p style="font-size:{22*zoom}px; text-align: center; background-color: blue;color: white; padding: 8px; border-radius: 5px;">
+                <b>{round((local_player_stat["2_R"].sum()*2+local_player_stat["3_R"].sum()*3)/(local_player_stat["2_T"].sum()+local_player_stat["3_T"].sum()),2)}&nbsp; PTS PER SHOOT</b>
+            </p>
+            ''',
+            unsafe_allow_html=True
+        )
+
         shot_T = local_player_stat["1_T"].sum()/2 + local_player_stat["2_T"].sum() + local_player_stat["3_T"].sum()
         TO = local_player_stat["TO"].sum()
 
         st.markdown(
             f'''
-            <p style="font-size:{25*zoom}px; text-align: center; background-color: grey;color: black; padding: 8px; border-radius: 5px;">
+            <p style="font-size:{25*zoom}px; text-align: center; background-color: blue;color: white; padding: 8px; border-radius: 5px;">
                 <b>{round(100*shot_T/(shot_T+TO),1)} % BALL CARE</b>
             </p>
             ''',
@@ -651,8 +661,16 @@ with cola :
 
         st.markdown(
             f'''
-            <p style="font-size:{20*zoom}px; text-align: center; background-color: grey;color: black; padding: 8px; border-radius: 5px;">
+            <p style="font-size:{22*zoom}px; text-align: center; background-color: yellow;color: black; padding: 8px; border-radius: 5px;">
                 <b>{round(road_player_stat["2_T"].sum()+road_player_stat["3_T"].sum(),2)}&nbsp; SHOOTS + {round(road_player_stat["1_T"].sum(),1)}&nbsp; FT</b>
+            </p>
+            ''',
+            unsafe_allow_html=True
+        )
+        st.markdown(
+            f'''
+            <p style="font-size:{22*zoom}px; text-align: center; background-color: yellow;color: black; padding: 8px; border-radius: 5px;">
+                <b>{round((road_player_stat["2_R"].sum()*2+road_player_stat["3_R"].sum()*3)/(road_player_stat["2_T"].sum()+road_player_stat["3_T"].sum()),2)}&nbsp; PTS PER SHOOT</b>
             </p>
             ''',
             unsafe_allow_html=True
@@ -663,7 +681,7 @@ with cola :
 
         st.markdown(
             f'''
-            <p style="font-size:{25*zoom}px; text-align: center; background-color: grey;color: black; padding: 8px; border-radius: 5px;">
+            <p style="font-size:{25*zoom}px; text-align: center; background-color: yellow;color: black; padding: 8px; border-radius: 5px;">
                 <b>{round(100*shot_T/(shot_T+TO),1)} % BALL CARE</b>
             </p>
             ''',
@@ -698,7 +716,7 @@ with cola :
 
         st.markdown(
             f'''
-            <p style="font-size:{25*zoom}px; text-align: center; background-color: grey;color: black; padding: 8px; border-radius: 5px;">
+            <p style="font-size:{25*zoom}px; text-align: center; background-color: blue;color: white; padding: 8px; border-radius: 5px;">
                 <b>{round((local_player_stat["DR"].sum()/(local_player_stat["DR"].sum() + road_player_stat["OR"].sum()))*1/0.7+(local_player_stat["OR"].sum()/(local_player_stat["OR"].sum() + road_player_stat["DR"].sum()))*1/0.3,2)}</b>
                 <b> REB. PERF </b>
             </p>
@@ -723,7 +741,7 @@ with cola :
 
         st.markdown(
             f'''
-            <p style="font-size:{25*zoom}px; text-align: center; background-color: grey;color: black; padding: 8px; border-radius: 5px;">
+            <p style="font-size:{25*zoom}px; text-align: center; background-color: yellow;color: black; padding: 8px; border-radius: 5px;">
                 <b>{round((road_player_stat["DR"].sum()/(road_player_stat["DR"].sum() + local_player_stat["OR"].sum()))*1/0.7+(road_player_stat["OR"].sum()/(road_player_stat["OR"].sum() + local_player_stat["DR"].sum()))*1/0.3,2)}</b>
                 <b> REB. PERF </b>
             </p>
