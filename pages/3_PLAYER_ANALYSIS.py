@@ -78,21 +78,23 @@ selected_range = st.sidebar.slider(
 )
 notation =f.analyse_per(data_dir,competition,season,R = [i for i in range(selected_range[0],selected_range[1])],CODETEAM = [])
 palette = [
-    "#FF0000",  # Rouge vif
-    "#FF3300",  # Rouge-orangé
-    "#FF6600",  # Orange foncé
-    "#FF9900",  # Orange
-    "#FFCC00",  # Jaune-orange
-    "#FFFF00",  # Jaune vif
-    "#CCFF00",  # Jaune-vert clair
-    "#99FF00",  # Vert citron
-    "#66FF00",  # Vert clair
-    "#33FF00",  # Vert tendre
-    "#00FF00",  # Vert vif
-    "#00E600",  # Vert moyen vif
-    "#00CC00",  # Vert moyen
-    "#00B300",  # Vert profond clair
-    "#009900"   # Vert profond
+    "#FF0000",  
+    "#FF4C00",  
+    "#FF7200",  
+    "#FF9200",  
+    "#FFAF00",  
+    "#FFCA00", 
+    "#FFE500",  
+    
+    "#FFFF00",  
+    
+    "#D9F213",  
+    "#B5E422", 
+    "#93D52E",  
+    "#72C637",  
+    "#53B63E",  
+    "#32A542",  
+    "#009445"   
 ]
 
 
