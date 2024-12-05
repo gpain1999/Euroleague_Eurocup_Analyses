@@ -89,6 +89,7 @@ road_logo_path = os.path.join(images_dir, f"{competition}_{season}_teams/{team_r
 ############################### DATA ###################################################
 
 periode,cumul,cumul_local,cumul_road = f.team_evol_score(team_local,r,r,data_dir,competition,season,type = "MEAN")
+
 cumul_local = [int(x) for x in cumul_local if not math.isnan(x)]
 cumul_road = [int(x) for x in cumul_road if not math.isnan(x)]
 
