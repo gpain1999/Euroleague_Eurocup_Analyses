@@ -54,8 +54,8 @@ def stats_important_players(r,team_local,team_road,df) :
 
     coeff = pd.concat([local_coeff,road_coeff])
     stats = pd.concat([local_stats,road_stats])
-
-    largest_values = coeff.stack().nlargest(8)
+    coeff_abs = coeff.abs()
+    largest_values = coeff_abs.stack().nlargest(9)
 
     result = largest_values.reset_index()
 

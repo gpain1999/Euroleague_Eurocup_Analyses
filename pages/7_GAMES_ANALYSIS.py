@@ -597,7 +597,7 @@ st.markdown(
     unsafe_allow_html=True
 )
 
-sip1,sip2,sip3,sip4,sip5,sip6,sip7,sip8 = st.columns([1/8,1/8,1/8,1/8,1/8,1/8,1/8,1/8])
+sip1,sip2,sip3,sip4,sip5,sip6,sip7,sip8,sip9 = st.columns([1/9,1/9,1/9,1/9,1/9,1/9,1/9,1/9,1/9])
 
 
 
@@ -614,7 +614,7 @@ with sip1 :
 
     st.markdown(
         f'''
-        <p style="font-size:{int(24*zoom)}px; text-align: center; background-color: {color};color: {color_text}; padding: 5px; border-radius: 5px;">
+        <p style="font-size:{int(21*zoom)}px; text-align: center; background-color: {color};color: {color_text}; padding: 5px; border-radius: 5px;">
             <b>{playersip}</b>
         </p>
         ''',
@@ -622,7 +622,7 @@ with sip1 :
     )
     st.markdown(
         f'''
-        <p style="font-size:{int(24*zoom)}px; text-align: center; background-color: {color};color: {color_text}; padding: 5px; border-radius: 5px;">
+        <p style="font-size:{int(25*zoom)}px; text-align: center; background-color: {color};color: {color_text}; padding: 5px; border-radius: 5px;">
             <b>{statssip}</b>
         </p>
         ''',
@@ -642,7 +642,7 @@ with sip2:
 
     st.markdown(
         f'''
-        <p style="font-size:{int(24*zoom)}px; text-align: center; background-color: {color};color: {color_text}; padding: 5px; border-radius: 5px;">
+        <p style="font-size:{int(21*zoom)}px; text-align: center; background-color: {color};color: {color_text}; padding: 5px; border-radius: 5px;">
             <b>{playersip}</b>
         </p>
         ''',
@@ -650,7 +650,7 @@ with sip2:
     )
     st.markdown(
         f'''
-        <p style="font-size:{int(24*zoom)}px; text-align: center; background-color: {color};color: {color_text}; padding: 5px; border-radius: 5px;">
+        <p style="font-size:{int(25*zoom)}px; text-align: center; background-color: {color};color: {color_text}; padding: 5px; border-radius: 5px;">
             <b>{statssip}</b>
         </p>
         ''',
@@ -669,7 +669,7 @@ with sip3 :
 
     st.markdown(
         f'''
-        <p style="font-size:{int(24*zoom)}px; text-align: center; background-color: {color};color: {color_text}; padding: 5px; border-radius: 5px;">
+        <p style="font-size:{int(21*zoom)}px; text-align: center; background-color: {color};color: {color_text}; padding: 5px; border-radius: 5px;">
             <b>{playersip}</b>
         </p>
         ''',
@@ -677,7 +677,7 @@ with sip3 :
     )
     st.markdown(
         f'''
-        <p style="font-size:{int(24*zoom)}px; text-align: center; background-color: {color};color: {color_text}; padding: 5px; border-radius: 5px;">
+        <p style="font-size:{int(25*zoom)}px; text-align: center; background-color: {color};color: {color_text}; padding: 5px; border-radius: 5px;">
             <b>{statssip}</b>
         </p>
         ''',
@@ -696,7 +696,7 @@ with sip4 :
 
     st.markdown(
         f'''
-        <p style="font-size:{int(24*zoom)}px; text-align: center; background-color: {color};color: {color_text}; padding: 5px; border-radius: 5px;">
+        <p style="font-size:{int(21*zoom)}px; text-align: center; background-color: {color};color: {color_text}; padding: 5px; border-radius: 5px;">
             <b>{playersip}</b>
         </p>
         ''',
@@ -704,7 +704,7 @@ with sip4 :
     )
     st.markdown(
         f'''
-        <p style="font-size:{int(24*zoom)}px; text-align: center; background-color: {color};color: {color_text}; padding: 5px; border-radius: 5px;">
+        <p style="font-size:{int(25*zoom)}px; text-align: center; background-color: {color};color: {color_text}; padding: 5px; border-radius: 5px;">
             <b>{statssip}</b>
         </p>
         ''',
@@ -723,7 +723,7 @@ with sip5 :
 
     st.markdown(
         f'''
-        <p style="font-size:{int(24*zoom)}px; text-align: center; background-color: {color};color: {color_text}; padding: 5px; border-radius: 5px;">
+        <p style="font-size:{int(21*zoom)}px; text-align: center; background-color: {color};color: {color_text}; padding: 5px; border-radius: 5px;">
             <b>{playersip}</b>
         </p>
         ''',
@@ -731,7 +731,7 @@ with sip5 :
     )
     st.markdown(
         f'''
-        <p style="font-size:{int(24*zoom)}px; text-align: center; background-color: {color};color: {color_text}; padding: 5px; border-radius: 5px;">
+        <p style="font-size:{int(25*zoom)}px; text-align: center; background-color: {color};color: {color_text}; padding: 5px; border-radius: 5px;">
             <b>{statssip}</b>
         </p>
         ''',
@@ -750,7 +750,7 @@ with sip6 :
 
     st.markdown(
         f'''
-        <p style="font-size:{int(24*zoom)}px; text-align: center; background-color: {color};color: {color_text}; padding: 5px; border-radius: 5px;">
+        <p style="font-size:{int(21*zoom)}px; text-align: center; background-color: {color};color: {color_text}; padding: 5px; border-radius: 5px;">
             <b>{playersip}</b>
         </p>
         ''',
@@ -758,7 +758,7 @@ with sip6 :
     )
     st.markdown(
         f'''
-        <p style="font-size:{int(24*zoom)}px; text-align: center; background-color: {color};color: {color_text}; padding: 5px; border-radius: 5px;">
+        <p style="font-size:{int(25*zoom)}px; text-align: center; background-color: {color};color: {color_text}; padding: 5px; border-radius: 5px;">
             <b>{statssip}</b>
         </p>
         ''',
@@ -777,7 +777,7 @@ with sip7 :
 
     st.markdown(
         f'''
-        <p style="font-size:{int(24*zoom)}px; text-align: center; background-color: {color};color: {color_text}; padding: 5px; border-radius: 5px;">
+        <p style="font-size:{int(21*zoom)}px; text-align: center; background-color: {color};color: {color_text}; padding: 5px; border-radius: 5px;">
             <b>{playersip}</b>
         </p>
         ''',
@@ -785,7 +785,7 @@ with sip7 :
     )
     st.markdown(
         f'''
-        <p style="font-size:{int(24*zoom)}px; text-align: center; background-color: {color};color: {color_text}; padding: 5px; border-radius: 5px;">
+        <p style="font-size:{int(25*zoom)}px; text-align: center; background-color: {color};color: {color_text}; padding: 5px; border-radius: 5px;">
             <b>{statssip}</b>
         </p>
         ''',
@@ -804,7 +804,7 @@ with sip8 :
 
     st.markdown(
         f'''
-        <p style="font-size:{int(24*zoom)}px; text-align: center; background-color: {color};color: {color_text}; padding: 5px; border-radius: 5px;">
+        <p style="font-size:{int(21*zoom)}px; text-align: center; background-color: {color};color: {color_text}; padding: 5px; border-radius: 5px;">
             <b>{playersip}</b>
         </p>
         ''',
@@ -812,7 +812,35 @@ with sip8 :
     )
     st.markdown(
         f'''
-        <p style="font-size:{int(24*zoom)}px; text-align: center; background-color: {color};color: {color_text}; padding: 5px; border-radius: 5px;">
+        <p style="font-size:{int(25*zoom)}px; text-align: center; background-color: {color};color: {color_text}; padding: 5px; border-radius: 5px;">
+            <b>{statssip}</b>
+        </p>
+        ''',
+        unsafe_allow_html=True
+    )
+
+with sip9 :
+    teamsip = df_stats_important_players["TEAM"].to_list()[8]
+    playersip = df_stats_important_players["PLAYER"].to_list()[8]
+    statssip = df_stats_important_players["VALUE"].to_list()[8]
+    if teamsip == team_local :
+        color = "blue"
+        color_text = "white"
+    else :
+        color = "yellow"
+        color_text = "black"
+
+    st.markdown(
+        f'''
+        <p style="font-size:{int(21*zoom)}px; text-align: center; background-color: {color};color: {color_text}; padding: 5px; border-radius: 5px;">
+            <b>{playersip}</b>
+        </p>
+        ''',
+        unsafe_allow_html=True
+    )
+    st.markdown(
+        f'''
+        <p style="font-size:{int(25*zoom)}px; text-align: center; background-color: {color};color: {color_text}; padding: 5px; border-radius: 5px;">
             <b>{statssip}</b>
         </p>
         ''',
@@ -862,11 +890,11 @@ with cola :
             unsafe_allow_html=True
         )
         fig2 = f.plot_semi_circular_chart(local_player_stat["1_R"].sum()/local_player_stat["1_T"].sum() if local_player_stat["1_T"].sum() != 0 else 0,"FT",size=int(95*zoom), font_size=int(22*zoom))
-        st.plotly_chart(fig2,use_container_width=True)
+        st.plotly_chart(fig2,use_container_width=True,key = "o")
         fig2 = f.plot_semi_circular_chart(local_player_stat["2_R"].sum()/local_player_stat["2_T"].sum() if local_player_stat["2_T"].sum() != 0 else 0,"2P",size=int(95*zoom), font_size=int(22*zoom))
-        st.plotly_chart(fig2,use_container_width=True)
+        st.plotly_chart(fig2,use_container_width=True,key = "p")
         fig2 = f.plot_semi_circular_chart(local_player_stat["3_R"].sum()/local_player_stat["3_T"].sum() if local_player_stat["3_T"].sum() != 0 else 0,"3P",size=int(95*zoom), font_size=int(22*zoom))
-        st.plotly_chart(fig2,use_container_width=True)
+        st.plotly_chart(fig2,use_container_width=True,key = "q")
         
 
         st.markdown(
@@ -923,9 +951,9 @@ with cola :
         st.plotly_chart(fig2,use_container_width=True,key="fig2_unique_key")
 
         fig2 = f.plot_semi_circular_chart(road_player_stat["2_R"].sum()/road_player_stat["2_T"].sum() if road_player_stat["2_T"].sum() != 0 else 0,"2P",size=int(95*zoom), font_size=int(22*zoom))
-        st.plotly_chart(fig2,use_container_width=True)
+        st.plotly_chart(fig2,use_container_width=True,key="1")
         fig2 = f.plot_semi_circular_chart(road_player_stat["3_R"].sum()/road_player_stat["3_T"].sum() if road_player_stat["3_T"].sum() != 0 else 0,"3P",size=int(95*zoom), font_size=int(22*zoom))
-        st.plotly_chart(fig2,use_container_width=True)
+        st.plotly_chart(fig2,use_container_width=True,key="2")
 
 
         st.markdown(
@@ -970,10 +998,10 @@ with cola :
             unsafe_allow_html=True
         )
         fig2 = f.plot_semi_circular_chart(local_player_stat["DR"].sum()/(local_player_stat["DR"].sum() + road_player_stat["OR"].sum()),"DEF.", size=int(95*zoom), font_size=int(22*zoom))
-        st.plotly_chart(fig2,use_container_width=True)
+        st.plotly_chart(fig2,use_container_width=True,key = "a")
 
         fig2 = f.plot_semi_circular_chart(local_player_stat["OR"].sum()/(local_player_stat["OR"].sum() + road_player_stat["DR"].sum()),"OFF.",size=int(95*zoom), font_size=int(22*zoom))
-        st.plotly_chart(fig2,use_container_width=True)
+        st.plotly_chart(fig2,use_container_width=True,key = "ba")
 
         local_def_perc = local_player_stat["DR"].sum()/(local_player_stat["DR"].sum() + road_player_stat["OR"].sum())
         road_off_perc = 1 - local_def_perc
@@ -1004,10 +1032,10 @@ with cola :
             unsafe_allow_html=True
         )
         fig2 = f.plot_semi_circular_chart(road_player_stat["DR"].sum()/(road_player_stat["DR"].sum() + local_player_stat["OR"].sum()),"DEF.", size=int(95*zoom), font_size=int(22*zoom))
-        st.plotly_chart(fig2,use_container_width=True)
+        st.plotly_chart(fig2,use_container_width=True,key = "pio")
 
         fig2 = f.plot_semi_circular_chart(road_player_stat["OR"].sum()/(road_player_stat["OR"].sum() + local_player_stat["DR"].sum()),"OFF.",size=int(95*zoom), font_size=int(22*zoom))
-        st.plotly_chart(fig2,use_container_width=True)
+        st.plotly_chart(fig2,use_container_width=True,key = "salut")
 
         st.markdown(
             f'''
