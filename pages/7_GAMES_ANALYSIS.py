@@ -203,6 +203,7 @@ CO_image_path = os.path.join(images_dir, f"{competition}_{season}_players/{TEAM_
 
 
 local_top_values,local_bottom_values,road_top_values,road_bottom_values = f.stats_important(r,team_local,team_road,df)
+df_stats_important_players = f.stats_important_players(r,team_local,team_road,df)
 ############################# STYLE ####################################################
 
 
@@ -577,6 +578,246 @@ with colb :
             st.image(CO_image_path, caption=f"#{NUMBER_CO} {NAME_CO}", width=int(250*zoom))
         else:
             st.warning(f"Image introuvable pour le joueur : {NAME_CO}")
+
+st.markdown(
+    f'''
+    <p style="font-size:{int(27*zoom)}px; text-align: center; background-color: grey;color: black; padding: 3px; border-radius: 5px;">
+        <b></b>
+    </p>
+    ''',
+    unsafe_allow_html=True
+)
+
+sip1,sip2,sip3,sip4,sip5,sip6,sip7,sip8 = st.columns([1/8,1/8,1/8,1/8,1/8,1/8,1/8,1/8])
+
+
+
+with sip1 :
+    teamsip = df_stats_important_players["TEAM"].to_list()[0]
+    playersip = df_stats_important_players["PLAYER"].to_list()[0]
+    statssip = df_stats_important_players["VALUE"].to_list()[0]
+    if teamsip == team_local :
+        color = "blue"
+        color_text = "white"
+    else :
+        color = "yellow"
+        color_text = "black"
+
+    st.markdown(
+        f'''
+        <p style="font-size:{int(27*zoom)}px; text-align: center; background-color: {color};color: {color_text}; padding: 5px; border-radius: 5px;">
+            <b>{playersip}</b>
+        </p>
+        ''',
+        unsafe_allow_html=True
+    )
+    st.markdown(
+        f'''
+        <p style="font-size:{int(27*zoom)}px; text-align: center; background-color: {color};color: {color_text}; padding: 5px; border-radius: 5px;">
+            <b>{statssip}</b>
+        </p>
+        ''',
+        unsafe_allow_html=True
+    )
+
+with sip2:
+    teamsip = df_stats_important_players["TEAM"].to_list()[1]
+    playersip = df_stats_important_players["PLAYER"].to_list()[1]
+    statssip = df_stats_important_players["VALUE"].to_list()[1]
+    if teamsip == team_local :
+        color = "blue"
+        color_text = "white"
+    else :
+        color = "yellow"
+        color_text = "black"
+
+    st.markdown(
+        f'''
+        <p style="font-size:{int(27*zoom)}px; text-align: center; background-color: {color};color: {color_text}; padding: 5px; border-radius: 5px;">
+            <b>{playersip}</b>
+        </p>
+        ''',
+        unsafe_allow_html=True
+    )
+    st.markdown(
+        f'''
+        <p style="font-size:{int(27*zoom)}px; text-align: center; background-color: {color};color: {color_text}; padding: 5px; border-radius: 5px;">
+            <b>{statssip}</b>
+        </p>
+        ''',
+        unsafe_allow_html=True
+    )
+with sip3 :
+    teamsip = df_stats_important_players["TEAM"].to_list()[2]
+    playersip = df_stats_important_players["PLAYER"].to_list()[2]
+    statssip = df_stats_important_players["VALUE"].to_list()[2]
+    if teamsip == team_local :
+        color = "blue"
+        color_text = "white"
+    else :
+        color = "yellow"
+        color_text = "black"
+
+    st.markdown(
+        f'''
+        <p style="font-size:{int(27*zoom)}px; text-align: center; background-color: {color};color: {color_text}; padding: 5px; border-radius: 5px;">
+            <b>{playersip}</b>
+        </p>
+        ''',
+        unsafe_allow_html=True
+    )
+    st.markdown(
+        f'''
+        <p style="font-size:{int(27*zoom)}px; text-align: center; background-color: {color};color: {color_text}; padding: 5px; border-radius: 5px;">
+            <b>{statssip}</b>
+        </p>
+        ''',
+        unsafe_allow_html=True
+    )
+with sip4 :
+    teamsip = df_stats_important_players["TEAM"].to_list()[3]
+    playersip = df_stats_important_players["PLAYER"].to_list()[3]
+    statssip = df_stats_important_players["VALUE"].to_list()[3]
+    if teamsip == team_local :
+        color = "blue"
+        color_text = "white"
+    else :
+        color = "yellow"
+        color_text = "black"
+
+    st.markdown(
+        f'''
+        <p style="font-size:{int(27*zoom)}px; text-align: center; background-color: {color};color: {color_text}; padding: 5px; border-radius: 5px;">
+            <b>{playersip}</b>
+        </p>
+        ''',
+        unsafe_allow_html=True
+    )
+    st.markdown(
+        f'''
+        <p style="font-size:{int(27*zoom)}px; text-align: center; background-color: {color};color: {color_text}; padding: 5px; border-radius: 5px;">
+            <b>{statssip}</b>
+        </p>
+        ''',
+        unsafe_allow_html=True
+    )
+with sip5 :
+    teamsip = df_stats_important_players["TEAM"].to_list()[4]
+    playersip = df_stats_important_players["PLAYER"].to_list()[4]
+    statssip = df_stats_important_players["VALUE"].to_list()[4]
+    if teamsip == team_local :
+        color = "blue"
+        color_text = "white"
+    else :
+        color = "yellow"
+        color_text = "black"
+
+    st.markdown(
+        f'''
+        <p style="font-size:{int(27*zoom)}px; text-align: center; background-color: {color};color: {color_text}; padding: 5px; border-radius: 5px;">
+            <b>{playersip}</b>
+        </p>
+        ''',
+        unsafe_allow_html=True
+    )
+    st.markdown(
+        f'''
+        <p style="font-size:{int(27*zoom)}px; text-align: center; background-color: {color};color: {color_text}; padding: 5px; border-radius: 5px;">
+            <b>{statssip}</b>
+        </p>
+        ''',
+        unsafe_allow_html=True
+    )
+with sip6 :
+    teamsip = df_stats_important_players["TEAM"].to_list()[5]
+    playersip = df_stats_important_players["PLAYER"].to_list()[5]
+    statssip = df_stats_important_players["VALUE"].to_list()[5]
+    if teamsip == team_local :
+        color = "blue"
+        color_text = "white"
+    else :
+        color = "yellow"
+        color_text = "black"
+
+    st.markdown(
+        f'''
+        <p style="font-size:{int(27*zoom)}px; text-align: center; background-color: {color};color: {color_text}; padding: 5px; border-radius: 5px;">
+            <b>{playersip}</b>
+        </p>
+        ''',
+        unsafe_allow_html=True
+    )
+    st.markdown(
+        f'''
+        <p style="font-size:{int(27*zoom)}px; text-align: center; background-color: {color};color: {color_text}; padding: 5px; border-radius: 5px;">
+            <b>{statssip}</b>
+        </p>
+        ''',
+        unsafe_allow_html=True
+    )
+with sip7 :
+    teamsip = df_stats_important_players["TEAM"].to_list()[6]
+    playersip = df_stats_important_players["PLAYER"].to_list()[6]
+    statssip = df_stats_important_players["VALUE"].to_list()[6]
+    if teamsip == team_local :
+        color = "blue"
+        color_text = "white"
+    else :
+        color = "yellow"
+        color_text = "black"
+
+    st.markdown(
+        f'''
+        <p style="font-size:{int(27*zoom)}px; text-align: center; background-color: {color};color: {color_text}; padding: 5px; border-radius: 5px;">
+            <b>{playersip}</b>
+        </p>
+        ''',
+        unsafe_allow_html=True
+    )
+    st.markdown(
+        f'''
+        <p style="font-size:{int(27*zoom)}px; text-align: center; background-color: {color};color: {color_text}; padding: 5px; border-radius: 5px;">
+            <b>{statssip}</b>
+        </p>
+        ''',
+        unsafe_allow_html=True
+    )
+with sip8 :
+    teamsip = df_stats_important_players["TEAM"].to_list()[7]
+    playersip = df_stats_important_players["PLAYER"].to_list()[7]
+    statssip = df_stats_important_players["VALUE"].to_list()[7]
+    if teamsip == team_local :
+        color = "blue"
+        color_text = "white"
+    else :
+        color = "yellow"
+        color_text = "black"
+
+    st.markdown(
+        f'''
+        <p style="font-size:{int(27*zoom)}px; text-align: center; background-color: {color};color: {color_text}; padding: 5px; border-radius: 5px;">
+            <b>{playersip}</b>
+        </p>
+        ''',
+        unsafe_allow_html=True
+    )
+    st.markdown(
+        f'''
+        <p style="font-size:{int(27*zoom)}px; text-align: center; background-color: {color};color: {color_text}; padding: 5px; border-radius: 5px;">
+            <b>{statssip}</b>
+        </p>
+        ''',
+        unsafe_allow_html=True
+    )
+
+st.markdown(
+    f'''
+    <p style="font-size:{int(27*zoom)}px; text-align: center; background-color: grey;color: black; padding: 3px; border-radius: 5px;">
+        <b></b>
+    </p>
+    ''',
+    unsafe_allow_html=True
+)
 
 cola, colb = st.columns([0.18, 0.82])
 
