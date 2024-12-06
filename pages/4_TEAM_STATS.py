@@ -752,6 +752,14 @@ with cola :
                 ''',
                 unsafe_allow_html=True
             )
+        st.markdown(
+                f'''
+                <p style="font-size:{taille}px; text-align: center; background-color: #00ff00;color: black; padding: 8px; border-radius: 5px;">
+                    <b>{round(((team_moyenne["3_R"].mean()*3 + team_moyenne["2_R"].mean()*2)/(team_moyenne["2_T"].mean()+team_moyenne["3_T"].mean())),2)}&nbsp;PTS PER SHOOT</b>
+                </p>
+                ''',
+                unsafe_allow_html=True
+            )  
 
         st.markdown(
             f'''
@@ -842,6 +850,14 @@ with colb :
             ''',
             unsafe_allow_html=True
         )
+    st.markdown(
+                f'''
+                <p style="font-size:{taille}px; text-align: center; background-color: #ff0000;color: black; padding: 8px; border-radius: 5px;">
+                    <b>{round(((data["3_R"].mean()*3 + data["2_R"].mean()*2)/(data["2_T"].mean()+data["3_T"].mean())),2)}&nbsp;PTS PER SHOOT</b>
+                </p>
+                ''',
+                unsafe_allow_html=True
+            ) 
     st.markdown(
             f'''
             <p style="font-size:{int(30*zoom)}px; text-align: center;">
