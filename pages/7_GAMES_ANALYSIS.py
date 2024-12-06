@@ -334,13 +334,70 @@ with cola :
         cumul_local = [team_local] + cumul_local
         cumul_road = [team_road] + cumul_road
         data_TABLEAU = pd.DataFrame([cumul_local, cumul_road], columns=col_tab[0:len(cumul_local)])
-    styled_data_TABLEAU = (
-        data_TABLEAU.style
-        .apply(highlight_columns, axis=1, dataframe=data_TABLEAU)
-        .set_table_styles([{'selector': 'td', 'props': [('font-size', '5px')]}])  # Taille globale
-    )    
-    st.dataframe(styled_data_TABLEAU,hide_index=True,width=500,height=115)
 
+
+    cols = st.columns([1] * len(data_TABLEAU.columns))  # Créer des colonnes dynamiques
+    data_TABLEAU.columns = ["-"] + data_TABLEAU.columns[1:].tolist()
+
+    for i, col in enumerate(cols):  # Itérer sur chaque colonne
+        col.markdown(
+            f'''
+            <p style="font-size:{int(20*zoom)}px; text-align: center; background-color: white;color: black; padding: 4px; border-radius: 5px;">
+                <b>{data_TABLEAU.columns[i]}</>
+            </p>
+            ''',
+            unsafe_allow_html=True
+        )
+                    
+        if i == 0:  # Première colonne, pas de coloration spéciale
+            col.markdown(
+                f'''
+                <p style="font-size:{int(20*zoom)}px; text-align: center; background-color: blue;color: white; padding: 4px; border-radius: 5px;">
+                    <b>{data_TABLEAU[data_TABLEAU.columns[i]].to_list()[0]}</b>
+                </p>
+                ''',
+                unsafe_allow_html=True
+            )
+            col.markdown(
+                f'''
+                <p style="font-size:{int(20*zoom)}px; text-align: center; background-color: yellow;color: black; padding: 4px; border-radius: 5px;">
+                    <b>{data_TABLEAU[data_TABLEAU.columns[i]].to_list()[1]}</b>
+                </p>
+                ''',
+                unsafe_allow_html=True
+            )
+        else:  # Autres colonnes avec coloration conditionnelle
+            value1 = data_TABLEAU[data_TABLEAU.columns[i]].to_list()[0]
+            value2 = data_TABLEAU[data_TABLEAU.columns[i]].to_list()[1]
+
+            # Déterminer les couleurs
+            if value1 > value2:
+                color1, color2 = "green", "red"
+            elif value1 < value2:
+                color1, color2 = "red", "green"
+            else:
+                color1, color2 = "white", "white"
+
+            # Ajouter les valeurs avec les couleurs appropriées
+            col.markdown(
+                f'''
+                <p style="font-size:{int(20*zoom)}px; text-align: center; background-color: {color1};color: black; padding: 4px; border-radius: 5px;">
+                    <b>{value1}</b>
+                </p>
+                ''',
+                unsafe_allow_html=True
+            )
+            col.markdown(
+                f'''
+                <p style="font-size:{int(20*zoom)}px; text-align: center; background-color: {color2};color: black; padding: 4px; border-radius: 5px;">
+                    <b>{value2}</b>
+                </p>
+                ''',
+                unsafe_allow_html=True
+            )
+
+
+        
     # Noms des barres
     labels = [i * 2.5 for i in range(1, len(data_delta) + 1)]
 
