@@ -282,7 +282,7 @@ with t1 :
         st.warning(f"Logo introuvable pour l'équipe : {team_local}")
     st.markdown(
             f'''
-            <p style="font-size:{int(40*zoom)}px; text-align: center;">
+            <p style="font-size:{int(40*zoom)}px; text-align: center; background-color: blue;color: white; padding: 4px; border-radius: 5px;">
                 <b>{with_game["LOCAL_SCORE"].to_list()[0]}</b>
             </p>
             ''',
@@ -297,12 +297,21 @@ with t2 :
         st.warning(f"Logo introuvable pour l'équipe : {team_road}")
     st.markdown(
             f'''
-            <p style="font-size:{int(40*zoom)}px; text-align: center;">
+            <p style="font-size:{int(40*zoom)}px; text-align: center; background-color: yellow;color: black; padding: 4px; border-radius: 5px;">
                 <b>{with_game["ROAD_SCORE"].to_list()[0]}</b>
             </p>
             ''',
             unsafe_allow_html=True
         )
+
+st.markdown(
+    f'''
+    <p style="font-size:{int(27*zoom)}px; text-align: center; background-color: grey;color: black; padding: 3px; border-radius: 5px;">
+        <b></b>
+    </p>
+    ''',
+    unsafe_allow_html=True
+)
 
 cola, colb = st.columns([0.3, 0.7])
 
@@ -605,7 +614,7 @@ with sip1 :
 
     st.markdown(
         f'''
-        <p style="font-size:{int(27*zoom)}px; text-align: center; background-color: {color};color: {color_text}; padding: 5px; border-radius: 5px;">
+        <p style="font-size:{int(24*zoom)}px; text-align: center; background-color: {color};color: {color_text}; padding: 5px; border-radius: 5px;">
             <b>{playersip}</b>
         </p>
         ''',
@@ -613,7 +622,7 @@ with sip1 :
     )
     st.markdown(
         f'''
-        <p style="font-size:{int(27*zoom)}px; text-align: center; background-color: {color};color: {color_text}; padding: 5px; border-radius: 5px;">
+        <p style="font-size:{int(24*zoom)}px; text-align: center; background-color: {color};color: {color_text}; padding: 5px; border-radius: 5px;">
             <b>{statssip}</b>
         </p>
         ''',
@@ -633,7 +642,7 @@ with sip2:
 
     st.markdown(
         f'''
-        <p style="font-size:{int(27*zoom)}px; text-align: center; background-color: {color};color: {color_text}; padding: 5px; border-radius: 5px;">
+        <p style="font-size:{int(24*zoom)}px; text-align: center; background-color: {color};color: {color_text}; padding: 5px; border-radius: 5px;">
             <b>{playersip}</b>
         </p>
         ''',
@@ -641,7 +650,7 @@ with sip2:
     )
     st.markdown(
         f'''
-        <p style="font-size:{int(27*zoom)}px; text-align: center; background-color: {color};color: {color_text}; padding: 5px; border-radius: 5px;">
+        <p style="font-size:{int(24*zoom)}px; text-align: center; background-color: {color};color: {color_text}; padding: 5px; border-radius: 5px;">
             <b>{statssip}</b>
         </p>
         ''',
@@ -660,7 +669,7 @@ with sip3 :
 
     st.markdown(
         f'''
-        <p style="font-size:{int(27*zoom)}px; text-align: center; background-color: {color};color: {color_text}; padding: 5px; border-radius: 5px;">
+        <p style="font-size:{int(24*zoom)}px; text-align: center; background-color: {color};color: {color_text}; padding: 5px; border-radius: 5px;">
             <b>{playersip}</b>
         </p>
         ''',
@@ -668,7 +677,7 @@ with sip3 :
     )
     st.markdown(
         f'''
-        <p style="font-size:{int(27*zoom)}px; text-align: center; background-color: {color};color: {color_text}; padding: 5px; border-radius: 5px;">
+        <p style="font-size:{int(24*zoom)}px; text-align: center; background-color: {color};color: {color_text}; padding: 5px; border-radius: 5px;">
             <b>{statssip}</b>
         </p>
         ''',
@@ -687,7 +696,7 @@ with sip4 :
 
     st.markdown(
         f'''
-        <p style="font-size:{int(27*zoom)}px; text-align: center; background-color: {color};color: {color_text}; padding: 5px; border-radius: 5px;">
+        <p style="font-size:{int(24*zoom)}px; text-align: center; background-color: {color};color: {color_text}; padding: 5px; border-radius: 5px;">
             <b>{playersip}</b>
         </p>
         ''',
@@ -695,7 +704,7 @@ with sip4 :
     )
     st.markdown(
         f'''
-        <p style="font-size:{int(27*zoom)}px; text-align: center; background-color: {color};color: {color_text}; padding: 5px; border-radius: 5px;">
+        <p style="font-size:{int(24*zoom)}px; text-align: center; background-color: {color};color: {color_text}; padding: 5px; border-radius: 5px;">
             <b>{statssip}</b>
         </p>
         ''',
@@ -714,7 +723,7 @@ with sip5 :
 
     st.markdown(
         f'''
-        <p style="font-size:{int(27*zoom)}px; text-align: center; background-color: {color};color: {color_text}; padding: 5px; border-radius: 5px;">
+        <p style="font-size:{int(24*zoom)}px; text-align: center; background-color: {color};color: {color_text}; padding: 5px; border-radius: 5px;">
             <b>{playersip}</b>
         </p>
         ''',
@@ -722,7 +731,7 @@ with sip5 :
     )
     st.markdown(
         f'''
-        <p style="font-size:{int(27*zoom)}px; text-align: center; background-color: {color};color: {color_text}; padding: 5px; border-radius: 5px;">
+        <p style="font-size:{int(24*zoom)}px; text-align: center; background-color: {color};color: {color_text}; padding: 5px; border-radius: 5px;">
             <b>{statssip}</b>
         </p>
         ''',
@@ -741,7 +750,7 @@ with sip6 :
 
     st.markdown(
         f'''
-        <p style="font-size:{int(27*zoom)}px; text-align: center; background-color: {color};color: {color_text}; padding: 5px; border-radius: 5px;">
+        <p style="font-size:{int(24*zoom)}px; text-align: center; background-color: {color};color: {color_text}; padding: 5px; border-radius: 5px;">
             <b>{playersip}</b>
         </p>
         ''',
@@ -749,7 +758,7 @@ with sip6 :
     )
     st.markdown(
         f'''
-        <p style="font-size:{int(27*zoom)}px; text-align: center; background-color: {color};color: {color_text}; padding: 5px; border-radius: 5px;">
+        <p style="font-size:{int(24*zoom)}px; text-align: center; background-color: {color};color: {color_text}; padding: 5px; border-radius: 5px;">
             <b>{statssip}</b>
         </p>
         ''',
@@ -768,7 +777,7 @@ with sip7 :
 
     st.markdown(
         f'''
-        <p style="font-size:{int(27*zoom)}px; text-align: center; background-color: {color};color: {color_text}; padding: 5px; border-radius: 5px;">
+        <p style="font-size:{int(24*zoom)}px; text-align: center; background-color: {color};color: {color_text}; padding: 5px; border-radius: 5px;">
             <b>{playersip}</b>
         </p>
         ''',
@@ -776,7 +785,7 @@ with sip7 :
     )
     st.markdown(
         f'''
-        <p style="font-size:{int(27*zoom)}px; text-align: center; background-color: {color};color: {color_text}; padding: 5px; border-radius: 5px;">
+        <p style="font-size:{int(24*zoom)}px; text-align: center; background-color: {color};color: {color_text}; padding: 5px; border-radius: 5px;">
             <b>{statssip}</b>
         </p>
         ''',
@@ -795,7 +804,7 @@ with sip8 :
 
     st.markdown(
         f'''
-        <p style="font-size:{int(27*zoom)}px; text-align: center; background-color: {color};color: {color_text}; padding: 5px; border-radius: 5px;">
+        <p style="font-size:{int(24*zoom)}px; text-align: center; background-color: {color};color: {color_text}; padding: 5px; border-radius: 5px;">
             <b>{playersip}</b>
         </p>
         ''',
@@ -803,7 +812,7 @@ with sip8 :
     )
     st.markdown(
         f'''
-        <p style="font-size:{int(27*zoom)}px; text-align: center; background-color: {color};color: {color_text}; padding: 5px; border-radius: 5px;">
+        <p style="font-size:{int(24*zoom)}px; text-align: center; background-color: {color};color: {color_text}; padding: 5px; border-radius: 5px;">
             <b>{statssip}</b>
         </p>
         ''',

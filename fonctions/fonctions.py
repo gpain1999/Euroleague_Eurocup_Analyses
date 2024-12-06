@@ -39,7 +39,7 @@ def stats_important_players(r,team_local,team_road,df) :
 
     coefficients = {
         'DR': 0.85, 'OR': 1.35, 'AS': 0.8, 'ST': 1.33, 'CO': 0.6,
-        '1_R': 1, '2_R': 2, '3_R': 3, '1_L': -0.6, '2_L': -0.75, '3_L': -0.5,
+        '1_R': 0.8, '2_R': 1.6, '3_R': 2.4, '1_L': -0.6, '2_L': -0.75, '3_L': -0.5,
         'TO': -1.25, 'FP': 0.5, 'CF': -0.5, 'NCF': -1.25
     }
 
@@ -135,13 +135,15 @@ def get_top_and_bottom_column_names(df, n=5):
     return top_columns, bottom_columns
 
 # Fonction pour récupérer les valeurs avec un formatage spécial pour '1', '2', '3'
-def extract_column_values(columns, stats_df):
+def extract_column_values(columns, stats_df,top):
     extracted_values = []
     for column in columns:
         if column in ['2', '3']:
             extracted_values.append(f"{stats_df.loc[0, f'{column}_R']}/{stats_df.loc[0, f'{column}_T']} {column}-PTS")
         elif column == '1' :
-            if stats_df.loc[0, f'{column}_R'] / stats_df.loc[0, f'{column}_T'] < 0.75 :
+            if (stats_df.loc[0, f'{column}_R'] / stats_df.loc[0, f'{column}_T'] < 0.75) and top == "bottom"  :
+                extracted_values.append(f"{stats_df.loc[0, f'{column}_R']}/{stats_df.loc[0, f'{column}_T']} FT")
+            elif (stats_df.loc[0, f'{column}_R'] / stats_df.loc[0, f'{column}_T'] > 0.75) and top == "top":
                 extracted_values.append(f"{stats_df.loc[0, f'{column}_R']}/{stats_df.loc[0, f'{column}_T']} FT")
             else :
                 extracted_values.append(f"{stats_df.loc[0, f'{column}_T']} FT ATTEMPTED")
@@ -221,10 +223,10 @@ def stats_important(r,team_local,team_road,df) :
 
 
     # Extraire les valeurs formatées
-    local_top_values = extract_column_values(local_top_columns, local_stats)
-    local_bottom_values = extract_column_values(local_bottom_columns, local_stats)
-    road_top_values = extract_column_values(road_top_columns, road_stats)
-    road_bottom_values = extract_column_values(road_bottom_columns, road_stats)
+    local_top_values = extract_column_values(local_top_columns, local_stats,"top")
+    local_bottom_values = extract_column_values(local_bottom_columns, local_stats,"bottom")
+    road_top_values = extract_column_values(road_top_columns, road_stats,"top")
+    road_bottom_values = extract_column_values(road_bottom_columns, road_stats,"bottom")
 
     # Compléter les listes manuellement
     if len(local_top_values) < 5:
