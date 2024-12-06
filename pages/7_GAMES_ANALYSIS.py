@@ -336,7 +336,7 @@ with cola :
         data_TABLEAU = pd.DataFrame([cumul_local, cumul_road], columns=col_tab[0:len(cumul_local)])
 
 
-    cols = st.columns([1] * len(data_TABLEAU.columns))  # Créer des colonnes dynamiques
+    cols = st.columns([1.2] + [1] * (len(data_TABLEAU.columns)-1))  # Créer des colonnes dynamiques
     data_TABLEAU.columns = ["-"] + data_TABLEAU.columns[1:].tolist()
 
     for i, col in enumerate(cols):  # Itérer sur chaque colonne
