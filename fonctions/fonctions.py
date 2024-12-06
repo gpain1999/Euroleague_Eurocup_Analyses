@@ -70,8 +70,13 @@ def get_top_and_bottom_column_names(df, n=5):
 def extract_column_values(columns, stats_df):
     extracted_values = []
     for column in columns:
-        if column in ['1', '2', '3']:
+        if column in ['2', '3']:
             extracted_values.append(f"{stats_df.loc[0, f'{column}_R']}/{stats_df.loc[0, f'{column}_T']} {column}-PTS")
+        elif column == '1' :
+            if stats_df.loc[0, f'{column}_R'] / stats_df.loc[0, f'{column}_T'] < 0.75 :
+                extracted_values.append(f"{stats_df.loc[0, f'{column}_R']}/{stats_df.loc[0, f'{column}_T']} FT")
+            else :
+                extracted_values.append(f"{stats_df.loc[0, f'{column}_T']} FT ATTEMPTED")
 
         elif column == "PTS_C" :
             extracted_values.append(f"{stats_df.loc[0, column]} PTS CONC.")
@@ -84,7 +89,6 @@ def extract_column_values(columns, stats_df):
 def stats_important(r,team_local,team_road,df) : 
     local_stats = get_aggregated_stats(df, r, team_local)
     road_stats = get_aggregated_stats(df, r, team_road)
-
 
 
     local_stats = add_delta_columns(local_stats)
@@ -176,7 +180,6 @@ def team_evol_score(team,min_round,max_round,data_dir,competition,season,type = 
     team_df = df_evol_score[(df_evol_score["TEAM"]==team)&(df_evol_score["ROUND"]>=min_round)&(df_evol_score["ROUND"]<=max_round)]
     opp_df = df_evol_score[(df_evol_score["OPPONENT"]==team)&(df_evol_score["ROUND"]>=min_round)&(df_evol_score["ROUND"]<=max_round)]
 
-    print(df_evol_score)
 
     columns_p = [f'P{i}' for i in range(1, 25)]
     if type != "MEAN" :

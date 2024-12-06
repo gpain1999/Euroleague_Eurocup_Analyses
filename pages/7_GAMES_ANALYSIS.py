@@ -723,10 +723,19 @@ with cola :
         fig2 = f.plot_semi_circular_chart(local_player_stat["OR"].sum()/(local_player_stat["OR"].sum() + road_player_stat["DR"].sum()),"OFF.",size=int(95*zoom), font_size=int(22*zoom))
         st.plotly_chart(fig2,use_container_width=True)
 
+        local_def_perc = local_player_stat["DR"].sum()/(local_player_stat["DR"].sum() + road_player_stat["OR"].sum())
+        road_off_perc = 1 - local_def_perc
+        road_def_perc = road_player_stat["DR"].sum()/(road_player_stat["DR"].sum() + local_player_stat["OR"].sum())
+        local_off_perc = 1 - road_def_perc
+
+        local_def = (local_def_perc/0.7)/(local_def_perc/0.7 + road_off_perc/0.3)
+        road_off = (road_off_perc/0.3)/(local_def_perc/0.7 + road_off_perc/0.3)
+        road_def = (road_def_perc/0.7)/( road_def_perc/0.7 + local_off_perc/0.3)
+        local_off = (local_off_perc/0.3)/(road_def_perc/0.7 + local_off_perc/0.3)
         st.markdown(
             f'''
             <p style="font-size:{25*zoom}px; text-align: center; background-color: blue;color: white; padding: 8px; border-radius: 5px;">
-                <b>{round((local_player_stat["DR"].sum()/(local_player_stat["DR"].sum() + road_player_stat["OR"].sum()))*1/0.7+(local_player_stat["OR"].sum()/(local_player_stat["OR"].sum() + road_player_stat["DR"].sum()))*1/0.3,2)}</b>
+                <b>{round(local_def+local_off,2)}</b>
                 <b> REB. PERF </b>
             </p>
             ''',
@@ -751,7 +760,7 @@ with cola :
         st.markdown(
             f'''
             <p style="font-size:{25*zoom}px; text-align: center; background-color: yellow;color: black; padding: 8px; border-radius: 5px;">
-                <b>{round((road_player_stat["DR"].sum()/(road_player_stat["DR"].sum() + local_player_stat["OR"].sum()))*1/0.7+(road_player_stat["OR"].sum()/(road_player_stat["OR"].sum() + local_player_stat["DR"].sum()))*1/0.3,2)}</b>
+                <b>{round(road_def+road_off,2)}</b>
                 <b> REB. PERF </b>
             </p>
             ''',

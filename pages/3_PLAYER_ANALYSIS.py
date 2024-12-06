@@ -76,7 +76,8 @@ selected_range = st.sidebar.slider(
     value=(min_round, max_round),
     step=1
 )
-notation =f.analyse_per(data_dir,competition,season,R = [i for i in range(selected_range[0],selected_range[1])],CODETEAM = [])
+notation =f.analyse_per(data_dir,competition,season,R = [i for i in range(selected_range[0],selected_range[1]+1)],CODETEAM = [])
+print(notation)
 
 palette = [
     "#FF0000",  
@@ -281,7 +282,7 @@ with col1:
 
 
 
-    fig2 = f.plot_semi_circular_chart(df_resultat["1_R"].sum()/df_resultat["1_T"].sum() if df_resultat["1_T"].sum() != 0 else 0,"1P",size=int(120*zoom),font_size=int(20*zoom),m=False)
+    fig2 = f.plot_semi_circular_chart(df_resultat["1_R"].sum()/df_resultat["1_T"].sum() if df_resultat["1_T"].sum() != 0 else 0,"FT",size=int(120*zoom),font_size=int(20*zoom),m=False)
     st.plotly_chart(fig2)
     fig2 = f.plot_semi_circular_chart(df_resultat["2_R"].sum()/df_resultat["2_T"].sum() if df_resultat["2_T"].sum() != 0 else 0,"2P",size=int(120*zoom),font_size=int(20*zoom),m=False)
     st.plotly_chart(fig2)
@@ -299,6 +300,7 @@ with col1:
 
 
         
+print(notation[notation["CODETEAM"]==CODETEAM])
 
 with col_image :
     # Récupérer la note et la couleur associée pour le joueur

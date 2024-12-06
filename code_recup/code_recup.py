@@ -10,7 +10,7 @@ image_dir = os.path.join(os.path.dirname(__file__), '..', 'images')
 
 season = 2024
 competition = "euroleague"
-round_ = 13
+round_ = 14
 
 
 

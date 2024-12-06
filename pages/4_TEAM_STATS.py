@@ -185,7 +185,7 @@ delta_moyenne_league = delta_moyenne_league.drop(columns = ["PM_ON"])
 
 
 
-notation =f.analyse_per(data_dir,competition,season,R = [i for i in range(selected_range[0],selected_range[1])],CODETEAM = [])
+notation =f.analyse_per(data_dir,competition,season,R = [i for i in range(selected_range[0],selected_range[1]+1)],CODETEAM = [])
 palette = [
     "#FF0000",  
     "#FF4C00",  
@@ -510,7 +510,7 @@ with col1 :
             unsafe_allow_html=True
         )
 
-        fig2 = f.plot_semi_circular_chart(team_detail_select["1_R"].sum()/team_detail_select["1_T"].sum() if team_detail_select["1_T"].sum() != 0 else 0,"1P",size=int(120*zoom), font_size=int(20*zoom))
+        fig2 = f.plot_semi_circular_chart(team_detail_select["1_R"].sum()/team_detail_select["1_T"].sum() if team_detail_select["1_T"].sum() != 0 else 0,"FT",size=int(120*zoom), font_size=int(20*zoom))
         st.plotly_chart(fig2,use_container_width=True)
         fig2 = f.plot_semi_circular_chart(team_detail_select["2_R"].sum()/team_detail_select["2_T"].sum() if team_detail_select["2_T"].sum() != 0 else 0,"2P",size=int(120*zoom), font_size=int(20*zoom))
         st.plotly_chart(fig2,use_container_width=True)
@@ -529,14 +529,14 @@ with col1 :
         )
 
         if DELTA == "OPPONENTS" : 
-            fig2 = f.plot_semi_circular_chart(opp_detail_select["1_R"].sum()/opp_detail_select["1_T"].sum() if opp_detail_select["1_T"].sum() != 0 else 0,"1P",size=int(120*zoom), font_size=int(20*zoom))
+            fig2 = f.plot_semi_circular_chart(opp_detail_select["1_R"].sum()/opp_detail_select["1_T"].sum() if opp_detail_select["1_T"].sum() != 0 else 0,"FT",size=int(120*zoom), font_size=int(20*zoom))
             st.plotly_chart(fig2,use_container_width=True)
             fig2 = f.plot_semi_circular_chart(opp_detail_select["2_R"].sum()/opp_detail_select["2_T"].sum() if opp_detail_select["2_T"].sum() != 0 else 0,"2P",size=int(120*zoom), font_size=int(20*zoom))
             st.plotly_chart(fig2,use_container_width=True)
             fig2 = f.plot_semi_circular_chart(opp_detail_select["3_R"].sum()/opp_detail_select["3_T"].sum() if opp_detail_select["3_T"].sum() != 0 else 0,"3P",size=int(120*zoom), font_size=int(20*zoom))
             st.plotly_chart(fig2,use_container_width=True)
         else : 
-            fig2 = f.plot_semi_circular_chart(team_league_detail["1_R"].sum()/team_league_detail["1_T"].sum() if team_league_detail["1_T"].sum() != 0 else 0,"1P",size=int(120*zoom), font_size=int(20*zoom))
+            fig2 = f.plot_semi_circular_chart(team_league_detail["1_R"].sum()/team_league_detail["1_T"].sum() if team_league_detail["1_T"].sum() != 0 else 0,"FT",size=int(120*zoom), font_size=int(20*zoom))
             st.plotly_chart(fig2,use_container_width=True)
             fig2 = f.plot_semi_circular_chart(team_league_detail["2_R"].sum()/team_league_detail["2_T"].sum() if team_league_detail["2_T"].sum() != 0 else 0,"2P",size=int(120*zoom), font_size=int(20*zoom))
             st.plotly_chart(fig2,use_container_width=True)
