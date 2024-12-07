@@ -989,7 +989,7 @@ st.markdown(
     unsafe_allow_html=True
 )
 
-cola, colb = st.columns([0.18, 0.82])
+cola, colb,colc = st.columns([0.15, 0.15,0.70])
 
 with cola :
 
@@ -1042,14 +1042,7 @@ with cola :
         shot_T = local_player_stat["1_T"].sum()/2 + local_player_stat["2_T"].sum() + local_player_stat["3_T"].sum()
         TO = local_player_stat["TO"].sum()
 
-        st.markdown(
-            f'''
-            <p style="font-size:{25*zoom}px; text-align: center; background-color: blue;color: white; padding: 8px; border-radius: 5px;">
-                <b>{round(100*shot_T/(shot_T+TO),1)} % BALL CARE</b>
-            </p>
-            ''',
-            unsafe_allow_html=True
-        )
+
 
 
 
@@ -1098,44 +1091,13 @@ with cola :
             unsafe_allow_html=True
         )
 
-        shot_T = road_player_stat["1_T"].sum()/2 + road_player_stat["2_T"].sum() + road_player_stat["3_T"].sum()
-        TO = road_player_stat["TO"].sum()
 
-        st.markdown(
-            f'''
-            <p style="font-size:{25*zoom}px; text-align: center; background-color: yellow;color: black; padding: 8px; border-radius: 5px;">
-                <b>{round(100*shot_T/(shot_T+TO),1)} % BALL CARE</b>
-            </p>
-            ''',
-            unsafe_allow_html=True
-        )
+with colb :
 
-    st.markdown(
-        f'''
-        <p style="font-size:{int(35*zoom)}px; text-align: center; padding: 10pxs;">
-            <b>% REBONDS</b>
-        </p>
-        ''',
-        unsafe_allow_html=True
-    )
 
     reb_local, reb_road = st.columns([1, 1])
 
     with reb_local :
-        st.markdown(
-            f'''
-            <p style="font-size:{int(30*zoom)}px; text-align: center;">
-                <b> {team_local}</b>
-            </p>
-            ''',
-            unsafe_allow_html=True
-        )
-        fig2 = f.plot_semi_circular_chart(local_player_stat["DR"].sum()/(local_player_stat["DR"].sum() + road_player_stat["OR"].sum()),"DEF.", size=int(95*zoom), font_size=int(22*zoom))
-        st.plotly_chart(fig2,use_container_width=True,key = "a")
-
-        fig2 = f.plot_semi_circular_chart(local_player_stat["OR"].sum()/(local_player_stat["OR"].sum() + road_player_stat["DR"].sum()),"OFF.",size=int(95*zoom), font_size=int(22*zoom))
-        st.plotly_chart(fig2,use_container_width=True,key = "ba")
-
         local_def_perc = local_player_stat["DR"].sum()/(local_player_stat["DR"].sum() + road_player_stat["OR"].sum())
         road_off_perc = 1 - local_def_perc
         road_def_perc = road_player_stat["DR"].sum()/(road_player_stat["DR"].sum() + local_player_stat["OR"].sum())
@@ -1145,11 +1107,37 @@ with cola :
         road_off = (road_off_perc/0.3)/(local_def_perc/0.7 + road_off_perc/0.3)
         road_def = (road_def_perc/0.7)/( road_def_perc/0.7 + local_off_perc/0.3)
         local_off = (local_off_perc/0.3)/(road_def_perc/0.7 + local_off_perc/0.3)
+
+        st.markdown(
+            f'''
+            <p style="font-size:{int(30*zoom)}px; text-align: center;">
+                <b> {team_local}</b>
+            </p>
+            ''',
+            unsafe_allow_html=True
+        )
+        st.markdown(
+            f'''
+            <p style="font-size:{22*zoom}px; text-align: center; background-color: blue;color: white; padding: 22px; border-radius: 5px;">
+                <b>{round(local_def+local_off,2)}</b>
+                <b> REB. PERF </b>
+            </p>
+            ''',
+            unsafe_allow_html=True
+        )
+
+        fig2 = f.plot_semi_circular_chart(local_player_stat["DR"].sum()/(local_player_stat["DR"].sum() + road_player_stat["OR"].sum()),"DEF.", size=int(95*zoom), font_size=int(22*zoom))
+        st.plotly_chart(fig2,use_container_width=True,key = "a")
+
+        fig2 = f.plot_semi_circular_chart(local_player_stat["OR"].sum()/(local_player_stat["OR"].sum() + road_player_stat["DR"].sum()),"OFF.",size=int(95*zoom), font_size=int(22*zoom))
+        st.plotly_chart(fig2,use_container_width=True,key = "ba")
+
+        fig2 = f.plot_semi_circular_chart(local_player_stat["TR"].sum()/(road_player_stat["TR"].sum() + local_player_stat["TR"].sum()),"TOT.",size=int(95*zoom), font_size=int(22*zoom))
+        st.plotly_chart(fig2,use_container_width=True,key = "TT")
         st.markdown(
             f'''
             <p style="font-size:{25*zoom}px; text-align: center; background-color: blue;color: white; padding: 8px; border-radius: 5px;">
-                <b>{round(local_def+local_off,2)}</b>
-                <b> REB. PERF </b>
+                <b>{round(100*shot_T/(shot_T+TO),1)} % BALL CARE</b>
             </p>
             ''',
             unsafe_allow_html=True
@@ -1164,23 +1152,35 @@ with cola :
             ''',
             unsafe_allow_html=True
         )
-        fig2 = f.plot_semi_circular_chart(road_player_stat["DR"].sum()/(road_player_stat["DR"].sum() + local_player_stat["OR"].sum()),"DEF.", size=int(95*zoom), font_size=int(22*zoom))
-        st.plotly_chart(fig2,use_container_width=True,key = "pio")
-
-        fig2 = f.plot_semi_circular_chart(road_player_stat["OR"].sum()/(road_player_stat["OR"].sum() + local_player_stat["DR"].sum()),"OFF.",size=int(95*zoom), font_size=int(22*zoom))
-        st.plotly_chart(fig2,use_container_width=True,key = "salut")
-
         st.markdown(
             f'''
-            <p style="font-size:{25*zoom}px; text-align: center; background-color: yellow;color: black; padding: 8px; border-radius: 5px;">
+            <p style="font-size:{22*zoom}px; text-align: center; background-color: yellow;color: black; padding: 22px; border-radius: 5px;">
                 <b>{round(road_def+road_off,2)}</b>
                 <b> REB. PERF </b>
             </p>
             ''',
             unsafe_allow_html=True
         )
+        fig2 = f.plot_semi_circular_chart(road_player_stat["DR"].sum()/(road_player_stat["DR"].sum() + local_player_stat["OR"].sum()),"DEF.", size=int(95*zoom), font_size=int(22*zoom))
+        st.plotly_chart(fig2,use_container_width=True,key = "pio")
 
-with colb :
+        fig2 = f.plot_semi_circular_chart(road_player_stat["OR"].sum()/(road_player_stat["OR"].sum() + local_player_stat["DR"].sum()),"OFF.",size=int(95*zoom), font_size=int(22*zoom))
+        st.plotly_chart(fig2,use_container_width=True,key = "salut")
+
+        fig2 = f.plot_semi_circular_chart(road_player_stat["TR"].sum()/(road_player_stat["TR"].sum() + local_player_stat["TR"].sum()),"TOT.",size=int(95*zoom), font_size=int(22*zoom))
+        st.plotly_chart(fig2,use_container_width=True,key = "T")
+        shot_T = road_player_stat["1_T"].sum()/2 + road_player_stat["2_T"].sum() + road_player_stat["3_T"].sum()
+        TO = road_player_stat["TO"].sum()
+
+        st.markdown(
+            f'''
+            <p style="font-size:{25*zoom}px; text-align: center; background-color: yellow;color: black; padding: 8px; border-radius: 5px;">
+                <b>{round(100*shot_T/(shot_T+TO),1)} % BALL CARE</b>
+            </p>
+            ''',
+            unsafe_allow_html=True
+        )
+with colc :
     C1, C2 = st.columns([1, 1])
     with C1 :
         t = st.selectbox("TEAM", options=[team_local,team_road], index=0)
@@ -1204,6 +1204,6 @@ with colb :
        'DEF_OFF_10', 'DELTA_OFF']]
         
         data_aff2 = data_aff.style.apply(colorize_pm_on, axis=1).format(precision=1)
-        st.dataframe(data_aff2, height=min(36 + 36*len(data_aff),22*36),width=2100,hide_index=True)
+        st.dataframe(data_aff2, height=min(36 + 36*len(data_aff),22*36),hide_index=True)
     
 
