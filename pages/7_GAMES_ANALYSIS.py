@@ -467,7 +467,7 @@ with good_bad :
     with good :
         st.markdown(
             f'''
-            <p style="font-size:{int(20*zoom)}px; text-align: center; background-color: green;color: white; padding: 4px; border-radius: 5px;">
+            <p style="font-size:{int(23*zoom)}px; text-align: center; background-color: green;color: white; padding: 4px; border-radius: 5px;">
                 <b>BEST</b>
             </p>
             ''',
@@ -476,7 +476,7 @@ with good_bad :
         for g in local_df["BEST"].to_list() :
             st.markdown(
                 f'''
-                <p style="font-size:{int(18*zoom)}px; text-align: center; background-color: #00ff00;color: black; padding: 3px; border-radius: 5px;">
+                <p style="font-size:{int(22*zoom)}px; text-align: center; background-color: #00ff00;color: black; padding: 3px; border-radius: 5px;">
                     <b>{g}</b>
                 </p>
                 ''',
@@ -486,7 +486,7 @@ with good_bad :
     with bad :
         st.markdown(
             f'''
-            <p style="font-size:{int(20*zoom)}px; text-align: center; background-color: red;color: white; padding: 4px; border-radius: 5px;">
+            <p style="font-size:{int(23*zoom)}px; text-align: center; background-color: red;color: white; padding: 4px; border-radius: 5px;">
                 <b>WORST</b>
             </p>
             ''',
@@ -495,7 +495,7 @@ with good_bad :
         for g in local_df["WORST"].to_list() :
             st.markdown(
                 f'''
-                <p style="font-size:{int(18*zoom)}px; text-align: center; background-color: #ff0000;color: black; padding: 3px; border-radius: 5px;">
+                <p style="font-size:{int(22*zoom)}px; text-align: center; background-color: #ff0000;color: black; padding: 3px; border-radius: 5px;">
                     <b>{g}</b>
                 </p>
                 ''',
@@ -528,7 +528,7 @@ with good_bad :
     with good :
         st.markdown(
             f'''
-            <p style="font-size:{int(20*zoom)}px; text-align: center; background-color: green;color: white; padding: 4px; border-radius: 5px;">
+            <p style="font-size:{int(23*zoom)}px; text-align: center; background-color: green;color: white; padding: 4px; border-radius: 5px;">
                 <b>BEST</b>
             </p>
             ''',
@@ -537,7 +537,7 @@ with good_bad :
         for g in road_df["BEST"].to_list() :
             st.markdown(
                 f'''
-                <p style="font-size:{int(18*zoom)}px; text-align: center; background-color: #00ff00;color: black; padding: 3px; border-radius: 5px;">
+                <p style="font-size:{int(22*zoom)}px; text-align: center; background-color: #00ff00;color: black; padding: 3px; border-radius: 5px;">
                     <b>{g}</b>
                 </p>
                 ''',
@@ -547,7 +547,7 @@ with good_bad :
     with bad :
         st.markdown(
             f'''
-            <p style="font-size:{int(20*zoom)}px; text-align: center; background-color: red;color: white; padding: 4px; border-radius: 5px;">
+            <p style="font-size:{int(23*zoom)}px; text-align: center; background-color: red;color: white; padding: 4px; border-radius: 5px;">
                 <b>WORST</b>
             </p>
             ''',
@@ -556,7 +556,7 @@ with good_bad :
         for g in road_df["WORST"].to_list() :
             st.markdown(
                 f'''
-                <p style="font-size:{int(18*zoom)}px; text-align: center; background-color: #ff0000;color: black; padding: 3px; border-radius: 5px;">
+                <p style="font-size:{int(22*zoom)}px; text-align: center; background-color: #ff0000;color: black; padding: 3px; border-radius: 5px;">
                     <b>{g}</b>
                 </p>
                 ''',
