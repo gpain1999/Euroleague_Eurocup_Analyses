@@ -1189,7 +1189,7 @@ with colb :
 
     if affichage == "BOXESCORE" :
         data_aff = player_stat[player_stat["TEAM"]==t].drop(columns = ["TEAM","ROUND","NB_GAME","OPPONENT","HOME","WIN"]).sort_values(by = "TIME_ON",ascending = False)
-        st.dataframe(data_aff, height=min(36 + 36*len(data_aff),16*36),width=2000,hide_index=True)
+        st.dataframe(data_aff, height=min(36 + 36*len(data_aff),16*36),hide_index=True)
     else :
         data_aff = f.analyse_io_2(data_dir = data_dir,
                     competition = competition,
