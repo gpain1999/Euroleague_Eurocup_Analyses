@@ -43,6 +43,8 @@ df = df[['ROUND', 'NB_GAME', 'TEAM', 'OPPONENT', 'HOME', 'WIN', 'NUMBER', 'PLAYE
 
 # Charger les données de jeux
 gs = pd.read_csv(f"datas/{competition}_gs_{season}.csv")[["Gamecode", "Round", "local.club.code", "local.score", "road.club.code", "road.score"]]
+
+teams_color = pd.read_csv(f"datas/{competition}_{season}_teams_colors.csv",sep=";")
 gs.columns = ["GAMECODE", "ROUND", "LOCAL_TEAM", "LOCAL_SCORE", "ROAD_TEAM", "ROAD_SCORE"]
 gs["GAME"] = gs.apply(lambda row: f"R{row['ROUND']} : {row['LOCAL_TEAM']} - {row['ROAD_TEAM']}", axis=1)
 
@@ -204,6 +206,17 @@ CO_image_path = os.path.join(images_dir, f"{competition}_{season}_players/{TEAM_
 
 local_top_values,local_bottom_values,road_top_values,road_bottom_values = f.stats_important(r,team_local,team_road,df)
 df_stats_important_players = f.stats_important_players(r,team_local,team_road,df)
+
+local_def_perc = local_player_stat["DR"].sum()/(local_player_stat["DR"].sum() + road_player_stat["OR"].sum())
+road_off_perc = 1 - local_def_perc
+road_def_perc = road_player_stat["DR"].sum()/(road_player_stat["DR"].sum() + local_player_stat["OR"].sum())
+local_off_perc = 1 - road_def_perc
+
+local_def = (local_def_perc/0.7)/(local_def_perc/0.7 + road_off_perc/0.3)
+road_off = (road_off_perc/0.3)/(local_def_perc/0.7 + road_off_perc/0.3)
+road_def = (road_def_perc/0.7)/( road_def_perc/0.7 + local_off_perc/0.3)
+local_off = (local_off_perc/0.3)/(road_def_perc/0.7 + local_off_perc/0.3)
+
 ############################# STYLE ####################################################
 
 
@@ -245,6 +258,49 @@ def style_good(val):
 def style_bad(val):
     return 'background-color: #FFCCCC; font-weight: bold ; color: black'  # Colonne 'bad' en rouge et gras
 
+
+################################ COLOR TEAM ##############################################
+def hex_to_rgb(hex_color):
+    """Convertit une couleur hexadécimale en RGB."""
+    hex_color = hex_color.lstrip('#')
+    return tuple(int(hex_color[i:i+2], 16) for i in (0, 2, 4))
+
+def color_distance(rgb1, rgb2):
+    """Calcule la distance euclidienne entre deux couleurs RGB."""
+    return math.sqrt(sum((c1 - c2) ** 2 for c1, c2 in zip(rgb1, rgb2)))
+
+def choisir_maillot(couleur_domicile, couleurs_exterieur):
+    """
+    Sélectionne le maillot extérieur le plus éloigné de la couleur domicile.
+    
+    Args:
+        couleur_domicile (str): Couleur hex de l'équipe à domicile (e.g., "#FF5733").
+        couleurs_exterieur (list): Liste de couleurs hex pour l'équipe extérieure (e.g., ["#33FF57", "#3357FF"]).
+    
+    Returns:
+        str: Couleur hex choisie pour l'équipe extérieure.
+    """
+    rgb_domicile = hex_to_rgb(couleur_domicile)
+    distances = {
+        couleur: color_distance(rgb_domicile, hex_to_rgb(couleur))
+        for couleur in couleurs_exterieur
+    }
+    # Retourne la couleur avec la plus grande distance
+    return max(distances, key=distances.get)
+
+
+
+teams_color[teams_color["TEAM"]==team_local]["COL1"].to_list()[0]
+
+local_c1 = teams_color[teams_color["TEAM"]==team_local]["COL1"].to_list()[0]
+local_c2 = teams_color[teams_color["TEAM"]==team_local]["COL2"].to_list()[0]
+
+road_choix_1 = teams_color[teams_color["TEAM"]==team_road]["COL1"].to_list()[0]
+road_choix_2 = teams_color[teams_color["TEAM"]==team_road]["COL2"].to_list()[0]
+
+road_c1 = choisir_maillot(local_c1, [road_choix_1,road_choix_2])
+road_c2 = road_choix_1 if road_c1 != road_choix_1 else road_choix_2
+
 ############################ PRINT ########################################################
 
 col1, col2,t1,t2 = st.columns([1, 2.5,0.5,0.5])
@@ -282,7 +338,7 @@ with t1 :
         st.warning(f"Logo introuvable pour l'équipe : {team_local}")
     st.markdown(
             f'''
-            <p style="font-size:{int(40*zoom)}px; text-align: center; background-color: blue;color: white; padding: 4px; border-radius: 5px;">
+            <p style="font-size:{int(40*zoom)}px; text-align: center; background-color: {local_c1};color: {local_c2}; padding: 4px; border-radius: 5px;outline: 3px solid {local_c2};">
                 <b>{with_game["LOCAL_SCORE"].to_list()[0]}</b>
             </p>
             ''',
@@ -297,7 +353,7 @@ with t2 :
         st.warning(f"Logo introuvable pour l'équipe : {team_road}")
     st.markdown(
             f'''
-            <p style="font-size:{int(40*zoom)}px; text-align: center; background-color: yellow;color: black; padding: 4px; border-radius: 5px;">
+            <p style="font-size:{int(40*zoom)}px; text-align: center; background-color: {road_c1};color: {road_c2}; padding: 4px; border-radius: 5px;outline: 3px solid {road_c2};">
                 <b>{with_game["ROAD_SCORE"].to_list()[0]}</b>
             </p>
             ''',
@@ -313,8 +369,7 @@ st.markdown(
     unsafe_allow_html=True
 )
 
-cola, good_bad,s1,s2,s3,s4,s5 = st.columns([0.3, 0.175,0.105,0.105,0.105,0.105,0.105])
-
+cola, good_bad,snum = st.columns([0.3, 0.3,0.4])
 
 with cola :
 
@@ -340,19 +395,24 @@ with cola :
     data_TABLEAU.columns = ["-"] + data_TABLEAU.columns[1:].tolist()
 
     for i, col in enumerate(cols):  # Itérer sur chaque colonne
+        is_last_col = (i == len(cols) - 1)  # Vérifier si c'est la dernière colonne
+        border_style = "border: 3px solid gold;" if is_last_col else "border: 3px solid black;"
+
+        # Ajouter le titre de la colonne
         col.markdown(
             f'''
-            <p style="font-size:{int(20*zoom)}px; text-align: center; background-color: #FAF0E6;color: black; padding: 4px; border-radius: 5px;">
-                <b>{data_TABLEAU.columns[i]}</>
+            <p style="font-size:{int(20*zoom)}px; text-align: center; background-color: #FAF0E6;color: black; padding: 4px; border-radius: 5px; {border_style}">
+                <b>{data_TABLEAU.columns[i]}</b>
             </p>
             ''',
             unsafe_allow_html=True
         )
-                    
+
+        # Contenu pour la première colonne
         if i == 0:  # Première colonne, pas de coloration spéciale
             col.markdown(
                 f'''
-                <p style="font-size:{int(20*zoom)}px; text-align: center; background-color: blue;color: white; padding: 4px; border-radius: 5px;">
+                <p style="font-size:{int(20*zoom)}px; text-align: center; background-color: {local_c1};color: {local_c2}; padding: 4px; border-radius: 5px; {border_style}">
                     <b>{data_TABLEAU[data_TABLEAU.columns[i]].to_list()[0]}</b>
                 </p>
                 ''',
@@ -360,7 +420,7 @@ with cola :
             )
             col.markdown(
                 f'''
-                <p style="font-size:{int(20*zoom)}px; text-align: center; background-color: yellow;color: black; padding: 4px; border-radius: 5px;">
+                <p style="font-size:{int(20*zoom)}px; text-align: center; background-color: {road_c1};color: {road_c2}; padding: 4px; border-radius: 5px; {border_style}">
                     <b>{data_TABLEAU[data_TABLEAU.columns[i]].to_list()[1]}</b>
                 </p>
                 ''',
@@ -381,7 +441,7 @@ with cola :
             # Ajouter les valeurs avec les couleurs appropriées
             col.markdown(
                 f'''
-                <p style="font-size:{int(20*zoom)}px; text-align: center; background-color: {color1};color: black; padding: 4px; border-radius: 5px;">
+                <p style="font-size:{int(20*zoom)}px; text-align: center; background-color: {color1};color: black; padding: 4px; border-radius: 5px; {border_style}">
                     <b>{value1}</b>
                 </p>
                 ''',
@@ -389,7 +449,7 @@ with cola :
             )
             col.markdown(
                 f'''
-                <p style="font-size:{int(20*zoom)}px; text-align: center; background-color: {color2};color: black; padding: 4px; border-radius: 5px;">
+                <p style="font-size:{int(20*zoom)}px; text-align: center; background-color: {color2};color: black; padding: 4px; border-radius: 5px; {border_style}">
                     <b>{value2}</b>
                 </p>
                 ''',
@@ -397,12 +457,21 @@ with cola :
             )
 
 
+    st.markdown(
+        f'''
+        <p style="font-size:{int(27*zoom)}px; text-align: center; background-color: grey;color: black; padding: 3px; border-radius: 5px;">
+            <b></b>
+        </p>
+        ''',
+        unsafe_allow_html=True
+    )
         
     # Noms des barres
     labels = [i * 2.5 for i in range(1, len(data_delta) + 1)]
 
     # Couleurs conditionnelles
-    colors = ['blue' if val > 0 else 'yellow' if val < 0 else 'red' for val in data_delta]
+    colors = [local_c1 if val > 0 else road_c1 if val < 0 else 'grey' for val in data_delta]
+    contour = [local_c2 if val > 0 else road_c2 if val < 0 else 'grey' for val in data_delta]
 
     # Création de la figure
     fig = go.Figure()
@@ -412,7 +481,10 @@ with cola :
         go.Bar(
             x=labels,
             y=data_delta,
-            marker=dict(color=colors),  # Couleurs dynamiques
+            marker=dict(
+                color=colors,  # Couleurs des barres
+                line=dict(color=contour, width=2)  # Couleurs des contours dynamiques
+            ),
         )
     )
     for i in range(3, len(labels)-1, 4):  # Indices toutes les 4 barres (commençant à 3)
@@ -428,9 +500,8 @@ with cola :
     # Mise en page
     fig.update_layout(
         autosize=True,
-        width=int(600*zoom),
         height=int(600*zoom),
-        title=f"DELTA {type_delta}",
+        title=f"SCORE EVOL. DELTA {type_delta}",
         xaxis_title="Minutes",
         yaxis_title="Delta",
         xaxis=dict(
@@ -451,18 +522,21 @@ with cola :
 with good_bad :
     st.markdown(
         f'''
-        <p style="font-size:{int(30*zoom)}px; text-align: center; background-color: blue;color: white; padding: 4px; border-radius: 5px;">
+        <p style="font-size:{int(30*zoom)}px; text-align: center; background-color: {local_c1}; color: {local_c2}; 
+        padding: 4px; border-radius: 5px; outline: 3px solid {local_c2};">
             <b>{team_local} - KEYS STATS</b>
         </p>
         ''',
         unsafe_allow_html=True
     )
+
+
     local_df = pd.DataFrame({
         'BEST': local_top_values,
         'WORST': local_bottom_values
     })
 
-    good,bad = st.columns([0.5,0.5])
+    good,bad,shoot = st.columns([0.33,0.33,0.33])
 
     with good :
         st.markdown(
@@ -476,7 +550,7 @@ with good_bad :
         for g in local_df["BEST"].to_list() :
             st.markdown(
                 f'''
-                <p style="font-size:{int(22*zoom)}px; text-align: center; background-color: #00ff00;color: black; padding: 3px; border-radius: 5px;">
+                <p style="font-size:{int(22*zoom)}px; text-align: center; background-color: #E8FFD9;color: black; padding: 3px; border-radius: 5px;">
                     <b>{g}</b>
                 </p>
                 ''',
@@ -495,13 +569,50 @@ with good_bad :
         for g in local_df["WORST"].to_list() :
             st.markdown(
                 f'''
-                <p style="font-size:{int(22*zoom)}px; text-align: center; background-color: #ff0000;color: black; padding: 3px; border-radius: 5px;">
+                <p style="font-size:{int(22*zoom)}px; text-align: center; background-color: #FFD3D3;color: black; padding: 3px; border-radius: 5px;">
                     <b>{g}</b>
                 </p>
                 ''',
                 unsafe_allow_html=True
             )
+    with shoot : 
+        st.markdown(
+            f'''
+            <p style="font-size:{20*zoom}px; text-align: center; background-color: {local_c1};color: {local_c2}; padding: 8px; border-radius: 5px;outline: 3px solid {local_c2};">
+                <b>{round((local_player_stat["2_R"].sum()*2+local_player_stat["3_R"].sum()*3)/(local_player_stat["2_T"].sum()+local_player_stat["3_T"].sum()),2)}&nbsp; PTS PER SHOOT</b>
+            </p>
+            ''',
+            unsafe_allow_html=True
+        )
+        shot_T = local_player_stat["1_T"].sum()/2 + local_player_stat["2_T"].sum() + local_player_stat["3_T"].sum()
+        TO = local_player_stat["TO"].sum()
 
+        st.markdown(
+            f'''
+            <p style="font-size:{22*zoom}px; text-align: center; background-color: {local_c1};color: {local_c2}; padding: 8px; border-radius: 5px;outline: 3px solid {local_c2};">
+                <b>{round(100*shot_T/(shot_T+TO),1)} % BALL CARE</b>
+            </p>
+            ''',
+            unsafe_allow_html=True
+        )
+
+        st.markdown(
+            f'''
+            <p style="font-size:{22*zoom}px; text-align: center; background-color: {local_c1};color: {local_c2}; padding: 8px; border-radius: 5px;outline: 3px solid {local_c2};">
+                <b>{round(local_def+local_off,2)} REB. PERF</b>
+            </p>
+            ''',
+            unsafe_allow_html=True
+        )
+
+        st.markdown(
+            f'''
+            <p style="font-size:{20*zoom}px; text-align: center; background-color: {local_c1};color: {local_c2}; padding: 8px; border-radius: 5px;outline: 3px solid {local_c2};">
+                <b>{round(100*local_player_stat["AS"].sum()/(local_player_stat["2_R"].sum()+local_player_stat["3_R"].sum()),1)}&nbsp;% ASSISTS </b>
+            </p>
+            ''',
+            unsafe_allow_html=True
+        )
     st.markdown(
     f'''
     <p style="font-size:{int(27*zoom)}px; text-align: center; background-color: grey;color: black; padding: 3px; border-radius: 5px;">
@@ -513,7 +624,7 @@ with good_bad :
 
     st.markdown(
         f'''
-        <p style="font-size:{int(30*zoom)}px; text-align: center; background-color: yellow;color: black; padding: 4px; border-radius: 5px;">
+        <p style="font-size:{int(30*zoom)}px; text-align: center; background-color: {road_c1};color: {road_c2}; padding: 4px; border-radius: 5px;outline: 3px solid {road_c2};">
             <b>{team_road} - KEYS STATS</b>
         </p>
         ''',
@@ -523,7 +634,7 @@ with good_bad :
         'BEST': road_top_values,
         'WORST': road_bottom_values
     })
-    good,bad = st.columns([0.5,0.5])
+    good,bad,shoot = st.columns([0.33,0.33,0.33])
 
     with good :
         st.markdown(
@@ -537,7 +648,7 @@ with good_bad :
         for g in road_df["BEST"].to_list() :
             st.markdown(
                 f'''
-                <p style="font-size:{int(22*zoom)}px; text-align: center; background-color: #00ff00;color: black; padding: 3px; border-radius: 5px;">
+                <p style="font-size:{int(22*zoom)}px; text-align: center; background-color: #E8FFD9;color: black; padding: 3px; border-radius: 5px;">
                     <b>{g}</b>
                 </p>
                 ''',
@@ -556,170 +667,208 @@ with good_bad :
         for g in road_df["WORST"].to_list() :
             st.markdown(
                 f'''
-                <p style="font-size:{int(22*zoom)}px; text-align: center; background-color: #ff0000;color: black; padding: 3px; border-radius: 5px;">
+                <p style="font-size:{int(22*zoom)}px; text-align: center; background-color: #FFD3D3;color: black; padding: 3px; border-radius: 5px;">
                     <b>{g}</b>
                 </p>
                 ''',
                 unsafe_allow_html=True
             )
+    with shoot :
+        st.markdown(
+            f'''
+            <p style="font-size:{20*zoom}px; text-align: center; background-color: {road_c1};color: {road_c2}; padding: 8px; border-radius: 5px;outline: 3px solid {road_c2};">
+                <b>{round((road_player_stat["2_R"].sum()*2+road_player_stat["3_R"].sum()*3)/(road_player_stat["2_T"].sum()+road_player_stat["3_T"].sum()),2)}&nbsp; PTS PER SHOOT</b>
+            </p>
+            ''',
+            unsafe_allow_html=True
+        )
+        shot_T = road_player_stat["1_T"].sum()/2 + road_player_stat["2_T"].sum() + road_player_stat["3_T"].sum()
+        TO = road_player_stat["TO"].sum()
 
-with s1 :
-    # Intégrer la couleur dans le markdown
+        st.markdown(
+            f'''
+            <p style="font-size:{22*zoom}px; text-align: center; background-color: {road_c1};color: {road_c2}; padding: 8px; border-radius: 5px;outline: 3px solid {road_c2};">
+                <b>{round(100*shot_T/(shot_T+TO),1)} % BALL CARE</b>
+            </p>
+            ''',
+            unsafe_allow_html=True
+        )
+        st.markdown(
+            f'''
+            <p style="font-size:{22*zoom}px; text-align: center; background-color: {road_c1};color: {road_c2}; padding: 8px; border-radius: 5px;outline: 3px solid {road_c2};">
+                <b>{round(road_def+road_off,2)} REB. PERF</b>
+            </p>
+            ''',
+            unsafe_allow_html=True
+        )
+        st.markdown(
+            f'''
+            <p style="font-size:{20*zoom}px; text-align: center; background-color: {road_c1};color: {road_c2}; padding: 8px; border-radius: 5px;outline: 3px solid {road_c2};">
+                <b>{round(100*road_player_stat["AS"].sum()/(road_player_stat["2_R"].sum()+road_player_stat["3_R"].sum()),1)}&nbsp;% ASSISTS </b>
+            </p>
+            ''',
+            unsafe_allow_html=True
+        )
+with snum :
+    s1, s2,s3,s4 = st.columns([0.25, 0.25,0.25,0.25])
+
+
+    with s1 :
+        # Intégrer la couleur dans le markdown
+
+        st.markdown(
+            f'''
+            <p style="font-size:{int(27*zoom)}px; text-align: center; background-color: gold;color: black; padding: 5px; border-radius: 5px;">
+                <b>MVP : {mvp_data["I_PER"].to_list()[0]} I_PER</b>
+            </p>
+            ''',
+            unsafe_allow_html=True
+        )
+
+        if os.path.exists(mvp_image_path):
+            st.image(mvp_image_path, caption=f"#{NUMBER_MVP} {NAME_MVP}", width=int(250*zoom))
+        else:
+            st.warning(f"Image introuvable pour le joueur : {NAME_MVP}")
+
+
+    with s2 :
+        # Intégrer la couleur dans le markdown
+
+        st.markdown(
+            f'''
+            <p style="font-size:{int(27*zoom)}px; text-align: center; background-color: #00ff00;color: black; padding: 5px; border-radius: 5px;">
+                <b>{PTS_data["PTS"].to_list()[0]} POINTS</b>
+            </p>
+            ''',
+            unsafe_allow_html=True
+        )
+        if os.path.exists(PTS_image_path):
+            st.image(PTS_image_path, caption=f"#{NUMBER_PTS} {NAME_PTS}", width=int(250*zoom))
+        else:
+            st.warning(f"Image introuvable pour le joueur : {NAME_PTS}")
+
+
+
+    with s3 :
+
+        st.markdown(
+            f'''
+            <p style="font-size:{int(27*zoom)}px; text-align: center; background-color: #00ff00;color: black; padding: 5px; border-radius: 5px;">
+                <b>{DR_data["DR"].to_list()[0]} DEF. REB.</b>
+            </p>
+            ''',
+            unsafe_allow_html=True
+        )
+
+
+        if os.path.exists(DR_image_path):
+            st.image(DR_image_path, caption=f"#{NUMBER_DR} {NAME_DR}", width=int(250*zoom))
+        else:
+            st.warning(f"Image introuvable pour le joueur : {NAME_DR}")
+
+
+
+
+            
+    with s4 :
+        # Intégrer la couleur dans le markdown
+        st.markdown(
+            f'''
+            <p style="font-size:{int(27*zoom)}px; text-align: center; background-color: #00ff00;color: black; padding: 5px; border-radius: 5px;">
+                <b>{AS_data["AS"].to_list()[0]} ASSISTS</b>
+            </p>
+            ''',
+            unsafe_allow_html=True
+        )
+
+        if os.path.exists(AS_image_path):
+            st.image(AS_image_path, caption=f"#{NUMBER_AS} {NAME_AS}", width=int(250*zoom))
+        else:
+            st.warning(f"Image introuvable pour le joueur : {NAME_AS}")
+
 
     st.markdown(
         f'''
-        <p style="font-size:{int(27*zoom)}px; text-align: center; background-color: gold;color: black; padding: 5px; border-radius: 5px;">
-            <b>MVP : {mvp_data["I_PER"].to_list()[0]} I_PER</b>
+        <p style="font-size:{int(27*zoom)}px; text-align: center; background-color: grey;color: black; padding: 3px; border-radius: 5px;">
+            <b></b>
         </p>
         ''',
         unsafe_allow_html=True
     )
 
-    if os.path.exists(mvp_image_path):
-        st.image(mvp_image_path, caption=f"#{NUMBER_MVP} {NAME_MVP}", width=int(250*zoom))
-    else:
-        st.warning(f"Image introuvable pour le joueur : {NAME_MVP}")
-    # Intégrer la couleur dans le markdown
-
-    st.markdown(
-        f'''
-        <p style="font-size:{int(25*zoom)}px; text-align: center; background-color: #00ff00;color: black; padding: 5px; border-radius: 5px;">
-            <b>MVP LO : {BL_data["I_PER"].to_list()[0]} I_PER</b>
-        </p>
-        ''',
-        unsafe_allow_html=True
-    )
-
-    if os.path.exists(BL_image_path):
-        st.image(BL_image_path, caption=f"#{NUMBER_BL} {NAME_BL}", width=int(250*zoom))
-    else:
-        st.warning(f"Image introuvable pour le joueur : {NAME_BL}")
-
-with s2 :
-    # Intégrer la couleur dans le markdown
-
-    st.markdown(
-        f'''
-        <p style="font-size:{int(27*zoom)}px; text-align: center; background-color: #00ff00;color: black; padding: 5px; border-radius: 5px;">
-            <b>{PTS_data["PTS"].to_list()[0]} POINTS</b>
-        </p>
-        ''',
-        unsafe_allow_html=True
-    )
-    if os.path.exists(PTS_image_path):
-        st.image(PTS_image_path, caption=f"#{NUMBER_PTS} {NAME_PTS}", width=int(250*zoom))
-    else:
-        st.warning(f"Image introuvable pour le joueur : {NAME_PTS}")
-
-    # Intégrer la couleur dans le markdown
-
-    st.markdown(
-        f'''
-        <p style="font-size:{int(27*zoom)}px; text-align: center; background-color: #00ff00;color: black; padding: 5px; border-radius: 5px;">
-            <b>{int(PM_ON_data["PM_ON"].to_list()[0])} +/-</b>
-        </p>
-        ''',
-        unsafe_allow_html=True
-    )
-    if os.path.exists(PM_ON_image_path):
-        st.image(PM_ON_image_path, caption=f"#{NUMBER_PM_ON} {NAME_PM_ON}", width=int(250*zoom))
-    else:
-        st.warning(f"Image introuvable pour le joueur : {NAME_PM_ON}")
-
-with s3 :
-
-    st.markdown(
-        f'''
-        <p style="font-size:{int(27*zoom)}px; text-align: center; background-color: #00ff00;color: black; padding: 5px; border-radius: 5px;">
-            <b>{DR_data["DR"].to_list()[0]} DEF. REB.</b>
-        </p>
-        ''',
-        unsafe_allow_html=True
-    )
+    s1, s2,s3,s4 = st.columns([0.25, 0.25,0.25,0.25])
 
 
-    if os.path.exists(DR_image_path):
-        st.image(DR_image_path, caption=f"#{NUMBER_DR} {NAME_DR}", width=int(250*zoom))
-    else:
-        st.warning(f"Image introuvable pour le joueur : {NAME_DR}")
+    with s1 :
+
+
+        st.markdown(
+            f'''
+            <p style="font-size:{int(25*zoom)}px; text-align: center; background-color: #00ff00;color: black; padding: 5px; border-radius: 5px;">
+                <b>MVP LO : {BL_data["I_PER"].to_list()[0]} I_PER</b>
+            </p>
+            ''',
+            unsafe_allow_html=True
+        )
+
+        if os.path.exists(BL_image_path):
+            st.image(BL_image_path, caption=f"#{NUMBER_BL} {NAME_BL}", width=int(250*zoom))
+        else:
+            st.warning(f"Image introuvable pour le joueur : {NAME_BL}")
+
+    with s2 :
+
+        # Intégrer la couleur dans le markdown
+
+        st.markdown(
+            f'''
+            <p style="font-size:{int(27*zoom)}px; text-align: center; background-color: #00ff00;color: black; padding: 5px; border-radius: 5px;">
+                <b>{int(PM_ON_data["PM_ON"].to_list()[0])} +/-</b>
+            </p>
+            ''',
+            unsafe_allow_html=True
+        )
+        if os.path.exists(PM_ON_image_path):
+            st.image(PM_ON_image_path, caption=f"#{NUMBER_PM_ON} {NAME_PM_ON}", width=int(250*zoom))
+        else:
+            st.warning(f"Image introuvable pour le joueur : {NAME_PM_ON}")
+
+    with s3 :
 
 
 
-    st.markdown(
-        f'''
-        <p style="font-size:{int(27*zoom)}px; text-align: center; background-color: #00ff00;color: black; padding: 5px; border-radius: 5px;">
-            <b>{OR_data["OR"].to_list()[0]} OFF. REB.</b>
-        </p>
-        ''',
-        unsafe_allow_html=True
-    )
 
-    if os.path.exists(OR_image_path):
-        st.image(OR_image_path, caption=f"#{NUMBER_OR} {NAME_OR}", width=int(250*zoom))
-    else:
-        st.warning(f"Image introuvable pour le joueur : {NAME_OR}")
-        
-with s4 :
-    # Intégrer la couleur dans le markdown
-    st.markdown(
-        f'''
-        <p style="font-size:{int(27*zoom)}px; text-align: center; background-color: #00ff00;color: black; padding: 5px; border-radius: 5px;">
-            <b>{AS_data["AS"].to_list()[0]} ASSISTS</b>
-        </p>
-        ''',
-        unsafe_allow_html=True
-    )
+        st.markdown(
+            f'''
+            <p style="font-size:{int(27*zoom)}px; text-align: center; background-color: #00ff00;color: black; padding: 5px; border-radius: 5px;">
+                <b>{OR_data["OR"].to_list()[0]} OFF. REB.</b>
+            </p>
+            ''',
+            unsafe_allow_html=True
+        )
 
-    if os.path.exists(AS_image_path):
-        st.image(AS_image_path, caption=f"#{NUMBER_AS} {NAME_AS}", width=int(250*zoom))
-    else:
-        st.warning(f"Image introuvable pour le joueur : {NAME_AS}")
+        if os.path.exists(OR_image_path):
+            st.image(OR_image_path, caption=f"#{NUMBER_OR} {NAME_OR}", width=int(250*zoom))
+        else:
+            st.warning(f"Image introuvable pour le joueur : {NAME_OR}")
+            
+    with s4 :
 
-    # Intégrer la couleur dans le markdown
-    st.markdown(
-        f'''
-        <p style="font-size:{int(27*zoom)}px; text-align: center; background-color: #ff0000;color: black; padding: 5px; border-radius: 5px;">
-            <b>{TO_data["TO"].to_list()[0]} TURNOVERS</b>
-        </p>
-        ''',
-        unsafe_allow_html=True
-    )
+        # Intégrer la couleur dans le markdown
+        st.markdown(
+            f'''
+            <p style="font-size:{int(27*zoom)}px; text-align: center; background-color: #ff0000;color: black; padding: 5px; border-radius: 5px;">
+                <b>{TO_data["TO"].to_list()[0]} TURNOVERS</b>
+            </p>
+            ''',
+            unsafe_allow_html=True
+        )
 
-    if os.path.exists(TO_image_path):
-        st.image(TO_image_path, caption=f"#{NUMBER_TO} {NAME_TO}", width=int(250*zoom))
-    else:
-        st.warning(f"Image introuvable pour le joueur : {NAME_TO}")
+        if os.path.exists(TO_image_path):
+            st.image(TO_image_path, caption=f"#{NUMBER_TO} {NAME_TO}", width=int(250*zoom))
+        else:
+            st.warning(f"Image introuvable pour le joueur : {NAME_TO}")
 
-with s5 :
-    # Intégrer la couleur dans le markdown
-    st.markdown(
-        f'''
-        <p style="font-size:{int(27*zoom)}px; text-align: center; background-color: #00ff00;color: black; padding: 5px; border-radius: 5px;">
-            <b>{ST_data["ST"].to_list()[0]} STEALS</b>
-        </p>
-        ''',
-        unsafe_allow_html=True
-    )
-
-    if os.path.exists(ST_image_path):
-        st.image(ST_image_path, caption=f"#{NUMBER_ST} {NAME_ST}", width=int(250*zoom))
-    else:
-        st.warning(f"Image introuvable pour le joueur : {NAME_ST}")
-
-    # Intégrer la couleur dans le markdown
-    st.markdown(
-        f'''
-        <p style="font-size:{int(27*zoom)}px; text-align: center; background-color: #00ff00;color: black; padding: 5px; border-radius: 5px;">
-            <b>{CO_data["CO"].to_list()[0]} BLOCKS</b>
-        </p>
-        ''',
-        unsafe_allow_html=True
-    )
-
-    if os.path.exists(CO_image_path):
-        st.image(CO_image_path, caption=f"#{NUMBER_CO} {NAME_CO}", width=int(250*zoom))
-    else:
-        st.warning(f"Image introuvable pour le joueur : {NAME_CO}")
 
 st.markdown(
     f'''
@@ -739,15 +888,15 @@ with sip1 :
     playersip = df_stats_important_players["PLAYER"].to_list()[0]
     statssip = df_stats_important_players["VALUE"].to_list()[0]
     if teamsip == team_local :
-        color = "blue"
-        color_text = "white"
+        color = local_c1
+        color_text = local_c2
     else :
-        color = "yellow"
-        color_text = "black"
+        color = road_c1
+        color_text = road_c2
 
     st.markdown(
         f'''
-        <p style="font-size:{int(21*zoom)}px; text-align: center; background-color: {color};color: {color_text}; padding: 5px; border-radius: 5px;">
+        <p style="font-size:{int(21*zoom)}px; text-align: center; background-color: {color};color: {color_text}; padding: 5px; border-radius: 5px;outline: 3px solid {color_text};">
             <b>{playersip}</b>
         </p>
         ''',
@@ -755,7 +904,7 @@ with sip1 :
     )
     st.markdown(
         f'''
-        <p style="font-size:{int(25*zoom)}px; text-align: center; background-color: {color};color: {color_text}; padding: 5px; border-radius: 5px;">
+        <p style="font-size:{int(25*zoom)}px; text-align: center; background-color: {color};color: {color_text}; padding: 5px; border-radius: 5px;outline: 3px solid {color_text};">
             <b>{statssip}</b>
         </p>
         ''',
@@ -767,15 +916,15 @@ with sip2:
     playersip = df_stats_important_players["PLAYER"].to_list()[1]
     statssip = df_stats_important_players["VALUE"].to_list()[1]
     if teamsip == team_local :
-        color = "blue"
-        color_text = "white"
+        color = local_c1
+        color_text = local_c2
     else :
-        color = "yellow"
-        color_text = "black"
+        color = road_c1
+        color_text = road_c2
 
     st.markdown(
         f'''
-        <p style="font-size:{int(21*zoom)}px; text-align: center; background-color: {color};color: {color_text}; padding: 5px; border-radius: 5px;">
+        <p style="font-size:{int(21*zoom)}px; text-align: center; background-color: {color};color: {color_text}; padding: 5px; border-radius: 5px;outline: 3px solid {color_text};">
             <b>{playersip}</b>
         </p>
         ''',
@@ -783,7 +932,7 @@ with sip2:
     )
     st.markdown(
         f'''
-        <p style="font-size:{int(25*zoom)}px; text-align: center; background-color: {color};color: {color_text}; padding: 5px; border-radius: 5px;">
+        <p style="font-size:{int(25*zoom)}px; text-align: center; background-color: {color};color: {color_text}; padding: 5px; border-radius: 5px;outline: 3px solid {color_text};">
             <b>{statssip}</b>
         </p>
         ''',
@@ -794,15 +943,15 @@ with sip3 :
     playersip = df_stats_important_players["PLAYER"].to_list()[2]
     statssip = df_stats_important_players["VALUE"].to_list()[2]
     if teamsip == team_local :
-        color = "blue"
-        color_text = "white"
+        color = local_c1
+        color_text = local_c2
     else :
-        color = "yellow"
-        color_text = "black"
+        color = road_c1
+        color_text = road_c2
 
     st.markdown(
         f'''
-        <p style="font-size:{int(21*zoom)}px; text-align: center; background-color: {color};color: {color_text}; padding: 5px; border-radius: 5px;">
+        <p style="font-size:{int(21*zoom)}px; text-align: center; background-color: {color};color: {color_text}; padding: 5px; border-radius: 5px;outline: 3px solid {color_text};">
             <b>{playersip}</b>
         </p>
         ''',
@@ -810,7 +959,7 @@ with sip3 :
     )
     st.markdown(
         f'''
-        <p style="font-size:{int(25*zoom)}px; text-align: center; background-color: {color};color: {color_text}; padding: 5px; border-radius: 5px;">
+        <p style="font-size:{int(25*zoom)}px; text-align: center; background-color: {color};color: {color_text}; padding: 5px; border-radius: 5px;outline: 3px solid {color_text};">
             <b>{statssip}</b>
         </p>
         ''',
@@ -821,15 +970,15 @@ with sip4 :
     playersip = df_stats_important_players["PLAYER"].to_list()[3]
     statssip = df_stats_important_players["VALUE"].to_list()[3]
     if teamsip == team_local :
-        color = "blue"
-        color_text = "white"
+        color = local_c1
+        color_text = local_c2
     else :
-        color = "yellow"
-        color_text = "black"
+        color = road_c1
+        color_text = road_c2
 
     st.markdown(
         f'''
-        <p style="font-size:{int(21*zoom)}px; text-align: center; background-color: {color};color: {color_text}; padding: 5px; border-radius: 5px;">
+        <p style="font-size:{int(21*zoom)}px; text-align: center; background-color: {color};color: {color_text}; padding: 5px; border-radius: 5px;outline: 3px solid {color_text};">
             <b>{playersip}</b>
         </p>
         ''',
@@ -837,7 +986,7 @@ with sip4 :
     )
     st.markdown(
         f'''
-        <p style="font-size:{int(25*zoom)}px; text-align: center; background-color: {color};color: {color_text}; padding: 5px; border-radius: 5px;">
+        <p style="font-size:{int(25*zoom)}px; text-align: center; background-color: {color};color: {color_text}; padding: 5px; border-radius: 5px;outline: 3px solid {color_text};">
             <b>{statssip}</b>
         </p>
         ''',
@@ -848,15 +997,15 @@ with sip5 :
     playersip = df_stats_important_players["PLAYER"].to_list()[4]
     statssip = df_stats_important_players["VALUE"].to_list()[4]
     if teamsip == team_local :
-        color = "blue"
-        color_text = "white"
+        color = local_c1
+        color_text = local_c2
     else :
-        color = "yellow"
-        color_text = "black"
+        color = road_c1
+        color_text = road_c2
 
     st.markdown(
         f'''
-        <p style="font-size:{int(21*zoom)}px; text-align: center; background-color: {color};color: {color_text}; padding: 5px; border-radius: 5px;">
+        <p style="font-size:{int(21*zoom)}px; text-align: center; background-color: {color};color: {color_text}; padding: 5px; border-radius: 5px;outline: 3px solid {color_text};">
             <b>{playersip}</b>
         </p>
         ''',
@@ -864,7 +1013,7 @@ with sip5 :
     )
     st.markdown(
         f'''
-        <p style="font-size:{int(25*zoom)}px; text-align: center; background-color: {color};color: {color_text}; padding: 5px; border-radius: 5px;">
+        <p style="font-size:{int(25*zoom)}px; text-align: center; background-color: {color};color: {color_text}; padding: 5px; border-radius: 5px;outline: 3px solid {color_text};">
             <b>{statssip}</b>
         </p>
         ''',
@@ -875,15 +1024,15 @@ with sip6 :
     playersip = df_stats_important_players["PLAYER"].to_list()[5]
     statssip = df_stats_important_players["VALUE"].to_list()[5]
     if teamsip == team_local :
-        color = "blue"
-        color_text = "white"
+        color = local_c1
+        color_text = local_c2
     else :
-        color = "yellow"
-        color_text = "black"
+        color = road_c1
+        color_text = road_c2
 
     st.markdown(
         f'''
-        <p style="font-size:{int(21*zoom)}px; text-align: center; background-color: {color};color: {color_text}; padding: 5px; border-radius: 5px;">
+        <p style="font-size:{int(21*zoom)}px; text-align: center; background-color: {color};color: {color_text}; padding: 5px; border-radius: 5px;outline: 3px solid {color_text};">
             <b>{playersip}</b>
         </p>
         ''',
@@ -891,7 +1040,7 @@ with sip6 :
     )
     st.markdown(
         f'''
-        <p style="font-size:{int(25*zoom)}px; text-align: center; background-color: {color};color: {color_text}; padding: 5px; border-radius: 5px;">
+        <p style="font-size:{int(25*zoom)}px; text-align: center; background-color: {color};color: {color_text}; padding: 5px; border-radius: 5px;outline: 3px solid {color_text};">
             <b>{statssip}</b>
         </p>
         ''',
@@ -902,15 +1051,15 @@ with sip7 :
     playersip = df_stats_important_players["PLAYER"].to_list()[6]
     statssip = df_stats_important_players["VALUE"].to_list()[6]
     if teamsip == team_local :
-        color = "blue"
-        color_text = "white"
+        color = local_c1
+        color_text = local_c2
     else :
-        color = "yellow"
-        color_text = "black"
+        color = road_c1
+        color_text = road_c2
 
     st.markdown(
         f'''
-        <p style="font-size:{int(21*zoom)}px; text-align: center; background-color: {color};color: {color_text}; padding: 5px; border-radius: 5px;">
+        <p style="font-size:{int(21*zoom)}px; text-align: center; background-color: {color};color: {color_text}; padding: 5px; border-radius: 5px;outline: 3px solid {color_text};">
             <b>{playersip}</b>
         </p>
         ''',
@@ -918,7 +1067,7 @@ with sip7 :
     )
     st.markdown(
         f'''
-        <p style="font-size:{int(25*zoom)}px; text-align: center; background-color: {color};color: {color_text}; padding: 5px; border-radius: 5px;">
+        <p style="font-size:{int(25*zoom)}px; text-align: center; background-color: {color};color: {color_text}; padding: 5px; border-radius: 5px;outline: 3px solid {color_text};">
             <b>{statssip}</b>
         </p>
         ''',
@@ -929,15 +1078,15 @@ with sip8 :
     playersip = df_stats_important_players["PLAYER"].to_list()[7]
     statssip = df_stats_important_players["VALUE"].to_list()[7]
     if teamsip == team_local :
-        color = "blue"
-        color_text = "white"
+        color = local_c1
+        color_text = local_c2
     else :
-        color = "yellow"
-        color_text = "black"
+        color = road_c1
+        color_text = road_c2
 
     st.markdown(
         f'''
-        <p style="font-size:{int(21*zoom)}px; text-align: center; background-color: {color};color: {color_text}; padding: 5px; border-radius: 5px;">
+        <p style="font-size:{int(21*zoom)}px; text-align: center; background-color: {color};color: {color_text}; padding: 5px; border-radius: 5px;outline: 3px solid {color_text};">
             <b>{playersip}</b>
         </p>
         ''',
@@ -945,7 +1094,7 @@ with sip8 :
     )
     st.markdown(
         f'''
-        <p style="font-size:{int(25*zoom)}px; text-align: center; background-color: {color};color: {color_text}; padding: 5px; border-radius: 5px;">
+        <p style="font-size:{int(25*zoom)}px; text-align: center; background-color: {color};color: {color_text}; padding: 5px; border-radius: 5px;outline: 3px solid {color_text};">
             <b>{statssip}</b>
         </p>
         ''',
@@ -957,15 +1106,15 @@ with sip9 :
     playersip = df_stats_important_players["PLAYER"].to_list()[8]
     statssip = df_stats_important_players["VALUE"].to_list()[8]
     if teamsip == team_local :
-        color = "blue"
-        color_text = "white"
+        color = local_c1
+        color_text = local_c2
     else :
-        color = "yellow"
-        color_text = "black"
+        color = road_c1
+        color_text = road_c2
 
     st.markdown(
         f'''
-        <p style="font-size:{int(21*zoom)}px; text-align: center; background-color: {color};color: {color_text}; padding: 5px; border-radius: 5px;">
+        <p style="font-size:{int(21*zoom)}px; text-align: center; background-color: {color};color: {color_text}; padding: 5px; border-radius: 5px;outline: 3px solid {color_text};">
             <b>{playersip}</b>
         </p>
         ''',
@@ -973,7 +1122,7 @@ with sip9 :
     )
     st.markdown(
         f'''
-        <p style="font-size:{int(25*zoom)}px; text-align: center; background-color: {color};color: {color_text}; padding: 5px; border-radius: 5px;">
+        <p style="font-size:{int(25*zoom)}px; text-align: center; background-color: {color};color: {color_text}; padding: 5px; border-radius: 5px;outline: 3px solid {color_text};">
             <b>{statssip}</b>
         </p>
         ''',
@@ -1008,7 +1157,7 @@ with cola :
         )
         st.markdown(
             f'''
-            <p style="font-size:{22*zoom}px; text-align: center; background-color: blue;color: white; padding: 8px; border-radius: 5px;">
+            <p style="font-size:{22*zoom}px; text-align: center; background-color: {local_c1};color: {local_c2}; padding: 6px; border-radius: 5px;outline: 3px solid {local_c2};">
                 <b>{round(local_player_stat["2_T"].sum()+local_player_stat["3_T"].sum(),2)}&nbsp; SHOOTS</b>
             </p>
             ''',
@@ -1016,7 +1165,7 @@ with cola :
         )
         st.markdown(
             f'''
-            <p style="font-size:{22*zoom}px; text-align: center; background-color: blue;color: white; padding: 8px; border-radius: 5px;">
+            <p style="font-size:{22*zoom}px; text-align: center; background-color: {local_c1};color: {local_c2}; padding: 6px; border-radius: 5px;outline: 3px solid {local_c2};">
                 <b>{round(local_player_stat["1_T"].sum(),1)}&nbsp; FT</b>
             </p>
             ''',
@@ -1030,17 +1179,9 @@ with cola :
         st.plotly_chart(fig2,use_container_width=True,key = "q")
         
 
-        st.markdown(
-            f'''
-            <p style="font-size:{22*zoom}px; text-align: center; background-color: blue;color: white; padding: 8px; border-radius: 5px;">
-                <b>{round((local_player_stat["2_R"].sum()*2+local_player_stat["3_R"].sum()*3)/(local_player_stat["2_T"].sum()+local_player_stat["3_T"].sum()),2)}&nbsp; PTS PER SHOOT</b>
-            </p>
-            ''',
-            unsafe_allow_html=True
-        )
 
-        shot_T = local_player_stat["1_T"].sum()/2 + local_player_stat["2_T"].sum() + local_player_stat["3_T"].sum()
-        TO = local_player_stat["TO"].sum()
+
+
 
 
 
@@ -1058,7 +1199,7 @@ with cola :
         )
         st.markdown(
             f'''
-            <p style="font-size:{22*zoom}px; text-align: center; background-color: yellow;color: black; padding: 8px; border-radius: 5px;">
+            <p style="font-size:{22*zoom}px; text-align: center; background-color: {road_c1};color: {road_c2}; padding: 6px; border-radius: 5px;outline: 3px solid {road_c2};">
                 <b>{round(road_player_stat["2_T"].sum()+road_player_stat["3_T"].sum(),2)}&nbsp; SHOOTS</b>
             </p>
             ''',
@@ -1066,7 +1207,7 @@ with cola :
         )
         st.markdown(
             f'''
-            <p style="font-size:{22*zoom}px; text-align: center; background-color: yellow;color: black; padding: 8px; border-radius: 5px;">
+            <p style="font-size:{22*zoom}px; text-align: center; background-color: {road_c1};color: {road_c2}; padding: 6px; border-radius: 5px;outline: 3px solid {road_c2};">
                 <b>{round(road_player_stat["1_T"].sum(),1)}&nbsp; FT</b>
             </p>
             ''',
@@ -1082,14 +1223,7 @@ with cola :
         st.plotly_chart(fig2,use_container_width=True,key="2")
 
 
-        st.markdown(
-            f'''
-            <p style="font-size:{22*zoom}px; text-align: center; background-color: yellow;color: black; padding: 8px; border-radius: 5px;">
-                <b>{round((road_player_stat["2_R"].sum()*2+road_player_stat["3_R"].sum()*3)/(road_player_stat["2_T"].sum()+road_player_stat["3_T"].sum()),2)}&nbsp; PTS PER SHOOT</b>
-            </p>
-            ''',
-            unsafe_allow_html=True
-        )
+
 
 
 with colb :
@@ -1098,15 +1232,6 @@ with colb :
     reb_local, reb_road = st.columns([1, 1])
 
     with reb_local :
-        local_def_perc = local_player_stat["DR"].sum()/(local_player_stat["DR"].sum() + road_player_stat["OR"].sum())
-        road_off_perc = 1 - local_def_perc
-        road_def_perc = road_player_stat["DR"].sum()/(road_player_stat["DR"].sum() + local_player_stat["OR"].sum())
-        local_off_perc = 1 - road_def_perc
-
-        local_def = (local_def_perc/0.7)/(local_def_perc/0.7 + road_off_perc/0.3)
-        road_off = (road_off_perc/0.3)/(local_def_perc/0.7 + road_off_perc/0.3)
-        road_def = (road_def_perc/0.7)/( road_def_perc/0.7 + local_off_perc/0.3)
-        local_off = (local_off_perc/0.3)/(road_def_perc/0.7 + local_off_perc/0.3)
 
         st.markdown(
             f'''
@@ -1118,7 +1243,7 @@ with colb :
         )
         st.markdown(
             f'''
-            <p style="font-size:{22*zoom}px; text-align: center; background-color: blue;color: white; padding: 22px; border-radius: 5px;">
+            <p style="font-size:{24*zoom}px; text-align: center; background-color: {local_c1};color: {local_c2}; padding: 18px; border-radius: 5px;outline: 3px solid {local_c2};">
                 <b>{round(local_def+local_off,2)}</b>
                 <b> REB. PERF </b>
             </p>
@@ -1134,14 +1259,7 @@ with colb :
 
         fig2 = f.plot_semi_circular_chart(local_player_stat["TR"].sum()/(road_player_stat["TR"].sum() + local_player_stat["TR"].sum()),"TOT.",size=int(95*zoom), font_size=int(22*zoom))
         st.plotly_chart(fig2,use_container_width=True,key = "TT")
-        st.markdown(
-            f'''
-            <p style="font-size:{25*zoom}px; text-align: center; background-color: blue;color: white; padding: 8px; border-radius: 5px;">
-                <b>{round(100*shot_T/(shot_T+TO),1)} % BALL CARE</b>
-            </p>
-            ''',
-            unsafe_allow_html=True
-        )
+
 
     with reb_road :
         st.markdown(
@@ -1154,7 +1272,7 @@ with colb :
         )
         st.markdown(
             f'''
-            <p style="font-size:{22*zoom}px; text-align: center; background-color: yellow;color: black; padding: 22px; border-radius: 5px;">
+            <p style="font-size:{24*zoom}px; text-align: center; background-color: {road_c1};color: {road_c2}; padding: 18px; border-radius: 5px;outline: 3px solid {road_c2};">
                 <b>{round(road_def+road_off,2)}</b>
                 <b> REB. PERF </b>
             </p>
@@ -1169,17 +1287,7 @@ with colb :
 
         fig2 = f.plot_semi_circular_chart(road_player_stat["TR"].sum()/(road_player_stat["TR"].sum() + local_player_stat["TR"].sum()),"TOT.",size=int(95*zoom), font_size=int(22*zoom))
         st.plotly_chart(fig2,use_container_width=True,key = "T")
-        shot_T = road_player_stat["1_T"].sum()/2 + road_player_stat["2_T"].sum() + road_player_stat["3_T"].sum()
-        TO = road_player_stat["TO"].sum()
 
-        st.markdown(
-            f'''
-            <p style="font-size:{25*zoom}px; text-align: center; background-color: yellow;color: black; padding: 8px; border-radius: 5px;">
-                <b>{round(100*shot_T/(shot_T+TO),1)} % BALL CARE</b>
-            </p>
-            ''',
-            unsafe_allow_html=True
-        )
 with colc :
     C1, C2 = st.columns([1, 1])
     with C1 :
@@ -1205,5 +1313,3 @@ with colc :
         
         data_aff2 = data_aff.style.apply(colorize_pm_on, axis=1).format(precision=1)
         st.dataframe(data_aff2, height=min(36 + 36*len(data_aff),22*36),hide_index=True)
-    
-
