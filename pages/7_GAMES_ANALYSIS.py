@@ -574,8 +574,8 @@ with good_bad :
 
 
     local_df = pd.DataFrame({
-        'BEST': local_top_values,
-        'WORST': local_bottom_values
+        'POSITIVES': local_top_values,
+        'NEGATIVES': local_bottom_values
     })
 
     good,bad,shoot = st.columns([0.3,0.3,0.4])
@@ -584,12 +584,12 @@ with good_bad :
         st.markdown(
             f'''
             <p style="font-size:{int(23*zoom)}px; text-align: center; background-color: green;color: white; padding: 4px; border-radius: 5px;">
-                <b>BEST</b>
+                <b>POSITIVES</b>
             </p>
             ''',
             unsafe_allow_html=True
         )
-        for g in local_df["BEST"].to_list() :
+        for g in local_df["POSITIVES"].to_list() :
             st.markdown(
                 f'''
                 <p style="font-size:{int(22*zoom)}px; text-align: center; background-color: #E8FFD9;color: black; padding: 3px; border-radius: 5px;">
@@ -603,12 +603,12 @@ with good_bad :
         st.markdown(
             f'''
             <p style="font-size:{int(23*zoom)}px; text-align: center; background-color: red;color: white; padding: 4px; border-radius: 5px;">
-                <b>WORST</b>
+                <b>NEGATIVES</b>
             </p>
             ''',
             unsafe_allow_html=True
         )
-        for g in local_df["WORST"].to_list() :
+        for g in local_df["NEGATIVES"].to_list() :
             st.markdown(
                 f'''
                 <p style="font-size:{int(22*zoom)}px; text-align: center; background-color: #FFD3D3;color: black; padding: 3px; border-radius: 5px;">
@@ -692,8 +692,8 @@ with good_bad :
         unsafe_allow_html=True
     )
     road_df = pd.DataFrame({
-        'BEST': road_top_values,
-        'WORST': road_bottom_values
+        'POSITIVES': road_top_values,
+        'NEGATIVES': road_bottom_values
     })
     good,bad,shoot = st.columns([0.3,0.3,0.4])
 
@@ -701,12 +701,12 @@ with good_bad :
         st.markdown(
             f'''
             <p style="font-size:{int(23*zoom)}px; text-align: center; background-color: green;color: white; padding: 4px; border-radius: 5px;">
-                <b>BEST</b>
+                <b>POSITIVES</b>
             </p>
             ''',
             unsafe_allow_html=True
         )
-        for g in road_df["BEST"].to_list() :
+        for g in road_df["POSITIVES"].to_list() :
             st.markdown(
                 f'''
                 <p style="font-size:{int(22*zoom)}px; text-align: center; background-color: #E8FFD9;color: black; padding: 3px; border-radius: 5px;">
@@ -720,12 +720,12 @@ with good_bad :
         st.markdown(
             f'''
             <p style="font-size:{int(23*zoom)}px; text-align: center; background-color: red;color: white; padding: 4px; border-radius: 5px;">
-                <b>WORST</b>
+                <b>NEGATIVES</b>
             </p>
             ''',
             unsafe_allow_html=True
         )
-        for g in road_df["WORST"].to_list() :
+        for g in road_df["NEGATIVES"].to_list() :
             st.markdown(
                 f'''
                 <p style="font-size:{int(22*zoom)}px; text-align: center; background-color: #FFD3D3;color: black; padding: 3px; border-radius: 5px;">

@@ -18,8 +18,10 @@ df["NB_GAME"] = 1
 df = df[['ROUND', 'NB_GAME', 'TEAM', 'OPPONENT', 'HOME', 'WIN', 'NUMBER', 'PLAYER',
          'TIME_ON', "I_PER", 'PER', 'PM_ON', 'PTS', 'DR', 'OR', 'TR', 'AS', 'ST', 'CO',
          '1_R', '1_T', '2_R', '2_T', '3_R', '3_T', 'TO', 'FP', 'CF', 'NCF']]
-r = 14
 
-team_local = 'TEL'
-team_road = 'BAR'
 
+team = 'ASV'
+min_round = 1
+max_round = 14
+
+print(f.stats_important_team(team,min_round,max_round,df))

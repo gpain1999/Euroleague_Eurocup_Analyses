@@ -24,6 +24,90 @@ import threading
 import streamlit as st
 import plotly.graph_objects as go
 
+def stats_important_team(team,min_round,max_round,df) : 
+    team_stats = get_aggregated_stats(df, min_round,max_round, team = team,more = "")
+    team_stats = add_delta_columns(team_stats)
+
+    opp_stats = get_aggregated_stats(df, min_round,max_round, opponent = team,more = "")
+    opp_stats = add_delta_columns(opp_stats)
+
+    team_stats["PTS_C"] = opp_stats["PTS"]
+    opp_stats["PTS_C"] = team_stats["PTS"]
+
+
+
+    mean_stats = get_aggregated_data(
+        df, 1, 34,
+        selected_teams=[],
+        selected_opponents=[],
+        selected_fields=["TEAM", "ROUND"],
+        selected_players=[],
+        mode="AVERAGE",
+        percent="MADE"
+    )
+
+    mean_stats = add_delta_columns(mean_stats)
+    mean_stats["PTS_C"] = mean_stats["PTS"]
+
+    columns_to_average = ["PTS_C", "DR", "OR", "AS", "ST", "CO", 
+                            "1_R", "1_L", "2_R", "2_L", "3_R", "3_L", 
+                            "TO", "FP", "CF", "NCF"]
+
+    # Calcul des moyennes arrondies et ajout dans un DataFrame
+    mean_stats = mean_stats[columns_to_average].mean().round(3).to_frame().T
+
+    # Coefficients pour appliquer aux colonnes
+    coefficients = {
+        'DR': 0.85, 'OR': 1.35, 'AS': 0.8, 'ST': 1.33, 'CO': 0.6,
+        '1_R': 1, '2_R': 2, '3_R': 3, '1_L': -0.6, '2_L': -0.75, '3_L': -0.5,
+        'TO': -1.25, 'PTS_C': -0.5, 'FP': 0.5, 'CF': -0.5, 'NCF': -1.25
+    }
+
+
+    team_coeff = apply_coefficients(team_stats.copy()[columns_to_average], coefficients)
+    team_coeff = pd.DataFrame(team_coeff.mean().round(3)).T  # Transpose pour avoir une ligne
+
+    opp_coeff = apply_coefficients(opp_stats.copy()[columns_to_average], coefficients)
+    opp_coeff = pd.DataFrame(opp_coeff.mean().round(3)).T  # Transpose pour avoir une ligne
+
+    mean_coeff = apply_coefficients(mean_stats.copy()[columns_to_average], coefficients)
+
+
+
+    team_delta = (team_coeff - mean_coeff).round(3)
+    opp_delta = (opp_coeff - mean_coeff).round(3)
+
+
+    team_coeff = process_dataframes(team_coeff)
+    opp_coeff = process_dataframes(opp_coeff)
+    mean_coeff = process_dataframes(mean_coeff)
+    team_delta = process_dataframes(team_delta)
+    opp_delta = process_dataframes(opp_delta)
+
+    team_top_columns, team_bottom_columns = get_top_and_bottom_column_names(team_delta)
+    opp_top_columns, opp_bottom_columns = get_top_and_bottom_column_names(opp_delta)
+
+    # Extraire les valeurs formatées
+    team_top_values = extract_column_values(team_top_columns, team_stats,"top")
+    team_bottom_values = extract_column_values(team_bottom_columns, team_stats,"bottom")
+    opp_top_values = extract_column_values(opp_top_columns, opp_stats,"top")
+    opp_bottom_values = extract_column_values(opp_bottom_columns, opp_stats,"bottom")
+
+    # Compléter les listes manuellement
+    if len(team_top_values) < 6:
+        team_top_values += ["--"] * (6 - len(team_top_values))
+
+    if len(team_bottom_values) < 6:
+        team_bottom_values += ["--"] * (6 - len(team_bottom_values))
+
+    if len(opp_top_values) < 6:
+        opp_top_values += ["--"] * (6 - len(opp_top_values))
+
+    if len(opp_bottom_values) < 6:
+        opp_bottom_values += ["--"] * (6 - len(opp_bottom_values))
+
+    return team_top_values,team_bottom_values,opp_top_values,opp_bottom_values
+
 def stats_important_players(r,team_local,team_road,df) : 
     local_stats = get_aggregated_stats_players(df, r, team_local)
     road_stats = get_aggregated_stats_players(df, r, team_road)
@@ -85,21 +169,32 @@ def stats_important_players(r,team_local,team_road,df) :
 
 
 # Récupérer les statistiques agrégées pour l'équipe locale et l'équipe visiteuse
-def get_aggregated_stats(df, round_value, team, opponent=None):
+def get_aggregated_stats(df, round_min,round_max, team = None, opponent=None,more = "ROUND"):
+    if team : 
+        if more == "ROUND" :
+            selected_fields = ["TEAM","ROUND"]
+        else :
+            selected_fields = ["TEAM"]
+    if opponent : 
+        if more == "ROUND" :
+            selected_fields = ["OPPONENT","ROUND"]
+        else :
+            selected_fields = ["OPPONENT"]
+
     return get_aggregated_data(
-        df, round_value, round_value,
-        selected_teams=[team],
-        selected_opponents=opponent if opponent else [],
-        selected_fields=["TEAM", "ROUND"],
+        df, round_min, round_max,
+        selected_teams=[team] if team else [],
+        selected_opponents=[opponent] if opponent else [],
+        selected_fields=selected_fields,
         selected_players=[],
-        mode="CUMULATED",
+        mode="AVERAGE",
         percent="MADE"
     )
-def get_aggregated_stats_players(df, round_value, team, opponent=None):
+def get_aggregated_stats_players(df, round_value, team = None, opponent=None):
     return get_aggregated_data(
         df, round_value, round_value,
-        selected_teams=[team],
-        selected_opponents=opponent if opponent else [],
+        selected_teams=[team] if team else [],
+        selected_opponents=[opponent] if opponent else [],
         selected_fields=["TEAM", "ROUND",'PLAYER'],
         selected_players=[],
         mode="CUMULATED",
@@ -162,8 +257,8 @@ def extract_column_values(columns, stats_df,top):
 
 
 def stats_important(r,team_local,team_road,df) : 
-    local_stats = get_aggregated_stats(df, r, team_local)
-    road_stats = get_aggregated_stats(df, r, team_road)
+    local_stats = get_aggregated_stats(df, r,r, team_local)
+    road_stats = get_aggregated_stats(df, r,r, team_road)
 
 
     local_stats = add_delta_columns(local_stats)
@@ -173,6 +268,13 @@ def stats_important(r,team_local,team_road,df) :
     local_stats["PTS_C"] = road_stats["PTS"]
     road_stats["PTS_C"] = local_stats["PTS"]
 
+    for col in local_stats.select_dtypes(include='float').columns:
+        if col != 'I_PER':
+            local_stats[col] = local_stats[col].astype(int)
+
+    for col in road_stats.select_dtypes(include='float').columns:
+        if col != 'I_PER':
+            road_stats[col] = road_stats[col].astype(int)
     # Calculer les moyennes pour mean_stats
     mean_stats = get_aggregated_data(
         df, 1, 34,
@@ -195,6 +297,7 @@ def stats_important(r,team_local,team_road,df) :
 
     # Calcul des moyennes arrondies et ajout dans un DataFrame
     mean_stats = mean_stats[columns_to_average].mean().round(3).to_frame().T
+
 
     # Coefficients pour appliquer aux colonnes
     coefficients = {

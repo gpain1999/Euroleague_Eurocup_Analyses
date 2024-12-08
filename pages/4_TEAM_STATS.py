@@ -120,6 +120,16 @@ opp_detail_select = opp_detail_select.loc[:, (opp_detail_select != "---").any(ax
 opp_detail_select = opp_detail_select.drop(columns = ["OPPONENT","NB_GAME","TIME_ON"])
 
 
+team_def_perc = team_detail_select["DR"].sum()/(team_detail_select["DR"].sum() + opp_detail_select["OR"].sum())
+opp_off_perc = 1 - team_def_perc
+opp_def_perc = opp_detail_select["DR"].sum()/(opp_detail_select["DR"].sum() + team_detail_select["OR"].sum())
+team_off_perc = 1 - opp_def_perc
+
+team_def = (team_def_perc/0.7)/(team_def_perc/0.7 + opp_off_perc/0.3)
+opp_off = (opp_off_perc/0.3)/(team_def_perc/0.7 + opp_off_perc/0.3)
+opp_def = (opp_def_perc/0.7)/( opp_def_perc/0.7 + team_off_perc/0.3)
+team_off = (team_off_perc/0.3)/(opp_def_perc/0.7 + team_off_perc/0.3)
+
 team_league_detail = f.get_aggregated_data(
     df=df, min_round=selected_range[0], max_round=selected_range[1],
     selected_teams=[],
@@ -135,7 +145,7 @@ team_league_detail = team_league_detail.sort_values(by = "ROUND",ascending=False
 team_league_detail = team_league_detail.loc[:, (team_league_detail != "---").any(axis=0)]
 team_league_detail = team_league_detail.drop(columns = ["TEAM","NB_GAME","TIME_ON"])
 
-
+team_top_values,team_bottom_values,opp_top_values,opp_bottom_values = f.stats_important_team(CODETEAM,selected_range[0],selected_range[1],df)
 
 team_moyenne = f.get_aggregated_data(
     df=df, min_round=selected_range[0], max_round=selected_range[1],
@@ -232,8 +242,12 @@ mvp_stat = f.get_aggregated_data(
     percent="MADE"
 )
 
+teams_color = pd.read_csv(f"datas/{competition}_{season}_teams_colors.csv",sep=";")
 
+teams_color[teams_color["TEAM"]==CODETEAM]["COL1"].to_list()[0]
 
+local_c1 = teams_color[teams_color["TEAM"]==CODETEAM]["COL1"].to_list()[0]
+local_c2 = teams_color[teams_color["TEAM"]==CODETEAM]["COL2"].to_list()[0]
 ################### STYLES
 
 def highlight_win(row):
@@ -672,7 +686,8 @@ with delta_graph :
     labels = [i * 2.5 for i in range(1, len(periode) + 1)]
 
     # Couleurs conditionnelles
-    colors = ['green' if val > 0 else 'red' if val < 0 else 'yellow' for val in data_delta]
+    colors = [local_c1 if val > 0 else 'orange' if val < 0 else 'grey' for val in data_delta]
+    contour = [local_c2 if val > 0 else "white" if val < 0 else 'grey' for val in data_delta]
 
     # Création de la figure
     fig = go.Figure()
@@ -682,7 +697,10 @@ with delta_graph :
         go.Bar(
             x=labels,
             y=data_delta,
-            marker=dict(color=colors),  # Couleurs dynamiques
+            marker=dict(
+                color=colors,  # Couleurs des barres
+                line=dict(color=contour, width=2)  # Couleurs des contours dynamiques
+            ),
         )
     )
     for i in range(3, len(labels)-1, 4):  # Indices toutes les 4 barres (commençant à 3)
@@ -721,8 +739,8 @@ with delta_graph :
 with cola :
         st.markdown(
                 f'''
-                <p style="font-size:{int(30*zoom)}px; text-align: center;">
-                    <b> SHOOTS REPART {CODETEAM} </b>
+                <p style="font-size:{int(30*zoom)}px; text-align: center; background-color: {local_c1}; color: {local_c2}; padding: 4px; border-radius: 5px; outline: 3px solid {local_c2};">                    
+                <b> SHOOTS REPART {CODETEAM} </b>
                 </p>
                 ''',
                 unsafe_allow_html=True
@@ -734,7 +752,7 @@ with cola :
 
             st.markdown(
             f'''
-            <p style="font-size:{taille}px; text-align: center; background-color: #00ff00;color: black; padding: 8px; border-radius: 5px;">
+            <p style="font-size:{taille}px; text-align: center; background-color: {local_c2}; color: {local_c1}; padding: 4px; border-radius: 5px; outline: 3px solid {local_c1};">
                 <b>{round(100*(team_moyenne["2_T"].mean()/(team_moyenne["2_T"].mean()+team_moyenne["3_T"].mean())),1)}&nbsp;% OF 2PTS</b>
             </p>
             ''',
@@ -746,7 +764,7 @@ with cola :
         
             st.markdown(
                 f'''
-                <p style="font-size:{taille}px; text-align: center; background-color: #00ff00;color: black; padding: 8px; border-radius: 5px;">
+                <p style="font-size:{taille}px; text-align: center; background-color: {local_c2}; color: {local_c1}; padding: 4px; border-radius: 5px; outline: 3px solid {local_c1};">
                     <b>{round(100*(team_moyenne["3_T"].mean()/(team_moyenne["2_T"].mean()+team_moyenne["3_T"].mean())),1)}&nbsp;% OF 3PTS</b>
                 </p>
                 ''',
@@ -754,7 +772,7 @@ with cola :
             )
         st.markdown(
                 f'''
-                <p style="font-size:{taille}px; text-align: center; background-color: #00ff00;color: black; padding: 8px; border-radius: 5px;">
+                <p style="font-size:{taille}px; text-align: center; background-color: {local_c2}; color: {local_c1}; padding: 4px; border-radius: 5px; outline: 3px solid {local_c1};">
                     <b>{round(((team_moyenne["3_R"].mean()*3 + team_moyenne["2_R"].mean()*2)/(team_moyenne["2_T"].mean()+team_moyenne["3_T"].mean())),2)}&nbsp;PTS PER SHOOT</b>
                 </p>
                 ''',
@@ -763,7 +781,7 @@ with cola :
 
         st.markdown(
             f'''
-            <p style="font-size:{int(30*zoom)}px; text-align: center;">
+                <p style="font-size:{int(30*zoom)}px; text-align: center; background-color: {local_c1}; color: {local_c2}; padding: 4px; border-radius: 5px; outline: 3px solid {local_c2};">                    
                 <b> RATIO AS/TO {CODETEAM} </b>
             </p>
             ''',
@@ -772,7 +790,7 @@ with cola :
 
         st.markdown(
             f'''
-            <p style="font-size:{taille}px; text-align: center; background-color: #00ff00;color: black; padding: 8px; border-radius: 5px;">
+            <p style="font-size:{taille}px; text-align: center; background-color: {local_c2}; color: {local_c1}; padding: 4px; border-radius: 5px; outline: 3px solid {local_c1};">
                 <b>{round(team_moyenne["AS"].mean()/team_moyenne["TO"].mean(),2)}&nbsp; OF AS/TO</b>
             </p>
             ''',
@@ -780,7 +798,7 @@ with cola :
         )
         st.markdown(
             f'''
-            <p style="font-size:{int(30*zoom)}px; text-align: center;">
+                <p style="font-size:{int(30*zoom)}px; text-align: center; background-color: {local_c1}; color: {local_c2}; padding: 4px; border-radius: 5px; outline: 3px solid {local_c2};">                    
                 <b> SHOOTS PER GAME {CODETEAM} </b>
             </p>
             ''',
@@ -789,7 +807,7 @@ with cola :
 
         st.markdown(
             f'''
-            <p style="font-size:{taille}px; text-align: center; background-color: #00ff00;color: black; padding: 8px; border-radius: 5px;">
+            <p style="font-size:{taille}px; text-align: center; background-color: {local_c2}; color: {local_c1}; padding: 4px; border-radius: 5px; outline: 3px solid {local_c1};">
                 <b>{round(team_moyenne["2_T"].mean()+team_moyenne["3_T"].mean(),2)}&nbsp; SHOOTS + {round(team_moyenne["1_T"].mean(),1)}&nbsp; FT</b>
             </p>
             ''',
@@ -798,7 +816,7 @@ with cola :
 
         st.markdown(
             f'''
-            <p style="font-size:{int(25*zoom)}px; text-align: center;">
+                <p style="font-size:{int(30*zoom)}px; text-align: center; background-color: {local_c1}; color: {local_c2}; padding: 4px; border-radius: 5px; outline: 3px solid {local_c2};">                    
                 <b> BUCKETS WITH ASSISTS {CODETEAM} </b>
             </p>
             ''',
@@ -807,7 +825,7 @@ with cola :
 
         st.markdown(
             f'''
-            <p style="font-size:{taille}px; text-align: center; background-color: #00ff00;color: black; padding: 8px; border-radius: 5px;">
+            <p style="font-size:{taille}px; text-align: center; background-color: {local_c2}; color: {local_c1}; padding: 4px; border-radius: 5px; outline: 3px solid {local_c1};">
                 <b>{round(100*team_moyenne["AS"].mean()/(team_moyenne["2_R"].mean()+team_moyenne["3_R"].mean()),1)}&nbsp; %</b>
             </p>
             ''',
@@ -818,7 +836,7 @@ with colb :
     
     st.markdown(
             f'''
-            <p style="font-size:{int(30*zoom)}px; text-align: center;">
+                <p style="font-size:{int(30*zoom)}px; text-align: center; background-color: orange; color: white; padding: 4px; border-radius: 5px; outline: 3px solid white;">                    
                 <b> {DELTA} </b>
             </p>
             ''',
@@ -833,7 +851,7 @@ with colb :
     with a :
         st.markdown(
             f'''
-            <p style="font-size:{taille}px; text-align: center; background-color: #ff0000;color: black; padding: 8px; border-radius: 5px;">
+            <p style="font-size:{taille}px; text-align: center; background-color: white; color: orange; padding: 4px; border-radius: 5px; outline: 3px solid orange;">
                 <b>{round(100*(data["2_T"].mean()/(data["2_T"].mean()+data["3_T"].mean())),1)}&nbsp;% OF 2PTS</b>
             </p>
             ''',
@@ -844,7 +862,7 @@ with colb :
         # Pour les défaites (NO)
         st.markdown(
             f'''
-            <p style="font-size:{taille}px; text-align: center; background-color: #ff0000;color: black; padding: 8px; border-radius: 5px;">
+            <p style="font-size:{taille}px; text-align: center; background-color: white; color: orange; padding: 4px; border-radius: 5px; outline: 3px solid orange;">
                 <b>{round(100*(data["3_T"].mean()/(data["2_T"].mean()+data["3_T"].mean())),1)}&nbsp;% OF 3PTS</b>
             </p>
             ''',
@@ -852,7 +870,7 @@ with colb :
         )
     st.markdown(
                 f'''
-                <p style="font-size:{taille}px; text-align: center; background-color: #ff0000;color: black; padding: 8px; border-radius: 5px;">
+                <p style="font-size:{taille}px; text-align: center; background-color: white; color: orange; padding: 4px; border-radius: 5px; outline: 3px solid orange;">
                     <b>{round(((data["3_R"].mean()*3 + data["2_R"].mean()*2)/(data["2_T"].mean()+data["3_T"].mean())),2)}&nbsp;PTS PER SHOOT</b>
                 </p>
                 ''',
@@ -860,7 +878,7 @@ with colb :
             ) 
     st.markdown(
             f'''
-            <p style="font-size:{int(30*zoom)}px; text-align: center;">
+                <p style="font-size:{int(30*zoom)}px; text-align: center; background-color: orange; color: white; padding: 4px; border-radius: 5px; outline: 3px solid white;">                    
                 <b> {DELTA} </b>
             </p>
             ''',
@@ -868,7 +886,7 @@ with colb :
         )
     st.markdown(
             f'''
-            <p style="font-size:{taille}px; text-align: center; background-color: #ff0000;color: black; padding: 8px; border-radius: 5px;">
+            <p style="font-size:{taille}px; text-align: center; background-color: white; color: orange; padding: 4px; border-radius: 5px; outline: 3px solid orange;">
                 <b>{round(data["AS"].mean()/data["TO"].mean(),2)}&nbsp; OF AS/TO</b>
             </p>
             ''',
@@ -876,7 +894,7 @@ with colb :
         )
     st.markdown(
             f'''
-            <p style="font-size:{int(30*zoom)}px; text-align: center;">
+                <p style="font-size:{int(30*zoom)}px; text-align: center; background-color: orange; color: white; padding: 4px; border-radius: 5px; outline: 3px solid white;">                    
                 <b> {DELTA} </b>
             </p>
             ''',
@@ -884,7 +902,7 @@ with colb :
         )
     st.markdown(
             f'''
-            <p style="font-size:{taille}px; text-align: center; background-color: #ff0000;color: black; padding: 8px; border-radius: 5px;">
+            <p style="font-size:{taille}px; text-align: center; background-color: white; color: orange; padding: 4px; border-radius: 5px; outline: 3px solid orange;">
                 <b>{round(data["2_T"].mean()+data["3_T"].mean(),2)}&nbsp; SHOOTS + {round(data["1_T"].mean(),1)}&nbsp; FT</b>
             </p>
             ''',
@@ -893,7 +911,7 @@ with colb :
 
     st.markdown(
             f'''
-            <p style="font-size:{int(25*zoom)}px; text-align: center;">
+                <p style="font-size:{int(30*zoom)}px; text-align: center; background-color: orange; color: white; padding: 4px; border-radius: 5px; outline: 3px solid white;">                    
                 <b> {DELTA} </b>
             </p>
             ''',
@@ -901,7 +919,7 @@ with colb :
         )
     st.markdown(
             f'''
-            <p style="font-size:{taille}px; text-align: center; background-color: #ff0000;color: black; padding: 8px; border-radius: 5px;">
+            <p style="font-size:{taille}px; text-align: center; background-color: white; color: orange; padding: 4px; border-radius: 5px; outline: 3px solid orange;">
                 <b>{round(100*data["AS"].mean()/(data["2_R"].mean()+data["3_R"].mean()),1)}&nbsp; %</b>
             </p>
             ''',
@@ -911,7 +929,7 @@ with mvp :
             # Intégrer la couleur dans le markdown
     st.markdown(
             f'''
-            <p style="font-size:{int(40*zoom)}px; text-align: center; background-color: {MVP_COLOR};color: black; padding: 6px; border-radius: 5px;">
+            <p style="font-size:{int(40*zoom)}px; text-align: center; background-color: {MVP_COLOR};color: black; padding: 6px; border-radius: 5px;outline: 4px solid gold;">
                 <b> BEST PLAYER NOTE : {round(MVP_NOTE)}</b>
             </p>
             ''',
@@ -937,7 +955,7 @@ with mvp :
         st.plotly_chart(fig2)
         st.markdown(
             f'''
-            <p style="font-size:{int(30*zoom)}px; text-align: center; background-color: {MVP_COLOR};color: black; padding: 6px; border-radius: 5px;">
+            <p style="font-size:{int(30*zoom)}px; text-align: center; background-color: {MVP_COLOR};color: black; padding: 6px; border-radius: 5px;outline: 4px solid gold;">
                 <b> {round(mvp_stat["PER"].mean(),1)} PER /G</b>
             </p>
             ''',
@@ -946,7 +964,7 @@ with mvp :
 with colc :
     st.markdown(
             f'''
-            <p style="font-size:{int(25*zoom)}px; text-align: center; background-color: {notation["COULEUR"].to_list()[1]};color: black; padding: 6px; border-radius: 4.5px;">
+            <p style="font-size:{int(25*zoom)}px; text-align: center; background-color: {notation["COULEUR"].to_list()[1]};color: black; padding: 6px; border-radius: 4.5px;outline:4px solid silver;">
                 <b> {notation["PLAYER"].to_list()[1]} : {round(notation["NOTE"].to_list()[1])}</b>
             </p>
             ''',
@@ -954,7 +972,7 @@ with colc :
         )
     st.markdown(
             f'''
-            <p style="font-size:{int(25*zoom)}px; text-align: center; background-color: {notation["COULEUR"].to_list()[2]};color: black; padding: 6px; border-radius: 4.5px;">
+            <p style="font-size:{int(25*zoom)}px; text-align: center; background-color: {notation["COULEUR"].to_list()[2]};color: black; padding: 6px; border-radius: 4.5px;outline:4px solid #CD7F32";>
                 <b> {notation["PLAYER"].to_list()[2]} : {round(notation["NOTE"].to_list()[2])}</b>
             </p>
             ''',
@@ -999,9 +1017,249 @@ with colc :
             </p>
             ''',
             unsafe_allow_html=True
+        )
+    st.markdown(
+            f'''
+            <p style="font-size:{int(25*zoom)}px; text-align: center; background-color: {notation["COULEUR"].to_list()[8]};color: black; padding: 6px; border-radius: 4.5px;">
+                <b> {notation["PLAYER"].to_list()[8]} : {round(notation["NOTE"].to_list()[8])}</b>
+            </p>
+            ''',
+            unsafe_allow_html=True
         ) 
 team_detail_select_2 = team_detail_select.style.apply(highlight_win, axis=1).format(precision=1) 
 opp_detail_select_2 = opp_detail_select.style.apply(highlight_win_o, axis=1).format(precision=1)
+
+good_bad_team,good_bad_opp = st.columns([1,1]) 
+
+
+with good_bad_team :
+    st.markdown(
+        f'''
+        <p style="font-size:{int(30*zoom)}px; text-align: center; background-color: {local_c1}; color: {local_c2}; 
+        padding: 4px; border-radius: 5px; outline: 3px solid {local_c2};">
+            <b>{CODETEAM} - KEYS STATS</b>
+        </p>
+        ''',
+        unsafe_allow_html=True
+    )
+
+
+    team_df = pd.DataFrame({
+        'POSITIVES': team_top_values,
+        'NEGATIVES': team_bottom_values
+    })
+
+    good,bad,sho = st.columns([0.33,0.33,0.33])
+
+    with good :
+        st.markdown(
+            f'''
+            <p style="font-size:{int(23*zoom)}px; text-align: center; background-color: green;color: white; padding: 4px; border-radius: 5px;">
+                <b>POSITIVES</b>
+            </p>
+            ''',
+            unsafe_allow_html=True
+        )
+        for g in team_df["POSITIVES"].to_list() :
+            st.markdown(
+                f'''
+                <p style="font-size:{int(22*zoom)}px; text-align: center; background-color: #E8FFD9;color: black; padding: 3px; border-radius: 5px;">
+                    <b>{g}</b>
+                </p>
+                ''',
+                unsafe_allow_html=True
+            )
+
+    with bad :
+        st.markdown(
+            f'''
+            <p style="font-size:{int(23*zoom)}px; text-align: center; background-color: red;color: white; padding: 4px; border-radius: 5px;">
+                <b>NEGATIVES</b>
+            </p>
+            ''',
+            unsafe_allow_html=True
+        )
+        for g in team_df["NEGATIVES"].to_list() :
+            st.markdown(
+                f'''
+                <p style="font-size:{int(22*zoom)}px; text-align: center; background-color: #FFD3D3;color: black; padding: 3px; border-radius: 5px;">
+                    <b>{g}</b>
+                </p>
+                ''',
+                unsafe_allow_html=True
+            )
+    with sho : 
+
+        st.markdown(
+            f'''
+            <p style="font-size:{22*zoom}px; text-align: center; background-color: {local_c2};color: {local_c1}; padding: 6px; border-radius: 5px;outline: 3px solid {local_c1};">
+                <b>{round(team_detail_select["2_T"].mean()+team_detail_select["3_T"].mean(),1)}&nbsp; SHOOTS + {round(team_detail_select["1_T"].mean(),1)} FT</b>
+            </p>
+            ''',
+            unsafe_allow_html=True
+        )
+
+        st.markdown(
+            f'''
+            <p style="font-size:{22*zoom}px; text-align: center; background-color: {local_c2};color: {local_c1}; padding: 6px; border-radius: 5px;outline: 3px solid {local_c1};">
+                <b>{round((team_detail_select["2_R"].sum()*2+team_detail_select["3_R"].sum()*3)/(team_detail_select["2_T"].sum()+team_detail_select["3_T"].sum()),2)}&nbsp; PTS PER SHOOT</b>
+            </p>
+            ''',
+            unsafe_allow_html=True
+        )
+        st.markdown(
+            f'''
+            <p style="font-size:{22*zoom}px; text-align: center; background-color: {local_c2};color: {local_c1}; padding: 6px; border-radius: 5px;outline: 3px solid {local_c1};">
+                <b>{round(100*team_detail_select["AS"].sum()/(team_detail_select["2_R"].sum()+team_detail_select["3_R"].sum()),1)}&nbsp;% ASSISTS </b>
+            </p>
+            ''',
+            unsafe_allow_html=True
+        )
+        shot_T = team_detail_select["1_T"].sum()/2 + team_detail_select["2_T"].sum() + team_detail_select["3_T"].sum()
+        TO = team_detail_select["TO"].sum()
+
+        st.markdown(
+            f'''
+            <p style="font-size:{22*zoom}px; text-align: center; background-color: {local_c2};color: {local_c1}; padding: 6px; border-radius: 5px;outline: 3px solid {local_c1};">
+                <b>{round(100*shot_T/(shot_T+TO),1)} % BALL CARE</b>
+            </p>
+            ''',
+            unsafe_allow_html=True
+        )
+
+        st.markdown(
+            f'''
+            <p style="font-size:{22*zoom}px; text-align: center; background-color: {local_c2};color: {local_c1}; padding: 6px; border-radius: 5px;outline: 3px solid {local_c1};">
+                <b>{round(team_def+team_off,2)} REB. PERF</b>
+            </p>
+            ''',
+            unsafe_allow_html=True
+        )
+
+
+        st.markdown(
+            f'''
+            <p style="font-size:{22*zoom}px; text-align: center; background-color: {local_c2};color: {local_c1}; padding: 6px; border-radius: 5px;outline: 3px solid {local_c1};">
+                <b>{round(team_detail_select["PER"].mean(),1)} PER</b>
+            </p>
+            ''',
+            unsafe_allow_html=True
+        )
+
+with good_bad_opp :
+    st.markdown(
+        f'''
+        <p style="font-size:{int(30*zoom)}px; text-align: center; background-color: orange; color: white; 
+        padding: 4px; border-radius: 5px; outline: 3px solid white;">
+            <b>OPPONENTS - KEYS STATS</b>
+        </p>
+        ''',
+        unsafe_allow_html=True
+    )
+
+
+    team_df = pd.DataFrame({
+        'POSITIVES': opp_top_values,
+        'NEGATIVES': opp_bottom_values
+    })
+
+    sho,good,bad = st.columns([0.33,0.33,0.33])
+
+    with good :
+        st.markdown(
+            f'''
+            <p style="font-size:{int(23*zoom)}px; text-align: center; background-color: green;color: white; padding: 4px; border-radius: 5px;">
+                <b>POSITIVES</b>
+            </p>
+            ''',
+            unsafe_allow_html=True
+        )
+        for g in team_df["POSITIVES"].to_list() :
+            st.markdown(
+                f'''
+                <p style="font-size:{int(22*zoom)}px; text-align: center; background-color: #E8FFD9;color: black; padding: 3px; border-radius: 5px;">
+                    <b>{g}</b>
+                </p>
+                ''',
+                unsafe_allow_html=True
+            )
+
+    with bad :
+        st.markdown(
+            f'''
+            <p style="font-size:{int(23*zoom)}px; text-align: center; background-color: red;color: white; padding: 4px; border-radius: 5px;">
+                <b>NEGATIVES</b>
+            </p>
+            ''',
+            unsafe_allow_html=True
+        )
+        for g in team_df["NEGATIVES"].to_list() :
+            st.markdown(
+                f'''
+                <p style="font-size:{int(22*zoom)}px; text-align: center; background-color: #FFD3D3;color: black; padding: 3px; border-radius: 5px;">
+                    <b>{g}</b>
+                </p>
+                ''',
+                unsafe_allow_html=True
+            )
+
+    with sho : 
+
+        st.markdown(
+            f'''
+            <p style="font-size:{22*zoom}px; text-align: center; background-color: grey;color: black; padding: 6px; border-radius: 5px;outline: 3px solid orange;">
+                <b>{round(opp_detail_select["2_T"].mean()+opp_detail_select["3_T"].mean(),1)}&nbsp; SHOOTS + {round(opp_detail_select["1_T"].mean(),1)} FT</b>
+            </p>
+            ''',
+            unsafe_allow_html=True
+        )
+
+        st.markdown(
+            f'''
+            <p style="font-size:{22*zoom}px; text-align: center; background-color: grey;color: black; padding: 6px; border-radius: 5px;outline: 3px solid orange;">
+                <b>{round((opp_detail_select["2_R"].sum()*2+opp_detail_select["3_R"].sum()*3)/(opp_detail_select["2_T"].sum()+opp_detail_select["3_T"].sum()),2)}&nbsp; PTS PER SHOOT</b>
+            </p>
+            ''',
+            unsafe_allow_html=True
+        )
+        st.markdown(
+            f'''
+            <p style="font-size:{22*zoom}px; text-align: center; background-color: grey;color: black; padding: 6px; border-radius: 5px;outline: 3px solid orange;">
+                <b>{round(100*opp_detail_select["AS"].sum()/(opp_detail_select["2_R"].sum()+opp_detail_select["3_R"].sum()),1)}&nbsp;% ASSISTS </b>
+            </p>
+            ''',
+            unsafe_allow_html=True
+        )
+        shot_T = opp_detail_select["1_T"].sum()/2 + opp_detail_select["2_T"].sum() + opp_detail_select["3_T"].sum()
+        TO = opp_detail_select["TO"].sum()
+
+        st.markdown(
+            f'''
+            <p style="font-size:{22*zoom}px; text-align: center; background-color: grey;color: black; padding: 6px; border-radius: 5px;outline: 3px solid orange;">
+                <b>{round(100*shot_T/(shot_T+TO),1)} % BALL CARE</b>
+            </p>
+            ''',
+            unsafe_allow_html=True
+        )
+
+        st.markdown(
+            f'''
+            <p style="font-size:{22*zoom}px; text-align: center; background-color: grey;color: black; padding: 6px; border-radius: 5px;outline: 3px solid orange;">
+                <b>{round(opp_def+opp_off,2)} REB. PERF</b>
+            </p>
+            ''',
+            unsafe_allow_html=True
+        )
+
+
+        st.markdown(
+            f'''
+            <p style="font-size:{22*zoom}px; text-align: center; background-color: grey;color: black; padding: 6px; border-radius: 5px;outline: 3px solid orange;">
+                <b>{round(opp_detail_select["PER"].mean(),1)} PER</b>
+            </p>
+            ''',
+            unsafe_allow_html=True
+        )
 
 st.header(f"Stats GAME BY GAME : {CODETEAM}")
 st.dataframe(team_detail_select_2,height=min(38*len(team_detail_select),650), use_container_width=True,hide_index=True)
@@ -1010,4 +1268,3 @@ st.header("Stats GAME BY GAME : OPPONENTS")
 st.dataframe(opp_detail_select_2,height=min(38*len(opp_detail_select),650), use_container_width=True,hide_index=True)
 
 
-#type
