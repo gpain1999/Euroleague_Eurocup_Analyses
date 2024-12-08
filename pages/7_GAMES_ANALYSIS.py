@@ -918,7 +918,7 @@ with snum :
             # Afficher l'image rognée avec Streamlit
             st.image(image_cropped, caption=f"#{NUMBER_PTS} {NAME_PTS}", width=int(250*zoom))
         else:
-            st.warning(f"Image introuvable pour le joueur : {NAME_PTS}")
+            st.image(os.path.join(images_dir, f"{competition}_{season}_teams/{TEAM_PTS}.png"), caption=f"#{NUMBER_PTS} {NAME_PTS}", width=int(200*zoom))
 
 
 
@@ -947,7 +947,7 @@ with snum :
             # Afficher l'image rognée avec Streamlit
             st.image(image_cropped, caption=f"#{NUMBER_DR} {NAME_DR}", width=int(250*zoom))
         else:
-            st.warning(f"Image introuvable pour le joueur : {NAME_DR}")
+            st.image(os.path.join(images_dir, f"{competition}_{season}_teams/{TEAM_DR}.png"), caption=f"#{NUMBER_DR} {NAME_DR}", width=int(200*zoom))
 
 
 
@@ -977,7 +977,7 @@ with snum :
             # Afficher l'image rognée avec Streamlit
             st.image(image_cropped, caption=f"#{NUMBER_AS} {NAME_AS}", width=int(250*zoom))
         else:
-            st.warning(f"Image introuvable pour le joueur : {NAME_AS}")
+            st.image(os.path.join(images_dir, f"{competition}_{season}_teams/{TEAM_AS}.png"), caption=f"#{NUMBER_AS} {NAME_AS}", width=int(200*zoom))
 
 
     st.markdown(
@@ -1014,7 +1014,7 @@ with snum :
             # Afficher l'image rognée avec Streamlit
             st.image(image_cropped, caption=f"#{NUMBER_ST} {NAME_ST}", width=int(250*zoom))
         else:
-            st.warning(f"Image introuvable pour le joueur : {NAME_ST}")
+            st.image(os.path.join(images_dir, f"{competition}_{season}_teams/{TEAM_ST}.png"), caption=f"#{NUMBER_ST} {NAME_ST}", width=int(200*zoom))
 
     s1, s2,s3,s4 = st.columns([0.25, 0.25,0.25,0.25])
 
@@ -1046,7 +1046,7 @@ with snum :
             # Afficher l'image rognée avec Streamlit
             st.image(image_cropped, caption=f"#{NUMBER_PM_ON} {NAME_PM_ON}", width=int(250*zoom)) 
         else:
-            st.warning(f"Image introuvable pour le joueur : {NAME_PM_ON}")
+            st.image(os.path.join(images_dir, f"{competition}_{season}_teams/{TEAM_PM_ON}.png"), caption=f"#{NUMBER_PM_ON} {NAME_PM_ON}", width=int(200*zoom))
 
     with s2 :
 
@@ -1075,7 +1075,7 @@ with snum :
             # Afficher l'image rognée avec Streamlit
             st.image(image_cropped, caption=f"#{NUMBER_OR} {NAME_OR}", width=int(250*zoom)) 
         else:
-            st.warning(f"Image introuvable pour le joueur : {NAME_OR}")
+            st.image(os.path.join(images_dir, f"{competition}_{season}_teams/{TEAM_OR}.png"), caption=f"#{NUMBER_OR} {NAME_OR}", width=int(200*zoom))
             
     with s3 :
 
@@ -1100,7 +1100,7 @@ with snum :
             image_cropped = image.crop((0, 0, width, cropped_height))
             st.image(image_cropped, caption=f"#{NUMBER_TO} {NAME_TO}", width=int(250*zoom))
         else:
-            st.warning(f"Image introuvable pour le joueur : {NAME_TO}")
+            st.image(os.path.join(images_dir, f"{competition}_{season}_teams/{TEAM_TO}.png"), caption=f"#{NUMBER_TO} {NAME_TO}", width=int(200*zoom))
 
     with s4 :
 
@@ -1127,7 +1127,7 @@ with snum :
             # Afficher l'image rognée avec Streamlit
             st.image(image_cropped, caption=f"#{NUMBER_CO} {NAME_CO}", width=int(250*zoom))        
         else:
-            st.warning(f"Image introuvable pour le joueur : {NAME_CO}")
+            st.image(os.path.join(images_dir, f"{competition}_{season}_teams/{TEAM_CO}.png"), caption=f"#{NUMBER_CO} {NAME_CO}", width=int(200*zoom))
 
 
 
