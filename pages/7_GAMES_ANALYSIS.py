@@ -386,6 +386,36 @@ cola, good_bad,snum = st.columns([0.3, 0.3,0.4])
 
 with cola :
 
+    team1,team2 = st.columns([0.5,0.5])
+
+    with team1 :
+        st.markdown(
+            f'''
+            <p style="font-size:{int(40*zoom)}px; text-align: center; background-color: {local_c1};color: {local_c2}; padding: 4px; border-radius: 5px;outline: 3px solid gold;">
+                <b>{team_local} : {with_game["LOCAL_SCORE"].to_list()[0]}</b>
+            </p>
+            ''',
+            unsafe_allow_html=True
+        )
+    with team2 :
+        st.markdown(
+            f'''
+            <p style="font-size:{int(40*zoom)}px; text-align: center; background-color: {road_c1};color: {road_c2}; padding: 4px; border-radius: 5px;outline: 3px solid gold;">
+                <b>{team_road} : {with_game["ROAD_SCORE"].to_list()[0]}</b>
+            </p>
+            ''',
+            unsafe_allow_html=True
+        )
+
+    st.markdown(
+        f'''
+        <p style="font-size:{int(27*zoom)}px; text-align: center; background-color: grey;color: black; padding: 3px; border-radius: 5px;">
+            <b></b>
+        </p>
+        ''',
+        unsafe_allow_html=True
+    )
+
     type_delta = st.selectbox("DELTA", options=["CUMULATED","PER PERIODE"], index=0)
 
     col_tab = ["TEAM","5","10","15","20","25","30","35","40","45","50","55","60"]
@@ -414,7 +444,7 @@ with cola :
         # Ajouter le titre de la colonne
         col.markdown(
             f'''
-            <p style="font-size:{int(20*zoom)}px; text-align: center; background-color: #FAF0E6;color: black; padding: 4px; border-radius: 5px; {border_style}">
+            <p style="font-size:{int(20*zoom)}px; text-align: center; background-color: #FAF0E6;color: black; padding: 2px; border-radius: 5px; {border_style}">
                 <b>{data_TABLEAU.columns[i]}</b>
             </p>
             ''',
@@ -513,7 +543,7 @@ with cola :
     # Mise en page
     fig.update_layout(
         autosize=True,
-        height=int(600*zoom),
+        height=int(550*zoom),
         title=f"SCORE EVOL. DELTA {type_delta}",
         xaxis_title="Minutes",
         yaxis_title="Delta",
@@ -529,7 +559,15 @@ with cola :
     # Affichage dans Streamlit
     st.plotly_chart(fig,use_container_width=True)
 
-
+    st.markdown(
+        f'''
+        <p style="font-size:{int(30*zoom)}px; text-align: center; background-color: gold; color: black; 
+        padding: 4px; border-radius: 5px; outline: 3px solid gold;">
+            <b> PLAYERS KEYS STATS : </b>
+        </p>
+        ''',
+        unsafe_allow_html=True
+    )
 
 
 with good_bad :
@@ -549,7 +587,7 @@ with good_bad :
         'WORST': local_bottom_values
     })
 
-    good,bad,shoot = st.columns([0.33,0.33,0.33])
+    good,bad,shoot = st.columns([0.3,0.3,0.4])
 
     with good :
         st.markdown(
@@ -589,9 +627,19 @@ with good_bad :
                 unsafe_allow_html=True
             )
     with shoot : 
+
         st.markdown(
             f'''
-            <p style="font-size:{20*zoom}px; text-align: center; background-color: {local_c1};color: {local_c2}; padding: 8px; border-radius: 5px;outline: 3px solid {local_c2};">
+            <p style="font-size:{22*zoom}px; text-align: center; background-color: {local_c2};color: {local_c1}; padding: 6px; border-radius: 5px;outline: 3px solid {local_c1};">
+                <b>{round(local_player_stat["2_T"].sum()+local_player_stat["3_T"].sum(),2)}&nbsp; SHOOTS + {local_player_stat["1_T"].sum()} FT</b>
+            </p>
+            ''',
+            unsafe_allow_html=True
+        )
+
+        st.markdown(
+            f'''
+            <p style="font-size:{20*zoom}px; text-align: center; background-color: {local_c2};color: {local_c1}; padding: 8px; border-radius: 5px;outline: 3px solid {local_c1};">
                 <b>{round((local_player_stat["2_R"].sum()*2+local_player_stat["3_R"].sum()*3)/(local_player_stat["2_T"].sum()+local_player_stat["3_T"].sum()),2)}&nbsp; PTS PER SHOOT</b>
             </p>
             ''',
@@ -602,7 +650,7 @@ with good_bad :
 
         st.markdown(
             f'''
-            <p style="font-size:{22*zoom}px; text-align: center; background-color: {local_c1};color: {local_c2}; padding: 8px; border-radius: 5px;outline: 3px solid {local_c2};">
+            <p style="font-size:{22*zoom}px; text-align: center; background-color: {local_c2};color: {local_c1}; padding: 8px; border-radius: 5px;outline: 3px solid {local_c1};">
                 <b>{round(100*shot_T/(shot_T+TO),1)} % BALL CARE</b>
             </p>
             ''',
@@ -611,7 +659,7 @@ with good_bad :
 
         st.markdown(
             f'''
-            <p style="font-size:{22*zoom}px; text-align: center; background-color: {local_c1};color: {local_c2}; padding: 8px; border-radius: 5px;outline: 3px solid {local_c2};">
+            <p style="font-size:{22*zoom}px; text-align: center; background-color: {local_c2};color: {local_c1}; padding: 8px; border-radius: 5px;outline: 3px solid {local_c1};">
                 <b>{round(local_def+local_off,2)} REB. PERF</b>
             </p>
             ''',
@@ -620,7 +668,7 @@ with good_bad :
 
         st.markdown(
             f'''
-            <p style="font-size:{20*zoom}px; text-align: center; background-color: {local_c1};color: {local_c2}; padding: 8px; border-radius: 5px;outline: 3px solid {local_c2};">
+            <p style="font-size:{20*zoom}px; text-align: center; background-color: {local_c2};color: {local_c1}; padding: 8px; border-radius: 5px;outline: 3px solid {local_c1};">
                 <b>{round(100*local_player_stat["AS"].sum()/(local_player_stat["2_R"].sum()+local_player_stat["3_R"].sum()),1)}&nbsp;% ASSISTS </b>
             </p>
             ''',
@@ -628,7 +676,7 @@ with good_bad :
         )
         st.markdown(
             f'''
-            <p style="font-size:{22*zoom}px; text-align: center; background-color: {local_c1};color: {local_c2}; padding: 8px; border-radius: 5px;outline: 3px solid {local_c2};">
+            <p style="font-size:{22*zoom}px; text-align: center; background-color: {local_c2};color: {local_c1}; padding: 8px; border-radius: 5px;outline: 3px solid {local_c1};">
                 <b>{round(local_player_stat["PER"].sum(),1)} PER</b>
             </p>
             ''',
@@ -655,7 +703,7 @@ with good_bad :
         'BEST': road_top_values,
         'WORST': road_bottom_values
     })
-    good,bad,shoot = st.columns([0.33,0.33,0.33])
+    good,bad,shoot = st.columns([0.3,0.3,0.4])
 
     with good :
         st.markdown(
@@ -695,9 +743,18 @@ with good_bad :
                 unsafe_allow_html=True
             )
     with shoot :
+
         st.markdown(
             f'''
-            <p style="font-size:{20*zoom}px; text-align: center; background-color: {road_c1};color: {road_c2}; padding: 8px; border-radius: 5px;outline: 3px solid {road_c2};">
+            <p style="font-size:{22*zoom}px; text-align: center; background-color: {road_c2};color: {road_c1}; padding: 6px; border-radius: 5px;outline: 3px solid {road_c1};">
+                <b>{round(road_player_stat["2_T"].sum()+road_player_stat["3_T"].sum(),2)}&nbsp; SHOOTS + {road_player_stat["1_T"].sum()} FT</b>
+            </p>
+            ''',
+            unsafe_allow_html=True
+        )
+        st.markdown(
+            f'''
+            <p style="font-size:{20*zoom}px; text-align: center; background-color: {road_c2};color: {road_c1}; padding: 8px; border-radius: 5px;outline: 3px solid {road_c1};">
                 <b>{round((road_player_stat["2_R"].sum()*2+road_player_stat["3_R"].sum()*3)/(road_player_stat["2_T"].sum()+road_player_stat["3_T"].sum()),2)}&nbsp; PTS PER SHOOT</b>
             </p>
             ''',
@@ -708,7 +765,7 @@ with good_bad :
 
         st.markdown(
             f'''
-            <p style="font-size:{22*zoom}px; text-align: center; background-color: {road_c1};color: {road_c2}; padding: 8px; border-radius: 5px;outline: 3px solid {road_c2};">
+            <p style="font-size:{22*zoom}px; text-align: center; background-color: {road_c2};color: {road_c1}; padding: 8px; border-radius: 5px;outline: 3px solid {road_c1};">
                 <b>{round(100*shot_T/(shot_T+TO),1)} % BALL CARE</b>
             </p>
             ''',
@@ -716,7 +773,7 @@ with good_bad :
         )
         st.markdown(
             f'''
-            <p style="font-size:{22*zoom}px; text-align: center; background-color: {road_c1};color: {road_c2}; padding: 8px; border-radius: 5px;outline: 3px solid {road_c2};">
+            <p style="font-size:{22*zoom}px; text-align: center; background-color: {road_c2};color: {road_c1}; padding: 8px; border-radius: 5px;outline: 3px solid {road_c1};">
                 <b>{round(road_def+road_off,2)} REB. PERF</b>
             </p>
             ''',
@@ -724,7 +781,7 @@ with good_bad :
         )
         st.markdown(
             f'''
-            <p style="font-size:{20*zoom}px; text-align: center; background-color: {road_c1};color: {road_c2}; padding: 8px; border-radius: 5px;outline: 3px solid {road_c2};">
+            <p style="font-size:{20*zoom}px; text-align: center; background-color: {road_c2};color: {road_c1}; padding: 8px; border-radius: 5px;outline: 3px solid {road_c1};">
                 <b>{round(100*road_player_stat["AS"].sum()/(road_player_stat["2_R"].sum()+road_player_stat["3_R"].sum()),1)}&nbsp;% ASSISTS </b>
             </p>
             ''',
@@ -732,7 +789,7 @@ with good_bad :
         )
         st.markdown(
             f'''
-            <p style="font-size:{22*zoom}px; text-align: center; background-color: {road_c1};color: {road_c2}; padding: 8px; border-radius: 5px;outline: 3px solid {road_c2};">
+            <p style="font-size:{22*zoom}px; text-align: center; background-color: {road_c2};color: {road_c1}; padding: 8px; border-radius: 5px;outline: 3px solid {road_c1};">
                 <b>{round(road_player_stat["PER"].sum(),1)} PER</b>
             </p>
             ''',
@@ -781,25 +838,16 @@ with snum :
 
     with s2 :
 
-        NAME_j = player_stat["PLAYER"].to_list()[1]
-        TEAM_j = player_stat["TEAM"].to_list()[1]
-        NUMBER_j = player_stat["#"].to_list()[1]
-        STAT_j = player_stat["I_PER"].to_list()[1]
-        ID_j = players[(players["CODETEAM"] == TEAM_j) & (players["PLAYER"] == NAME_j)]["PLAYER_ID"].to_list()[0]
-
-        image_path_j = os.path.join(images_dir, f"{competition}_{season}_players/{TEAM_j}_{ID_j}.png")
-
         st.markdown(
             f'''
-            <p style="font-size:{int(25*zoom)}px; text-align: center; background-color: silver;color: black; padding: 5px; border-radius: 5px;">
-                <b>2ND : {STAT_j} I_PER</b>
+            <p style="font-size:{int(27*zoom)}px; text-align: center; background-color: #00ff00;color: black; padding: 5px; border-radius: 5px;">
+                <b>{PTS_data["PTS"].to_list()[0]} POINTS</b>
             </p>
             ''',
             unsafe_allow_html=True
         )
-
-        if os.path.exists(image_path_j):
-            image = Image.open(image_path_j)
+        if os.path.exists(PTS_image_path):
+            image = Image.open(PTS_image_path)
 
             # Calculer la hauteur des 75% supérieurs
             width, height = image.size
@@ -809,31 +857,26 @@ with snum :
             image_cropped = image.crop((0, 0, width, cropped_height))
 
             # Afficher l'image rognée avec Streamlit
-            st.image(image_cropped, caption=f"#{NUMBER_j} {NAME_j}", width=int(250*zoom))        
+            st.image(image_cropped, caption=f"#{NUMBER_PTS} {NAME_PTS}", width=int(250*zoom))
         else:
-            st.image(os.path.join(images_dir, f"{competition}_{season}_teams/{TEAM_j}.png"), caption=f"#{NUMBER_j} {NAME_j}", width=int(200*zoom))
+            st.image(os.path.join(images_dir, f"{competition}_{season}_teams/{TEAM_PTS}.png"), caption=f"#{NUMBER_PTS} {NAME_PTS}", width=int(200*zoom))
+
+
 
 
     with s3 :
-        NAME_j = player_stat["PLAYER"].to_list()[2]
-        TEAM_j = player_stat["TEAM"].to_list()[2]
-        NUMBER_j = player_stat["#"].to_list()[2]
-        STAT_j = player_stat["I_PER"].to_list()[2]
-        ID_j = players[(players["CODETEAM"] == TEAM_j) & (players["PLAYER"] == NAME_j)]["PLAYER_ID"].to_list()[0]
-
-        image_path_j = os.path.join(images_dir, f"{competition}_{season}_players/{TEAM_j}_{ID_j}.png")
+        # Intégrer la couleur dans le markdown
 
         st.markdown(
             f'''
-            <p style="font-size:{int(25*zoom)}px; text-align: center; background-color: #CD7F32;color: white; padding: 5px; border-radius: 5px;">
-                <b>3RD : {STAT_j} I_PER</b>
+            <p style="font-size:{int(27*zoom)}px; text-align: center; background-color: #00ff00;color: black; padding: 5px; border-radius: 5px;">
+                <b>{int(PM_ON_data["PM_ON"].to_list()[0])} +/-</b>
             </p>
             ''',
             unsafe_allow_html=True
         )
-
-        if os.path.exists(image_path_j):
-            image = Image.open(image_path_j)
+        if os.path.exists(PM_ON_image_path):
+            image = Image.open(PM_ON_image_path)
 
             # Calculer la hauteur des 75% supérieurs
             width, height = image.size
@@ -843,9 +886,10 @@ with snum :
             image_cropped = image.crop((0, 0, width, cropped_height))
 
             # Afficher l'image rognée avec Streamlit
-            st.image(image_cropped, caption=f"#{NUMBER_j} {NAME_j}", width=int(250*zoom))        
+            st.image(image_cropped, caption=f"#{NUMBER_PM_ON} {NAME_PM_ON}", width=int(250*zoom)) 
         else:
-            st.image(os.path.join(images_dir, f"{competition}_{season}_teams/{TEAM_j}.png"), caption=f"#{NUMBER_j} {NAME_j}", width=int(200*zoom))
+            st.image(os.path.join(images_dir, f"{competition}_{season}_teams/{TEAM_PM_ON}.png"), caption=f"#{NUMBER_PM_ON} {NAME_PM_ON}", width=int(200*zoom))
+
             
     with s4 :
 
@@ -897,16 +941,25 @@ with snum :
     with s1 :
         # Intégrer la couleur dans le markdown
 
+        NAME_j = player_stat["PLAYER"].to_list()[1]
+        TEAM_j = player_stat["TEAM"].to_list()[1]
+        NUMBER_j = player_stat["#"].to_list()[1]
+        STAT_j = player_stat["I_PER"].to_list()[1]
+        ID_j = players[(players["CODETEAM"] == TEAM_j) & (players["PLAYER"] == NAME_j)]["PLAYER_ID"].to_list()[0]
+
+        image_path_j = os.path.join(images_dir, f"{competition}_{season}_players/{TEAM_j}_{ID_j}.png")
+
         st.markdown(
             f'''
-            <p style="font-size:{int(27*zoom)}px; text-align: center; background-color: #00ff00;color: black; padding: 5px; border-radius: 5px;">
-                <b>{PTS_data["PTS"].to_list()[0]} POINTS</b>
+            <p style="font-size:{int(25*zoom)}px; text-align: center; background-color: silver;color: black; padding: 5px; border-radius: 5px;">
+                <b>2ND : {STAT_j} I_PER</b>
             </p>
             ''',
             unsafe_allow_html=True
         )
-        if os.path.exists(PTS_image_path):
-            image = Image.open(PTS_image_path)
+
+        if os.path.exists(image_path_j):
+            image = Image.open(image_path_j)
 
             # Calculer la hauteur des 75% supérieurs
             width, height = image.size
@@ -916,10 +969,9 @@ with snum :
             image_cropped = image.crop((0, 0, width, cropped_height))
 
             # Afficher l'image rognée avec Streamlit
-            st.image(image_cropped, caption=f"#{NUMBER_PTS} {NAME_PTS}", width=int(250*zoom))
+            st.image(image_cropped, caption=f"#{NUMBER_j} {NAME_j}", width=int(250*zoom))        
         else:
-            st.image(os.path.join(images_dir, f"{competition}_{season}_teams/{TEAM_PTS}.png"), caption=f"#{NUMBER_PTS} {NAME_PTS}", width=int(200*zoom))
-
+            st.image(os.path.join(images_dir, f"{competition}_{season}_teams/{TEAM_j}.png"), caption=f"#{NUMBER_j} {NAME_j}", width=int(200*zoom))
 
 
     with s2 :
@@ -1022,19 +1074,25 @@ with snum :
 
 
     with s1 :
+        NAME_j = player_stat["PLAYER"].to_list()[2]
+        TEAM_j = player_stat["TEAM"].to_list()[2]
+        NUMBER_j = player_stat["#"].to_list()[2]
+        STAT_j = player_stat["I_PER"].to_list()[2]
+        ID_j = players[(players["CODETEAM"] == TEAM_j) & (players["PLAYER"] == NAME_j)]["PLAYER_ID"].to_list()[0]
 
-        # Intégrer la couleur dans le markdown
+        image_path_j = os.path.join(images_dir, f"{competition}_{season}_players/{TEAM_j}_{ID_j}.png")
 
         st.markdown(
             f'''
-            <p style="font-size:{int(27*zoom)}px; text-align: center; background-color: #00ff00;color: black; padding: 5px; border-radius: 5px;">
-                <b>{int(PM_ON_data["PM_ON"].to_list()[0])} +/-</b>
+            <p style="font-size:{int(25*zoom)}px; text-align: center; background-color: #CD7F32;color: white; padding: 5px; border-radius: 5px;">
+                <b>3RD : {STAT_j} I_PER</b>
             </p>
             ''',
             unsafe_allow_html=True
         )
-        if os.path.exists(PM_ON_image_path):
-            image = Image.open(PM_ON_image_path)
+
+        if os.path.exists(image_path_j):
+            image = Image.open(image_path_j)
 
             # Calculer la hauteur des 75% supérieurs
             width, height = image.size
@@ -1044,9 +1102,11 @@ with snum :
             image_cropped = image.crop((0, 0, width, cropped_height))
 
             # Afficher l'image rognée avec Streamlit
-            st.image(image_cropped, caption=f"#{NUMBER_PM_ON} {NAME_PM_ON}", width=int(250*zoom)) 
+            st.image(image_cropped, caption=f"#{NUMBER_j} {NAME_j}", width=int(250*zoom))        
         else:
-            st.image(os.path.join(images_dir, f"{competition}_{season}_teams/{TEAM_PM_ON}.png"), caption=f"#{NUMBER_PM_ON} {NAME_PM_ON}", width=int(200*zoom))
+            st.image(os.path.join(images_dir, f"{competition}_{season}_teams/{TEAM_j}.png"), caption=f"#{NUMBER_j} {NAME_j}", width=int(200*zoom))
+
+
 
     with s2 :
 
@@ -1140,7 +1200,7 @@ st.markdown(
     unsafe_allow_html=True
 )
 
-sip1,sip2,sip3,sip4,sip5,sip6,sip7,sip8,sip9 = st.columns([1/9,1/9,1/9,1/9,1/9,1/9,1/9,1/9,1/9])
+sip1,sip2,sip3,sip4,sip5,sip6,sip7,sip8,sip9,sip10 = st.columns([0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1])
 
 
 
@@ -1157,7 +1217,7 @@ with sip1 :
 
     st.markdown(
         f'''
-        <p style="font-size:{int(21*zoom)}px; text-align: center; background-color: {color};color: {color_text}; padding: 5px; border-radius: 5px;outline: 3px solid {color_text};">
+        <p style="font-size:{int(19*zoom)}px; text-align: center; background-color: {color};color: {color_text}; padding: 5px; border-radius: 5px;outline: 3px solid {color_text};">
             <b>{playersip}</b>
         </p>
         ''',
@@ -1165,7 +1225,7 @@ with sip1 :
     )
     st.markdown(
         f'''
-        <p style="font-size:{int(25*zoom)}px; text-align: center; background-color: {color_text};color: {color}; padding: 5px; border-radius: 5px;outline: 3px solid {color};">
+        <p style="font-size:{int(22*zoom)}px; text-align: center; background-color: {color_text};color: {color}; padding: 5px; border-radius: 5px;outline: 3px solid {color};">
             <b>{statssip}</b>
         </p>
         ''',
@@ -1185,7 +1245,7 @@ with sip2:
 
     st.markdown(
         f'''
-        <p style="font-size:{int(21*zoom)}px; text-align: center; background-color: {color};color: {color_text}; padding: 5px; border-radius: 5px;outline: 3px solid {color_text};">
+        <p style="font-size:{int(19*zoom)}px; text-align: center; background-color: {color};color: {color_text}; padding: 5px; border-radius: 5px;outline: 3px solid {color_text};">
             <b>{playersip}</b>
         </p>
         ''',
@@ -1193,7 +1253,7 @@ with sip2:
     )
     st.markdown(
         f'''
-        <p style="font-size:{int(25*zoom)}px; text-align: center; background-color: {color_text};color: {color}; padding: 5px; border-radius: 5px;outline: 3px solid {color};">
+        <p style="font-size:{int(22*zoom)}px; text-align: center; background-color: {color_text};color: {color}; padding: 5px; border-radius: 5px;outline: 3px solid {color};">
             <b>{statssip}</b>
         </p>
         ''',
@@ -1212,7 +1272,7 @@ with sip3 :
 
     st.markdown(
         f'''
-        <p style="font-size:{int(21*zoom)}px; text-align: center; background-color: {color};color: {color_text}; padding: 5px; border-radius: 5px;outline: 3px solid {color_text};">
+        <p style="font-size:{int(19*zoom)}px; text-align: center; background-color: {color};color: {color_text}; padding: 5px; border-radius: 5px;outline: 3px solid {color_text};">
             <b>{playersip}</b>
         </p>
         ''',
@@ -1220,7 +1280,7 @@ with sip3 :
     )
     st.markdown(
         f'''
-        <p style="font-size:{int(25*zoom)}px; text-align: center; background-color: {color_text};color: {color}; padding: 5px; border-radius: 5px;outline: 3px solid {color};">
+        <p style="font-size:{int(22*zoom)}px; text-align: center; background-color: {color_text};color: {color}; padding: 5px; border-radius: 5px;outline: 3px solid {color};">
             <b>{statssip}</b>
         </p>
         ''',
@@ -1239,7 +1299,7 @@ with sip4 :
 
     st.markdown(
         f'''
-        <p style="font-size:{int(21*zoom)}px; text-align: center; background-color: {color};color: {color_text}; padding: 5px; border-radius: 5px;outline: 3px solid {color_text};">
+        <p style="font-size:{int(19*zoom)}px; text-align: center; background-color: {color};color: {color_text}; padding: 5px; border-radius: 5px;outline: 3px solid {color_text};">
             <b>{playersip}</b>
         </p>
         ''',
@@ -1247,7 +1307,7 @@ with sip4 :
     )
     st.markdown(
         f'''
-        <p style="font-size:{int(25*zoom)}px; text-align: center; background-color: {color_text};color: {color}; padding: 5px; border-radius: 5px;outline: 3px solid {color};">
+        <p style="font-size:{int(22*zoom)}px; text-align: center; background-color: {color_text};color: {color}; padding: 5px; border-radius: 5px;outline: 3px solid {color};">
             <b>{statssip}</b>
         </p>
         ''',
@@ -1266,7 +1326,7 @@ with sip5 :
 
     st.markdown(
         f'''
-        <p style="font-size:{int(21*zoom)}px; text-align: center; background-color: {color};color: {color_text}; padding: 5px; border-radius: 5px;outline: 3px solid {color_text};">
+        <p style="font-size:{int(19*zoom)}px; text-align: center; background-color: {color};color: {color_text}; padding: 5px; border-radius: 5px;outline: 3px solid {color_text};">
             <b>{playersip}</b>
         </p>
         ''',
@@ -1274,7 +1334,7 @@ with sip5 :
     )
     st.markdown(
         f'''
-        <p style="font-size:{int(25*zoom)}px; text-align: center; background-color: {color_text};color: {color}; padding: 5px; border-radius: 5px;outline: 3px solid {color};">
+        <p style="font-size:{int(22*zoom)}px; text-align: center; background-color: {color_text};color: {color}; padding: 5px; border-radius: 5px;outline: 3px solid {color};">
             <b>{statssip}</b>
         </p>
         ''',
@@ -1293,7 +1353,7 @@ with sip6 :
 
     st.markdown(
         f'''
-        <p style="font-size:{int(21*zoom)}px; text-align: center; background-color: {color};color: {color_text}; padding: 5px; border-radius: 5px;outline: 3px solid {color_text};">
+        <p style="font-size:{int(19*zoom)}px; text-align: center; background-color: {color};color: {color_text}; padding: 5px; border-radius: 5px;outline: 3px solid {color_text};">
             <b>{playersip}</b>
         </p>
         ''',
@@ -1301,7 +1361,7 @@ with sip6 :
     )
     st.markdown(
         f'''
-        <p style="font-size:{int(25*zoom)}px; text-align: center; background-color: {color_text};color: {color}; padding: 5px; border-radius: 5px;outline: 3px solid {color};">
+        <p style="font-size:{int(22*zoom)}px; text-align: center; background-color: {color_text};color: {color}; padding: 5px; border-radius: 5px;outline: 3px solid {color};">
             <b>{statssip}</b>
         </p>
         ''',
@@ -1320,7 +1380,7 @@ with sip7 :
 
     st.markdown(
         f'''
-        <p style="font-size:{int(21*zoom)}px; text-align: center; background-color: {color};color: {color_text}; padding: 5px; border-radius: 5px;outline: 3px solid {color_text};">
+        <p style="font-size:{int(19*zoom)}px; text-align: center; background-color: {color};color: {color_text}; padding: 5px; border-radius: 5px;outline: 3px solid {color_text};">
             <b>{playersip}</b>
         </p>
         ''',
@@ -1328,7 +1388,7 @@ with sip7 :
     )
     st.markdown(
         f'''
-        <p style="font-size:{int(25*zoom)}px; text-align: center; background-color: {color_text};color: {color}; padding: 5px; border-radius: 5px;outline: 3px solid {color};">
+        <p style="font-size:{int(22*zoom)}px; text-align: center; background-color: {color_text};color: {color}; padding: 5px; border-radius: 5px;outline: 3px solid {color};">
             <b>{statssip}</b>
         </p>
         ''',
@@ -1347,7 +1407,7 @@ with sip8 :
 
     st.markdown(
         f'''
-        <p style="font-size:{int(21*zoom)}px; text-align: center; background-color: {color};color: {color_text}; padding: 5px; border-radius: 5px;outline: 3px solid {color_text};">
+        <p style="font-size:{int(19*zoom)}px; text-align: center; background-color: {color};color: {color_text}; padding: 5px; border-radius: 5px;outline: 3px solid {color_text};">
             <b>{playersip}</b>
         </p>
         ''',
@@ -1355,7 +1415,7 @@ with sip8 :
     )
     st.markdown(
         f'''
-        <p style="font-size:{int(25*zoom)}px; text-align: center; background-color: {color_text};color: {color}; padding: 5px; border-radius: 5px;outline: 3px solid {color};">
+        <p style="font-size:{int(22*zoom)}px; text-align: center; background-color: {color_text};color: {color}; padding: 5px; border-radius: 5px;outline: 3px solid {color};">
             <b>{statssip}</b>
         </p>
         ''',
@@ -1375,7 +1435,7 @@ with sip9 :
 
     st.markdown(
         f'''
-        <p style="font-size:{int(21*zoom)}px; text-align: center; background-color: {color};color: {color_text}; padding: 5px; border-radius: 5px;outline: 3px solid {color_text};">
+        <p style="font-size:{int(19*zoom)}px; text-align: center; background-color: {color};color: {color_text}; padding: 5px; border-radius: 5px;outline: 3px solid {color_text};">
             <b>{playersip}</b>
         </p>
         ''',
@@ -1383,7 +1443,34 @@ with sip9 :
     )
     st.markdown(
         f'''
-        <p style="font-size:{int(25*zoom)}px; text-align: center; background-color: {color_text};color: {color}; padding: 5px; border-radius: 5px;outline: 3px solid {color};">
+        <p style="font-size:{int(22*zoom)}px; text-align: center; background-color: {color_text};color: {color}; padding: 5px; border-radius: 5px;outline: 3px solid {color};">
+            <b>{statssip}</b>
+        </p>
+        ''',
+        unsafe_allow_html=True
+    )
+with sip10 :
+    teamsip = df_stats_important_players["TEAM"].to_list()[9]
+    playersip = df_stats_important_players["PLAYER"].to_list()[9]
+    statssip = df_stats_important_players["VALUE"].to_list()[9]
+    if teamsip == team_local :
+        color = local_c1
+        color_text = local_c2
+    else :
+        color = road_c1
+        color_text = road_c2
+
+    st.markdown(
+        f'''
+        <p style="font-size:{int(19*zoom)}px; text-align: center; background-color: {color};color: {color_text}; padding: 5px; border-radius: 5px;outline: 3px solid {color_text};">
+            <b>{playersip}</b>
+        </p>
+        ''',
+        unsafe_allow_html=True
+    )
+    st.markdown(
+        f'''
+        <p style="font-size:{int(22*zoom)}px; text-align: center; background-color: {color_text};color: {color}; padding: 5px; border-radius: 5px;outline: 3px solid {color};">
             <b>{statssip}</b>
         </p>
         ''',
