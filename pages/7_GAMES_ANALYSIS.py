@@ -111,17 +111,22 @@ player_stat = f.get_aggregated_data(
 )
 player_stat = player_stat.sort_values(by = "TIME_ON",ascending = False)
 
-# Tri général sur tout le DataFrame
-df_sorted = player_stat.sort_values(by=["I_PER", "TIME_ON"], ascending=[False, True])
+# Trier le DataFrame par "PER" et "I_PER"
+df_sorted = player_stat.sort_values(by=["PER", "I_PER", "TIME_ON"], ascending=[False, False, True])
 
-# Identifier la première ligne où WIN == "YES"
-first_row = df_sorted[df_sorted["WIN"] == "YES"].head(1)
+# Filtrer les lignes où WIN == "YES"
+df_win_yes = df_sorted[df_sorted["WIN"] == "YES"]
 
-# Supprimer cette ligne du DataFrame trié (pour éviter les doublons)
-df_sorted = df_sorted.drop(first_row.index)
+# Sélectionner les 3 meilleurs PER et parmi eux, la ligne avec le meilleur I_PER
+top_3_per = df_win_yes.head(3)
+best_row = top_3_per.sort_values(by="I_PER", ascending=False).head(1)
 
+# Supprimer la ligne sélectionnée du DataFrame trié
+df_sorted = df_sorted.drop(best_row.index)
+
+df_sorted = df_sorted.sort_values(by=["I_PER", "TIME_ON"], ascending=[False, True])
 # Concatenation pour placer cette ligne en première position
-player_stat = pd.concat([first_row, df_sorted], ignore_index=True).reset_index(drop = True)
+player_stat = pd.concat([best_row, df_sorted], ignore_index=True).reset_index(drop=True)
 
 
 local_player_stat = player_stat[player_stat["TEAM"]==team_local]
@@ -349,14 +354,7 @@ with t1 :
         st.image(local_logo_path,  width=int(200*zoom))
     else:
         st.warning(f"Logo introuvable pour l'équipe : {team_local}")
-    st.markdown(
-            f'''
-            <p style="font-size:{int(40*zoom)}px; text-align: center; background-color: {local_c1};color: {local_c2}; padding: 4px; border-radius: 5px;outline: 3px solid {local_c2};">
-                <b>{with_game["LOCAL_SCORE"].to_list()[0]}</b>
-            </p>
-            ''',
-            unsafe_allow_html=True
-        )
+
     
 
 with t2 :
@@ -364,14 +362,7 @@ with t2 :
         st.image(road_logo_path,  width=int(200*zoom))
     else:
         st.warning(f"Logo introuvable pour l'équipe : {team_road}")
-    st.markdown(
-            f'''
-            <p style="font-size:{int(40*zoom)}px; text-align: center; background-color: {road_c1};color: {road_c2}; padding: 4px; border-radius: 5px;outline: 3px solid {road_c2};">
-                <b>{with_game["ROAD_SCORE"].to_list()[0]}</b>
-            </p>
-            ''',
-            unsafe_allow_html=True
-        )
+
 
 st.markdown(
     f'''
