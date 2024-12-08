@@ -857,17 +857,18 @@ with snum :
 
     with s3 :
         # Intégrer la couleur dans le markdown
-
         st.markdown(
             f'''
             <p style="font-size:{int(27*zoom)}px; text-align: center; background-color: #00ff00;color: black; padding: 5px; border-radius: 5px;">
-                <b>{int(PM_ON_data["PM_ON"].to_list()[0])} +/-</b>
+                <b>{DR_data["DR"].to_list()[0]} DEF. REB.</b>
             </p>
             ''',
             unsafe_allow_html=True
         )
-        if os.path.exists(PM_ON_image_path):
-            image = Image.open(PM_ON_image_path)
+
+
+        if os.path.exists(DR_image_path):
+            image = Image.open(DR_image_path)
 
             # Calculer la hauteur des 75% supérieurs
             width, height = image.size
@@ -877,32 +878,23 @@ with snum :
             image_cropped = image.crop((0, 0, width, cropped_height))
 
             # Afficher l'image rognée avec Streamlit
-            st.image(image_cropped, caption=f"#{NUMBER_PM_ON} {NAME_PM_ON}", width=int(250*zoom)) 
+            st.image(image_cropped, caption=f"#{NUMBER_DR} {NAME_DR}", width=int(250*zoom))
         else:
-            st.image(os.path.join(images_dir, f"{competition}_{season}_teams/{TEAM_PM_ON}.png"), caption=f"#{NUMBER_PM_ON} {NAME_PM_ON}", width=int(200*zoom))
+            st.image(os.path.join(images_dir, f"{competition}_{season}_teams/{TEAM_DR}.png"), caption=f"#{NUMBER_DR} {NAME_DR}", width=int(200*zoom))
 
             
     with s4 :
-
-        NAME_j = player_stat["PLAYER"].to_list()[3]
-        TEAM_j = player_stat["TEAM"].to_list()[3]
-        NUMBER_j = player_stat["#"].to_list()[3]
-        STAT_j = player_stat["I_PER"].to_list()[3]
-        ID_j = players[(players["CODETEAM"] == TEAM_j) & (players["PLAYER"] == NAME_j)]["PLAYER_ID"].to_list()[0]
-
-        image_path_j = os.path.join(images_dir, f"{competition}_{season}_players/{TEAM_j}_{ID_j}.png")
-
         st.markdown(
             f'''
-            <p style="font-size:{int(25*zoom)}px; text-align: center; background-color: #7B3F00;color: white; padding: 5px; border-radius: 5px;">
-                <b>4th : {STAT_j} I_PER</b>
+            <p style="font-size:{int(27*zoom)}px; text-align: center; background-color: #00ff00;color: black; padding: 5px; border-radius: 5px;">
+                <b>{OR_data["OR"].to_list()[0]} OFF. REB.</b>
             </p>
             ''',
             unsafe_allow_html=True
         )
 
-        if os.path.exists(image_path_j):
-            image = Image.open(image_path_j)
+        if os.path.exists(OR_image_path):
+            image = Image.open(OR_image_path)
 
             # Calculer la hauteur des 75% supérieurs
             width, height = image.size
@@ -912,9 +904,11 @@ with snum :
             image_cropped = image.crop((0, 0, width, cropped_height))
 
             # Afficher l'image rognée avec Streamlit
-            st.image(image_cropped, caption=f"#{NUMBER_j} {NAME_j}", width=int(250*zoom))        
+            st.image(image_cropped, caption=f"#{NUMBER_OR} {NAME_OR}", width=int(250*zoom)) 
         else:
-            st.image(os.path.join(images_dir, f"{competition}_{season}_teams/{TEAM_j}.png"), caption=f"#{NUMBER_j} {NAME_j}", width=int(200*zoom))
+            st.image(os.path.join(images_dir, f"{competition}_{season}_teams/{TEAM_OR}.png"), caption=f"#{NUMBER_OR} {NAME_OR}", width=int(200*zoom))
+
+
 
     st.markdown(
         f'''
@@ -967,18 +961,17 @@ with snum :
 
     with s2 :
 
+
         st.markdown(
             f'''
             <p style="font-size:{int(27*zoom)}px; text-align: center; background-color: #00ff00;color: black; padding: 5px; border-radius: 5px;">
-                <b>{DR_data["DR"].to_list()[0]} DEF. REB.</b>
+                <b>{int(PM_ON_data["PM_ON"].to_list()[0])} +/-</b>
             </p>
             ''',
             unsafe_allow_html=True
         )
-
-
-        if os.path.exists(DR_image_path):
-            image = Image.open(DR_image_path)
+        if os.path.exists(PM_ON_image_path):
+            image = Image.open(PM_ON_image_path)
 
             # Calculer la hauteur des 75% supérieurs
             width, height = image.size
@@ -988,10 +981,9 @@ with snum :
             image_cropped = image.crop((0, 0, width, cropped_height))
 
             # Afficher l'image rognée avec Streamlit
-            st.image(image_cropped, caption=f"#{NUMBER_DR} {NAME_DR}", width=int(250*zoom))
+            st.image(image_cropped, caption=f"#{NUMBER_PM_ON} {NAME_PM_ON}", width=int(250*zoom)) 
         else:
-            st.image(os.path.join(images_dir, f"{competition}_{season}_teams/{TEAM_DR}.png"), caption=f"#{NUMBER_DR} {NAME_DR}", width=int(200*zoom))
-
+            st.image(os.path.join(images_dir, f"{competition}_{season}_teams/{TEAM_PM_ON}.png"), caption=f"#{NUMBER_PM_ON} {NAME_PM_ON}", width=int(200*zoom))
 
 
 
@@ -1034,18 +1026,18 @@ with snum :
 
     with s4 :
         # Intégrer la couleur dans le markdown
-
+        # Intégrer la couleur dans le markdown
         st.markdown(
             f'''
-            <p style="font-size:{int(27*zoom)}px; text-align: center; background-color: #00ff00;color: black; padding: 5px; border-radius: 5px;">
-                <b>{ST_data["ST"].to_list()[0]} ST</b>
+            <p style="font-size:{int(27*zoom)}px; text-align: center; background-color: #ff0000;color: black; padding: 5px; border-radius: 5px;">
+                <b>{TO_data["TO"].to_list()[0]} TURNOVERS</b>
             </p>
             ''',
             unsafe_allow_html=True
         )
-        if os.path.exists(ST_image_path):
-            # Charger l'image avec Pillow
-            image = Image.open(ST_image_path)
+
+        if os.path.exists(TO_image_path):
+            image = Image.open(TO_image_path)
 
             # Calculer la hauteur des 75% supérieurs
             width, height = image.size
@@ -1053,11 +1045,10 @@ with snum :
 
             # Rogner l'image : garder seulement les 75% du haut
             image_cropped = image.crop((0, 0, width, cropped_height))
-
-            # Afficher l'image rognée avec Streamlit
-            st.image(image_cropped, caption=f"#{NUMBER_ST} {NAME_ST}", width=int(250*zoom))
+            st.image(image_cropped, caption=f"#{NUMBER_TO} {NAME_TO}", width=int(250*zoom))
         else:
-            st.image(os.path.join(images_dir, f"{competition}_{season}_teams/{TEAM_ST}.png"), caption=f"#{NUMBER_ST} {NAME_ST}", width=int(200*zoom))
+            st.image(os.path.join(images_dir, f"{competition}_{season}_teams/{TEAM_TO}.png"), caption=f"#{NUMBER_TO} {NAME_TO}", width=int(200*zoom))
+
 
     s1, s2,s3,s4 = st.columns([0.25, 0.25,0.25,0.25])
 
@@ -1101,20 +1092,25 @@ with snum :
 
     with s2 :
 
+        NAME_j = player_stat["PLAYER"].to_list()[3]
+        TEAM_j = player_stat["TEAM"].to_list()[3]
+        NUMBER_j = player_stat["#"].to_list()[3]
+        STAT_j = player_stat["I_PER"].to_list()[3]
+        ID_j = players[(players["CODETEAM"] == TEAM_j) & (players["PLAYER"] == NAME_j)]["PLAYER_ID"].to_list()[0]
 
-
+        image_path_j = os.path.join(images_dir, f"{competition}_{season}_players/{TEAM_j}_{ID_j}.png")
 
         st.markdown(
             f'''
-            <p style="font-size:{int(27*zoom)}px; text-align: center; background-color: #00ff00;color: black; padding: 5px; border-radius: 5px;">
-                <b>{OR_data["OR"].to_list()[0]} OFF. REB.</b>
+            <p style="font-size:{int(25*zoom)}px; text-align: center; background-color: #7B3F00;color: white; padding: 5px; border-radius: 5px;">
+                <b>4TH : {STAT_j} I_PER</b>
             </p>
             ''',
             unsafe_allow_html=True
         )
 
-        if os.path.exists(OR_image_path):
-            image = Image.open(OR_image_path)
+        if os.path.exists(image_path_j):
+            image = Image.open(image_path_j)
 
             # Calculer la hauteur des 75% supérieurs
             width, height = image.size
@@ -1124,24 +1120,24 @@ with snum :
             image_cropped = image.crop((0, 0, width, cropped_height))
 
             # Afficher l'image rognée avec Streamlit
-            st.image(image_cropped, caption=f"#{NUMBER_OR} {NAME_OR}", width=int(250*zoom)) 
+            st.image(image_cropped, caption=f"#{NUMBER_j} {NAME_j}", width=int(250*zoom))        
         else:
-            st.image(os.path.join(images_dir, f"{competition}_{season}_teams/{TEAM_OR}.png"), caption=f"#{NUMBER_OR} {NAME_OR}", width=int(200*zoom))
+            st.image(os.path.join(images_dir, f"{competition}_{season}_teams/{TEAM_j}.png"), caption=f"#{NUMBER_j} {NAME_j}", width=int(200*zoom))
+
             
     with s3 :
 
-        # Intégrer la couleur dans le markdown
         st.markdown(
             f'''
-            <p style="font-size:{int(27*zoom)}px; text-align: center; background-color: #ff0000;color: black; padding: 5px; border-radius: 5px;">
-                <b>{TO_data["TO"].to_list()[0]} TURNOVERS</b>
+            <p style="font-size:{int(27*zoom)}px; text-align: center; background-color: #00ff00;color: black; padding: 5px; border-radius: 5px;">
+                <b>{ST_data["ST"].to_list()[0]} STEALS</b>
             </p>
             ''',
             unsafe_allow_html=True
         )
-
-        if os.path.exists(TO_image_path):
-            image = Image.open(TO_image_path)
+        if os.path.exists(ST_image_path):
+            # Charger l'image avec Pillow
+            image = Image.open(ST_image_path)
 
             # Calculer la hauteur des 75% supérieurs
             width, height = image.size
@@ -1149,17 +1145,18 @@ with snum :
 
             # Rogner l'image : garder seulement les 75% du haut
             image_cropped = image.crop((0, 0, width, cropped_height))
-            st.image(image_cropped, caption=f"#{NUMBER_TO} {NAME_TO}", width=int(250*zoom))
-        else:
-            st.image(os.path.join(images_dir, f"{competition}_{season}_teams/{TEAM_TO}.png"), caption=f"#{NUMBER_TO} {NAME_TO}", width=int(200*zoom))
 
+            # Afficher l'image rognée avec Streamlit
+            st.image(image_cropped, caption=f"#{NUMBER_ST} {NAME_ST}", width=int(250*zoom))
+        else:
+            st.image(os.path.join(images_dir, f"{competition}_{season}_teams/{TEAM_ST}.png"), caption=f"#{NUMBER_ST} {NAME_ST}", width=int(200*zoom))
     with s4 :
 
 
         st.markdown(
             f'''
             <p style="font-size:{int(25*zoom)}px; text-align: center; background-color: #00ff00;color: black; padding: 5px; border-radius: 5px;">
-                <b>{CO_data["CO"].to_list()[0]} CO</b>
+                <b>{CO_data["CO"].to_list()[0]} BLOCKS</b>
             </p>
             ''',
             unsafe_allow_html=True

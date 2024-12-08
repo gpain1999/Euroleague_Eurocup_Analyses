@@ -71,6 +71,9 @@ def stats_important_players(r,team_local,team_road,df) :
             VALUE_0.append(f"{stats_df.loc[0, f'{s}_R']}/{stats_df.loc[0, f'{s}_T']} {s}-PTS")
         elif s in ['1']:
             VALUE_0.append(f"{stats_df.loc[0, f'{s}_R']}/{stats_df.loc[0, f'{s}_T']} FT")
+
+        elif s in ['CO']:
+            VALUE_0.append(f"{stats_df.loc[0, s]} BL")
         else :
             VALUE_0.append(f"{stats_df.loc[0, s]} {s}")
 
@@ -148,6 +151,8 @@ def extract_column_values(columns, stats_df,top):
             else :
                 extracted_values.append(f"{stats_df.loc[0, f'{column}_T']} FT ATTEMPTED")
 
+        elif column in ['CO']:
+            extracted_values.append(f"{stats_df.loc[0, column]} BLOCKS")
         elif column == "PTS_C" :
             extracted_values.append(f"{stats_df.loc[0, column]} PTS CONC.")
 
