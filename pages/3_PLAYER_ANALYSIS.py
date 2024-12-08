@@ -77,7 +77,6 @@ selected_range = st.sidebar.slider(
     step=1
 )
 notation =f.analyse_per(data_dir,competition,season,R = [i for i in range(selected_range[0],selected_range[1]+1)],CODETEAM = [])
-print(notation)
 
 palette = [
     "#FF0000",  
@@ -300,7 +299,6 @@ with col1:
 
 
         
-print(notation[notation["CODETEAM"]==CODETEAM])
 
 with col_image :
     # Récupérer la note et la couleur associée pour le joueur

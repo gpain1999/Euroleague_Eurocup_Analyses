@@ -613,6 +613,14 @@ with good_bad :
             ''',
             unsafe_allow_html=True
         )
+        st.markdown(
+            f'''
+            <p style="font-size:{22*zoom}px; text-align: center; background-color: {local_c1};color: {local_c2}; padding: 8px; border-radius: 5px;outline: 3px solid {local_c2};">
+                <b>{round(local_player_stat["PER"].sum(),1)} PER</b>
+            </p>
+            ''',
+            unsafe_allow_html=True
+        )
     st.markdown(
     f'''
     <p style="font-size:{int(27*zoom)}px; text-align: center; background-color: grey;color: black; padding: 3px; border-radius: 5px;">
@@ -705,6 +713,14 @@ with good_bad :
             f'''
             <p style="font-size:{20*zoom}px; text-align: center; background-color: {road_c1};color: {road_c2}; padding: 8px; border-radius: 5px;outline: 3px solid {road_c2};">
                 <b>{round(100*road_player_stat["AS"].sum()/(road_player_stat["2_R"].sum()+road_player_stat["3_R"].sum()),1)}&nbsp;% ASSISTS </b>
+            </p>
+            ''',
+            unsafe_allow_html=True
+        )
+        st.markdown(
+            f'''
+            <p style="font-size:{22*zoom}px; text-align: center; background-color: {road_c1};color: {road_c2}; padding: 8px; border-radius: 5px;outline: 3px solid {road_c2};">
+                <b>{round(road_player_stat["PER"].sum(),1)} PER</b>
             </p>
             ''',
             unsafe_allow_html=True
