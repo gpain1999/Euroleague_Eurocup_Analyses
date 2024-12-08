@@ -1477,7 +1477,7 @@ st.markdown(
     unsafe_allow_html=True
 )
 
-cola, colb,colc = st.columns([0.15, 0.15,0.70])
+cola,colc = st.columns([0.2,0.80])
 
 with cola :
 
@@ -1488,28 +1488,13 @@ with cola :
         
         st.markdown(
             f'''
-            <p style="font-size:{int(30*zoom)}px; text-align: center;">
-                <b>{team_local}</b>
+            <p style="font-size:{int(30*zoom)}px; text-align: center;background-color: {local_c1};color: {local_c2};padding: 4px; border-radius: 5px; outline: 3px solid gold;">
+                <b>{team_local} PERC.</b>
             </p>
             ''',
             unsafe_allow_html=True
         )
-        st.markdown(
-            f'''
-            <p style="font-size:{22*zoom}px; text-align: center; background-color: {local_c1};color: {local_c2}; padding: 6px; border-radius: 5px;outline: 3px solid {local_c2};">
-                <b>{round(local_player_stat["2_T"].sum()+local_player_stat["3_T"].sum(),2)}&nbsp; SHOOTS</b>
-            </p>
-            ''',
-            unsafe_allow_html=True
-        )
-        st.markdown(
-            f'''
-            <p style="font-size:{22*zoom}px; text-align: center; background-color: {local_c1};color: {local_c2}; padding: 6px; border-radius: 5px;outline: 3px solid {local_c2};">
-                <b>{round(local_player_stat["1_T"].sum(),1)}&nbsp; FT</b>
-            </p>
-            ''',
-            unsafe_allow_html=True
-        )
+
         fig2 = f.plot_semi_circular_chart(local_player_stat["1_R"].sum()/local_player_stat["1_T"].sum() if local_player_stat["1_T"].sum() != 0 else 0,"FT",size=int(95*zoom), font_size=int(22*zoom))
         st.plotly_chart(fig2,use_container_width=True,key = "o")
         fig2 = f.plot_semi_circular_chart(local_player_stat["2_R"].sum()/local_player_stat["2_T"].sum() if local_player_stat["2_T"].sum() != 0 else 0,"2P",size=int(95*zoom), font_size=int(22*zoom))
@@ -1518,6 +1503,24 @@ with cola :
         st.plotly_chart(fig2,use_container_width=True,key = "q")
         
 
+        st.markdown(
+            f'''
+            <p style="font-size:{int(30*zoom)}px; text-align: center; background-color: {local_c1}; color: {local_c2};padding: 4px; border-radius: 5px; outline: 3px solid gold;">
+                <b>{team_local} REB.</b>
+            </p>
+            ''',
+            unsafe_allow_html=True
+        )
+
+
+        fig2 = f.plot_semi_circular_chart(local_player_stat["DR"].sum()/(local_player_stat["DR"].sum() + road_player_stat["OR"].sum()),"DEF.", size=int(95*zoom), font_size=int(22*zoom))
+        st.plotly_chart(fig2,use_container_width=True,key = "a")
+
+        fig2 = f.plot_semi_circular_chart(local_player_stat["OR"].sum()/(local_player_stat["OR"].sum() + road_player_stat["DR"].sum()),"OFF.",size=int(95*zoom), font_size=int(22*zoom))
+        st.plotly_chart(fig2,use_container_width=True,key = "ba")
+
+        fig2 = f.plot_semi_circular_chart(local_player_stat["TR"].sum()/(road_player_stat["TR"].sum() + local_player_stat["TR"].sum()),"TOT.",size=int(95*zoom), font_size=int(22*zoom))
+        st.plotly_chart(fig2,use_container_width=True,key = "TT")
 
 
 
@@ -1530,28 +1533,13 @@ with cola :
         
         st.markdown(
             f'''
-            <p style="font-size:{int(30*zoom)}px; text-align: center;">
-                <b>{team_road}</b>
+            <p style="font-size:{int(30*zoom)}px; text-align: center; background-color: {road_c1}; color: {road_c2};padding: 4px; border-radius: 5px; outline: 3px solid gold;">
+                <b>{team_road} PERC. </b>
             </p>
             ''',
             unsafe_allow_html=True
         )
-        st.markdown(
-            f'''
-            <p style="font-size:{22*zoom}px; text-align: center; background-color: {road_c1};color: {road_c2}; padding: 6px; border-radius: 5px;outline: 3px solid {road_c2};">
-                <b>{round(road_player_stat["2_T"].sum()+road_player_stat["3_T"].sum(),2)}&nbsp; SHOOTS</b>
-            </p>
-            ''',
-            unsafe_allow_html=True
-        )
-        st.markdown(
-            f'''
-            <p style="font-size:{22*zoom}px; text-align: center; background-color: {road_c1};color: {road_c2}; padding: 6px; border-radius: 5px;outline: 3px solid {road_c2};">
-                <b>{round(road_player_stat["1_T"].sum(),1)}&nbsp; FT</b>
-            </p>
-            ''',
-            unsafe_allow_html=True
-        )
+
 
         fig2 = f.plot_semi_circular_chart(road_player_stat["1_R"].sum()/road_player_stat["1_T"].sum() if road_player_stat["1_T"].sum() != 0 else 0,"FT",size=int(95*zoom), font_size=int(22*zoom))
         st.plotly_chart(fig2,use_container_width=True,key="fig2_unique_key")
@@ -1562,62 +1550,15 @@ with cola :
         st.plotly_chart(fig2,use_container_width=True,key="2")
 
 
-
-
-
-with colb :
-
-
-    reb_local, reb_road = st.columns([1, 1])
-
-    with reb_local :
-
         st.markdown(
             f'''
-            <p style="font-size:{int(30*zoom)}px; text-align: center;">
-                <b> {team_local}</b>
-            </p>
-            ''',
-            unsafe_allow_html=True
-        )
-        st.markdown(
-            f'''
-            <p style="font-size:{24*zoom}px; text-align: center; background-color: {local_c1};color: {local_c2}; padding: 18px; border-radius: 5px;outline: 3px solid {local_c2};">
-                <b>{round(local_def+local_off,2)}</b>
-                <b> REB. PERF </b>
+            <p style="font-size:{int(30*zoom)}px; text-align: center; background-color: {road_c1}; color: {road_c2};padding: 4px; border-radius: 5px; outline: 3px solid gold;">
+                <b>{team_road} REB.</b>
             </p>
             ''',
             unsafe_allow_html=True
         )
 
-        fig2 = f.plot_semi_circular_chart(local_player_stat["DR"].sum()/(local_player_stat["DR"].sum() + road_player_stat["OR"].sum()),"DEF.", size=int(95*zoom), font_size=int(22*zoom))
-        st.plotly_chart(fig2,use_container_width=True,key = "a")
-
-        fig2 = f.plot_semi_circular_chart(local_player_stat["OR"].sum()/(local_player_stat["OR"].sum() + road_player_stat["DR"].sum()),"OFF.",size=int(95*zoom), font_size=int(22*zoom))
-        st.plotly_chart(fig2,use_container_width=True,key = "ba")
-
-        fig2 = f.plot_semi_circular_chart(local_player_stat["TR"].sum()/(road_player_stat["TR"].sum() + local_player_stat["TR"].sum()),"TOT.",size=int(95*zoom), font_size=int(22*zoom))
-        st.plotly_chart(fig2,use_container_width=True,key = "TT")
-
-
-    with reb_road :
-        st.markdown(
-            f'''
-            <p style="font-size:{int(30*zoom)}px; text-align: center;">
-                <b> {team_road}</b>
-            </p>
-            ''',
-            unsafe_allow_html=True
-        )
-        st.markdown(
-            f'''
-            <p style="font-size:{24*zoom}px; text-align: center; background-color: {road_c1};color: {road_c2}; padding: 18px; border-radius: 5px;outline: 3px solid {road_c2};">
-                <b>{round(road_def+road_off,2)}</b>
-                <b> REB. PERF </b>
-            </p>
-            ''',
-            unsafe_allow_html=True
-        )
         fig2 = f.plot_semi_circular_chart(road_player_stat["DR"].sum()/(road_player_stat["DR"].sum() + local_player_stat["OR"].sum()),"DEF.", size=int(95*zoom), font_size=int(22*zoom))
         st.plotly_chart(fig2,use_container_width=True,key = "pio")
 
@@ -1626,6 +1567,10 @@ with colb :
 
         fig2 = f.plot_semi_circular_chart(road_player_stat["TR"].sum()/(road_player_stat["TR"].sum() + local_player_stat["TR"].sum()),"TOT.",size=int(95*zoom), font_size=int(22*zoom))
         st.plotly_chart(fig2,use_container_width=True,key = "T")
+
+
+
+
 
 with colc :
     C1, C2 = st.columns([1, 1])
@@ -1636,7 +1581,7 @@ with colc :
 
     if affichage == "BOXESCORE" :
         data_aff = player_stat[player_stat["TEAM"]==t].drop(columns = ["TEAM","ROUND","NB_GAME","OPPONENT","HOME","WIN"]).sort_values(by = "TIME_ON",ascending = False)
-        st.dataframe(data_aff, height=min(36 + 36*len(data_aff),16*36),hide_index=True)
+        st.dataframe(data_aff, height=min(36 + 36*len(data_aff),16*36),hide_index=True,use_container_width=True)
     else :
         data_aff = f.analyse_io_2(data_dir = data_dir,
                     competition = competition,
@@ -1651,4 +1596,4 @@ with colc :
        'DEF_OFF_10', 'DELTA_OFF']]
         
         data_aff2 = data_aff.style.apply(colorize_pm_on, axis=1).format(precision=1)
-        st.dataframe(data_aff2, height=min(36 + 36*len(data_aff),22*36),hide_index=True)
+        st.dataframe(data_aff2, height=min(36 + 36*len(data_aff),22*36),hide_index=True,use_container_width=True)
