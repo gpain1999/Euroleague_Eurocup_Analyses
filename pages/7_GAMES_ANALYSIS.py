@@ -1165,7 +1165,7 @@ with sip1 :
     )
     st.markdown(
         f'''
-        <p style="font-size:{int(25*zoom)}px; text-align: center; background-color: {color};color: {color_text}; padding: 5px; border-radius: 5px;outline: 3px solid {color_text};">
+        <p style="font-size:{int(25*zoom)}px; text-align: center; background-color: {color_text};color: {color}; padding: 5px; border-radius: 5px;outline: 3px solid {color};">
             <b>{statssip}</b>
         </p>
         ''',
@@ -1193,7 +1193,7 @@ with sip2:
     )
     st.markdown(
         f'''
-        <p style="font-size:{int(25*zoom)}px; text-align: center; background-color: {color};color: {color_text}; padding: 5px; border-radius: 5px;outline: 3px solid {color_text};">
+        <p style="font-size:{int(25*zoom)}px; text-align: center; background-color: {color_text};color: {color}; padding: 5px; border-radius: 5px;outline: 3px solid {color};">
             <b>{statssip}</b>
         </p>
         ''',
@@ -1220,7 +1220,7 @@ with sip3 :
     )
     st.markdown(
         f'''
-        <p style="font-size:{int(25*zoom)}px; text-align: center; background-color: {color};color: {color_text}; padding: 5px; border-radius: 5px;outline: 3px solid {color_text};">
+        <p style="font-size:{int(25*zoom)}px; text-align: center; background-color: {color_text};color: {color}; padding: 5px; border-radius: 5px;outline: 3px solid {color};">
             <b>{statssip}</b>
         </p>
         ''',
@@ -1247,7 +1247,7 @@ with sip4 :
     )
     st.markdown(
         f'''
-        <p style="font-size:{int(25*zoom)}px; text-align: center; background-color: {color};color: {color_text}; padding: 5px; border-radius: 5px;outline: 3px solid {color_text};">
+        <p style="font-size:{int(25*zoom)}px; text-align: center; background-color: {color_text};color: {color}; padding: 5px; border-radius: 5px;outline: 3px solid {color};">
             <b>{statssip}</b>
         </p>
         ''',
@@ -1274,7 +1274,7 @@ with sip5 :
     )
     st.markdown(
         f'''
-        <p style="font-size:{int(25*zoom)}px; text-align: center; background-color: {color};color: {color_text}; padding: 5px; border-radius: 5px;outline: 3px solid {color_text};">
+        <p style="font-size:{int(25*zoom)}px; text-align: center; background-color: {color_text};color: {color}; padding: 5px; border-radius: 5px;outline: 3px solid {color};">
             <b>{statssip}</b>
         </p>
         ''',
@@ -1301,7 +1301,7 @@ with sip6 :
     )
     st.markdown(
         f'''
-        <p style="font-size:{int(25*zoom)}px; text-align: center; background-color: {color};color: {color_text}; padding: 5px; border-radius: 5px;outline: 3px solid {color_text};">
+        <p style="font-size:{int(25*zoom)}px; text-align: center; background-color: {color_text};color: {color}; padding: 5px; border-radius: 5px;outline: 3px solid {color};">
             <b>{statssip}</b>
         </p>
         ''',
@@ -1328,7 +1328,7 @@ with sip7 :
     )
     st.markdown(
         f'''
-        <p style="font-size:{int(25*zoom)}px; text-align: center; background-color: {color};color: {color_text}; padding: 5px; border-radius: 5px;outline: 3px solid {color_text};">
+        <p style="font-size:{int(25*zoom)}px; text-align: center; background-color: {color_text};color: {color}; padding: 5px; border-radius: 5px;outline: 3px solid {color};">
             <b>{statssip}</b>
         </p>
         ''',
@@ -1355,7 +1355,7 @@ with sip8 :
     )
     st.markdown(
         f'''
-        <p style="font-size:{int(25*zoom)}px; text-align: center; background-color: {color};color: {color_text}; padding: 5px; border-radius: 5px;outline: 3px solid {color_text};">
+        <p style="font-size:{int(25*zoom)}px; text-align: center; background-color: {color_text};color: {color}; padding: 5px; border-radius: 5px;outline: 3px solid {color};">
             <b>{statssip}</b>
         </p>
         ''',
@@ -1383,7 +1383,7 @@ with sip9 :
     )
     st.markdown(
         f'''
-        <p style="font-size:{int(25*zoom)}px; text-align: center; background-color: {color};color: {color_text}; padding: 5px; border-radius: 5px;outline: 3px solid {color_text};">
+        <p style="font-size:{int(25*zoom)}px; text-align: center; background-color: {color_text};color: {color}; padding: 5px; border-radius: 5px;outline: 3px solid {color};">
             <b>{statssip}</b>
         </p>
         ''',
