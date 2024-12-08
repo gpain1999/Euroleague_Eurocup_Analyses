@@ -112,12 +112,25 @@ player_stat = f.get_aggregated_data(
 )
 player_stat = player_stat.sort_values(by = "TIME_ON",ascending = False)
 
+# Tri général sur tout le DataFrame
+df_sorted = player_stat.sort_values(by=["I_PER", "TIME_ON"], ascending=[False, True])
+
+# Identifier la première ligne où WIN == "YES"
+first_row = df_sorted[df_sorted["WIN"] == "YES"].head(1)
+
+# Supprimer cette ligne du DataFrame trié (pour éviter les doublons)
+df_sorted = df_sorted.drop(first_row.index)
+
+# Concatenation pour placer cette ligne en première position
+player_stat = pd.concat([first_row, df_sorted], ignore_index=True).reset_index(drop = True)
+
+
 local_player_stat = player_stat[player_stat["TEAM"]==team_local]
 road_player_stat = player_stat[player_stat["TEAM"]==team_road]
 
 ### MVP ###
 
-mvp_data = player_stat[player_stat["WIN"]=="YES"].sort_values(by = ["I_PER","TIME_ON"],ascending = [False,True]).reset_index(drop = True)
+mvp_data = player_stat
 NAME_MVP = mvp_data["PLAYER"].to_list()[0]
 NUMBER_MVP = mvp_data["#"].to_list()[0]
 TEAM_MVP = mvp_data["TEAM"].to_list()[0]
@@ -315,6 +328,8 @@ with col1 :
         # Afficher l'image redimensionnée
         st.image(image)
     except FileNotFoundError:
+        
+
         st.warning(f"L'image pour {competition} est introuvable à l'emplacement : {image_path}") 
     
 
@@ -726,6 +741,146 @@ with good_bad :
             unsafe_allow_html=True
         )
 with snum :
+
+
+    s1, s2,s3,s4 = st.columns([0.25, 0.25,0.25,0.25])
+
+
+    with s1 :
+
+        NAME_j = player_stat["PLAYER"].to_list()[0]
+        TEAM_j = player_stat["TEAM"].to_list()[0]
+        NUMBER_j = player_stat["#"].to_list()[0]
+        STAT_j = player_stat["I_PER"].to_list()[0]
+        ID_j = players[(players["CODETEAM"] == TEAM_j) & (players["PLAYER"] == NAME_j)]["PLAYER_ID"].to_list()[0]
+
+        image_path_j = os.path.join(images_dir, f"{competition}_{season}_players/{TEAM_j}_{ID_j}.png")
+
+        st.markdown(
+            f'''
+            <p style="font-size:{int(25*zoom)}px; text-align: center; background-color: gold;color: black; padding: 5px; border-radius: 5px;">
+                <b>MVP : {STAT_j} I_PER</b>
+            </p>
+            ''',
+            unsafe_allow_html=True
+        )
+
+        if os.path.exists(image_path_j):
+            image = Image.open(image_path_j)
+
+            # Calculer la hauteur des 75% supérieurs
+            width, height = image.size
+            cropped_height = int(0.66 * height)
+
+            # Rogner l'image : garder seulement les 75% du haut
+            image_cropped = image.crop((0, 0, width, cropped_height))
+
+            # Afficher l'image rognée avec Streamlit
+            st.image(image_cropped, caption=f"#{NUMBER_j} {NAME_j}", width=int(250*zoom))        
+        else:
+            st.warning(f"Image introuvable pour le joueur : {NAME_j}")
+
+    with s2 :
+
+        NAME_j = player_stat["PLAYER"].to_list()[1]
+        TEAM_j = player_stat["TEAM"].to_list()[1]
+        NUMBER_j = player_stat["#"].to_list()[1]
+        STAT_j = player_stat["I_PER"].to_list()[1]
+        ID_j = players[(players["CODETEAM"] == TEAM_j) & (players["PLAYER"] == NAME_j)]["PLAYER_ID"].to_list()[0]
+
+        image_path_j = os.path.join(images_dir, f"{competition}_{season}_players/{TEAM_j}_{ID_j}.png")
+
+        st.markdown(
+            f'''
+            <p style="font-size:{int(25*zoom)}px; text-align: center; background-color: silver;color: black; padding: 5px; border-radius: 5px;">
+                <b>2ND : {STAT_j} I_PER</b>
+            </p>
+            ''',
+            unsafe_allow_html=True
+        )
+
+        if os.path.exists(image_path_j):
+            image = Image.open(image_path_j)
+
+            # Calculer la hauteur des 75% supérieurs
+            width, height = image.size
+            cropped_height = int(0.66 * height)
+
+            # Rogner l'image : garder seulement les 75% du haut
+            image_cropped = image.crop((0, 0, width, cropped_height))
+
+            # Afficher l'image rognée avec Streamlit
+            st.image(image_cropped, caption=f"#{NUMBER_j} {NAME_j}", width=int(250*zoom))        
+        else:
+            st.warning(f"Image introuvable pour le joueur : {NAME_j}")
+
+
+    with s3 :
+        NAME_j = player_stat["PLAYER"].to_list()[2]
+        TEAM_j = player_stat["TEAM"].to_list()[2]
+        NUMBER_j = player_stat["#"].to_list()[2]
+        STAT_j = player_stat["I_PER"].to_list()[2]
+        ID_j = players[(players["CODETEAM"] == TEAM_j) & (players["PLAYER"] == NAME_j)]["PLAYER_ID"].to_list()[0]
+
+        image_path_j = os.path.join(images_dir, f"{competition}_{season}_players/{TEAM_j}_{ID_j}.png")
+
+        st.markdown(
+            f'''
+            <p style="font-size:{int(25*zoom)}px; text-align: center; background-color: #CD7F32;color: white; padding: 5px; border-radius: 5px;">
+                <b>3RD : {STAT_j} I_PER</b>
+            </p>
+            ''',
+            unsafe_allow_html=True
+        )
+
+        if os.path.exists(image_path_j):
+            image = Image.open(image_path_j)
+
+            # Calculer la hauteur des 75% supérieurs
+            width, height = image.size
+            cropped_height = int(0.66 * height)
+
+            # Rogner l'image : garder seulement les 75% du haut
+            image_cropped = image.crop((0, 0, width, cropped_height))
+
+            # Afficher l'image rognée avec Streamlit
+            st.image(image_cropped, caption=f"#{NUMBER_j} {NAME_j}", width=int(250*zoom))        
+        else:
+            st.warning(f"Image introuvable pour le joueur : {NAME_j}")
+            
+    with s4 :
+
+        NAME_j = player_stat["PLAYER"].to_list()[3]
+        TEAM_j = player_stat["TEAM"].to_list()[3]
+        NUMBER_j = player_stat["#"].to_list()[3]
+        STAT_j = player_stat["I_PER"].to_list()[3]
+        ID_j = players[(players["CODETEAM"] == TEAM_j) & (players["PLAYER"] == NAME_j)]["PLAYER_ID"].to_list()[0]
+
+        image_path_j = os.path.join(images_dir, f"{competition}_{season}_players/{TEAM_j}_{ID_j}.png")
+
+        st.markdown(
+            f'''
+            <p style="font-size:{int(25*zoom)}px; text-align: center; background-color: #7B3F00;color: white; padding: 5px; border-radius: 5px;">
+                <b>4th : {STAT_j} I_PER</b>
+            </p>
+            ''',
+            unsafe_allow_html=True
+        )
+
+        if os.path.exists(image_path_j):
+            image = Image.open(image_path_j)
+
+            # Calculer la hauteur des 75% supérieurs
+            width, height = image.size
+            cropped_height = int(0.66 * height)
+
+            # Rogner l'image : garder seulement les 75% du haut
+            image_cropped = image.crop((0, 0, width, cropped_height))
+
+            # Afficher l'image rognée avec Streamlit
+            st.image(image_cropped, caption=f"#{NUMBER_j} {NAME_j}", width=int(250*zoom))        
+        else:
+            st.warning(f"Image introuvable pour le joueur : {NAME_j}")
     s1, s2,s3,s4 = st.columns([0.25, 0.25,0.25,0.25])
 
 
@@ -734,18 +889,27 @@ with snum :
 
         st.markdown(
             f'''
-            <p style="font-size:{int(27*zoom)}px; text-align: center; background-color: gold;color: black; padding: 5px; border-radius: 5px;">
-                <b>MVP : {mvp_data["I_PER"].to_list()[0]} I_PER</b>
+            <p style="font-size:{int(27*zoom)}px; text-align: center; background-color: #00ff00;color: black; padding: 5px; border-radius: 5px;">
+                <b>{ST_data["ST"].to_list()[0]} ST</b>
             </p>
             ''',
             unsafe_allow_html=True
         )
+        if os.path.exists(ST_image_path):
+            # Charger l'image avec Pillow
+            image = Image.open(ST_image_path)
 
-        if os.path.exists(mvp_image_path):
-            st.image(mvp_image_path, caption=f"#{NUMBER_MVP} {NAME_MVP}", width=int(250*zoom))
+            # Calculer la hauteur des 75% supérieurs
+            width, height = image.size
+            cropped_height = int(0.66 * height)
+
+            # Rogner l'image : garder seulement les 75% du haut
+            image_cropped = image.crop((0, 0, width, cropped_height))
+
+            # Afficher l'image rognée avec Streamlit
+            st.image(image_cropped, caption=f"#{NUMBER_ST} {NAME_ST}", width=int(250*zoom))
         else:
-            st.warning(f"Image introuvable pour le joueur : {NAME_MVP}")
-
+            st.warning(f"Image introuvable pour le joueur : {NAME_ST}")
 
     with s2 :
         # Intégrer la couleur dans le markdown
@@ -759,7 +923,17 @@ with snum :
             unsafe_allow_html=True
         )
         if os.path.exists(PTS_image_path):
-            st.image(PTS_image_path, caption=f"#{NUMBER_PTS} {NAME_PTS}", width=int(250*zoom))
+            image = Image.open(PTS_image_path)
+
+            # Calculer la hauteur des 75% supérieurs
+            width, height = image.size
+            cropped_height = int(0.66 * height)
+
+            # Rogner l'image : garder seulement les 75% du haut
+            image_cropped = image.crop((0, 0, width, cropped_height))
+
+            # Afficher l'image rognée avec Streamlit
+            st.image(image_cropped, caption=f"#{NUMBER_PTS} {NAME_PTS}", width=int(250*zoom))
         else:
             st.warning(f"Image introuvable pour le joueur : {NAME_PTS}")
 
@@ -778,7 +952,17 @@ with snum :
 
 
         if os.path.exists(DR_image_path):
-            st.image(DR_image_path, caption=f"#{NUMBER_DR} {NAME_DR}", width=int(250*zoom))
+            image = Image.open(DR_image_path)
+
+            # Calculer la hauteur des 75% supérieurs
+            width, height = image.size
+            cropped_height = int(0.66 * height)
+
+            # Rogner l'image : garder seulement les 75% du haut
+            image_cropped = image.crop((0, 0, width, cropped_height))
+
+            # Afficher l'image rognée avec Streamlit
+            st.image(image_cropped, caption=f"#{NUMBER_DR} {NAME_DR}", width=int(250*zoom))
         else:
             st.warning(f"Image introuvable pour le joueur : {NAME_DR}")
 
@@ -798,7 +982,17 @@ with snum :
         )
 
         if os.path.exists(AS_image_path):
-            st.image(AS_image_path, caption=f"#{NUMBER_AS} {NAME_AS}", width=int(250*zoom))
+            image = Image.open(AS_image_path)
+
+            # Calculer la hauteur des 75% supérieurs
+            width, height = image.size
+            cropped_height = int(0.66 * height)
+
+            # Rogner l'image : garder seulement les 75% du haut
+            image_cropped = image.crop((0, 0, width, cropped_height))
+
+            # Afficher l'image rognée avec Streamlit
+            st.image(image_cropped, caption=f"#{NUMBER_AS} {NAME_AS}", width=int(250*zoom))
         else:
             st.warning(f"Image introuvable pour le joueur : {NAME_AS}")
 
@@ -828,7 +1022,17 @@ with snum :
         )
 
         if os.path.exists(BL_image_path):
-            st.image(BL_image_path, caption=f"#{NUMBER_BL} {NAME_BL}", width=int(250*zoom))
+            image = Image.open(BL_image_path)
+
+            # Calculer la hauteur des 75% supérieurs
+            width, height = image.size
+            cropped_height = int(0.66 * height)
+
+            # Rogner l'image : garder seulement les 75% du haut
+            image_cropped = image.crop((0, 0, width, cropped_height))
+
+            # Afficher l'image rognée avec Streamlit
+            st.image(image_cropped, caption=f"#{NUMBER_BL} {NAME_BL}", width=int(250*zoom))        
         else:
             st.warning(f"Image introuvable pour le joueur : {NAME_BL}")
 
@@ -845,7 +1049,17 @@ with snum :
             unsafe_allow_html=True
         )
         if os.path.exists(PM_ON_image_path):
-            st.image(PM_ON_image_path, caption=f"#{NUMBER_PM_ON} {NAME_PM_ON}", width=int(250*zoom))
+            image = Image.open(PM_ON_image_path)
+
+            # Calculer la hauteur des 75% supérieurs
+            width, height = image.size
+            cropped_height = int(0.66 * height)
+
+            # Rogner l'image : garder seulement les 75% du haut
+            image_cropped = image.crop((0, 0, width, cropped_height))
+
+            # Afficher l'image rognée avec Streamlit
+            st.image(image_cropped, caption=f"#{NUMBER_PM_ON} {NAME_PM_ON}", width=int(250*zoom)) 
         else:
             st.warning(f"Image introuvable pour le joueur : {NAME_PM_ON}")
 
@@ -864,7 +1078,17 @@ with snum :
         )
 
         if os.path.exists(OR_image_path):
-            st.image(OR_image_path, caption=f"#{NUMBER_OR} {NAME_OR}", width=int(250*zoom))
+            image = Image.open(OR_image_path)
+
+            # Calculer la hauteur des 75% supérieurs
+            width, height = image.size
+            cropped_height = int(0.66 * height)
+
+            # Rogner l'image : garder seulement les 75% du haut
+            image_cropped = image.crop((0, 0, width, cropped_height))
+
+            # Afficher l'image rognée avec Streamlit
+            st.image(image_cropped, caption=f"#{NUMBER_OR} {NAME_OR}", width=int(250*zoom)) 
         else:
             st.warning(f"Image introuvable pour le joueur : {NAME_OR}")
             
@@ -881,9 +1105,26 @@ with snum :
         )
 
         if os.path.exists(TO_image_path):
-            st.image(TO_image_path, caption=f"#{NUMBER_TO} {NAME_TO}", width=int(250*zoom))
+            image = Image.open(TO_image_path)
+
+            # Calculer la hauteur des 75% supérieurs
+            width, height = image.size
+            cropped_height = int(0.66 * height)
+
+            # Rogner l'image : garder seulement les 75% du haut
+            image_cropped = image.crop((0, 0, width, cropped_height))
+            st.image(image_cropped, caption=f"#{NUMBER_TO} {NAME_TO}", width=int(250*zoom))
         else:
             st.warning(f"Image introuvable pour le joueur : {NAME_TO}")
+
+    st.markdown(
+        f'''
+        <p style="font-size:{int(27*zoom)}px; text-align: center; background-color: grey;color: black; padding: 3px; border-radius: 5px;">
+            <b></b>
+        </p>
+        ''',
+        unsafe_allow_html=True
+    )
 
 
 st.markdown(
