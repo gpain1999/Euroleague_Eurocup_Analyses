@@ -636,6 +636,14 @@ with good_bad :
             ''',
             unsafe_allow_html=True
         )
+        st.markdown(
+            f'''
+            <p style="font-size:{20*zoom}px; text-align: center; background-color: {local_c2};color: {local_c1}; padding: 8px; border-radius: 5px;outline: 3px solid {local_c1};">
+                <b>{round(100*local_player_stat["AS"].sum()/(local_player_stat["2_R"].sum()+local_player_stat["3_R"].sum()),1)}&nbsp;% ASSISTS </b>
+            </p>
+            ''',
+            unsafe_allow_html=True
+        )
         shot_T = local_player_stat["1_T"].sum()/2 + local_player_stat["2_T"].sum() + local_player_stat["3_T"].sum()
         TO = local_player_stat["TO"].sum()
 
@@ -657,14 +665,7 @@ with good_bad :
             unsafe_allow_html=True
         )
 
-        st.markdown(
-            f'''
-            <p style="font-size:{20*zoom}px; text-align: center; background-color: {local_c2};color: {local_c1}; padding: 8px; border-radius: 5px;outline: 3px solid {local_c1};">
-                <b>{round(100*local_player_stat["AS"].sum()/(local_player_stat["2_R"].sum()+local_player_stat["3_R"].sum()),1)}&nbsp;% ASSISTS </b>
-            </p>
-            ''',
-            unsafe_allow_html=True
-        )
+
         st.markdown(
             f'''
             <p style="font-size:{22*zoom}px; text-align: center; background-color: {local_c2};color: {local_c1}; padding: 8px; border-radius: 5px;outline: 3px solid {local_c1};">
@@ -751,6 +752,15 @@ with good_bad :
             ''',
             unsafe_allow_html=True
         )
+
+        st.markdown(
+            f'''
+            <p style="font-size:{20*zoom}px; text-align: center; background-color: {road_c2};color: {road_c1}; padding: 8px; border-radius: 5px;outline: 3px solid {road_c1};">
+                <b>{round(100*road_player_stat["AS"].sum()/(road_player_stat["2_R"].sum()+road_player_stat["3_R"].sum()),1)}&nbsp;% ASSISTS </b>
+            </p>
+            ''',
+            unsafe_allow_html=True
+        )
         shot_T = road_player_stat["1_T"].sum()/2 + road_player_stat["2_T"].sum() + road_player_stat["3_T"].sum()
         TO = road_player_stat["TO"].sum()
 
@@ -770,14 +780,7 @@ with good_bad :
             ''',
             unsafe_allow_html=True
         )
-        st.markdown(
-            f'''
-            <p style="font-size:{20*zoom}px; text-align: center; background-color: {road_c2};color: {road_c1}; padding: 8px; border-radius: 5px;outline: 3px solid {road_c1};">
-                <b>{round(100*road_player_stat["AS"].sum()/(road_player_stat["2_R"].sum()+road_player_stat["3_R"].sum()),1)}&nbsp;% ASSISTS </b>
-            </p>
-            ''',
-            unsafe_allow_html=True
-        )
+
         st.markdown(
             f'''
             <p style="font-size:{22*zoom}px; text-align: center; background-color: {road_c2};color: {road_c1}; padding: 8px; border-radius: 5px;outline: 3px solid {road_c1};">
