@@ -416,6 +416,44 @@ with stat8 :
         ''',
         unsafe_allow_html=True
     )
+
+with stat9 :
+    
+    st.markdown(
+        f'''
+        <p style="font-size:{int(20*zoom)}px; text-align: center; background-color: white ;color: black; padding: 2px; border-radius: 5px;outline: 3px solid black;">
+            <b> FT MA. </b>
+        </p>
+        ''',
+        unsafe_allow_html=True
+    )
+
+    st.markdown(
+        f'''
+        <p style="font-size:{int(23*zoom)}px; text-align: center; background-color: white ;color: black; padding: 2px; border-radius: 5px;outline: 3px solid black;">
+            <b> {avg_data["1_R"].to_list()[0]}</b>
+        </p>
+        ''',
+        unsafe_allow_html=True
+    )
+    st.markdown(
+        f'''
+        <p style="font-size:{int(20*zoom)}px; text-align: center; background-color: white ;color: black; padding: 2px; border-radius: 5px;outline: 3px solid black;">
+            <b> % HOME </b>
+        </p>
+        ''',
+        unsafe_allow_html=True
+    )
+
+    st.markdown(
+        f'''
+        <p style="font-size:{int(23*zoom)}px; text-align: center; background-color: white ;color: black; padding: 2px; border-radius: 5px;outline: 3px solid black;">
+            <b> {avg_data["HOME"].to_list()[0]}</b>
+        </p>
+        ''',
+        unsafe_allow_html=True
+    )
+
 st.header(f"AVERAGES : {NAME_PLAYER} ")
 st.dataframe(avg_data,height=60, use_container_width=True,hide_index=True)
 
