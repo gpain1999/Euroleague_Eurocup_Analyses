@@ -258,7 +258,19 @@ def style_pm_on(value):
 
 
 
+stat1,stat2,stat3,stat4,stat5,stat6,stat7,stat8,stat9,stat10,stat11,stat12,stat13,stat14,stat15,stat16, = st.columns([1 for i in range(16)])
 
+with stat1 :
+    
+    # Intégrer la couleur dans le markdown
+    st.markdown(
+        f'''
+        <p style="font-size:{int(40*zoom)}px; text-align: center; background-color: {player_color};color: black; padding: 2px; border-radius: 5px;">
+            <b>NOTE : {round(player_note)}</b>
+        </p>
+        ''',
+        unsafe_allow_html=True
+    )
 
 st.header(f"AVERAGES : {NAME_PLAYER} ")
 st.dataframe(avg_data,height=60, use_container_width=True,hide_index=True)
