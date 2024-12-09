@@ -401,7 +401,7 @@ with stat8 :
     
     st.markdown(
         f'''
-        <p style="font-size:{int(30*zoom)}px; text-align: center; background-color: white ;color: black; padding: 2px; border-radius: 5px;outline: 3px solid black;">
+        <p style="font-size:{int(30*zoom)}px; text-align: center; background-color: white ;color: black; padding: 3px; border-radius: 5px;outline: 3px solid black;">
             <b> TURNOV.</b>
         </p>
         ''',
