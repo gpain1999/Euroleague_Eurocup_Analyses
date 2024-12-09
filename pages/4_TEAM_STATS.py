@@ -498,7 +498,7 @@ with col1 :
 
     st.markdown(
         f'''
-        <p style="font-size:{int(taille*0.9)}px; text-align: center; padding: 10pxs;">
+        <p style="font-size:{int(taille*1.2)}px; text-align: center; padding: 10pxs;">
             <b>% SHOOTS</b>
         </p>
         ''',
@@ -556,7 +556,7 @@ with col1 :
 
     st.markdown(
         f'''
-        <p style="font-size:{int(taille*0.9)}px; text-align: center; padding: 10pxs;">
+        <p style="font-size:{int(taille*1.2)}px; text-align: center; padding: 10pxs;">
             <b>% REBONDS</b>
         </p>
         ''',
@@ -609,7 +609,7 @@ with col1 :
     
     st.markdown(
         f'''
-        <p style="font-size:{int(taille*0.9)}px; text-align: center; padding: 10pxs;">
+        <p style="font-size:{int(taille*1.2)}px; text-align: center; padding: 10pxs;">
             <b>% BALL CARE </b>
         </p>
         ''',
