@@ -637,6 +637,80 @@ with stat14 :
         ''',
         unsafe_allow_html=True
     )
+
+with stat15 :
+    
+    st.markdown(
+        f'''
+        <p style="font-size:{int(20*zoom)}px; text-align: center; background-color: white ;color: black; padding: 2px; border-radius: 5px;outline: 3px solid black;">
+            <b> DEF. FAULTS. </b>
+        </p>
+        ''',
+        unsafe_allow_html=True
+    )
+
+    st.markdown(
+        f'''
+        <p style="font-size:{int(23*zoom)}px; text-align: center; background-color: white ;color: black; padding: 2px; border-radius: 5px;outline: 3px solid black;">
+            <b> {avg_data["CF"].to_list()[0]}</b>
+        </p>
+        ''',
+        unsafe_allow_html=True
+    )
+    st.markdown(
+        f'''
+        <p style="font-size:{int(20*zoom)}px; text-align: center; background-color: white ;color: black; padding: 2px; border-radius: 5px;outline: 3px solid black;">
+            <b> BLOCKS </b>
+        </p>
+        ''',
+        unsafe_allow_html=True
+    )
+
+    st.markdown(
+        f'''
+        <p style="font-size:{int(23*zoom)}px; text-align: center; background-color: white ;color: black; padding: 2px; border-radius: 5px;outline: 3px solid black;">
+            <b> {avg_data["CO"].to_list()[0]}</b>
+        </p>
+        ''',
+        unsafe_allow_html=True
+    )
+
+with stat16 :
+    
+    st.markdown(
+        f'''
+        <p style="font-size:{int(20*zoom)}px; text-align: center; background-color: white ;color: black; padding: 2px; border-radius: 5px;outline: 3px solid black;">
+            <b> NC FAULTS </b>
+        </p>
+        ''',
+        unsafe_allow_html=True
+    )
+
+    st.markdown(
+        f'''
+        <p style="font-size:{int(23*zoom)}px; text-align: center; background-color: white ;color: black; padding: 2px; border-radius: 5px;outline: 3px solid black;">
+            <b> {avg_data["NCF"].to_list()[0]}</b>
+        </p>
+        ''',
+        unsafe_allow_html=True
+    )
+    st.markdown(
+        f'''
+        <p style="font-size:{int(20*zoom)}px; text-align: center; background-color: white ;color: black; padding: 2px; border-radius: 5px;outline: 3px solid black;">
+            <b> FAULTS CAUSED </b>
+        </p>
+        ''',
+        unsafe_allow_html=True
+    )
+
+    st.markdown(
+        f'''
+        <p style="font-size:{int(23*zoom)}px; text-align: center; background-color: white ;color: black; padding: 2px; border-radius: 5px;outline: 3px solid black;">
+            <b> {avg_data["FP"].to_list()[0]}</b>
+        </p>
+        ''',
+        unsafe_allow_html=True
+    )
 st.header(f"AVERAGES : {NAME_PLAYER} ")
 st.dataframe(avg_data,height=60, use_container_width=True,hide_index=True)
 
