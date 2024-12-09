@@ -13,7 +13,7 @@ sys.path.append(os.path.join(os.path.dirname(__file__), '../fonctions'))
 images_dir = os.path.join(os.path.dirname(__file__), '..', 'images')  # Path to the images directory
 
 st.set_page_config(
-    page_title="PLAYER ANALYSIS",
+    page_title="PLAYER STATS",
     layout="wide",  # Active le Wide mode par défaut
     initial_sidebar_state="expanded",  # Si vous avez une barre latérale
 )
@@ -192,6 +192,13 @@ filtered_df = filtered_df.drop(columns=["NB_GAME", "PLAYER", "#", "TEAM"])
 player_image_path = os.path.join(images_dir, f"{competition}_{season}_players/{TEAM_PLAYER}_{PLAYER_ID}.png")
 
 
+teams_color = pd.read_csv(f"datas/{competition}_{season}_teams_colors.csv",sep=";")
+
+teams_color[teams_color["TEAM"]==CODETEAM]["COL1"].to_list()[0]
+
+local_c1 = teams_color[teams_color["TEAM"]==CODETEAM]["COL1"].to_list()[0]
+local_c2 = teams_color[teams_color["TEAM"]==CODETEAM]["COL2"].to_list()[0]
+
 # Calcul de la moyenne glissante en tenant compte des rounds manquants
 def calculate_moving_average(df, column, round_column, window_size):
     moving_avg = []
@@ -273,7 +280,7 @@ with stat1 :
     
     st.markdown(
         f'''
-        <p style="font-size:{int(30*zoom)}px; text-align: center; background-color: white ;color: black; padding: 9px; border-radius: 5px;outline: 3px solid black;">
+        <p style="font-size:{int(30*zoom)}px; text-align: center; background-color: {local_c1} ;color: {local_c2}; padding: 9px; border-radius: 5px;outline: 3px solid {local_c2};">
             <b> NB GAME</b>
         </p>
         ''',
@@ -292,7 +299,7 @@ with stat2 :
     
     st.markdown(
         f'''
-        <p style="font-size:{int(30*zoom)}px; text-align: center; background-color: white ;color: black; padding: 9px; border-radius: 5px;outline: 3px solid black;">
+        <p style="font-size:{int(30*zoom)}px; text-align: center; background-color: {local_c1} ;color: {local_c2}; padding: 9px; border-radius: 5px;outline: 3px solid {local_c2};">
             <b> TIME</b>
         </p>
         ''',
@@ -311,7 +318,7 @@ with stat3 :
     
     st.markdown(
         f'''
-        <p style="font-size:{int(30*zoom)}px; text-align: center; background-color: white ;color: black; padding: 9px; border-radius: 5px;outline: 3px solid black;">
+        <p style="font-size:{int(30*zoom)}px; text-align: center; background-color: {local_c1} ;color: {local_c2}; padding: 9px; border-radius: 5px;outline: 3px solid {local_c2};">
             <b> I_PER</b>
         </p>
         ''',
@@ -330,7 +337,7 @@ with stat4 :
     
     st.markdown(
         f'''
-        <p style="font-size:{int(30*zoom)}px; text-align: center; background-color: white ;color: black; padding: 9px; border-radius: 5px;outline: 3px solid black;">
+        <p style="font-size:{int(30*zoom)}px; text-align: center; background-color: {local_c1} ;color: {local_c2}; padding: 9px; border-radius: 5px;outline: 3px solid {local_c2};">
             <b> +/-</b>
         </p>
         ''',
@@ -350,7 +357,7 @@ with stat5 :
     
     st.markdown(
         f'''
-        <p style="font-size:{int(30*zoom)}px; text-align: center; background-color: white ;color: black; padding: 9px; border-radius: 5px;outline: 3px solid black;">
+        <p style="font-size:{int(30*zoom)}px; text-align: center; background-color: {local_c1} ;color: {local_c2}; padding: 9px; border-radius: 5px;outline: 3px solid {local_c2};">
             <b> PTS</b>
         </p>
         ''',
@@ -370,7 +377,7 @@ with stat6 :
     
     st.markdown(
         f'''
-        <p style="font-size:{int(30*zoom)}px; text-align: center; background-color: white ;color: black; padding: 9px; border-radius: 5px;outline: 3px solid black;">
+        <p style="font-size:{int(30*zoom)}px; text-align: center; background-color: {local_c1} ;color: {local_c2}; padding: 9px; border-radius: 5px;outline: 3px solid {local_c2};">
             <b> TOT.REB.</b>
         </p>
         ''',
@@ -390,7 +397,7 @@ with stat7 :
     
     st.markdown(
         f'''
-        <p style="font-size:{int(30*zoom)}px; text-align: center; background-color: white ;color: black; padding: 9px; border-radius: 5px;outline: 3px solid black;">
+        <p style="font-size:{int(30*zoom)}px; text-align: center; background-color: {local_c1} ;color: {local_c2}; padding: 9px; border-radius: 5px;outline: 3px solid {local_c2};">
             <b> ASSISTS</b>
         </p>
         ''',
@@ -410,7 +417,7 @@ with stat8 :
     
     st.markdown(
         f'''
-        <p style="font-size:{int(30*zoom)}px; text-align: center; background-color: white ;color: black; padding: 9px; border-radius: 5px;outline: 3px solid black;">
+        <p style="font-size:{int(30*zoom)}px; text-align: center; background-color: {local_c1} ;color: {local_c2}; padding: 9px; border-radius: 5px;outline: 3px solid {local_c2};">
             <b> TURNOV.</b>
         </p>
         ''',
@@ -430,7 +437,7 @@ with stat8 :
 with stat9 :
     st.markdown(
         f'''
-        <p style="font-size:{int(20*zoom)}px; text-align: center; background-color: white ;color: black; padding: 2px; border-radius: 5px;outline: 3px solid black;">
+        <p style="font-size:{int(20*zoom)}px; text-align: center; background-color: {local_c1} ;color: {local_c2}; padding: 2px; border-radius: 5px;outline: 3px solid {local_c2};">
             <b> % HOME </b>
         </p>
         ''',
@@ -449,7 +456,7 @@ with stat9 :
 
     st.markdown(
         f'''
-        <p style="font-size:{int(20*zoom)}px; text-align: center; background-color: white ;color: black; padding: 2px; border-radius: 5px;outline: 3px solid black;">
+        <p style="font-size:{int(20*zoom)}px; text-align: center; background-color: {local_c1} ;color: {local_c2}; padding: 2px; border-radius: 5px;outline: 3px solid {local_c2};">
             <b> % WIN </b>
         </p>
         ''',
@@ -469,7 +476,7 @@ with stat10 :
     
     st.markdown(
         f'''
-        <p style="font-size:{int(20*zoom)}px; text-align: center; background-color: white ;color: black; padding: 2px; border-radius: 5px;outline: 3px solid black;">
+        <p style="font-size:{int(20*zoom)}px; text-align: center; background-color: {local_c1} ;color: {local_c2}; padding: 2px; border-radius: 5px;outline: 3px solid {local_c2};">
             <b> FT MA. </b>
         </p>
         ''',
@@ -486,7 +493,7 @@ with stat10 :
     )
     st.markdown(
         f'''
-        <p style="font-size:{int(20*zoom)}px; text-align: center; background-color: white ;color: black; padding: 2px; border-radius: 5px;outline: 3px solid black;">
+        <p style="font-size:{int(20*zoom)}px; text-align: center; background-color: {local_c1} ;color: {local_c2}; padding: 2px; border-radius: 5px;outline: 3px solid {local_c2};">
             <b> FT ATT </b>
         </p>
         ''',
@@ -508,7 +515,7 @@ with stat11 :
     
     st.markdown(
         f'''
-        <p style="font-size:{int(20*zoom)}px; text-align: center; background-color: white ;color: black; padding: 2px; border-radius: 5px;outline: 3px solid black;">
+        <p style="font-size:{int(20*zoom)}px; text-align: center; background-color: {local_c1} ;color: {local_c2}; padding: 2px; border-radius: 5px;outline: 3px solid {local_c2};">
             <b> 2PTS MA. </b>
         </p>
         ''',
@@ -525,7 +532,7 @@ with stat11 :
     )
     st.markdown(
         f'''
-        <p style="font-size:{int(20*zoom)}px; text-align: center; background-color: white ;color: black; padding: 2px; border-radius: 5px;outline: 3px solid black;">
+        <p style="font-size:{int(20*zoom)}px; text-align: center; background-color: {local_c1} ;color: {local_c2}; padding: 2px; border-radius: 5px;outline: 3px solid {local_c2};">
             <b> 2PTS ATT </b>
         </p>
         ''',
@@ -546,7 +553,7 @@ with stat11 :
 with stat12 :
     st.markdown(
         f'''
-        <p style="font-size:{int(20*zoom)}px; text-align: center; background-color: white ;color: black; padding: 2px; border-radius: 5px;outline: 3px solid black;">
+        <p style="font-size:{int(20*zoom)}px; text-align: center; background-color: {local_c1} ;color: {local_c2}; padding: 2px; border-radius: 5px;outline: 3px solid {local_c2};">
             <b> 3PTS MA. </b>
         </p>
         ''',
@@ -564,7 +571,7 @@ with stat12 :
 
     st.markdown(
         f'''
-        <p style="font-size:{int(20*zoom)}px; text-align: center; background-color: white ;color: black; padding: 2px; border-radius: 5px;outline: 3px solid black;">
+        <p style="font-size:{int(20*zoom)}px; text-align: center; background-color: {local_c1} ;color: {local_c2}; padding: 2px; border-radius: 5px;outline: 3px solid {local_c2};">
             <b> 3PTS ATT </b>
         </p>
         ''',
@@ -586,7 +593,7 @@ with stat13 :
 
     st.markdown(
         f'''
-        <p style="font-size:{int(20*zoom)}px; text-align: center; background-color: white ;color: black; padding: 2px; border-radius: 5px;outline: 3px solid black;">
+        <p style="font-size:{int(20*zoom)}px; text-align: center; background-color: {local_c1} ;color: {local_c2}; padding: 2px; border-radius: 5px;outline: 3px solid {local_c2};">
             <b> DEF. REB. </b>
         </p>
         ''',
@@ -605,7 +612,7 @@ with stat13 :
 
     st.markdown(
         f'''
-        <p style="font-size:{int(20*zoom)}px; text-align: center; background-color: white ;color: black; padding: 2px; border-radius: 5px;outline: 3px solid black;">
+        <p style="font-size:{int(20*zoom)}px; text-align: center; background-color: {local_c1} ;color: {local_c2}; padding: 2px; border-radius: 5px;outline: 3px solid {local_c2};">
             <b> OFF. REB. </b>
         </p>
         ''',
@@ -624,7 +631,7 @@ with stat13 :
 with stat14 :
     st.markdown(
         f'''
-        <p style="font-size:{int(20*zoom)}px; text-align: center; background-color: white ;color: black; padding: 2px; border-radius: 5px;outline: 3px solid black;">
+        <p style="font-size:{int(20*zoom)}px; text-align: center; background-color: {local_c1} ;color: {local_c2}; padding: 2px; border-radius: 5px;outline: 3px solid {local_c2};">
             <b> PER </b>
         </p>
         ''',
@@ -642,7 +649,7 @@ with stat14 :
 
     st.markdown(
         f'''
-        <p style="font-size:{int(20*zoom)}px; text-align: center; background-color: white ;color: black; padding: 2px; border-radius: 5px;outline: 3px solid black;">
+        <p style="font-size:{int(20*zoom)}px; text-align: center; background-color: {local_c1} ;color: {local_c2}; padding: 2px; border-radius: 5px;outline: 3px solid {local_c2};">
             <b> STEALS </b>
         </p>
         ''',
@@ -662,7 +669,7 @@ with stat15 :
     
     st.markdown(
         f'''
-        <p style="font-size:{int(20*zoom)}px; text-align: center; background-color: white ;color: black; padding: 2px; border-radius: 5px;outline: 3px solid black;">
+        <p style="font-size:{int(20*zoom)}px; text-align: center; background-color: {local_c1} ;color: {local_c2}; padding: 2px; border-radius: 5px;outline: 3px solid {local_c2};">
             <b> DEF. FAULTS. </b>
         </p>
         ''',
@@ -679,7 +686,7 @@ with stat15 :
     )
     st.markdown(
         f'''
-        <p style="font-size:{int(20*zoom)}px; text-align: center; background-color: white ;color: black; padding: 2px; border-radius: 5px;outline: 3px solid black;">
+        <p style="font-size:{int(20*zoom)}px; text-align: center; background-color: {local_c1} ;color: {local_c2}; padding: 2px; border-radius: 5px;outline: 3px solid {local_c2};">
             <b> BLOCKS </b>
         </p>
         ''',
@@ -699,7 +706,7 @@ with stat16 :
     
     st.markdown(
         f'''
-        <p style="font-size:{int(20*zoom)}px; text-align: center; background-color: white ;color: black; padding: 2px; border-radius: 5px;outline: 3px solid black;">
+        <p style="font-size:{int(20*zoom)}px; text-align: center; background-color: {local_c1} ;color: {local_c2}; padding: 2px; border-radius: 5px;outline: 3px solid {local_c2};">
             <b> NC FAULTS </b>
         </p>
         ''',
@@ -716,7 +723,7 @@ with stat16 :
     )
     st.markdown(
         f'''
-        <p style="font-size:{int(20*zoom)}px; text-align: center; background-color: white ;color: black; padding: 2px; border-radius: 5px;outline: 3px solid black;">
+        <p style="font-size:{int(20*zoom)}px; text-align: center; background-color: {local_c1} ;color: {local_c2}; padding: 2px; border-radius: 5px;outline: 3px solid {local_c2};">
             <b> FAULTS CAUSED </b>
         </p>
         ''',
@@ -765,7 +772,7 @@ with col1:
 
     st.markdown(
         f'''
-        <p style="font-size:{int(20*zoom)}px; text-align: center; ">
+        <p style="font-size:{int(35*zoom)}px; text-align: center; background-color: {local_c1} ;color: {local_c2}; padding: 10px; border-radius: 5px;outline: 3px solid {local_c2};">
             <b>SCORE PER 10 mins</b>
         </p>
         ''',
@@ -783,7 +790,7 @@ with col_image :
     # Intégrer la couleur dans le markdown
     st.markdown(
         f'''
-        <p style="font-size:{int(40*zoom)}px; text-align: center; background-color: {player_color};color: black; padding: 2px; border-radius: 5px;">
+        <p style="font-size:{int(40*zoom)}px; text-align: center; background-color: {player_color};color: black; padding: 2px; border-radius: 5px;outline: 3px solid {local_c2};">
             <b>NOTE : {round(player_note)}</b>
         </p>
         ''',
@@ -807,7 +814,7 @@ with col_image :
 
     st.markdown(
         f'''
-    <p style="font-size:{int(35*zoom)}px; text-align: center; background-color: green;color: black; padding: 2px; border-radius: 5px;">
+    <p style="font-size:{int(35*zoom)}px; text-align: center; background-color: green;color: black; padding: 2px; border-radius: 5px;outline: 3px solid {local_c2};">
             <b style="margin-right: {int(24*zoom)}px;">ON :</b> 
             <span style="margin-right: {int(24*zoom)}px;">{round(result_pm_solo["OFF_ON_10"].to_list()[0],1)}</span> 
             <span style="margin-right: {int(24*zoom)}px;">-</span> 
@@ -819,7 +826,7 @@ with col_image :
 
     st.markdown(
         f'''
-    <p style="font-size:{int(35*zoom)}px; text-align: center; background-color: red;color: black; padding: 2px; border-radius: 5px;">
+    <p style="font-size:{int(35*zoom)}px; text-align: center; background-color: red;color: black; padding: 2px; border-radius: 5px;outline: 3px solid {local_c2};">
             <b style="margin-right: {int(24*zoom)}px;">OFF :</b> 
             <span style="margin-right: {int(24*zoom)}px;">{round(result_pm_solo["OFF_OFF_10"].to_list()[0],1)}</span> 
             <span style="margin-right: {int(24*zoom)}px;">-</span> 

@@ -4,11 +4,7 @@ import os
 import numpy as np
 from tabulate import tabulate
 from sklearn.linear_model import LogisticRegression
-from statsmodels.api import add_constant
-import pickle
 
-from statsmodels.api import GLM, families
-from statsmodels.genmod.families.links import logit
 
 season = 2024
 competition = "euroleague"
