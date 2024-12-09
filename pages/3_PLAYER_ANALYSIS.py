@@ -410,7 +410,7 @@ with stat8 :
 
     st.markdown(
         f'''
-        <p style="font-size:{int(35*zoom)}px; text-align: center; background-color: white ;color: black; padding: 4px; border-radius: 5px;outline: 3px solid black;">
+        <p style="font-size:{int(40*zoom)}px; text-align: center; background-color: white ;color: black; padding: 4px; border-radius: 5px;outline: 3px solid black;">
             <b> {avg_data["TO"].to_list()[0]}</b>
         </p>
         ''',
