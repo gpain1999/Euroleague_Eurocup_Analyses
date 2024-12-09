@@ -397,6 +397,7 @@ with col2:
 
     # Mise à jour du layout
     fig.update_layout(
+        height = 500,
         autosize=True,
         title=f'#{NUMBER_PLAYER} {NAME_PLAYER} ({TEAM_PLAYER}) AVG: {avg_data[selected_stats].sum()} {selected_stats}  ON {avg_data["TIME_ON"].sum()} MIN ',
         xaxis=dict(
