@@ -378,7 +378,67 @@ with stat6 :
     )
 st.header(f"AVERAGES : {NAME_PLAYER} ")
 st.dataframe(avg_data,height=60, use_container_width=True,hide_index=True)
+with stat6 :
+    
+    st.markdown(
+        f'''
+        <p style="font-size:{int(30*zoom)}px; text-align: center; background-color: white ;color: black; padding: 2px; border-radius: 5px;outline: 3px solid black;">
+            <b> TOT. REB.</b>
+        </p>
+        ''',
+        unsafe_allow_html=True
+    )
 
+    st.markdown(
+        f'''
+        <p style="font-size:{int(30*zoom)}px; text-align: center; background-color: white ;color: black; padding: 2px; border-radius: 5px;outline: 3px solid black;">
+            <b> {avg_data["TR"].to_list()[0]}</b>
+        </p>
+        ''',
+        unsafe_allow_html=True
+    )
+
+with stat7 :
+    
+    st.markdown(
+        f'''
+        <p style="font-size:{int(30*zoom)}px; text-align: center; background-color: white ;color: black; padding: 2px; border-radius: 5px;outline: 3px solid black;">
+            <b> ASSISTS</b>
+        </p>
+        ''',
+        unsafe_allow_html=True
+    )
+
+    st.markdown(
+        f'''
+        <p style="font-size:{int(30*zoom)}px; text-align: center; background-color: white ;color: black; padding: 2px; border-radius: 5px;outline: 3px solid black;">
+            <b> {avg_data["AS"].to_list()[0]}</b>
+        </p>
+        ''',
+        unsafe_allow_html=True
+    )
+
+with stat8 :
+    
+    st.markdown(
+        f'''
+        <p style="font-size:{int(30*zoom)}px; text-align: center; background-color: white ;color: black; padding: 2px; border-radius: 5px;outline: 3px solid black;">
+            <b> TURNOV.</b>
+        </p>
+        ''',
+        unsafe_allow_html=True
+    )
+
+    st.markdown(
+        f'''
+        <p style="font-size:{int(30*zoom)}px; text-align: center; background-color: white ;color: black; padding: 2px; border-radius: 5px;outline: 3px solid black;">
+            <b> {avg_data["TO"].to_list()[0]}</b>
+        </p>
+        ''',
+        unsafe_allow_html=True
+    )
+st.header(f"AVERAGES : {NAME_PLAYER} ")
+st.dataframe(avg_data,height=60, use_container_width=True,hide_index=True)
 
 col1,col_image, col2, col3 = st.columns([1.2,2, 6, 4])
 
