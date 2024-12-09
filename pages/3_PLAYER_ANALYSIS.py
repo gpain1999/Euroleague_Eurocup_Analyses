@@ -544,6 +544,45 @@ with stat11 :
 
 
 with stat12 :
+    st.markdown(
+        f'''
+        <p style="font-size:{int(20*zoom)}px; text-align: center; background-color: white ;color: black; padding: 2px; border-radius: 5px;outline: 3px solid black;">
+            <b> 3PTS MA. </b>
+        </p>
+        ''',
+        unsafe_allow_html=True
+    )
+
+    st.markdown(
+        f'''
+        <p style="font-size:{int(23*zoom)}px; text-align: center; background-color: white ;color: black; padding: 2px; border-radius: 5px;outline: 3px solid black;">
+            <b> {avg_data["3_R"].to_list()[0]}</b>
+        </p>
+        ''',
+        unsafe_allow_html=True
+    )
+
+    st.markdown(
+        f'''
+        <p style="font-size:{int(20*zoom)}px; text-align: center; background-color: white ;color: black; padding: 2px; border-radius: 5px;outline: 3px solid black;">
+            <b> 3PTS ATT </b>
+        </p>
+        ''',
+        unsafe_allow_html=True
+    )
+
+    st.markdown(
+        f'''
+        <p style="font-size:{int(23*zoom)}px; text-align: center; background-color: white ;color: black; padding: 2px; border-radius: 5px;outline: 3px solid black;">
+            <b> {avg_data["3_T"].to_list()[0]}</b>
+        </p>
+        ''',
+        unsafe_allow_html=True
+    )
+    
+
+with stat13 :
+    
     
     st.markdown(
         f'''
@@ -562,43 +601,7 @@ with stat12 :
         ''',
         unsafe_allow_html=True
     )
-    st.markdown(
-        f'''
-        <p style="font-size:{int(20*zoom)}px; text-align: center; background-color: white ;color: black; padding: 2px; border-radius: 5px;outline: 3px solid black;">
-            <b> DEF. REB. </b>
-        </p>
-        ''',
-        unsafe_allow_html=True
-    )
 
-    st.markdown(
-        f'''
-        <p style="font-size:{int(23*zoom)}px; text-align: center; background-color: white ;color: black; padding: 2px; border-radius: 5px;outline: 3px solid black;">
-            <b> {avg_data["DR"].to_list()[0]}</b>
-        </p>
-        ''',
-        unsafe_allow_html=True
-    )
-
-with stat13 :
-    
-    st.markdown(
-        f'''
-        <p style="font-size:{int(20*zoom)}px; text-align: center; background-color: white ;color: black; padding: 2px; border-radius: 5px;outline: 3px solid black;">
-            <b> 3PTS MA. </b>
-        </p>
-        ''',
-        unsafe_allow_html=True
-    )
-
-    st.markdown(
-        f'''
-        <p style="font-size:{int(23*zoom)}px; text-align: center; background-color: white ;color: black; padding: 2px; border-radius: 5px;outline: 3px solid black;">
-            <b> {avg_data["3_R"].to_list()[0]}</b>
-        </p>
-        ''',
-        unsafe_allow_html=True
-    )
     st.markdown(
         f'''
         <p style="font-size:{int(20*zoom)}px; text-align: center; background-color: white ;color: black; padding: 2px; border-radius: 5px;outline: 3px solid black;">
@@ -622,7 +625,7 @@ with stat14 :
     st.markdown(
         f'''
         <p style="font-size:{int(20*zoom)}px; text-align: center; background-color: white ;color: black; padding: 2px; border-radius: 5px;outline: 3px solid black;">
-            <b> 3PTS ATT </b>
+            <b> DEF. REB. </b>
         </p>
         ''',
         unsafe_allow_html=True
@@ -631,11 +634,12 @@ with stat14 :
     st.markdown(
         f'''
         <p style="font-size:{int(23*zoom)}px; text-align: center; background-color: white ;color: black; padding: 2px; border-radius: 5px;outline: 3px solid black;">
-            <b> {avg_data["3_T"].to_list()[0]}</b>
+            <b> {avg_data["DR"].to_list()[0]}</b>
         </p>
         ''',
         unsafe_allow_html=True
     )
+
     st.markdown(
         f'''
         <p style="font-size:{int(20*zoom)}px; text-align: center; background-color: white ;color: black; padding: 2px; border-radius: 5px;outline: 3px solid black;">
