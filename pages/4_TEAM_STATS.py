@@ -464,7 +464,14 @@ with col2 :
 
             
 
-
+    st.markdown(
+        f'''
+        <p style="font-size:{int(27*zoom)}px; text-align: center; background-color: grey;color: black; padding: 3px; border-radius: 5px;">
+            <b></b>
+        </p>
+        ''',
+        unsafe_allow_html=True
+    )
     st.header(f"Averages : {CODETEAM}")
     st.dataframe(team_moyenne,height=60, use_container_width=True,hide_index=True)
 
