@@ -53,7 +53,7 @@ players = pd.read_csv(os.path.join(data_dir, f"{competition}_idplayers_{season}.
 st.sidebar.header("SETTINGS")
 
 zoom = st.sidebar.slider(
-    "Choisissez une valeur de zoom pour les photos",
+    "Choose a zoom value for photos and graphs",
     min_value=0.3,
     max_value=1.0,
     step=0.1,
