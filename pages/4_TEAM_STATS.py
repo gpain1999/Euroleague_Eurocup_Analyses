@@ -1028,7 +1028,14 @@ with colc :
         ) 
 team_detail_select_2 = team_detail_select.style.apply(highlight_win, axis=1).format(precision=1) 
 opp_detail_select_2 = opp_detail_select.style.apply(highlight_win_o, axis=1).format(precision=1)
-
+st.markdown(
+    f'''
+    <p style="font-size:{int(27*zoom)}px; text-align: center; background-color: grey;color: black; padding: 3px; border-radius: 5px;">
+        <b></b>
+    </p>
+    ''',
+    unsafe_allow_html=True
+)
 good_bad_team,good_bad_opp = st.columns([1,1]) 
 
 
