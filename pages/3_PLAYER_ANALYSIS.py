@@ -265,7 +265,7 @@ with stat1 :
     st.markdown(
         f'''
         <p style="font-size:{int(30*zoom)}px; text-align: center; background-color: white ;color: black; padding: 2px; border-radius: 5px;outline: 3px solid black;">
-            <b> NB_GAME</b>
+            <b> NB GAME</b>
         </p>
         ''',
         unsafe_allow_html=True
