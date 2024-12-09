@@ -655,8 +655,14 @@ with col1 :
         fig2 = f.plot_semi_circular_chart(shot_T/(shot_T+TO),"SHOOT/TO", size=int(120*zoom), font_size=int(20*zoom))
         st.plotly_chart(fig2,use_container_width=True)
 
-
-   
+st.markdown(
+    f'''
+    <p style="font-size:{int(27*zoom)}px; text-align: center; background-color: grey;color: black; padding: 3px; border-radius: 5px;">
+        <b></b>
+    </p>
+    ''',
+    unsafe_allow_html=True
+)
 
 delta_graph,cola, colb,mvp,vide,colc = st.columns([1,0.666,0.666,0.9,0.1,0.666]) 
 
