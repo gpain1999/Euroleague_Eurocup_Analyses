@@ -273,7 +273,7 @@ with stat1 :
 
     st.markdown(
         f'''
-        <p style="font-size:{int(60*zoom)}px; text-align: center; background-color: white ;color: black; padding: 9px; border-radius: 5px;outline: 3px solid black;">
+        <p style="font-size:{int(60*zoom)}px; text-align: center; background-color: white ;color: black; padding: 12px; border-radius: 5px;outline: 3px solid black;">
             <b> {avg_data["NB_GAME"].to_list()[0]}</b>
         </p>
         ''',
@@ -292,7 +292,7 @@ with stat2 :
 
     st.markdown(
         f'''
-        <p style="font-size:{int(60*zoom)}px; text-align: center; background-color: white ;color: black; padding: 9px; border-radius: 5px;outline: 3px solid black;">
+        <p style="font-size:{int(60*zoom)}px; text-align: center; background-color: white ;color: black; padding: 12px; border-radius: 5px;outline: 3px solid black;">
             <b> {avg_data["TIME_ON"].to_list()[0]}</b>
         </p>
         ''',
