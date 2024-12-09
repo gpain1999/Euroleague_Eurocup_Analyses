@@ -426,7 +426,46 @@ with stat8 :
         unsafe_allow_html=True
     )
 
+
 with stat9 :
+    st.markdown(
+        f'''
+        <p style="font-size:{int(20*zoom)}px; text-align: center; background-color: white ;color: black; padding: 2px; border-radius: 5px;outline: 3px solid black;">
+            <b> % HOME </b>
+        </p>
+        ''',
+        unsafe_allow_html=True
+    )
+
+    st.markdown(
+        f'''
+        <p style="font-size:{int(23*zoom)}px; text-align: center; background-color: white ;color: black; padding: 2px; border-radius: 5px;outline: 3px solid black;">
+            <b> {avg_data["HOME"].to_list()[0]}</b>
+        </p>
+        ''',
+        unsafe_allow_html=True
+    )
+
+
+    st.markdown(
+        f'''
+        <p style="font-size:{int(20*zoom)}px; text-align: center; background-color: white ;color: black; padding: 2px; border-radius: 5px;outline: 3px solid black;">
+            <b> % WIN </b>
+        </p>
+        ''',
+        unsafe_allow_html=True
+    )
+
+    st.markdown(
+        f'''
+        <p style="font-size:{int(23*zoom)}px; text-align: center; background-color: white ;color: black; padding: 2px; border-radius: 5px;outline: 3px solid black;">
+            <b> {avg_data["WIN"].to_list()[0]}</b>
+        </p>
+        ''',
+        unsafe_allow_html=True
+    )
+
+with stat10 :
     
     st.markdown(
         f'''
@@ -464,43 +503,7 @@ with stat9 :
     )
     
 
-with stat10 :
-    st.markdown(
-        f'''
-        <p style="font-size:{int(20*zoom)}px; text-align: center; background-color: white ;color: black; padding: 2px; border-radius: 5px;outline: 3px solid black;">
-            <b> % HOME </b>
-        </p>
-        ''',
-        unsafe_allow_html=True
-    )
 
-    st.markdown(
-        f'''
-        <p style="font-size:{int(23*zoom)}px; text-align: center; background-color: white ;color: black; padding: 2px; border-radius: 5px;outline: 3px solid black;">
-            <b> {avg_data["HOME"].to_list()[0]}</b>
-        </p>
-        ''',
-        unsafe_allow_html=True
-    )
-
-
-    st.markdown(
-        f'''
-        <p style="font-size:{int(20*zoom)}px; text-align: center; background-color: white ;color: black; padding: 2px; border-radius: 5px;outline: 3px solid black;">
-            <b> % WIN </b>
-        </p>
-        ''',
-        unsafe_allow_html=True
-    )
-
-    st.markdown(
-        f'''
-        <p style="font-size:{int(23*zoom)}px; text-align: center; background-color: white ;color: black; padding: 2px; border-radius: 5px;outline: 3px solid black;">
-            <b> {avg_data["WIN"].to_list()[0]}</b>
-        </p>
-        ''',
-        unsafe_allow_html=True
-    )
 with stat11 :
     
     st.markdown(
@@ -523,26 +526,6 @@ with stat11 :
     st.markdown(
         f'''
         <p style="font-size:{int(20*zoom)}px; text-align: center; background-color: white ;color: black; padding: 2px; border-radius: 5px;outline: 3px solid black;">
-            <b> PER </b>
-        </p>
-        ''',
-        unsafe_allow_html=True
-    )
-
-    st.markdown(
-        f'''
-        <p style="font-size:{int(23*zoom)}px; text-align: center; background-color: white ;color: black; padding: 2px; border-radius: 5px;outline: 3px solid black;">
-            <b> {avg_data["PER"].to_list()[0]}</b>
-        </p>
-        ''',
-        unsafe_allow_html=True
-    )
-
-with stat12 :
-    
-    st.markdown(
-        f'''
-        <p style="font-size:{int(20*zoom)}px; text-align: center; background-color: white ;color: black; padding: 2px; border-radius: 5px;outline: 3px solid black;">
             <b> 2PTS ATT </b>
         </p>
         ''',
@@ -553,6 +536,28 @@ with stat12 :
         f'''
         <p style="font-size:{int(23*zoom)}px; text-align: center; background-color: white ;color: black; padding: 2px; border-radius: 5px;outline: 3px solid black;">
             <b> {avg_data["2_T"].to_list()[0]}</b>
+        </p>
+        ''',
+        unsafe_allow_html=True
+    )
+    
+
+
+with stat12 :
+    
+    st.markdown(
+        f'''
+        <p style="font-size:{int(20*zoom)}px; text-align: center; background-color: white ;color: black; padding: 2px; border-radius: 5px;outline: 3px solid black;">
+            <b> PER </b>
+        </p>
+        ''',
+        unsafe_allow_html=True
+    )
+
+    st.markdown(
+        f'''
+        <p style="font-size:{int(23*zoom)}px; text-align: center; background-color: white ;color: black; padding: 2px; border-radius: 5px;outline: 3px solid black;">
+            <b> {avg_data["PER"].to_list()[0]}</b>
         </p>
         ''',
         unsafe_allow_html=True
