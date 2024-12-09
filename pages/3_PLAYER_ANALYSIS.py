@@ -264,7 +264,7 @@ with stat1 :
     
     st.markdown(
         f'''
-        <p style="font-size:{int(30*zoom)}px; text-align: center; background-color: white ;color: black; padding: 2px; border-radius: 5px;outline: 3px solid black;">
+        <p style="font-size:{int(30*zoom)}px; text-align: center; background-color: white ;color: black; padding: 9px; border-radius: 5px;outline: 3px solid black;">
             <b> NB GAME</b>
         </p>
         ''',
@@ -283,7 +283,7 @@ with stat2 :
     
     st.markdown(
         f'''
-        <p style="font-size:{int(30*zoom)}px; text-align: center; background-color: white ;color: black; padding: 2px; border-radius: 5px;outline: 3px solid black;">
+        <p style="font-size:{int(30*zoom)}px; text-align: center; background-color: white ;color: black; padding: 9px; border-radius: 5px;outline: 3px solid black;">
             <b> TIME</b>
         </p>
         ''',
@@ -302,7 +302,7 @@ with stat3 :
     
     st.markdown(
         f'''
-        <p style="font-size:{int(30*zoom)}px; text-align: center; background-color: white ;color: black; padding: 2px; border-radius: 5px;outline: 3px solid black;">
+        <p style="font-size:{int(30*zoom)}px; text-align: center; background-color: white ;color: black; padding: 9px; border-radius: 5px;outline: 3px solid black;">
             <b> I_PER</b>
         </p>
         ''',
@@ -311,7 +311,7 @@ with stat3 :
 
     st.markdown(
         f'''
-        <p style="font-size:{int(60*zoom)}px; text-align: center; background-color: white ;color: black; padding: 9px; border-radius: 5px;outline: 3px solid black;">
+        <p style="font-size:{int(60*zoom)}px; text-align: center; background-color: white ;color: black; padding: 12px; border-radius: 5px;outline: 3px solid black;">
             <b> {avg_data["I_PER"].to_list()[0]}</b>
         </p>
         ''',
@@ -321,7 +321,7 @@ with stat4 :
     
     st.markdown(
         f'''
-        <p style="font-size:{int(30*zoom)}px; text-align: center; background-color: white ;color: black; padding: 2px; border-radius: 5px;outline: 3px solid black;">
+        <p style="font-size:{int(30*zoom)}px; text-align: center; background-color: white ;color: black; padding: 9px; border-radius: 5px;outline: 3px solid black;">
             <b> +/-</b>
         </p>
         ''',
@@ -330,7 +330,7 @@ with stat4 :
 
     st.markdown(
         f'''
-        <p style="font-size:{int(60*zoom)}px; text-align: center; background-color: white ;color: black; padding: 9px; border-radius: 5px;outline: 3px solid black;">
+        <p style="font-size:{int(60*zoom)}px; text-align: center; background-color: white ;color: black; padding: 12px; border-radius: 5px;outline: 3px solid black;">
             <b> {avg_data["PM_ON"].to_list()[0]}</b>
         </p>
         ''',
@@ -341,7 +341,7 @@ with stat5 :
     
     st.markdown(
         f'''
-        <p style="font-size:{int(30*zoom)}px; text-align: center; background-color: white ;color: black; padding: 2px; border-radius: 5px;outline: 3px solid black;">
+        <p style="font-size:{int(30*zoom)}px; text-align: center; background-color: white ;color: black; padding: 9px; border-radius: 5px;outline: 3px solid black;">
             <b> PTS</b>
         </p>
         ''',
@@ -350,7 +350,7 @@ with stat5 :
 
     st.markdown(
         f'''
-        <p style="font-size:{int(60*zoom)}px; text-align: center; background-color: white ;color: black; padding: 9px; border-radius: 5px;outline: 3px solid black;">
+        <p style="font-size:{int(60*zoom)}px; text-align: center; background-color: white ;color: black; padding: 12px; border-radius: 5px;outline: 3px solid black;">
             <b> {avg_data["PTS"].to_list()[0]}</b>
         </p>
         ''',
@@ -361,7 +361,7 @@ with stat6 :
     
     st.markdown(
         f'''
-        <p style="font-size:{int(30*zoom)}px; text-align: center; background-color: white ;color: black; padding: 2px; border-radius: 5px;outline: 3px solid black;">
+        <p style="font-size:{int(30*zoom)}px; text-align: center; background-color: white ;color: black; padding: 9px; border-radius: 5px;outline: 3px solid black;">
             <b> TOT. REB.</b>
         </p>
         ''',
@@ -370,7 +370,7 @@ with stat6 :
 
     st.markdown(
         f'''
-        <p style="font-size:{int(60*zoom)}px; text-align: center; background-color: white ;color: black; padding: 9px; border-radius: 5px;outline: 3px solid black;">
+        <p style="font-size:{int(60*zoom)}px; text-align: center; background-color: white ;color: black; padding: 12px; border-radius: 5px;outline: 3px solid black;">
             <b> {avg_data["TR"].to_list()[0]}</b>
         </p>
         ''',
@@ -381,7 +381,7 @@ with stat7 :
     
     st.markdown(
         f'''
-        <p style="font-size:{int(30*zoom)}px; text-align: center; background-color: white ;color: black; padding: 2px; border-radius: 5px;outline: 3px solid black;">
+        <p style="font-size:{int(30*zoom)}px; text-align: center; background-color: white ;color: black; padding: 9px; border-radius: 5px;outline: 3px solid black;">
             <b> ASSISTS</b>
         </p>
         ''',
@@ -390,7 +390,7 @@ with stat7 :
 
     st.markdown(
         f'''
-        <p style="font-size:{int(60*zoom)}px; text-align: center; background-color: white ;color: black; padding: 9px; border-radius: 5px;outline: 3px solid black;">
+        <p style="font-size:{int(60*zoom)}px; text-align: center; background-color: white ;color: black; padding: 12px; border-radius: 5px;outline: 3px solid black;">
             <b> {avg_data["AS"].to_list()[0]}</b>
         </p>
         ''',
@@ -454,6 +454,115 @@ with stat9 :
         unsafe_allow_html=True
     )
 
+with stat10 :
+    
+    st.markdown(
+        f'''
+        <p style="font-size:{int(20*zoom)}px; text-align: center; background-color: white ;color: black; padding: 2px; border-radius: 5px;outline: 3px solid black;">
+            <b> FT ATT </b>
+        </p>
+        ''',
+        unsafe_allow_html=True
+    )
+
+    st.markdown(
+        f'''
+        <p style="font-size:{int(23*zoom)}px; text-align: center; background-color: white ;color: black; padding: 2px; border-radius: 5px;outline: 3px solid black;">
+            <b> {avg_data["1_T"].to_list()[0]}</b>
+        </p>
+        ''',
+        unsafe_allow_html=True
+    )
+    st.markdown(
+        f'''
+        <p style="font-size:{int(20*zoom)}px; text-align: center; background-color: white ;color: black; padding: 2px; border-radius: 5px;outline: 3px solid black;">
+            <b> % WIN </b>
+        </p>
+        ''',
+        unsafe_allow_html=True
+    )
+
+    st.markdown(
+        f'''
+        <p style="font-size:{int(23*zoom)}px; text-align: center; background-color: white ;color: black; padding: 2px; border-radius: 5px;outline: 3px solid black;">
+            <b> {avg_data["WIN"].to_list()[0]}</b>
+        </p>
+        ''',
+        unsafe_allow_html=True
+    )
+with stat11 :
+    
+    st.markdown(
+        f'''
+        <p style="font-size:{int(20*zoom)}px; text-align: center; background-color: white ;color: black; padding: 2px; border-radius: 5px;outline: 3px solid black;">
+            <b> 2PTS MA. </b>
+        </p>
+        ''',
+        unsafe_allow_html=True
+    )
+
+    st.markdown(
+        f'''
+        <p style="font-size:{int(23*zoom)}px; text-align: center; background-color: white ;color: black; padding: 2px; border-radius: 5px;outline: 3px solid black;">
+            <b> {avg_data["2_R"].to_list()[0]}</b>
+        </p>
+        ''',
+        unsafe_allow_html=True
+    )
+    st.markdown(
+        f'''
+        <p style="font-size:{int(20*zoom)}px; text-align: center; background-color: white ;color: black; padding: 2px; border-radius: 5px;outline: 3px solid black;">
+            <b> PER </b>
+        </p>
+        ''',
+        unsafe_allow_html=True
+    )
+
+    st.markdown(
+        f'''
+        <p style="font-size:{int(23*zoom)}px; text-align: center; background-color: white ;color: black; padding: 2px; border-radius: 5px;outline: 3px solid black;">
+            <b> {avg_data["PER"].to_list()[0]}</b>
+        </p>
+        ''',
+        unsafe_allow_html=True
+    )
+
+with stat10 :
+    
+    st.markdown(
+        f'''
+        <p style="font-size:{int(20*zoom)}px; text-align: center; background-color: white ;color: black; padding: 2px; border-radius: 5px;outline: 3px solid black;">
+            <b> 2PTS ATT </b>
+        </p>
+        ''',
+        unsafe_allow_html=True
+    )
+
+    st.markdown(
+        f'''
+        <p style="font-size:{int(23*zoom)}px; text-align: center; background-color: white ;color: black; padding: 2px; border-radius: 5px;outline: 3px solid black;">
+            <b> {avg_data["2_T"].to_list()[0]}</b>
+        </p>
+        ''',
+        unsafe_allow_html=True
+    )
+    st.markdown(
+        f'''
+        <p style="font-size:{int(20*zoom)}px; text-align: center; background-color: white ;color: black; padding: 2px; border-radius: 5px;outline: 3px solid black;">
+            <b> DEF. REB. </b>
+        </p>
+        ''',
+        unsafe_allow_html=True
+    )
+
+    st.markdown(
+        f'''
+        <p style="font-size:{int(23*zoom)}px; text-align: center; background-color: white ;color: black; padding: 2px; border-radius: 5px;outline: 3px solid black;">
+            <b> {avg_data["DR"].to_list()[0]}</b>
+        </p>
+        ''',
+        unsafe_allow_html=True
+    )
 st.header(f"AVERAGES : {NAME_PLAYER} ")
 st.dataframe(avg_data,height=60, use_container_width=True,hide_index=True)
 
