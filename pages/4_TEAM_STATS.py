@@ -40,18 +40,7 @@ min_round, max_round = df["ROUND"].min(), df["ROUND"].max()
 
 
 ######################### PARAM
-st.markdown(
-    """
-    <style>
-    [data-testid="stSidebar"] {
-        min-width: 60px; /* Largeur minimale */
-        max-width: 240px; /* Largeur maximale */
-        width: 100px; /* Largeur fixe */
-    }
-    </style>
-    """,
-    unsafe_allow_html=True
-)
+
 
 
 # Sidebar : Curseur pour sélectionner la plage de ROUND
