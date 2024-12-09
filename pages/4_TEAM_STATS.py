@@ -722,7 +722,6 @@ with delta_graph :
         height=int(600*zoom),
         title=f"{MM} Delta score",
         xaxis_title="Minutes",
-        xaxis_title_standoff=20,
         yaxis_title="Delta",
         xaxis=dict(
             tickmode='linear',
