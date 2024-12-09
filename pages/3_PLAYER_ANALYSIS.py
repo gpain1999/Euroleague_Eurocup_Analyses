@@ -583,11 +583,11 @@ with stat12 :
 
 with stat13 :
     
-    
+
     st.markdown(
         f'''
         <p style="font-size:{int(20*zoom)}px; text-align: center; background-color: white ;color: black; padding: 2px; border-radius: 5px;outline: 3px solid black;">
-            <b> PER </b>
+            <b> DEF. REB. </b>
         </p>
         ''',
         unsafe_allow_html=True
@@ -596,11 +596,12 @@ with stat13 :
     st.markdown(
         f'''
         <p style="font-size:{int(23*zoom)}px; text-align: center; background-color: white ;color: black; padding: 2px; border-radius: 5px;outline: 3px solid black;">
-            <b> {avg_data["PER"].to_list()[0]}</b>
+            <b> {avg_data["DR"].to_list()[0]}</b>
         </p>
         ''',
         unsafe_allow_html=True
     )
+
 
     st.markdown(
         f'''
@@ -621,11 +622,10 @@ with stat13 :
     )
 
 with stat14 :
-    
     st.markdown(
         f'''
         <p style="font-size:{int(20*zoom)}px; text-align: center; background-color: white ;color: black; padding: 2px; border-radius: 5px;outline: 3px solid black;">
-            <b> DEF. REB. </b>
+            <b> PER </b>
         </p>
         ''',
         unsafe_allow_html=True
@@ -634,7 +634,7 @@ with stat14 :
     st.markdown(
         f'''
         <p style="font-size:{int(23*zoom)}px; text-align: center; background-color: white ;color: black; padding: 2px; border-radius: 5px;outline: 3px solid black;">
-            <b> {avg_data["DR"].to_list()[0]}</b>
+            <b> {avg_data["PER"].to_list()[0]}</b>
         </p>
         ''',
         unsafe_allow_html=True
