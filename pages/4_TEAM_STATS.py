@@ -1163,7 +1163,7 @@ with good_bad_opp :
         'NEGATIVES': opp_bottom_values
     })
 
-    sho,good,bad = st.columns([0.33,0.33,0.33])
+    sho,bad,good = st.columns([0.33,0.33,0.33])
 
     with good :
         st.markdown(
