@@ -256,7 +256,14 @@ def style_pm_on(value):
     else:
         return "background-color: #FFFFFF;color: black;"
 
-
+st.markdown(
+    f'''
+    <p style="font-size:{int(27*zoom)}px; text-align: center; background-color: grey;color: black; padding: 3px; border-radius: 5px;">
+        <b></b>
+    </p>
+    ''',
+    unsafe_allow_html=True
+)
 st.header(f"AVERAGES : {NAME_PLAYER} ")
 #st.dataframe(avg_data,height=60, use_container_width=True,hide_index=True)
 
@@ -713,7 +720,14 @@ with stat16 :
         ''',
         unsafe_allow_html=True
     )
-
+st.markdown(
+    f'''
+    <p style="font-size:{int(27*zoom)}px; text-align: center; background-color: grey;color: black; padding: 3px; border-radius: 5px;">
+        <b></b>
+    </p>
+    ''',
+    unsafe_allow_html=True
+)
 col1,col_image, col2, col3 = st.columns([1.2,2, 6, 4])
 
 with col1:
@@ -936,7 +950,14 @@ with col3:
     st.header(f"Boxplots de {selected_stats}")
     st.plotly_chart(box_fig, use_container_width=True)
 
-
+st.markdown(
+    f'''
+    <p style="font-size:{int(27*zoom)}px; text-align: center; background-color: grey;color: black; padding: 3px; border-radius: 5px;">
+        <b></b>
+    </p>
+    ''',
+    unsafe_allow_html=True
+)
 # Afficher le tableau stylé dans Streamlit
 st.header(f"Stats : {NAME_PLAYER}")
 st.dataframe(styled_df,height=min(38*len(df_resultat),650), use_container_width=True,hide_index=True)
