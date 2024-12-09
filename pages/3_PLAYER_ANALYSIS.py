@@ -448,6 +448,26 @@ with stat9 :
     st.markdown(
         f'''
         <p style="font-size:{int(20*zoom)}px; text-align: center; background-color: white ;color: black; padding: 2px; border-radius: 5px;outline: 3px solid black;">
+            <b> FT ATT </b>
+        </p>
+        ''',
+        unsafe_allow_html=True
+    )
+
+    st.markdown(
+        f'''
+        <p style="font-size:{int(23*zoom)}px; text-align: center; background-color: white ;color: black; padding: 2px; border-radius: 5px;outline: 3px solid black;">
+            <b> {avg_data["1_T"].to_list()[0]}</b>
+        </p>
+        ''',
+        unsafe_allow_html=True
+    )
+    
+
+with stat10 :
+    st.markdown(
+        f'''
+        <p style="font-size:{int(20*zoom)}px; text-align: center; background-color: white ;color: black; padding: 2px; border-radius: 5px;outline: 3px solid black;">
             <b> % HOME </b>
         </p>
         ''',
@@ -463,25 +483,7 @@ with stat9 :
         unsafe_allow_html=True
     )
 
-with stat10 :
-    
-    st.markdown(
-        f'''
-        <p style="font-size:{int(20*zoom)}px; text-align: center; background-color: white ;color: black; padding: 2px; border-radius: 5px;outline: 3px solid black;">
-            <b> FT ATT </b>
-        </p>
-        ''',
-        unsafe_allow_html=True
-    )
 
-    st.markdown(
-        f'''
-        <p style="font-size:{int(23*zoom)}px; text-align: center; background-color: white ;color: black; padding: 2px; border-radius: 5px;outline: 3px solid black;">
-            <b> {avg_data["1_T"].to_list()[0]}</b>
-        </p>
-        ''',
-        unsafe_allow_html=True
-    )
     st.markdown(
         f'''
         <p style="font-size:{int(20*zoom)}px; text-align: center; background-color: white ;color: black; padding: 2px; border-radius: 5px;outline: 3px solid black;">
