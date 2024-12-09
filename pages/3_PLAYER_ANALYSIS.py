@@ -108,7 +108,7 @@ notation = notation.sort_values(by = "NOTE",ascending = False)
 
 selected_stats = st.sidebar.selectbox("Stat Sélectionné", options=["PER","I_PER","PTS","TR","AS","PM_ON","ST"])
 
-window_size = st.sidebar.number_input("Moyenne glissante", min_value=1,max_value=max_round ,value=5)
+window_size = st.sidebar.number_input("Sliding average", min_value=1,max_value=max_round ,value=5)
 # Calcul des min et max pour les axes
 min_selected_stats = df[selected_stats].min()
 max_selected_stats = df[selected_stats].max()
