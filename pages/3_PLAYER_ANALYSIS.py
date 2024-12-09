@@ -392,7 +392,7 @@ with col2:
         marker=dict(size=8, symbol="square", color="orange"),
         yaxis="y1",
         showlegend=True,
-        name=f"{selected_stats} Moyenne glissante ({window_size} derniers rounds)"
+        name=f"{selected_stats} Sliding average ({window_size} last rounds)"
     ))
 
     # Mise à jour du layout
