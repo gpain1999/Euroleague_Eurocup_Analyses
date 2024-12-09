@@ -430,7 +430,7 @@ with col2:
             x=0.5  # Centré horizontalement
         ),
         margin=dict(l=50, r=50, t=50, b=100),
-        height=700,
+        height=600,
         dragmode="pan"  
     )
 
@@ -476,7 +476,7 @@ with col3:
             showgrid=False
         ),
         margin=dict(l=50, r=50, t=50, b=50),
-        height=400,
+        height=500,
         showlegend=False,
         dragmode="pan"
     )
