@@ -380,7 +380,7 @@ with col2:
         marker=dict(size=8, symbol="circle", color="blue"),
         yaxis="y2",
         showlegend=True,
-        name="Minutes jouées"
+        name="Minutes played"
     ))
 
     # Nouvelle courbe pour la moyenne glissante
