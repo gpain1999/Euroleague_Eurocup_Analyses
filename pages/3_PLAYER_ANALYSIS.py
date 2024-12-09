@@ -257,6 +257,8 @@ def style_pm_on(value):
         return "background-color: #FFFFFF;color: black;"
 
 
+st.header(f"AVERAGES : {NAME_PLAYER} ")
+#st.dataframe(avg_data,height=60, use_container_width=True,hide_index=True)
 
 stat1,stat2,stat3,stat4,stat5,stat6,stat7,stat8,stat9,stat10,stat11,stat12,stat13,stat14,stat15,stat16, = st.columns([1 for i in range(16)])
 
@@ -711,8 +713,6 @@ with stat16 :
         ''',
         unsafe_allow_html=True
     )
-st.header(f"AVERAGES : {NAME_PLAYER} ")
-st.dataframe(avg_data,height=60, use_container_width=True,hide_index=True)
 
 col1,col_image, col2, col3 = st.columns([1.2,2, 6, 4])
 
