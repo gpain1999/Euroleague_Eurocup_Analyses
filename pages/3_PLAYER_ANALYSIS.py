@@ -262,11 +262,19 @@ stat1,stat2,stat3,stat4,stat5,stat6,stat7,stat8,stat9,stat10,stat11,stat12,stat1
 
 with stat1 :
     
-    # Intégrer la couleur dans le markdown
     st.markdown(
         f'''
-        <p style="font-size:{int(40*zoom)}px; text-align: center; background-color: {player_color};color: black; padding: 2px; border-radius: 5px;">
-            <b>NOTE : {round(player_note)}</b>
+        <p style="font-size:{int(10*zoom)}px; text-align: center; background-color: white ;color: black; padding: 2px; border-radius: 5px;">
+            <b> NB_GAME</b>
+        </p>
+        ''',
+        unsafe_allow_html=True
+    )
+
+    st.markdown(
+        f'''
+        <p style="font-size:{int(10*zoom)}px; text-align: center; background-color: white ;color: black; padding: 2px; border-radius: 5px;">
+            <b> {avg_data["NB_GAME"].to_list()[0]}</b>
         </p>
         ''',
         unsafe_allow_html=True
