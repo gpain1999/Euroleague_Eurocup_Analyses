@@ -798,11 +798,12 @@ with col_image :
         ''',
         unsafe_allow_html=True
     )
-
-    if os.path.exists(player_image_path):
-        st.image(player_image_path, caption=f"#{NUMBER_PLAYER} {NAME_PLAYER}", width=int(330*zoom))
-    else:
-        st.warning(f"Image introuvable pour le joueur : {NAME_PLAYER}")
+    _, i, _ = st.beta_columns([1,6,1])
+    with i :
+        if os.path.exists(player_image_path):
+            st.image(player_image_path, caption=f"#{NUMBER_PLAYER} {NAME_PLAYER}", width=int(330*zoom))
+        else:
+            st.warning(f"Image introuvable pour le joueur : {NAME_PLAYER}")
 
     result_pm_solo = f.analyse_io_2(data_dir = data_dir,
                     competition = competition,
