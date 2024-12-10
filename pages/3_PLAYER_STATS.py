@@ -799,14 +799,7 @@ with col_image :
         ''',
         unsafe_allow_html=True
     )
-    st.markdown(
-        f'''
-        <p style="font-size:{int(30*zoom)}px; text-align: center; background-color: {local_c1} ;color: {local_c2}; padding: 2px; border-radius: 5px;outline: 3px solid {local_c2};">
-            <b># {NUMBER_PLAYER} {NAME_PLAYER}</b>
-        </p>
-        ''',
-        unsafe_allow_html=True
-        )
+
 
     _, i, _ = st.columns([1,6,1])
     with i :
