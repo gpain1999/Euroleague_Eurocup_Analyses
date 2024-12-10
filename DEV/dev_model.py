@@ -27,6 +27,7 @@ df = df[['ROUND', 'NB_GAME', 'TEAM', 'OPPONENT', 'HOME', 'WIN', 'NUMBER', 'PLAYE
 r = 14
 
 f.modele_PPS(r,df)
+f.modele_BC(r,df)
 
 
 # Résultats

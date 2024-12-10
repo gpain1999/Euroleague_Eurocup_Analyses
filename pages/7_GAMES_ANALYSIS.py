@@ -277,15 +277,6 @@ def style_bad(val):
 
 
 ################################ COLOR TEAM ##############################################
-def hex_to_rgb(hex_color):
-    """Convertit une couleur hexadécimale en RGB."""
-    hex_color = hex_color.lstrip('#')
-    return tuple(int(hex_color[i:i+2], 16) for i in (0, 2, 4))
-
-def color_distance(rgb1, rgb2):
-    """Calcule la distance euclidienne entre deux couleurs RGB."""
-    return math.sqrt(sum((c1 - c2) ** 2 for c1, c2 in zip(rgb1, rgb2)))
-
 
 
 

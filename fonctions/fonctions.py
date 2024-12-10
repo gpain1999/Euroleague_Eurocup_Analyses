@@ -103,8 +103,8 @@ def modele_BC(r,df) :
     # Sélectionner et renommer les colonnes pour correspondre à la sortie SQL
     result = result[["ROUND", "TEAM_local", "TEAM_road", "BC_local", "BC_road"]]
     result.columns = ["ROUND", "local.club.code", "road.club.code", "BCL", "BCR"]
-
-    clubs = pd.unique(result[["local.club.code", "road.club.code"]].values.ravel())
+            
+    clubs = sorted(list(set(result["local.club.code"].unique()) | set(result["road.club.code"].unique())))
 
     # Ajouter une colonne pour chaque club
     for club in clubs:
@@ -174,7 +174,7 @@ def modele_PPS(r,df) :
     result = result[["ROUND", "TEAM_local", "TEAM_road", "PPS_local", "PPS_road"]]
     result.columns = ["ROUND", "local.club.code", "road.club.code", "PPSL", "PPSR"]
 
-    clubs = pd.unique(result[["local.club.code", "road.club.code"]].values.ravel())
+    clubs = sorted(list(set(result["local.club.code"].unique()) | set(result["road.club.code"].unique())))
 
     # Ajouter une colonne pour chaque club
     for club in clubs:
