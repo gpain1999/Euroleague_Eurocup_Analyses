@@ -757,7 +757,7 @@ with col1:
         ''',
         unsafe_allow_html=True
         )
-    _, i, _ = st.columns([2,5,1])
+    _, i, _ = st.columns([1.5,5.5,1])
     with i :
 
         
