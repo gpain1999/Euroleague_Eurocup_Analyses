@@ -751,7 +751,14 @@ col1,col_image, col2, col3 = st.columns([1.2,2, 6, 4])
 with col1:
     _, i, _ = st.columns([1,6,1])
     with i :
-
+        st.markdown(
+        f'''
+        <p style="font-size:{int(35*zoom)}px; text-align: center; background-color: {local_c1} ;color: {local_c2}; padding: 2px; border-radius: 5px;outline: 3px solid {local_c2};">
+            <b>{round((df_resultat["2_R"].sum()*2 + df_resultat["3_R"].sum()*3)/(df_resultat["2_T"].sum() + df_resultat["3_T"].sum()),2)} PPS</b>
+        </p>
+        ''',
+        unsafe_allow_html=True
+        )
         
     
         fig2 = f.plot_semi_circular_chart(df_resultat["1_R"].sum()/df_resultat["1_T"].sum() if df_resultat["1_T"].sum() != 0 else 0,"FT",size=int(130*zoom),font_size=int(20*zoom),m=False)
@@ -762,14 +769,7 @@ with col1:
         st.plotly_chart(fig2)
         team_logo_path = os.path.join(images_dir, f"{competition}_{season}_teams/{TEAM_PLAYER}.png")
         
-        st.markdown(
-        f'''
-        <p style="font-size:{int(30*zoom)}px; text-align: center; background-color: {local_c1} ;color: {local_c2}; padding: 2px; border-radius: 5px;outline: 3px solid {local_c2};">
-            <b>{round((df_resultat["2_R"].sum()*2 + df_resultat["3_R"].sum()*3)/(df_resultat["2_T"].sum() + df_resultat["3_T"].sum()),2)} PPS</b>
-        </p>
-        ''',
-        unsafe_allow_html=True
-        )
+
         if os.path.exists(team_logo_path):
             st.image(team_logo_path, width=int(200*zoom))
         else:
@@ -800,7 +800,7 @@ with col_image :
     )
     st.markdown(
         f'''
-        <p style="font-size:{int(40*zoom)}px; text-align: center; background-color: {local_c1} ;color: {local_c2}; padding: 2px; border-radius: 5px;outline: 3px solid {local_c2};">
+        <p style="font-size:{int(30*zoom)}px; text-align: center; background-color: {local_c1} ;color: {local_c2}; padding: 2px; border-radius: 5px;outline: 3px solid {local_c2};">
             <b># {NUMBER_PLAYER} {NAME_PLAYER}</b>
         </p>
         ''',
