@@ -770,14 +770,7 @@ with col1:
     fig2 = f.plot_semi_circular_chart(df_resultat["3_R"].sum()/df_resultat["3_T"].sum() if df_resultat["3_T"].sum() != 0 else 0,"3P",size=int(120*zoom),font_size=int(20*zoom),m=False)
     st.plotly_chart(fig2)
 
-    st.markdown(
-        f'''
-        <p style="font-size:{int(35*zoom)}px; text-align: center; background-color: {local_c1} ;color: {local_c2}; padding: 10px; border-radius: 5px;outline: 3px solid {local_c2};">
-            <b>SCORE PER 10 mins</b>
-        </p>
-        ''',
-        unsafe_allow_html=True
-    )
+
 
 
         
@@ -812,6 +805,14 @@ with col_image :
                     selected_players = [selected_players],
                     min_percent_in = 0)
 
+    st.markdown(
+        f'''
+        <p style="font-size:{int(25*zoom)}px; text-align: center; background-color: {local_c1} ;color: {local_c2}; padding: 2px; border-radius: 5px;outline: 3px solid {local_c2};">
+            <b>SCORE PER 10 mins</b>
+        </p>
+        ''',
+        unsafe_allow_html=True
+    )
     st.markdown(
         f'''
     <p style="font-size:{int(35*zoom)}px; text-align: center; background-color: green;color: black; padding: 2px; border-radius: 5px;outline: 3px solid {local_c2};">
