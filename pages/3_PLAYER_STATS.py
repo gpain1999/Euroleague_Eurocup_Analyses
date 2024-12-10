@@ -749,9 +749,8 @@ st.markdown(
 col1,col_image, col2, col3 = st.columns([1.2,2, 6, 4])
 
 with col1:
-    cola, colb= st.columns([0.5,2])
-
-    with colb : 
+    _, i, _ = st.columns([1,6,1])
+    with i :
         st.markdown(
         f'''
         <p style="font-size:{int(40*zoom)}px; text-align: center; background-color: {local_c1} ;color: {local_c2}; padding: 2px; border-radius: 5px;outline: 3px solid {local_c2};">
@@ -761,7 +760,7 @@ with col1:
         unsafe_allow_html=True
         )
         
-
+    
         fig2 = f.plot_semi_circular_chart(df_resultat["1_R"].sum()/df_resultat["1_T"].sum() if df_resultat["1_T"].sum() != 0 else 0,"FT",size=int(130*zoom),font_size=int(20*zoom),m=False)
         st.plotly_chart(fig2)
         fig2 = f.plot_semi_circular_chart(df_resultat["2_R"].sum()/df_resultat["2_T"].sum() if df_resultat["2_T"].sum() != 0 else 0,"2P",size=int(130*zoom),font_size=int(20*zoom),m=False)
@@ -769,12 +768,11 @@ with col1:
         fig2 = f.plot_semi_circular_chart(df_resultat["3_R"].sum()/df_resultat["3_T"].sum() if df_resultat["3_T"].sum() != 0 else 0,"3P",size=int(130*zoom),font_size=int(20*zoom),m=False)
         st.plotly_chart(fig2)
         team_logo_path = os.path.join(images_dir, f"{competition}_{season}_teams/{TEAM_PLAYER}.png")
-        _, i, _ = st.columns([1,6,1])
-        with i :
-            if os.path.exists(team_logo_path):
-                st.image(team_logo_path, width=int(200*zoom))
-            else:
-                st.warning(f"Logo introuvable pour l'équipe : {TEAM_PLAYER}")
+
+        if os.path.exists(team_logo_path):
+            st.image(team_logo_path, width=int(200*zoom))
+        else:
+            st.warning(f"Logo introuvable pour l'équipe : {TEAM_PLAYER}")
 
 
 
