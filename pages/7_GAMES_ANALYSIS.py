@@ -286,28 +286,9 @@ def color_distance(rgb1, rgb2):
     """Calcule la distance euclidienne entre deux couleurs RGB."""
     return math.sqrt(sum((c1 - c2) ** 2 for c1, c2 in zip(rgb1, rgb2)))
 
-def choisir_maillot(couleur_domicile, couleurs_exterieur):
-    """
-    Sélectionne le maillot extérieur le plus éloigné de la couleur domicile.
-    
-    Args:
-        couleur_domicile (str): Couleur hex de l'équipe à domicile (e.g., "#FF5733").
-        couleurs_exterieur (list): Liste de couleurs hex pour l'équipe extérieure (e.g., ["#33FF57", "#3357FF"]).
-    
-    Returns:
-        str: Couleur hex choisie pour l'équipe extérieure.
-    """
-    rgb_domicile = hex_to_rgb(couleur_domicile)
-    distances = {
-        couleur: color_distance(rgb_domicile, hex_to_rgb(couleur))
-        for couleur in couleurs_exterieur
-    }
-    # Retourne la couleur avec la plus grande distance
-    return max(distances, key=distances.get)
 
 
 
-teams_color[teams_color["TEAM"]==team_local]["COL1"].to_list()[0]
 
 local_c1 = teams_color[teams_color["TEAM"]==team_local]["COL1"].to_list()[0]
 local_c2 = teams_color[teams_color["TEAM"]==team_local]["COL2"].to_list()[0]
@@ -315,7 +296,7 @@ local_c2 = teams_color[teams_color["TEAM"]==team_local]["COL2"].to_list()[0]
 road_choix_1 = teams_color[teams_color["TEAM"]==team_road]["COL1"].to_list()[0]
 road_choix_2 = teams_color[teams_color["TEAM"]==team_road]["COL2"].to_list()[0]
 
-road_c1 = choisir_maillot(local_c1, [road_choix_1,road_choix_2])
+road_c1 = f.choisir_maillot(local_c1, [road_choix_1,road_choix_2])
 road_c2 = road_choix_1 if road_c1 != road_choix_1 else road_choix_2
 
 ############################ PRINT ########################################################

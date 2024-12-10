@@ -194,7 +194,6 @@ player_image_path = os.path.join(images_dir, f"{competition}_{season}_players/{T
 
 teams_color = pd.read_csv(f"datas/{competition}_{season}_teams_colors.csv",sep=";")
 
-teams_color[teams_color["TEAM"]==CODETEAM]["COL1"].to_list()[0]
 
 local_c1 = teams_color[teams_color["TEAM"]==CODETEAM]["COL1"].to_list()[0]
 local_c2 = teams_color[teams_color["TEAM"]==CODETEAM]["COL2"].to_list()[0]
@@ -778,13 +777,7 @@ with col1:
             st.warning(f"Logo introuvable pour l'équipe : {TEAM_PLAYER}")
 
 
-
-
-
-
-
-
-        
+   
 
 with col_image :
     # Récupérer la note et la couleur associée pour le joueur

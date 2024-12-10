@@ -74,6 +74,40 @@ zoom = st.sidebar.slider(
     value=0.7,  # Valeur initiale
 )
 
+###################### DATA
+
+notation =f.analyse_per(data_dir,competition,season,R = [i for i in range(selected_range[0],selected_range[1]+1)],CODETEAM = [])
+
+palette = [
+    "#FF0000",  
+    "#FF4C00",  
+    "#FF7200",  
+    "#FF9200",  
+    "#FFAF00",  
+    "#FFCA00", 
+    "#FFE500",
+    "#FFFF00",  
+    "#D9F213",  
+    "#B5E422", 
+    "#93D52E",  
+    "#72C637",  
+    "#53B63E",  
+    "#32A542",  
+    "#009445"   
+]
+
+
+# Diviser les données en 7 classes égales en nombre
+notation['CLASS'] = pd.qcut(notation['NOTE'], q=15, labels=range(15))
+
+# Attribuer une couleur en fonction de la classe
+notation['COULEUR'] = notation['CLASS'].map(lambda x: palette[int(x)])
+
+notation = notation.sort_values(by = "NOTE",ascending = False)
+
+
+
+
 ###################### PRINT
 
 image_path = f"images/{competition}.png"  # Chemin vers l'image
@@ -109,67 +143,231 @@ with col2 :
 col1, col2,col3,col4,col5 = st.columns([3,1,2,1,3])
 
 with col2:
-    HOMETEAM = st.selectbox("HOME TEAM", options=sorted(df["TEAM"].unique()) if not df.empty else [],index = 0)
-    HOMETEAM_logo_path = os.path.join(images_dir, f"{competition}_{season}_teams/{HOMETEAM}.png")
+    LOCALTEAM = st.selectbox("HOME TEAM", options=sorted(df["TEAM"].unique()) if not df.empty else [],index = 0)
+    LOCALTEAM_logo_path = os.path.join(images_dir, f"{competition}_{season}_teams/{LOCALTEAM}.png")
 
-    st.image(HOMETEAM_logo_path,  width=int(200*zoom))
+    st.image(LOCALTEAM_logo_path,  width=int(200*zoom))
 
 
 with col4 :
-    AWAYTEAM = st.selectbox("AWAY TEAM", options=sorted(df["TEAM"].unique()) if not df.empty else [],index = 1)
-    AWAYTEAM_logo_path = os.path.join(images_dir, f"{competition}_{season}_teams/{AWAYTEAM}.png")
-    st.image(AWAYTEAM_logo_path,  width=int(200*zoom))
+    ROADTEAM = st.selectbox("AWAY TEAM", options=sorted(df["TEAM"].unique()) if not df.empty else [],index = 1)
+    ROADTEAM_logo_path = os.path.join(images_dir, f"{competition}_{season}_teams/{ROADTEAM}.png")
+    st.image(ROADTEAM_logo_path,  width=int(200*zoom))
 
 
-col1,col2,col4,col6,col7 = st.columns([1,1,1,1,1])
-taille = 20*zoom
+######## PARAM COLOR ####################################
+teams_color = pd.read_csv(f"datas/{competition}_{season}_teams_colors.csv",sep=";")
 
-with col1 :
+
+local_c1 = teams_color[teams_color["TEAM"]==LOCALTEAM]["COL1"].to_list()[0]
+local_c2 = teams_color[teams_color["TEAM"]==LOCALTEAM]["COL2"].to_list()[0]
+
+road_choix_1 = teams_color[teams_color["TEAM"]==ROADTEAM]["COL1"].to_list()[0]
+road_choix_2 = teams_color[teams_color["TEAM"]==ROADTEAM]["COL2"].to_list()[0]
+
+road_c1 = f.choisir_maillot(local_c1, [road_choix_1,road_choix_2])
+road_c2 = road_choix_1 if road_c1 != road_choix_1 else road_choix_2
+
+####################################
+previews1,previews2,_,pronostic = st.columns([0.3,0.3,0.1,0.3])
+
+with previews1 :
     st.markdown(
         f'''
-        <p style="font-size:{int(taille)}px; text-align: center; padding: 10pxs;">
-            <b>OFFENSIVE </b>
+        <p style="font-size:{int(40*zoom)}px; text-align: center; background-color: white;color: black; padding: 4px; border-radius: 5px;outline: 3px solid black;">
+            <b>AVERAGES STATS</b>
         </p>
         ''',
         unsafe_allow_html=True
     )
+    stat_name,loc_stat,color_best,road_stat = st.columns([0.4,0.25,0.1,0.25])
 
-with col2 :
-    st.markdown(
-        f'''
-        <p style="font-size:{int(taille)}px; text-align: center; padding: 10pxs;">
-            <b>DEFENSIVE </b>
-        </p>
-        ''',
-        unsafe_allow_html=True
-    )
 
-with col4 :
-    st.markdown(
-        f'''
-        <p style="font-size:{int(taille)}px; text-align: center; padding: 10pxs;">
-            <b>DELTA </b>
-        </p>
-        ''',
-        unsafe_allow_html=True
-    )
+    with stat_name :
+        st.markdown(
+            f'''
+            <p style="font-size:{int(30*zoom)}px; text-align: center; background-color: black;color: white; padding: 4px; border-radius: 5px;outline: 3px solid white;">
+                <b>TEAMS</b>
+            </p>
+            ''',
+            unsafe_allow_html=True
+        )
+        st.markdown(
+            f'''
+            <p style="font-size:{int(30*zoom)}px; text-align: center; background-color: grey;color: black; padding: 3px; border-radius: 5px;">
+                <b></b>
+            </p>
+            ''',
+            unsafe_allow_html=True
+        )
+        st.markdown(
+            f'''
+            <p style="font-size:{int(30*zoom)}px; text-align: center; background-color: black;color: white; padding: 4px; border-radius: 5px;outline: 3px solid white;">
+                <b>NB SHOOTS (OFF)</b>
+            </p>
+            ''',
+            unsafe_allow_html=True
+        )
+        st.markdown(
+            f'''
+            <p style="font-size:{int(30*zoom)}px; text-align: center; background-color: black;color: white; padding: 4px; border-radius: 5px;outline: 3px solid white;">
+                <b>NB SHOOTS (DEF)</b>
+            </p>
+            ''',
+            unsafe_allow_html=True
+        )
 
-with col6 :
-    st.markdown(
-        f'''
-        <p style="font-size:{int(taille)}px; text-align: center; padding: 10pxs;">
-            <b>OFFENSIVE </b>
-        </p>
-        ''',
-        unsafe_allow_html=True
-    )
+        st.markdown(
+            f'''
+            <p style="font-size:{int(30*zoom)}px; text-align: center; background-color: grey;color: black; padding: 3px; border-radius: 5px;">
+                <b></b>
+            </p>
+            ''',
+            unsafe_allow_html=True
+        )
+        st.markdown(
+            f'''
+            <p style="font-size:{int(30*zoom)}px; text-align: center; background-color: black;color: white; padding: 4px; border-radius: 5px;outline: 3px solid white;">
+                <b>PPS (OFF)</b>
+            </p>
+            ''',
+            unsafe_allow_html=True
+        )
+        st.markdown(
+            f'''
+            <p style="font-size:{int(30*zoom)}px; text-align: center; background-color: black;color: white; padding: 4px; border-radius: 5px;outline: 3px solid white;">
+                <b>PPS (DEF)</b>
+            </p>
+            ''',
+            unsafe_allow_html=True
+        )
 
-with col7 :
-    st.markdown(
-        f'''
-        <p style="font-size:{int(taille)}px; text-align: center; padding: 10pxs;">
-            <b>DEFENSIVE </b>
-        </p>
-        ''',
-        unsafe_allow_html=True
-    )
+        st.markdown(
+            f'''
+            <p style="font-size:{int(30*zoom)}px; text-align: center; background-color: grey;color: black; padding: 3px; border-radius: 5px;">
+                <b></b>
+            </p>
+            ''',
+            unsafe_allow_html=True
+        )
+
+        st.markdown(
+            f'''
+            <p style="font-size:{int(30*zoom)}px; text-align: center; background-color: black;color: white; padding: 4px; border-radius: 5px;outline: 3px solid white;">
+                <b>% REB (OFF)</b>
+            </p>
+            ''',
+            unsafe_allow_html=True
+        )
+        st.markdown(
+            f'''
+            <p style="font-size:{int(30*zoom)}px; text-align: center; background-color: black;color: white; padding: 4px; border-radius: 5px;outline: 3px solid white;">
+                <b>% REB (DEF)</b>
+            </p>
+            ''',
+            unsafe_allow_html=True
+        )
+        st.markdown(
+            f'''
+            <p style="font-size:{int(30*zoom)}px; text-align: center; background-color: grey;color: black; padding: 3px; border-radius: 5px;">
+                <b></b>
+            </p>
+            ''',
+            unsafe_allow_html=True
+        )
+
+        st.markdown(
+            f'''
+            <p style="font-size:{int(30*zoom)}px; text-align: center; background-color: black;color: white; padding: 4px; border-radius: 5px;outline: 3px solid white;">
+                <b>% ASSISTS (OFF)</b>
+            </p>
+            ''',
+            unsafe_allow_html=True
+        )
+        st.markdown(
+            f'''
+            <p style="font-size:{int(30*zoom)}px; text-align: center; background-color: black;color: white; padding: 4px; border-radius: 5px;outline: 3px solid white;">
+                <b>% ASSISTS (DEF)</b>
+            </p>
+            ''',
+            unsafe_allow_html=True
+        )
+        st.markdown(
+            f'''
+            <p style="font-size:{int(30*zoom)}px; text-align: center; background-color: grey;color: black; padding: 3px; border-radius: 5px;">
+                <b></b>
+            </p>
+            ''',
+            unsafe_allow_html=True
+        )
+
+        st.markdown(
+            f'''
+            <p style="font-size:{int(30*zoom)}px; text-align: center; background-color: black;color: white; padding: 4px; border-radius: 5px;outline: 3px solid white;">
+                <b>BALL CARE (OFF)</b>
+            </p>
+            ''',
+            unsafe_allow_html=True
+        )
+        st.markdown(
+            f'''
+            <p style="font-size:{int(30*zoom)}px; text-align: center; background-color: black;color: white; padding: 4px; border-radius: 5px;outline: 3px solid white;">
+                <b>BALL CARE (DEF)</b>
+            </p>
+            ''',
+            unsafe_allow_html=True
+        )
+    with loc_stat :
+        st.markdown(
+            f'''
+            <p style="font-size:{int(30*zoom)}px; text-align: center; background-color: {local_c1};color: {local_c2}; padding: 4px; border-radius: 5px;outline: 3px solid {local_c2};">
+                <b>{LOCALTEAM}</b>
+            </p>
+            ''',
+            unsafe_allow_html=True
+        )
+        st.markdown(
+            f'''
+            <p style="font-size:{int(30*zoom)}px; text-align: center; background-color: grey;color: black; padding: 3px; border-radius: 5px;">
+                <b></b>
+            </p>
+            ''',
+            unsafe_allow_html=True
+        )
+
+    with road_stat :
+        st.markdown(
+            f'''
+            <p style="font-size:{int(30*zoom)}px; text-align: center; background-color: {road_c1};color: {road_c2}; padding: 4px; border-radius: 5px;outline: 3px solid {road_c2};">
+                <b>{ROADTEAM}</b>
+            </p>
+            ''',
+            unsafe_allow_html=True
+        )
+        st.markdown(
+            f'''
+            <p style="font-size:{int(30*zoom)}px; text-align: center; background-color: grey;color: black; padding: 3px; border-radius: 5px;">
+                <b></b>
+            </p>
+            ''',
+            unsafe_allow_html=True
+        )
+
+    with color_best :
+        st.markdown(
+            f'''
+            <p style="font-size:{int(30*zoom)}px; text-align: center; background-color: black;color: white; padding: 4px; border-radius: 5px;outline: 3px solid white;">
+                <b>---</b>
+            </p>
+            ''',
+            unsafe_allow_html=True
+        )
+        
+        st.markdown(
+            f'''
+            <p style="font-size:{int(30*zoom)}px; text-align: center; background-color: grey;color: black; padding: 3px; border-radius: 5px;">
+                <b></b>
+            </p>
+            ''',
+            unsafe_allow_html=True
+        )
