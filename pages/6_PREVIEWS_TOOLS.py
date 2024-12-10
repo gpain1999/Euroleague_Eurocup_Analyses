@@ -168,156 +168,81 @@ road_choix_2 = teams_color[teams_color["TEAM"]==ROADTEAM]["COL2"].to_list()[0]
 road_c1 = f.choisir_maillot(local_c1, [road_choix_1,road_choix_2])
 road_c2 = road_choix_1 if road_c1 != road_choix_1 else road_choix_2
 
-####################################
-previews1,previews2,_,pronostic = st.columns([0.3,0.3,0.1,0.3])
 
-with previews1 :
+################## PICKLE #########################
+
+BCL = f.lire_fichier_pickle("./modeles/model_BCL.pkl")
+BCR = f.lire_fichier_pickle("./modeles/model_BCR.pkl")
+PPSL = f.lire_fichier_pickle("./modeles/model_PPSL.pkl")
+PPSR = f.lire_fichier_pickle("./modeles/model_PPSR.pkl")
+
+#################################DATA############################################
+local_moyenne = f.get_aggregated_data(
+    df=df, min_round=selected_range[0], max_round=selected_range[1],
+    selected_teams=[LOCALTEAM],
+    selected_opponents=[],
+    selected_fields=["TEAM"],
+    selected_players=[],
+    mode="AVERAGE",
+    percent="MADE"
+)
+local_moyenne = local_moyenne.loc[:, (local_moyenne != "---").any(axis=0)]
+local_moyenne = local_moyenne.drop(columns = ["TEAM","NB_GAME","HOME","TIME_ON"])
+
+local_opp_moyenne = f.get_aggregated_data(
+    df=df, min_round=selected_range[0], max_round=selected_range[1],
+    selected_teams=[],
+    selected_opponents=[LOCALTEAM],
+    selected_fields=["OPPONENT"],
+    selected_players=[],
+    mode="AVERAGE",
+    percent="MADE"
+)
+local_opp_moyenne = local_opp_moyenne.loc[:, (local_opp_moyenne != "---").any(axis=0)]
+local_opp_moyenne = local_opp_moyenne.drop(columns = ["OPPONENT","NB_GAME","HOME","TIME_ON"])
+
+road_moyenne = f.get_aggregated_data(
+    df=df, min_round=selected_range[0], max_round=selected_range[1],
+    selected_teams=[ROADTEAM],
+    selected_opponents=[],
+    selected_fields=["TEAM"],
+    selected_players=[],
+    mode="AVERAGE",
+    percent="MADE"
+)
+road_moyenne = road_moyenne.loc[:, (road_moyenne != "---").any(axis=0)]
+road_moyenne = road_moyenne.drop(columns = ["TEAM","NB_GAME","HOME","TIME_ON"])
+
+road_opp_moyenne = f.get_aggregated_data(
+    df=df, min_round=selected_range[0], max_round=selected_range[1],
+    selected_teams=[],
+    selected_opponents=[ROADTEAM],
+    selected_fields=["OPPONENT"],
+    selected_players=[],
+    mode="AVERAGE",
+    percent="MADE"
+)
+road_opp_moyenne = road_opp_moyenne.loc[:, (road_opp_moyenne != "---").any(axis=0)]
+road_opp_moyenne = road_opp_moyenne.drop(columns = ["OPPONENT","NB_GAME","HOME","WIN","TIME_ON"])
+
+
+####################################
+previews1,pause1,previews2,pause2,pronostic = st.columns([0.25,0.1,0.25,0.15,0.25])
+
+with pronostic :
     st.markdown(
         f'''
         <p style="font-size:{int(40*zoom)}px; text-align: center; background-color: white;color: black; padding: 4px; border-radius: 5px;outline: 3px solid black;">
-            <b>AVERAGES STATS</b>
+            <b>PRONOSTICS</b>
         </p>
         ''',
         unsafe_allow_html=True
     )
-    stat_name,loc_stat,color_best,road_stat = st.columns([0.4,0.25,0.1,0.25])
+    prono_name,loc_prono,road_prono = st.columns([0.46,0.27,0.27])
+    ppsl_p,ppsr_p = f.predict_(PPSL,PPSR, LOCALTEAM, ROADTEAM, sorted(df["TEAM"].unique()))
+    bcl_p,bcr_p = f.predict_(BCL,BCR, LOCALTEAM, ROADTEAM, sorted(df["TEAM"].unique()))
 
-
-    with stat_name :
-        st.markdown(
-            f'''
-            <p style="font-size:{int(30*zoom)}px; text-align: center; background-color: black;color: white; padding: 4px; border-radius: 5px;outline: 3px solid white;">
-                <b>TEAMS</b>
-            </p>
-            ''',
-            unsafe_allow_html=True
-        )
-        st.markdown(
-            f'''
-            <p style="font-size:{int(30*zoom)}px; text-align: center; background-color: grey;color: black; padding: 3px; border-radius: 5px;">
-                <b></b>
-            </p>
-            ''',
-            unsafe_allow_html=True
-        )
-        st.markdown(
-            f'''
-            <p style="font-size:{int(30*zoom)}px; text-align: center; background-color: black;color: white; padding: 4px; border-radius: 5px;outline: 3px solid white;">
-                <b>NB SHOOTS (OFF)</b>
-            </p>
-            ''',
-            unsafe_allow_html=True
-        )
-        st.markdown(
-            f'''
-            <p style="font-size:{int(30*zoom)}px; text-align: center; background-color: black;color: white; padding: 4px; border-radius: 5px;outline: 3px solid white;">
-                <b>NB SHOOTS (DEF)</b>
-            </p>
-            ''',
-            unsafe_allow_html=True
-        )
-
-        st.markdown(
-            f'''
-            <p style="font-size:{int(30*zoom)}px; text-align: center; background-color: grey;color: black; padding: 3px; border-radius: 5px;">
-                <b></b>
-            </p>
-            ''',
-            unsafe_allow_html=True
-        )
-        st.markdown(
-            f'''
-            <p style="font-size:{int(30*zoom)}px; text-align: center; background-color: black;color: white; padding: 4px; border-radius: 5px;outline: 3px solid white;">
-                <b>PPS (OFF)</b>
-            </p>
-            ''',
-            unsafe_allow_html=True
-        )
-        st.markdown(
-            f'''
-            <p style="font-size:{int(30*zoom)}px; text-align: center; background-color: black;color: white; padding: 4px; border-radius: 5px;outline: 3px solid white;">
-                <b>PPS (DEF)</b>
-            </p>
-            ''',
-            unsafe_allow_html=True
-        )
-
-        st.markdown(
-            f'''
-            <p style="font-size:{int(30*zoom)}px; text-align: center; background-color: grey;color: black; padding: 3px; border-radius: 5px;">
-                <b></b>
-            </p>
-            ''',
-            unsafe_allow_html=True
-        )
-
-        st.markdown(
-            f'''
-            <p style="font-size:{int(30*zoom)}px; text-align: center; background-color: black;color: white; padding: 4px; border-radius: 5px;outline: 3px solid white;">
-                <b>% REB (OFF)</b>
-            </p>
-            ''',
-            unsafe_allow_html=True
-        )
-        st.markdown(
-            f'''
-            <p style="font-size:{int(30*zoom)}px; text-align: center; background-color: black;color: white; padding: 4px; border-radius: 5px;outline: 3px solid white;">
-                <b>% REB (DEF)</b>
-            </p>
-            ''',
-            unsafe_allow_html=True
-        )
-        st.markdown(
-            f'''
-            <p style="font-size:{int(30*zoom)}px; text-align: center; background-color: grey;color: black; padding: 3px; border-radius: 5px;">
-                <b></b>
-            </p>
-            ''',
-            unsafe_allow_html=True
-        )
-
-        st.markdown(
-            f'''
-            <p style="font-size:{int(30*zoom)}px; text-align: center; background-color: black;color: white; padding: 4px; border-radius: 5px;outline: 3px solid white;">
-                <b>% ASSISTS (OFF)</b>
-            </p>
-            ''',
-            unsafe_allow_html=True
-        )
-        st.markdown(
-            f'''
-            <p style="font-size:{int(30*zoom)}px; text-align: center; background-color: black;color: white; padding: 4px; border-radius: 5px;outline: 3px solid white;">
-                <b>% ASSISTS (DEF)</b>
-            </p>
-            ''',
-            unsafe_allow_html=True
-        )
-        st.markdown(
-            f'''
-            <p style="font-size:{int(30*zoom)}px; text-align: center; background-color: grey;color: black; padding: 3px; border-radius: 5px;">
-                <b></b>
-            </p>
-            ''',
-            unsafe_allow_html=True
-        )
-
-        st.markdown(
-            f'''
-            <p style="font-size:{int(30*zoom)}px; text-align: center; background-color: black;color: white; padding: 4px; border-radius: 5px;outline: 3px solid white;">
-                <b>BALL CARE (OFF)</b>
-            </p>
-            ''',
-            unsafe_allow_html=True
-        )
-        st.markdown(
-            f'''
-            <p style="font-size:{int(30*zoom)}px; text-align: center; background-color: black;color: white; padding: 4px; border-radius: 5px;outline: 3px solid white;">
-                <b>BALL CARE (DEF)</b>
-            </p>
-            ''',
-            unsafe_allow_html=True
-        )
-    with loc_stat :
+    with loc_prono :
         st.markdown(
             f'''
             <p style="font-size:{int(30*zoom)}px; text-align: center; background-color: {local_c1};color: {local_c2}; padding: 4px; border-radius: 5px;outline: 3px solid {local_c2};">
@@ -334,8 +259,31 @@ with previews1 :
             ''',
             unsafe_allow_html=True
         )
-
-    with road_stat :
+        st.markdown(
+            f'''
+            <p style="font-size:{int(30*zoom)}px; text-align: center; background-color: black;color: orange; padding: 4px; border-radius: 5px;outline: 3px solid orange;">
+                <b>{round(ppsl_p, 2):.2f}</b>
+            </p>
+            ''',
+            unsafe_allow_html=True
+        )
+        st.markdown(
+            f'''
+            <p style="font-size:{int(30*zoom)}px; text-align: center; background-color: grey;color: black; padding: 3px; border-radius: 5px;">
+                <b></b>
+            </p>
+            ''',
+            unsafe_allow_html=True
+        )
+        st.markdown(
+            f'''
+            <p style="font-size:{int(30*zoom)}px; text-align: center; background-color: black;color: orange; padding: 4px; border-radius: 5px;outline: 3px solid orange;">
+                <b>{round(100*bcl_p, 1):.1f} %</b>
+            </p>
+            ''',
+            unsafe_allow_html=True
+        )
+    with road_prono :
         st.markdown(
             f'''
             <p style="font-size:{int(30*zoom)}px; text-align: center; background-color: {road_c1};color: {road_c2}; padding: 4px; border-radius: 5px;outline: 3px solid {road_c2};">
@@ -352,21 +300,626 @@ with previews1 :
             ''',
             unsafe_allow_html=True
         )
-
-    with color_best :
         st.markdown(
             f'''
-            <p style="font-size:{int(30*zoom)}px; text-align: center; background-color: black;color: white; padding: 4px; border-radius: 5px;outline: 3px solid white;">
-                <b>---</b>
+            <p style="font-size:{int(30*zoom)}px; text-align: center; background-color: black;color: orange; padding: 4px; border-radius: 5px;outline: 3px solid orange;">
+                <b>{round(ppsr_p, 2):.2f}</b>
             </p>
             ''',
             unsafe_allow_html=True
         )
-        
         st.markdown(
             f'''
             <p style="font-size:{int(30*zoom)}px; text-align: center; background-color: grey;color: black; padding: 3px; border-radius: 5px;">
                 <b></b>
+            </p>
+            ''',
+            unsafe_allow_html=True
+        )
+        st.markdown(
+            f'''
+            <p style="font-size:{int(30*zoom)}px; text-align: center; background-color: black;color: orange; padding: 4px; border-radius: 5px;outline: 3px solid orange;">
+                <b>{round(100*bcr_p, 1):.1f} %</b>
+            </p>
+            ''',
+            unsafe_allow_html=True
+        )
+    with prono_name :
+
+        st.markdown(
+            f'''
+            <p style="font-size:{int(30*zoom)}px; text-align: center; background-color: black;color: orange; padding: 4px; border-radius: 5px;outline: 3px solid orange;">
+                <b>TEAMS</b>
+            </p>
+            ''',
+            unsafe_allow_html=True
+        )
+
+        st.markdown(
+            f'''
+            <p style="font-size:{int(30*zoom)}px; text-align: center; background-color: grey;color: black; padding: 3px; border-radius: 5px;">
+                <b></b>
+            </p>
+            ''',
+            unsafe_allow_html=True
+        )
+
+        if ppsl_p > ppsr_p:
+            c1 =local_c1
+            c2 = local_c2
+        else :
+            c1 =road_c1
+            c2 = road_c2
+        st.markdown(
+            f'''
+            <p style="font-size:{int(30*zoom)}px; text-align: center; background-color: {c1};color: {c2}; padding: 4px; border-radius: 5px;outline: 3px solid {c2};">
+                <b>PPS</b>
+            </p>
+            ''',
+            unsafe_allow_html=True
+        )
+        st.markdown(
+            f'''
+            <p style="font-size:{int(30*zoom)}px; text-align: center; background-color: grey;color: black; padding: 3px; border-radius: 5px;">
+                <b></b>
+            </p>
+            ''',
+            unsafe_allow_html=True
+        )
+
+        if bcl_p > bcr_p:
+            c1 =local_c1
+            c2 = local_c2
+        else :
+            c1 =road_c1
+            c2 = road_c2
+        st.markdown(
+            f'''
+            <p style="font-size:{int(30*zoom)}px; text-align: center; background-color: {c1};color: {c2}; padding: 4px; border-radius: 5px;outline: 3px solid {c2};">
+                <b>BALL CARE</b>
+            </p>
+            ''',
+            unsafe_allow_html=True
+        )
+with previews1 :
+    st.markdown(
+        f'''
+        <p style="font-size:{int(40*zoom)}px; text-align: center; background-color: white;color: black; padding: 4px; border-radius: 5px;outline: 3px solid black;">
+            <b>AVERAGES STATS</b>
+        </p>
+        ''',
+        unsafe_allow_html=True
+    )
+    stat_name,loc_stat,road_stat = st.columns([0.46,0.27,0.27])
+
+
+    with loc_stat :
+        st.markdown(
+            f'''
+            <p style="font-size:{int(30*zoom)}px; text-align: center; background-color: {local_c1};color: {local_c2}; padding: 4px; border-radius: 5px;outline: 3px solid {local_c2};">
+                <b>{LOCALTEAM}</b>
+            </p>
+            ''',
+            unsafe_allow_html=True
+        )
+        st.markdown(
+            f'''
+            <p style="font-size:{int(30*zoom)}px; text-align: center; background-color: grey;color: grey; padding: 3px; border-radius: 5px;">
+                <b></b>
+            </p>
+            ''',
+            unsafe_allow_html=True
+        )
+        st.markdown(
+            f'''
+            <p style="font-size:{int(30*zoom)}px; text-align: center; background-color: black;color: orange; padding: 4px; border-radius: 5px;outline: 3px solid orange;">
+                <b>{local_moyenne["WIN"].to_list()[0]}</b>
+            </p>
+            ''',
+            unsafe_allow_html=True
+        )
+
+
+        st.markdown(
+            f'''
+            <p style="font-size:{int(30*zoom)}px; text-align: center; background-color: grey;color: black; padding: 3px; border-radius: 5px;">
+                <b></b>
+            </p>
+            ''',
+            unsafe_allow_html=True
+        )
+
+        st.markdown(
+            f'''
+            <p style="font-size:{int(30*zoom)}px; text-align: center; background-color: black;color: orange; padding: 4px; border-radius: 5px;outline: 3px solid orange;">
+                <b>{round(local_moyenne["2_T"].sum()+local_moyenne["3_T"].sum(),1):.1f}</b>
+            </p>
+            ''',
+            unsafe_allow_html=True
+        )
+
+        st.markdown(
+            f'''
+            <p style="font-size:{int(30*zoom)}px; text-align: center; background-color: black;color: orange; padding: 4px; border-radius: 5px;outline: 3px solid orange;">
+                <b>{round(local_opp_moyenne["2_T"].sum()+local_opp_moyenne["3_T"].sum(),1):.1f}</b>
+            </p>
+            ''',
+            unsafe_allow_html=True
+        )
+        st.markdown(
+            f'''
+            <p style="font-size:{int(30*zoom)}px; text-align: center; background-color: grey;color: black; padding: 3px; border-radius: 5px;">
+                <b></b>
+            </p>
+            ''',
+            unsafe_allow_html=True
+        )
+
+        st.markdown(
+            f'''
+            <p style="font-size:{int(30*zoom)}px; text-align: center; background-color: black;color: orange; padding: 4px; border-radius: 5px;outline: 3px solid orange;">
+                <b>{round((local_moyenne['3_R'].sum()*3 + local_moyenne['2_R'].sum()*2)/(local_moyenne["2_T"].sum()+local_moyenne["3_T"].sum()), 2):.2f}</b>
+            </p>
+            ''',
+            unsafe_allow_html=True
+        )
+
+        st.markdown(
+            f'''
+            <p style="font-size:{int(30*zoom)}px; text-align: center; background-color: black;color: orange; padding: 4px; border-radius: 5px;outline: 3px solid orange;">
+                <b>{round((local_opp_moyenne['3_R'].sum()*3 + local_opp_moyenne['2_R'].sum()*2)/(local_opp_moyenne["2_T"].sum()+local_opp_moyenne["3_T"].sum()), 2):.2f}</b>
+            </p>
+            ''',
+            unsafe_allow_html=True
+        )
+        st.markdown(
+            f'''
+            <p style="font-size:{int(30*zoom)}px; text-align: center; background-color: grey;color: black; padding: 3px; border-radius: 5px;">
+                <b></b>
+            </p>
+            ''',
+            unsafe_allow_html=True
+        )
+
+        st.markdown(
+            f'''
+            <p style="font-size:{int(30*zoom)}px; text-align: center; background-color: black;color: orange; padding: 4px; border-radius: 5px;outline: 3px solid orange;">
+                <b>{round((100*local_moyenne['OR'].sum())/(local_opp_moyenne["DR"].sum()+local_moyenne['OR'].sum()), 1):.1f} %</b>
+            </p>
+            ''',
+            unsafe_allow_html=True
+        )
+        st.markdown(
+            f'''
+            <p style="font-size:{int(30*zoom)}px; text-align: center; background-color: black;color: orange; padding: 4px; border-radius: 5px;outline: 3px solid orange;">
+                <b>{round((100*local_moyenne['DR'].sum())/(local_opp_moyenne["OR"].sum()+local_moyenne['DR'].sum()), 1):.1f} %</b>
+            </p>
+            ''',
+            unsafe_allow_html=True
+        )
+        st.markdown(
+            f'''
+            <p style="font-size:{int(30*zoom)}px; text-align: center; background-color: grey;color: black; padding: 3px; border-radius: 5px;">
+                <b></b>
+            </p>
+            ''',
+            unsafe_allow_html=True
+        )
+        st.markdown(
+            f'''
+            <p style="font-size:{int(30*zoom)}px; text-align: center; background-color: black;color: orange; padding: 4px; border-radius: 5px;outline: 3px solid orange;">
+                <b>{round((100*local_moyenne['AS'].sum())/(local_moyenne["2_R"].sum()+local_moyenne['3_R'].sum()), 1):.1f} %</b>
+            </p>
+            ''',
+            unsafe_allow_html=True
+        )
+
+        st.markdown(
+            f'''
+            <p style="font-size:{int(30*zoom)}px; text-align: center; background-color: black;color: orange; padding: 4px; border-radius: 5px;outline: 3px solid orange;">
+                <b>{round((100*local_opp_moyenne['AS'].sum())/(local_opp_moyenne["2_R"].sum()+local_opp_moyenne['3_R'].sum()), 1):.1f} %</b>
+            </p>
+            ''',
+            unsafe_allow_html=True
+        )
+
+        st.markdown(
+            f'''
+            <p style="font-size:{int(30*zoom)}px; text-align: center; background-color: grey;color: black; padding: 3px; border-radius: 5px;">
+                <b></b>
+            </p>
+            ''',
+            unsafe_allow_html=True
+        )
+        st.markdown(
+            f'''
+            <p style="font-size:{int(30*zoom)}px; text-align: center; background-color: black;color: orange; padding: 4px; border-radius: 5px;outline: 3px solid orange;">
+                <b>{round(100*(local_moyenne['1_T'].sum()*0.5 +local_moyenne['2_T'].sum() +local_moyenne['3_T'].sum()  )/(local_moyenne['1_T'].sum()*0.5 +local_moyenne['2_T'].sum() +local_moyenne['3_T'].sum() + local_moyenne['TO'].sum()), 1):.1f} %</b>
+            </p>
+            ''',
+            unsafe_allow_html=True
+        )
+        st.markdown(
+            f'''
+            <p style="font-size:{int(30*zoom)}px; text-align: center; background-color: black;color: orange; padding: 4px; border-radius: 5px;outline: 3px solid orange;">
+                <b>{round(100*(local_opp_moyenne['1_T'].sum()*0.5 +local_opp_moyenne['2_T'].sum() +local_opp_moyenne['3_T'].sum()  )/(local_opp_moyenne['1_T'].sum()*0.5 +local_opp_moyenne['2_T'].sum() +local_opp_moyenne['3_T'].sum() + local_opp_moyenne['TO'].sum()), 1):.1f} %</b>
+            </p>
+            ''',
+            unsafe_allow_html=True
+        )
+    with road_stat :
+        st.markdown(
+            f'''
+            <p style="font-size:{int(30*zoom)}px; text-align: center; background-color: {road_c1};color: {road_c2}; padding: 4px; border-radius: 5px;outline: 3px solid {road_c2};">
+                <b>{ROADTEAM}</b>
+            </p>
+            ''',
+            unsafe_allow_html=True
+        )
+        st.markdown(
+            f'''
+            <p style="font-size:{int(30*zoom)}px; text-align: center; background-color: grey;color: grey; padding: 3px; border-radius: 5px;">
+                <b></b>
+            </p>
+            ''',
+            unsafe_allow_html=True
+        )
+        st.markdown(
+            f'''
+            <p style="font-size:{int(30*zoom)}px; text-align: center; background-color: black;color: orange; padding: 4px; border-radius: 5px;outline: 3px solid orange;">
+                <b>{road_moyenne["WIN"].to_list()[0]}</b>
+            </p>
+            ''',
+            unsafe_allow_html=True
+        )
+
+        st.markdown(
+            f'''
+            <p style="font-size:{int(30*zoom)}px; text-align: center; background-color: grey;color: black; padding: 3px; border-radius: 5px;">
+                <b></b>
+            </p>
+            ''',
+            unsafe_allow_html=True
+        )
+    
+        st.markdown(
+            f'''
+            <p style="font-size:{int(30*zoom)}px; text-align: center; background-color: black;color: orange; padding: 4px; border-radius: 5px;outline: 3px solid orange;">
+                <b>{round(road_moyenne["2_T"].sum()+road_moyenne["3_T"].sum(),1):.1f}</b>
+            </p>
+            ''',
+            unsafe_allow_html=True
+        )
+
+        st.markdown(
+            f'''
+            <p style="font-size:{int(30*zoom)}px; text-align: center; background-color: black;color: orange; padding: 4px; border-radius: 5px;outline: 3px solid orange;">
+                <b>{round(road_opp_moyenne["2_T"].sum()+road_opp_moyenne["3_T"].sum(),1):.1f}</b>
+            </p>
+            ''',
+            unsafe_allow_html=True
+        )
+        st.markdown(
+            f'''
+            <p style="font-size:{int(30*zoom)}px; text-align: center; background-color: grey;color: black; padding: 3px; border-radius: 5px;">
+                <b></b>
+            </p>
+            ''',
+            unsafe_allow_html=True
+        )
+
+        st.markdown(
+            f'''
+            <p style="font-size:{int(30*zoom)}px; text-align: center; background-color: black;color: orange; padding: 4px; border-radius: 5px;outline: 3px solid orange;">
+                <b>{round((road_moyenne['3_R'].sum()*3 + road_moyenne['2_R'].sum()*2)/(road_moyenne["2_T"].sum()+road_moyenne["3_T"].sum()), 2):.2f}</b>
+            </p>
+            ''',
+            unsafe_allow_html=True
+        )
+
+        st.markdown(
+            f'''
+            <p style="font-size:{int(30*zoom)}px; text-align: center; background-color: black;color: orange; padding: 4px; border-radius: 5px;outline: 3px solid orange;">
+                <b>{round((road_opp_moyenne['3_R'].sum()*3 + road_opp_moyenne['2_R'].sum()*2)/(road_opp_moyenne["2_T"].sum()+road_opp_moyenne["3_T"].sum()), 2):.2f}</b>
+            </p>
+            ''',
+            unsafe_allow_html=True
+        )
+        st.markdown(
+            f'''
+            <p style="font-size:{int(30*zoom)}px; text-align: center; background-color: grey;color: black; padding: 3px; border-radius: 5px;">
+                <b></b>
+            </p>
+            ''',
+            unsafe_allow_html=True
+        )
+        st.markdown(
+            f'''
+            <p style="font-size:{int(30*zoom)}px; text-align: center; background-color: black;color: orange; padding: 4px; border-radius: 5px;outline: 3px solid orange;">
+                <b>{round((100*road_moyenne['OR'].sum())/(road_opp_moyenne["DR"].sum()+road_moyenne['OR'].sum()), 1):.1f} %</b>
+            </p>
+            ''',
+            unsafe_allow_html=True
+        )
+        st.markdown(
+            f'''
+            <p style="font-size:{int(30*zoom)}px; text-align: center; background-color: black;color: orange; padding: 4px; border-radius: 5px;outline: 3px solid orange;">
+                <b>{round((100*road_moyenne['DR'].sum())/(road_opp_moyenne["OR"].sum()+road_moyenne['DR'].sum()), 1):.1f} %</b>
+            </p>
+            ''',
+            unsafe_allow_html=True
+        )
+        st.markdown(
+            f'''
+            <p style="font-size:{int(30*zoom)}px; text-align: center; background-color: grey;color: black; padding: 3px; border-radius: 5px;">
+                <b></b>
+            </p>
+            ''',
+            unsafe_allow_html=True
+        )
+
+        st.markdown(
+            f'''
+            <p style="font-size:{int(30*zoom)}px; text-align: center; background-color: black;color: orange; padding: 4px; border-radius: 5px;outline: 3px solid orange;">
+                <b>{round((100*road_moyenne['AS'].sum())/(road_moyenne["2_R"].sum()+road_moyenne['3_R'].sum()), 1):.1f} %</b>
+            </p>
+            ''',
+            unsafe_allow_html=True
+        )
+
+        st.markdown(
+            f'''
+            <p style="font-size:{int(30*zoom)}px; text-align: center; background-color: black;color: orange; padding: 4px; border-radius: 5px;outline: 3px solid orange;">
+                <b>{round((100*road_opp_moyenne['AS'].sum())/(road_opp_moyenne["2_R"].sum()+road_opp_moyenne['3_R'].sum()), 1):.1f} %</b>
+            </p>
+            ''',
+            unsafe_allow_html=True
+        )
+
+        st.markdown(
+            f'''
+            <p style="font-size:{int(30*zoom)}px; text-align: center; background-color: grey;color: black; padding: 3px; border-radius: 5px;">
+                <b></b>
+            </p>
+            ''',
+            unsafe_allow_html=True
+        )
+        st.markdown(
+            f'''
+            <p style="font-size:{int(30*zoom)}px; text-align: center; background-color: black;color: orange; padding: 4px; border-radius: 5px;outline: 3px solid orange;">
+                <b>{round(100*(road_moyenne['1_T'].sum()*0.5 +road_moyenne['2_T'].sum() +road_moyenne['3_T'].sum()  )/(road_moyenne['1_T'].sum()*0.5 +road_moyenne['2_T'].sum() +road_moyenne['3_T'].sum() + road_moyenne['TO'].sum()), 1):.1f} %</b>
+            </p>
+            ''',
+            unsafe_allow_html=True
+        )
+        st.markdown(
+            f'''
+            <p style="font-size:{int(30*zoom)}px; text-align: center; background-color: black;color: orange; padding: 4px; border-radius: 5px;outline: 3px solid orange;">
+                <b>{round(100*(road_opp_moyenne['1_T'].sum()*0.5 +road_opp_moyenne['2_T'].sum() +road_opp_moyenne['3_T'].sum()  )/(road_opp_moyenne['1_T'].sum()*0.5 +road_opp_moyenne['2_T'].sum() +road_opp_moyenne['3_T'].sum() + road_opp_moyenne['TO'].sum()), 1):.1f} %</b>
+            </p>
+            ''',
+            unsafe_allow_html=True
+        )
+    with stat_name :
+
+        st.markdown(
+            f'''
+            <p style="font-size:{int(30*zoom)}px; text-align: center; background-color: black;color: orange; padding: 4px; border-radius: 5px;outline: 3px solid orange;">
+                <b>TEAMS</b>
+            </p>
+            ''',
+            unsafe_allow_html=True
+        )
+
+        st.markdown(
+            f'''
+            <p style="font-size:{int(30*zoom)}px; text-align: center; background-color: grey;color: black; padding: 3px; border-radius: 5px;">
+                <b></b>
+            </p>
+            ''',
+            unsafe_allow_html=True
+        )
+
+
+        if int(local_moyenne["WIN"].to_list()[0].strip('%')) > int(road_moyenne["WIN"].to_list()[0].strip('%')):
+            c1 =local_c1
+            c2 = local_c2
+        elif int(local_moyenne["WIN"].to_list()[0].strip('%'))<  int(road_moyenne["WIN"].to_list()[0].strip('%')):
+            c1 =road_c1
+            c2 = road_c2
+        else :
+            c1 = "orange"
+            c2 = "black"
+
+        st.markdown(
+            f'''
+            <p style="font-size:{int(30*zoom)}px; text-align: center; background-color: {c1};color: {c2}; padding: 4px; border-radius: 5px;outline: 3px solid {c2};">
+                <b>% WIN</b>
+            </p>
+            ''',
+            unsafe_allow_html=True
+        )
+
+        st.markdown(
+            f'''
+            <p style="font-size:{int(30*zoom)}px; text-align: center; background-color: grey;color: black; padding: 3px; border-radius: 5px;">
+                <b></b>
+            </p>
+            ''',
+            unsafe_allow_html=True
+        )
+
+        if (local_moyenne["2_T"].sum()+local_moyenne["3_T"].sum())>(road_moyenne["2_T"].sum()+road_moyenne["3_T"].sum()):
+            c1 =local_c1
+            c2 = local_c2
+        else :
+            c1 =road_c1
+            c2 = road_c2
+        st.markdown(
+            f'''
+            <p style="font-size:{int(30*zoom)}px; text-align: center; background-color: {c1};color: {c2}; padding: 4px; border-radius: 5px;outline: 3px solid {c2};">
+                <b>NB SHOOTS (OFF)</b>
+            </p>
+            ''',
+            unsafe_allow_html=True
+        )
+        if (local_opp_moyenne["2_T"].sum()+local_opp_moyenne["3_T"].sum())<(road_opp_moyenne["2_T"].sum()+road_opp_moyenne["3_T"].sum()):
+            c1 =local_c1
+            c2 = local_c2
+        else :
+            c1 =road_c1
+            c2 = road_c2
+        st.markdown(
+            f'''
+            <p style="font-size:{int(30*zoom)}px; text-align: center; background-color: {c1};color: {c2}; padding: 4px; border-radius: 5px;outline: 3px solid {c2};">
+                <b>NB SHOOTS (DEF)</b>
+            </p>
+            ''',
+            unsafe_allow_html=True
+        )
+
+        st.markdown(
+            f'''
+            <p style="font-size:{int(30*zoom)}px; text-align: center; background-color: grey;color: black; padding: 3px; border-radius: 5px;">
+                <b></b>
+            </p>
+            ''',
+            unsafe_allow_html=True
+        )
+
+        if ((local_moyenne['3_R'].sum()*3 + local_moyenne['2_R'].sum()*2)/(local_moyenne["2_T"].sum()+local_moyenne["3_T"].sum()))>((road_moyenne['3_R'].sum()*3 + road_moyenne['2_R'].sum()*2)/(road_moyenne["2_T"].sum()+road_moyenne["3_T"].sum())):
+            c1 =local_c1
+            c2 = local_c2
+        else :
+            c1 =road_c1
+            c2 = road_c2
+        st.markdown(
+            f'''
+            <p style="font-size:{int(30*zoom)}px; text-align: center; background-color: {c1};color: {c2}; padding: 4px; border-radius: 5px;outline: 3px solid {c2};">
+                <b>PPS (OFF)</b>
+            </p>
+            ''',
+            unsafe_allow_html=True
+        )
+        if ((local_opp_moyenne['3_R'].sum()*3 + local_opp_moyenne['2_R'].sum()*2)/(local_opp_moyenne["2_T"].sum()+local_opp_moyenne["3_T"].sum()))<((road_opp_moyenne['3_R'].sum()*3 + road_opp_moyenne['2_R'].sum()*2)/(road_opp_moyenne["2_T"].sum()+road_opp_moyenne["3_T"].sum())):
+            c1 =local_c1
+            c2 = local_c2
+        else :
+            c1 =road_c1
+            c2 = road_c2
+        st.markdown(
+            f'''
+            <p style="font-size:{int(30*zoom)}px; text-align: center; background-color: {c1};color: {c2}; padding: 4px; border-radius: 5px;outline: 3px solid {c2};">
+                <b>PPS (DEF)</b>
+            </p>
+            ''',
+            unsafe_allow_html=True
+        )
+
+        st.markdown(
+            f'''
+            <p style="font-size:{int(30*zoom)}px; text-align: center; background-color: grey;color: black; padding: 3px; border-radius: 5px;">
+                <b></b>
+            </p>
+            ''',
+            unsafe_allow_html=True
+        )
+        if ((100*local_moyenne['OR'].sum())/(local_opp_moyenne["DR"].sum()+local_moyenne['OR'].sum())) > ((100*road_moyenne['OR'].sum())/(road_opp_moyenne["DR"].sum()+road_moyenne['OR'].sum())):
+            c1 =local_c1
+            c2 = local_c2
+        else :
+            c1 =road_c1
+            c2 = road_c2
+        st.markdown(
+            f'''
+            <p style="font-size:{int(30*zoom)}px; text-align: center; background-color: {c1};color: {c2}; padding: 4px; border-radius: 5px;outline: 3px solid {c2};">
+                <b>% REB OFF</b>
+            </p>
+            ''',
+            unsafe_allow_html=True
+        )
+        if ((100*local_moyenne['DR'].sum())/(local_opp_moyenne["OR"].sum()+local_moyenne['DR'].sum())) > ((100*road_moyenne['DR'].sum())/(road_opp_moyenne["OR"].sum()+road_moyenne['DR'].sum())):
+            c1 =local_c1
+            c2 = local_c2
+        else :
+            c1 =road_c1
+            c2 = road_c2
+        st.markdown(
+            f'''
+            <p style="font-size:{int(30*zoom)}px; text-align: center; background-color: {c1};color: {c2}; padding: 4px; border-radius: 5px;outline: 3px solid {c2};">
+                <b>% REB DEF</b>
+            </p>
+            ''',
+            unsafe_allow_html=True
+        )
+        st.markdown(
+            f'''
+            <p style="font-size:{int(30*zoom)}px; text-align: center; background-color: grey;color: black; padding: 3px; border-radius: 5px;">
+                <b></b>
+            </p>
+            ''',
+            unsafe_allow_html=True
+        )
+        if ((100*local_moyenne['AS'].sum())/(local_moyenne["2_R"].sum()+local_moyenne['3_R'].sum()))>((100*road_moyenne['AS'].sum())/(road_moyenne["2_R"].sum()+road_moyenne['3_R'].sum())):
+            c1 =local_c1
+            c2 = local_c2
+        else :
+            c1 =road_c1
+            c2 = road_c2
+        st.markdown(
+            f'''
+            <p style="font-size:{int(30*zoom)}px; text-align: center; background-color: {c1};color: {c2}; padding: 4px; border-radius: 5px;outline: 3px solid {c2};">
+                <b>% ASSISTS (OFF)</b>
+            </p>
+            ''',
+            unsafe_allow_html=True
+        )
+        if ((100*local_opp_moyenne['AS'].sum())/(local_opp_moyenne["2_R"].sum()+local_opp_moyenne['3_R'].sum()))<((100*road_opp_moyenne['AS'].sum())/(road_opp_moyenne["2_R"].sum()+road_opp_moyenne['3_R'].sum())):
+            c1 =local_c1
+            c2 = local_c2
+        else :
+            c1 =road_c1
+            c2 = road_c2
+        st.markdown(
+            f'''
+            <p style="font-size:{int(30*zoom)}px; text-align: center; background-color: {c1};color: {c2}; padding: 4px; border-radius: 5px;outline: 3px solid {c2};">
+                <b>% ASSISTS (DEF)</b>
+            </p>
+            ''',
+            unsafe_allow_html=True
+        )
+        st.markdown(
+            f'''
+            <p style="font-size:{int(30*zoom)}px; text-align: center; background-color: grey;color: black; padding: 3px; border-radius: 5px;">
+                <b></b>
+            </p>
+            ''',
+            unsafe_allow_html=True
+        )
+        if (100*(local_moyenne['1_T'].sum()*0.5 +local_moyenne['2_T'].sum() +local_moyenne['3_T'].sum()  )/(local_moyenne['1_T'].sum()*0.5 +local_moyenne['2_T'].sum() +local_moyenne['3_T'].sum() + local_moyenne['TO'].sum()))>(100*(road_moyenne['1_T'].sum()*0.5 +road_moyenne['2_T'].sum() +road_moyenne['3_T'].sum()  )/(road_moyenne['1_T'].sum()*0.5 +road_moyenne['2_T'].sum() +road_moyenne['3_T'].sum() + road_moyenne['TO'].sum())):
+            c1 =local_c1
+            c2 = local_c2
+        else :
+            c1 =road_c1
+            c2 = road_c2
+        st.markdown(
+            f'''
+            <p style="font-size:{int(30*zoom)}px; text-align: center; background-color: {c1};color: {c2}; padding: 4px; border-radius: 5px;outline: 3px solid {c2};">
+                <b>BALL CARE (OFF)</b>
+            </p>
+            ''',
+            unsafe_allow_html=True
+        )
+        if (100*(local_opp_moyenne['1_T'].sum()*0.5 +local_opp_moyenne['2_T'].sum() +local_opp_moyenne['3_T'].sum()  )/(local_opp_moyenne['1_T'].sum()*0.5 +local_opp_moyenne['2_T'].sum() +local_opp_moyenne['3_T'].sum() + local_opp_moyenne['TO'].sum()))<(100*(road_opp_moyenne['1_T'].sum()*0.5 +road_opp_moyenne['2_T'].sum() +road_opp_moyenne['3_T'].sum()  )/(road_opp_moyenne['1_T'].sum()*0.5 +road_opp_moyenne['2_T'].sum() +road_opp_moyenne['3_T'].sum() + road_opp_moyenne['TO'].sum())):
+            c1 =local_c1
+            c2 = local_c2
+        else :
+            c1 =road_c1
+            c2 = road_c2
+        st.markdown(
+            f'''
+            <p style="font-size:{int(30*zoom)}px; text-align: center; background-color: {c1};color: {c2}; padding: 4px; border-radius: 5px;outline: 3px solid {c2};">
+                <b>BALL CARE (DEF)</b>
             </p>
             ''',
             unsafe_allow_html=True

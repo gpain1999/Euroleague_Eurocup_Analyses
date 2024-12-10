@@ -28,6 +28,27 @@ import pickle
 from statsmodels.api import GLM, families,OLS
 from statsmodels.genmod.families.links import logit
 
+def lire_fichier_pickle(nom_fichier):
+    """
+    Lit un fichier pickle et retourne son contenu.
+
+    Parameters:
+        nom_fichier (str): Le chemin du fichier pickle à lire.
+
+    Returns:
+        obj: L'objet chargé depuis le fichier pickle.
+    """
+    try:
+        with open(nom_fichier, 'rb') as fichier:
+            contenu = pickle.load(fichier)
+        return contenu
+    except FileNotFoundError:
+        print(f"Erreur : Le fichier '{nom_fichier}' n'existe pas.")
+    except pickle.UnpicklingError:
+        print("Erreur : Le fichier n'a pas pu être désérialisé.")
+    except Exception as e:
+        print(f"Une erreur inattendue s'est produite : {e}")
+        
 def predict_(results_L,results_R, local_team, road_team, clubs):
 
     # Créer une nouvelle ligne de données pour ce match
@@ -199,7 +220,8 @@ def color_distance(rgb1, rgb2):
 
 def choisir_maillot(couleur_domicile, couleurs_exterieur):
     """
-    Sélectionne le maillot extérieur le plus éloigné de la couleur domicile.
+    Sélectionne la première couleur extérieure ayant une distance > 200 avec la couleur domicile,
+    ou la couleur avec la distance maximale si aucune distance > 200 n'existe.
     
     Args:
         couleur_domicile (str): Couleur hex de l'équipe à domicile (e.g., "#FF5733").
@@ -213,8 +235,16 @@ def choisir_maillot(couleur_domicile, couleurs_exterieur):
         couleur: color_distance(rgb_domicile, hex_to_rgb(couleur))
         for couleur in couleurs_exterieur
     }
-    # Retourne la couleur avec la plus grande distance
+    
+    # Cherche la première couleur avec une distance > 200
+    for couleur, distance in distances.items():
+        if distance > 200:
+            return couleur
+    
+    # Si aucune distance > 200, retourne la couleur avec la distance maximale
     return max(distances, key=distances.get)
+
+
 
 def stats_important_team(team,min_round,max_round,df) : 
     team_stats = get_aggregated_stats(df, min_round,max_round, team = team,more = "")
