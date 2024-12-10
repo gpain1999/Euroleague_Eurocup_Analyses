@@ -753,22 +753,22 @@ with col1:
 
     with colb : 
 
-
+        fig2 = f.plot_semi_circular_chart(df_resultat["1_R"].sum()/df_resultat["1_T"].sum() if df_resultat["1_T"].sum() != 0 else 0,"FT",size=int(130*zoom),font_size=int(20*zoom),m=False)
+        st.plotly_chart(fig2)
+        fig2 = f.plot_semi_circular_chart(df_resultat["2_R"].sum()/df_resultat["2_T"].sum() if df_resultat["2_T"].sum() != 0 else 0,"2P",size=int(130*zoom),font_size=int(20*zoom),m=False)
+        st.plotly_chart(fig2)
+        fig2 = f.plot_semi_circular_chart(df_resultat["3_R"].sum()/df_resultat["3_T"].sum() if df_resultat["3_T"].sum() != 0 else 0,"3P",size=int(130*zoom),font_size=int(20*zoom),m=False)
+        st.plotly_chart(fig2)
         team_logo_path = os.path.join(images_dir, f"{competition}_{season}_teams/{TEAM_PLAYER}.png")
 
         if os.path.exists(team_logo_path):
-            st.image(team_logo_path, width=int(150*zoom))
+            st.image(team_logo_path, width=int(200*zoom))
         else:
             st.warning(f"Logo introuvable pour l'équipe : {TEAM_PLAYER}")
 
 
 
-    fig2 = f.plot_semi_circular_chart(df_resultat["1_R"].sum()/df_resultat["1_T"].sum() if df_resultat["1_T"].sum() != 0 else 0,"FT",size=int(120*zoom),font_size=int(20*zoom),m=False)
-    st.plotly_chart(fig2)
-    fig2 = f.plot_semi_circular_chart(df_resultat["2_R"].sum()/df_resultat["2_T"].sum() if df_resultat["2_T"].sum() != 0 else 0,"2P",size=int(120*zoom),font_size=int(20*zoom),m=False)
-    st.plotly_chart(fig2)
-    fig2 = f.plot_semi_circular_chart(df_resultat["3_R"].sum()/df_resultat["3_T"].sum() if df_resultat["3_T"].sum() != 0 else 0,"3P",size=int(120*zoom),font_size=int(20*zoom),m=False)
-    st.plotly_chart(fig2)
+
 
 
 
