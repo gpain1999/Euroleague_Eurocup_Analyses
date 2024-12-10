@@ -25,8 +25,8 @@ import streamlit as st
 import plotly.graph_objects as go
 from statsmodels.api import add_constant
 import pickle
-from statsmodels.api import GLM, families
-from statsmodels.genmod.families.links import logit
+#from statsmodels.api import GLM, families
+#from statsmodels.genmod.families.links import logit
 
 def modele_BC(data_dir,season, competition,r) : 
 
