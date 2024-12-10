@@ -751,7 +751,7 @@ col1,col_image, col2, col3 = st.columns([1.2,2, 6, 4])
 with col1:
     st.markdown(
         f'''
-        <p style="font-size:{int(35*zoom)}px; text-align: center; background-color: {local_c1} ;color: {local_c2}; padding: 2px; border-radius: 5px;outline: 3px solid {local_c2};">
+        <p style="font-size:{int(40*zoom)}px; text-align: center; background-color: {local_c1} ;color: {local_c2}; padding: 2px; border-radius: 5px;outline: 3px solid {local_c2};">
             <b>{round((df_resultat["2_R"].sum()*2 + df_resultat["3_R"].sum()*3)/(df_resultat["2_T"].sum() + df_resultat["3_T"].sum()),2)} PPS</b>
         </p>
         ''',
