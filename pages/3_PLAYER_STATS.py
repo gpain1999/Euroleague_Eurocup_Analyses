@@ -771,7 +771,7 @@ with col1:
         team_logo_path = os.path.join(images_dir, f"{competition}_{season}_teams/{TEAM_PLAYER}.png")
         
     _, i, _ = st.columns([1,6,1])
-    whith i :
+    with i :
         if os.path.exists(team_logo_path):
             st.image(team_logo_path, width=int(200*zoom))
         else:
