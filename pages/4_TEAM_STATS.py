@@ -301,7 +301,7 @@ with col3 :
     colA, colB = st.columns([1, 1])
 
 
-    taille = int(25*zoom)
+    taille = int(30*zoom)
     # Pour les victoires (YES)
 
     with colA :

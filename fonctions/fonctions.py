@@ -23,20 +23,33 @@ import pandas as pd
 import threading
 import streamlit as st
 import plotly.graph_objects as go
-#from statsmodels.api import add_constant
+from statsmodels.api import add_constant
 import pickle
-#from statsmodels.api import GLM, families
-#from statsmodels.genmod.families.links import logit
+from statsmodels.api import GLM, families,OLS
+from statsmodels.genmod.families.links import logit
 
-def modele_BC(data_dir,season, competition,r) : 
+def predict_(results_L,results_R, local_team, road_team, clubs):
 
-    df = calcul_per2(data_dir, season, competition)
-    df.insert(6, "I_PER", df["PER"] / df["TIME_ON"] ** 0.5)
-    df["I_PER"] = df["I_PER"].round(2)
-    df["NB_GAME"] = 1
-    df = df[['ROUND', 'NB_GAME', 'TEAM', 'OPPONENT', 'HOME', 'WIN', 'NUMBER', 'PLAYER',
-            'TIME_ON', "I_PER", 'PER', 'PM_ON', 'PTS', 'DR', 'OR', 'TR', 'AS', 'ST', 'CO',
-            '1_R', '1_T', '2_R', '2_T', '3_R', '3_T', 'TO', 'FP', 'CF', 'NCF']]
+    # Créer une nouvelle ligne de données pour ce match
+    row = {club: 0 for club in clubs}  # Initialisation avec des valeurs 0
+    row[local_team] = 1  # L'équipe locale reçoit la valeur 1
+    row[road_team] = -1  # L'équipe adverse reçoit la valeur -1
+    
+    # Convertir la ligne en DataFrame
+    match_data = pd.DataFrame(row, index=[0])
+    
+    # Ajouter la constante, mais vérifier que toutes les colonnes sont présentes
+    match_data = add_constant(match_data, has_constant='add')  # Ajouter une constante correctement
+    # S'assurer que les colonnes du match_data sont dans le même ordre que celles de X
+    
+    # Effectuer la prédiction avec le modèle GLM
+    prediction_BCL = results_L.predict(match_data)[0]  
+    prediction_BCR = results_R.predict(match_data)[0]  
+
+    return prediction_BCL,prediction_BCR
+
+
+def modele_BC(r,df) : 
 
     team_detail_select = get_aggregated_data(
         df=df, min_round=1, max_round=r,
@@ -90,7 +103,6 @@ def modele_BC(data_dir,season, competition,r) :
     # Ajustement d'un modèle GLM (Binomial avec lien logit)
     model_BCL = GLM(Y, X, family=families.Binomial(link=logit()), freq_weights=weights)
     results_BCL = model_BCL.fit()
-
     ################################## BCR ########################################################""
     Y = result['BCR']
 
@@ -106,6 +118,74 @@ def modele_BC(data_dir,season, competition,r) :
     with open('./modeles/model_BCR.pkl', 'wb') as f:
         pickle.dump(results_BCR, f)
 
+def modele_PPS(r,df) : 
+
+        team_detail_select = get_aggregated_data(
+        df=df, min_round=1, max_round=r,
+        selected_teams=[],
+        selected_opponents=[],
+        selected_fields=["ROUND","TEAM"],
+        selected_players=[],
+        mode="CUMULATED",
+        percent="MADE"
+        )[["ROUND","HOME",'TEAM', 'OPPONENT','2_R','2_T','3_R','3_T']]
+
+
+        team_detail_select["PPS"] = ((team_detail_select["2_R"]*2 + team_detail_select["3_R"]*3)/(team_detail_select["2_T"] + team_detail_select["3_T"])).round(4)
+
+
+
+        # Filtrer selon la condition HOME
+        t1 = team_detail_select[team_detail_select["HOME"] == "YES"]
+        t2 = team_detail_select[team_detail_select["HOME"] == "NO"]
+
+        # Effectuer le LEFT JOIN sur les conditions spécifiées
+        result = pd.merge(
+        t1,
+        t2,
+        how="left",
+        left_on=["TEAM", "OPPONENT", "ROUND"],
+        right_on=["OPPONENT", "TEAM", "ROUND"],
+        suffixes=('_local', '_road')
+        )
+
+        # Sélectionner et renommer les colonnes pour correspondre à la sortie SQL
+        result = result[["ROUND", "TEAM_local", "TEAM_road", "PPS_local", "PPS_road"]]
+        result.columns = ["ROUND", "local.club.code", "road.club.code", "PPSL", "PPSR"]
+
+        clubs = pd.unique(result[["local.club.code", "road.club.code"]].values.ravel())
+
+        # Ajouter une colonne pour chaque club
+        for club in clubs:
+                result[club] = result.apply(
+                        lambda row: 1 if row["local.club.code"] == club else 
+                                -1 if row["road.club.code"] == club else 0, 
+                        axis=1
+                )
+
+        X = result[clubs]
+        X = add_constant(X)
+        weights = result['ROUND'] + (result["ROUND"].max()+4)/3
+
+        ################################## PPSL ########################################################""
+        Y = result['PPSL']
+
+        model_PPSL = OLS(Y, X)
+        results_PPSL = model_PPSL.fit()
+
+        ################################## PPSR ########################################################""
+        Y = result['PPSR']
+
+        model_PPSR = OLS(Y, X)
+        results_PPSR = model_PPSR.fit()
+
+        # Enregistrer le modèle BCL
+        with open('./modeles/model_PPSL.pkl', 'wb') as f:
+                pickle.dump(results_PPSL, f)
+
+        # Enregistrer le modèle BCR
+        with open('./modeles/model_PPSR.pkl', 'wb') as f:
+                pickle.dump(results_PPSR, f)
 
 def stats_important_team(team,min_round,max_round,df) : 
     team_stats = get_aggregated_stats(df, min_round,max_round, team = team,more = "")
