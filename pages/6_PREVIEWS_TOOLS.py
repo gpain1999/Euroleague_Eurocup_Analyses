@@ -18,7 +18,6 @@ st.set_page_config(
     initial_sidebar_state="expanded",  # Si vous avez une barre latérale
 )
 
-
 import fonctions as f
 
 
