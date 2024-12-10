@@ -23,7 +23,7 @@ import pandas as pd
 import threading
 import streamlit as st
 import plotly.graph_objects as go
-from statsmodels.api import add_constant
+#from statsmodels.api import add_constant
 import pickle
 #from statsmodels.api import GLM, families
 #from statsmodels.genmod.families.links import logit
