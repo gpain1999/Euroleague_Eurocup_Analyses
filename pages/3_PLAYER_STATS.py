@@ -798,7 +798,7 @@ with col_image :
         ''',
         unsafe_allow_html=True
     )
-    _, i, _ = st.beta_columns([1,6,1])
+    _, i, _ = st.columns([1,6,1])
     with i :
         if os.path.exists(player_image_path):
             st.image(player_image_path, caption=f"#{NUMBER_PLAYER} {NAME_PLAYER}", width=int(330*zoom))
