@@ -1191,7 +1191,7 @@ st.markdown(
     unsafe_allow_html=True
 )
 
-sip1,sip2,sip3,sip4,sip5,sip6,sip7,sip8,sip9,sip10 = st.columns([0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1])
+sip1,sip2,sip3,sip4,sip5,sip6,sip7,sip8,sip9,sip10 = st.columns([1,1,1,1,1,1,1,1,1,1])
 
 
 
