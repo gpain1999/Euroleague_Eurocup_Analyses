@@ -769,11 +769,12 @@ with col1:
         fig2 = f.plot_semi_circular_chart(df_resultat["3_R"].sum()/df_resultat["3_T"].sum() if df_resultat["3_T"].sum() != 0 else 0,"3P",size=int(130*zoom),font_size=int(20*zoom),m=False)
         st.plotly_chart(fig2)
         team_logo_path = os.path.join(images_dir, f"{competition}_{season}_teams/{TEAM_PLAYER}.png")
-
-        if os.path.exists(team_logo_path):
-            st.image(team_logo_path, width=int(200*zoom))
-        else:
-            st.warning(f"Logo introuvable pour l'équipe : {TEAM_PLAYER}")
+        _, i, _ = st.columns([1,6,1])
+        with i :
+            if os.path.exists(team_logo_path):
+                st.image(team_logo_path, width=int(200*zoom))
+            else:
+                st.warning(f"Logo introuvable pour l'équipe : {TEAM_PLAYER}")
 
 
 
