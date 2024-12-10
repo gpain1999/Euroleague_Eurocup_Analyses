@@ -11,6 +11,7 @@ data_dir = os.path.join(os.path.dirname(__file__), '../datas')
 sys.path.append(os.path.join(os.path.dirname(__file__), '../fonctions'))
 images_dir = os.path.join(os.path.dirname(__file__), '..', 'images')  # Path to the images directory
 
+
 st.set_page_config(
     page_title="TEAM STATS",
     layout="wide",  # Active le Wide mode par défaut
