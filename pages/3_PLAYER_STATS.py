@@ -752,6 +752,15 @@ with col1:
     cola, colb= st.columns([0.5,2])
 
     with colb : 
+        st.markdown(
+        f'''
+        <p style="font-size:{int(30*zoom)}px; text-align: center; background-color: {local_c1} ;color: {local_c2}; padding: 2px; border-radius: 5px;outline: 3px solid {local_c2};">
+            <b># {NUMBER_PLAYER}</b>
+        </p>
+        ''',
+        unsafe_allow_html=True
+        )
+        
 
         fig2 = f.plot_semi_circular_chart(df_resultat["1_R"].sum()/df_resultat["1_T"].sum() if df_resultat["1_T"].sum() != 0 else 0,"FT",size=int(130*zoom),font_size=int(20*zoom),m=False)
         st.plotly_chart(fig2)
