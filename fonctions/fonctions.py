@@ -207,6 +207,73 @@ def modele_PPS(r,df) :
     # Enregistrer le modèle BCR
     with open('./modeles/model_PPSR.pkl', 'wb') as f:
             pickle.dump(results_PPSR, f)
+def modele_FT(r,df) : 
+
+    team_detail_select = get_aggregated_data(
+    df=df, min_round=1, max_round=r,
+    selected_teams=[],
+    selected_opponents=[],
+    selected_fields=["ROUND","TEAM"],
+    selected_players=[],
+    mode="CUMULATED",
+    percent="MADE"
+    )[["ROUND","HOME",'TEAM', 'OPPONENT','1_T']]
+
+
+
+
+
+    # Filtrer selon la condition HOME
+    t1 = team_detail_select[team_detail_select["HOME"] == "YES"]
+    t2 = team_detail_select[team_detail_select["HOME"] == "NO"]
+
+    # Effectuer le LEFT JOIN sur les conditions spécifiées
+    result = pd.merge(
+    t1,
+    t2,
+    how="left",
+    left_on=["TEAM", "OPPONENT", "ROUND"],
+    right_on=["OPPONENT", "TEAM", "ROUND"],
+    suffixes=('_local', '_road')
+    )
+
+    # Sélectionner et renommer les colonnes pour correspondre à la sortie SQL
+    result = result[["ROUND", "TEAM_local", "TEAM_road", "1_T_local", "1_T_road"]]
+    result.columns = ["ROUND", "local.club.code", "road.club.code", "1TL", "1TR"]
+
+    clubs = sorted(list(set(result["local.club.code"].unique()) | set(result["road.club.code"].unique())))
+
+    # Ajouter une colonne pour chaque club
+    for club in clubs:
+            result[club] = result.apply(
+                    lambda row: 1 if row["local.club.code"] == club else 
+                            -1 if row["road.club.code"] == club else 0, 
+                    axis=1
+            )
+
+    X = result[clubs]
+    X = add_constant(X)
+    weights = result['ROUND'] + (result["ROUND"].max()+4)/3
+
+    ################################## PPSL ########################################################""
+    Y = result['1TL']
+
+    model_1TL = OLS(Y, X, weights=weights)
+    results_1TL = model_1TL.fit()
+
+    ################################## PPSR ########################################################""
+    Y = result['1TR']
+
+    model_1TR = OLS(Y, X, weights=weights)
+    results_1TR = model_1TR.fit()
+
+    # Enregistrer le modèle BCL
+    with open('./modeles/model_1TL.pkl', 'wb') as f:
+            pickle.dump(results_1TL, f)
+
+    # Enregistrer le modèle BCR
+    with open('./modeles/model_1TR.pkl', 'wb') as f:
+            pickle.dump(results_1TR, f)
 
 def hex_to_rgb(hex_color):
     """Convertit une couleur hexadécimale en RGB."""

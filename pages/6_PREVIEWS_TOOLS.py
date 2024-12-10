@@ -175,6 +175,8 @@ BCL = f.lire_fichier_pickle("./modeles/model_BCL.pkl")
 BCR = f.lire_fichier_pickle("./modeles/model_BCR.pkl")
 PPSL = f.lire_fichier_pickle("./modeles/model_PPSL.pkl")
 PPSR = f.lire_fichier_pickle("./modeles/model_PPSR.pkl")
+FTL = f.lire_fichier_pickle("./modeles/model_1TL.pkl")
+FTR = f.lire_fichier_pickle("./modeles/model_1TR.pkl")
 
 #################################DATA############################################
 local_moyenne = f.get_aggregated_data(
@@ -241,7 +243,7 @@ with pronostic :
     prono_name,loc_prono,road_prono = st.columns([0.46,0.27,0.27])
     ppsl_p,ppsr_p = f.predict_(PPSL,PPSR, LOCALTEAM, ROADTEAM, sorted(df["TEAM"].unique()))
     bcl_p,bcr_p = f.predict_(BCL,BCR, LOCALTEAM, ROADTEAM, sorted(df["TEAM"].unique()))
-
+    ftl_p,ftr_p = f.predict_(FTL,FTR, LOCALTEAM, ROADTEAM, sorted(df["TEAM"].unique()))
     with loc_prono :
         st.markdown(
             f'''
@@ -283,6 +285,22 @@ with pronostic :
             ''',
             unsafe_allow_html=True
         )
+        st.markdown(
+            f'''
+            <p style="font-size:{int(30*zoom)}px; text-align: center; background-color: grey;color: black; padding: 3px; border-radius: 5px;">
+                <b></b>
+            </p>
+            ''',
+            unsafe_allow_html=True
+        )
+        st.markdown(
+            f'''
+            <p style="font-size:{int(30*zoom)}px; text-align: center; background-color: black;color: orange; padding: 4px; border-radius: 5px;outline: 3px solid orange;">
+                <b>{round(ftl_p, 0):.0f} </b>
+            </p>
+            ''',
+            unsafe_allow_html=True
+        )
     with road_prono :
         st.markdown(
             f'''
@@ -320,6 +338,22 @@ with pronostic :
             f'''
             <p style="font-size:{int(30*zoom)}px; text-align: center; background-color: black;color: orange; padding: 4px; border-radius: 5px;outline: 3px solid orange;">
                 <b>{round(100*bcr_p, 1):.1f} %</b>
+            </p>
+            ''',
+            unsafe_allow_html=True
+        )
+        st.markdown(
+            f'''
+            <p style="font-size:{int(30*zoom)}px; text-align: center; background-color: grey;color: black; padding: 3px; border-radius: 5px;">
+                <b></b>
+            </p>
+            ''',
+            unsafe_allow_html=True
+        )
+        st.markdown(
+            f'''
+            <p style="font-size:{int(30*zoom)}px; text-align: center; background-color: black;color: orange; padding: 4px; border-radius: 5px;outline: 3px solid orange;">
+                <b>{round(ftr_p):.0f} </b>
             </p>
             ''',
             unsafe_allow_html=True
@@ -377,6 +411,29 @@ with pronostic :
             f'''
             <p style="font-size:{int(30*zoom)}px; text-align: center; background-color: {c1};color: {c2}; padding: 4px; border-radius: 5px;outline: 3px solid {c2};">
                 <b>BALL CARE</b>
+            </p>
+            ''',
+            unsafe_allow_html=True
+        )
+        st.markdown(
+            f'''
+            <p style="font-size:{int(30*zoom)}px; text-align: center; background-color: grey;color: black; padding: 3px; border-radius: 5px;">
+                <b></b>
+            </p>
+            ''',
+            unsafe_allow_html=True
+        )
+
+        if ftl_p > ftr_p:
+            c1 =local_c1
+            c2 = local_c2
+        else :
+            c1 =road_c1
+            c2 = road_c2
+        st.markdown(
+            f'''
+            <p style="font-size:{int(30*zoom)}px; text-align: center; background-color: {c1};color: {c2}; padding: 4px; border-radius: 5px;outline: 3px solid {c2};">
+                <b>FT ATT.</b>
             </p>
             ''',
             unsafe_allow_html=True

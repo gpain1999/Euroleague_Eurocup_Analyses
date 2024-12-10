@@ -28,6 +28,9 @@ r = 14
 
 f.modele_PPS(r,df)
 f.modele_BC(r,df)
+f.modele_FT(r,df)
+
+
 
 
 # Résultats
