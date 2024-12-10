@@ -749,9 +749,7 @@ st.markdown(
 col1,col_image, col2, col3 = st.columns([1.2,2, 6, 4])
 
 with col1:
-    _, i, _ = st.columns([1,6,1])
-    with i :
-        st.markdown(
+    st.markdown(
         f'''
         <p style="font-size:{int(35*zoom)}px; text-align: center; background-color: {local_c1} ;color: {local_c2}; padding: 2px; border-radius: 5px;outline: 3px solid {local_c2};">
             <b>{round((df_resultat["2_R"].sum()*2 + df_resultat["3_R"].sum()*3)/(df_resultat["2_T"].sum() + df_resultat["3_T"].sum()),2)} PPS</b>
@@ -759,6 +757,9 @@ with col1:
         ''',
         unsafe_allow_html=True
         )
+    _, i, _ = st.columns([1,6,1])
+    with i :
+
         
     
         fig2 = f.plot_semi_circular_chart(df_resultat["1_R"].sum()/df_resultat["1_T"].sum() if df_resultat["1_T"].sum() != 0 else 0,"FT",size=int(130*zoom),font_size=int(20*zoom),m=False)
