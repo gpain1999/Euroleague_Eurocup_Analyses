@@ -130,10 +130,6 @@ print(result_rank[["TEAM","Rank_PctDeReRec", "Rank_PctOfReRec", "Rank_REB_PERF"]
 
 result2 = result[["NB_GAME","TEAM","PPS","NB_SHOOT","PPS_opp","NB_SHOOT_opp","PPS_DELTA","NB_SHOOT_DELTA","PP_FT","NB_FT","PP_FT_opp","NB_FT_opp","NB_FT_DELTA","BC","BC_opp","BC_DELTA","PctDeReRec","PctOfReRec","REB_PERF"]]
 
-from sklearn.decomposition import PCA
-from sklearn.preprocessing import StandardScaler
-
-
 ######################PRINT#############
 image_path = f"images/{competition}.png"  # Chemin vers l'image
 col1, col2,col3 = st.columns([1.5, 3,1])
