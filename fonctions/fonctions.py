@@ -275,6 +275,131 @@ def modele_FT(r,df) :
     with open('./modeles/model_1TR.pkl', 'wb') as f:
             pickle.dump(results_1TR, f)
 
+def modele_SPG(r,df) : 
+        team_detail_select = get_aggregated_data(
+        df=df, min_round=1, max_round=r,
+        selected_teams=[],
+        selected_opponents=[],
+        selected_fields=["ROUND","TEAM"],
+        selected_players=[],
+        mode="CUMULATED",
+        percent="MADE"
+        )[["ROUND","HOME",'TEAM', 'OPPONENT','2_T','3_T']]
+
+
+        # Filtrer selon la condition HOME
+        t1 = team_detail_select[team_detail_select["HOME"] == "YES"]
+        t2 = team_detail_select[team_detail_select["HOME"] == "NO"]
+
+        # Effectuer le LEFT JOIN sur les conditions spécifiées
+        result = pd.merge(
+        t1,
+        t2,
+        how="left",
+        left_on=["TEAM", "OPPONENT", "ROUND"],
+        right_on=["OPPONENT", "TEAM", "ROUND"],
+        suffixes=('_local', '_road')
+        )
+
+        result["SPG"] = result["2_T_local"] + result["3_T_local"] + result["2_T_road"] + result["3_T_road"]
+
+        result = result[["ROUND", "TEAM_local", "TEAM_road", "SPG"]]
+        result.columns = ["ROUND", "local.club.code", "road.club.code", "SPG"]
+
+        clubs = sorted(list(set(result["local.club.code"].unique()) | set(result["road.club.code"].unique())))
+
+        # Ajouter une colonne pour chaque club
+        for club in clubs:
+                result[club] = result.apply(
+                        lambda row: 1 if row["local.club.code"] == club else 
+                                -1 if row["road.club.code"] == club else 0, 
+                        axis=1
+                )
+
+        X = result[clubs]
+        X = add_constant(X)
+        weights = result['ROUND'] + (result["ROUND"].max()+4)/3
+
+        Y = result['SPG']
+
+        model_SPG = OLS(Y, X, weights=weights)
+        results_SPG = model_SPG.fit()
+
+        # Enregistrer le modèle SPG
+        with open('./modeles/model_SPG.pkl', 'wb') as f:
+                pickle.dump(results_SPG, f)
+
+def modele_REB(r,df) : 
+
+    team_detail_select = get_aggregated_data(
+        df=df, min_round=1, max_round=r,
+        selected_teams=[],
+        selected_opponents=[],
+        selected_fields=["ROUND","TEAM"],
+        selected_players=[],
+        mode="CUMULATED",
+        percent="MADE"
+    )[["ROUND","HOME",'TEAM', 'OPPONENT','OR','DR']]
+
+
+
+
+    # Filtrer selon la condition HOME
+    t1 = team_detail_select[team_detail_select["HOME"] == "YES"]
+    t2 = team_detail_select[team_detail_select["HOME"] == "NO"]
+
+    # Effectuer le LEFT JOIN sur les conditions spécifiées
+    result = pd.merge(
+        t1,
+        t2,
+        how="left",
+        left_on=["TEAM", "OPPONENT", "ROUND"],
+        right_on=["OPPONENT", "TEAM", "ROUND"],
+        suffixes=('_local', '_road')
+    )
+
+    result["REB_DEF_local"] = result["DR_local"] / (result["DR_local"] + result["OR_road"])
+    result["REB_DEF_road"] = result["DR_road"] / (result["DR_road"] + result["OR_local"])
+
+
+    # Sélectionner et renommer les colonnes pour correspondre à la sortie SQL
+    result = result[["ROUND", "TEAM_local", "TEAM_road", "REB_DEF_local", "REB_DEF_road"]]
+    result.columns = ["ROUND", "local.club.code", "road.club.code", "RDL", "RDR"]
+            
+    clubs = sorted(list(set(result["local.club.code"].unique()) | set(result["road.club.code"].unique())))
+
+    # Ajouter une colonne pour chaque club
+    for club in clubs:
+        result[club] = result.apply(
+            lambda row: 1 if row["local.club.code"] == club else 
+                        -1 if row["road.club.code"] == club else 0, 
+            axis=1
+        )
+
+    X = result[clubs]
+    X = add_constant(X)
+    weights = result['ROUND'] + (result["ROUND"].max()+4)/3
+
+    ################################## BCL ########################################################""
+    Y = result['RDL']
+
+    # Ajustement d'un modèle GLM (Binomial avec lien logit)
+    model_RDL = GLM(Y, X, family=families.Binomial(link=logit()), freq_weights=weights)
+    results_RDL = model_RDL.fit()
+    ################################## BCR ########################################################""
+    Y = result['RDR']
+
+    # Ajustement d'un modèle GLM (Binomial avec lien logit)
+    model_RDR = GLM(Y, X, family=families.Binomial(link=logit()), freq_weights=weights)
+    results_RDR = model_RDR.fit()
+
+    # Enregistrer le modèle RDL
+    with open('./modeles/model_RDL.pkl', 'wb') as f:
+        pickle.dump(results_RDL, f)
+
+    # Enregistrer le modèle RDR
+    with open('./modeles/model_RDR.pkl', 'wb') as f:
+        pickle.dump(results_RDR, f)
 def hex_to_rgb(hex_color):
     """Convertit une couleur hexadécimale en RGB."""
     hex_color = hex_color.lstrip('#')

@@ -178,6 +178,8 @@ PPSR = f.lire_fichier_pickle("./modeles/model_PPSR.pkl")
 FTL = f.lire_fichier_pickle("./modeles/model_1TL.pkl")
 FTR = f.lire_fichier_pickle("./modeles/model_1TR.pkl")
 
+RDL = f.lire_fichier_pickle("./modeles/model_RDL.pkl")
+RDR = f.lire_fichier_pickle("./modeles/model_RDR.pkl")
 #################################DATA############################################
 local_moyenne = f.get_aggregated_data(
     df=df, min_round=selected_range[0], max_round=selected_range[1],
@@ -244,6 +246,13 @@ with pronostic :
     ppsl_p,ppsr_p = f.predict_(PPSL,PPSR, LOCALTEAM, ROADTEAM, sorted(df["TEAM"].unique()))
     bcl_p,bcr_p = f.predict_(BCL,BCR, LOCALTEAM, ROADTEAM, sorted(df["TEAM"].unique()))
     ftl_p,ftr_p = f.predict_(FTL,FTR, LOCALTEAM, ROADTEAM, sorted(df["TEAM"].unique()))
+    rdl_p,rdr_p = f.predict_(RDL,RDR, LOCALTEAM, ROADTEAM, sorted(df["TEAM"].unique()))
+
+    local_def = (rdl_p/0.7)/(rdl_p/0.7 + (1-rdl_p)/0.3)
+    road_off = ((1-rdl_p)/0.3)/(rdl_p/0.7 + (1-rdl_p)/0.3)
+    road_def = ((rdr_p)/0.7)/( rdr_p/0.7 + (1-rdr_p)/0.3)
+    local_off = ((1-rdr_p)/0.3)/(rdr_p/0.7 + (1-rdr_p)/0.3)
+
     with loc_prono :
         st.markdown(
             f'''
@@ -297,6 +306,39 @@ with pronostic :
             f'''
             <p style="font-size:{int(30*zoom)}px; text-align: center; background-color: black;color: orange; padding: 4px; border-radius: 5px;outline: 3px solid orange;">
                 <b>{round(ftl_p, 0):.0f} </b>
+            </p>
+            ''',
+            unsafe_allow_html=True
+        )
+        st.markdown(
+            f'''
+            <p style="font-size:{int(30*zoom)}px; text-align: center; background-color: grey;color: black; padding: 3px; border-radius: 5px;">
+                <b></b>
+            </p>
+            ''',
+            unsafe_allow_html=True
+        )
+        st.markdown(
+            f'''
+            <p style="font-size:{int(30*zoom)}px; text-align: center; background-color: black;color: orange; padding: 4px; border-radius: 5px;outline: 3px solid orange;">
+                <b>{round(100*rdl_p, 1):.1f} %</b>
+            </p>
+            ''',
+            unsafe_allow_html=True
+        )
+
+        st.markdown(
+            f'''
+            <p style="font-size:{int(30*zoom)}px; text-align: center; background-color: black;color: orange; padding: 4px; border-radius: 5px;outline: 3px solid orange;">
+                <b>{round(100*(1-rdr_p), 1):.1f} %</b>
+            </p>
+            ''',
+            unsafe_allow_html=True
+        )
+        st.markdown(
+            f'''
+            <p style="font-size:{int(30*zoom)}px; text-align: center; background-color: black;color: orange; padding: 4px; border-radius: 5px;outline: 3px solid orange;">
+                <b>{round(local_def+local_off,2):.2f}</b>
             </p>
             ''',
             unsafe_allow_html=True
@@ -358,6 +400,39 @@ with pronostic :
             ''',
             unsafe_allow_html=True
         )
+        st.markdown(
+            f'''
+            <p style="font-size:{int(30*zoom)}px; text-align: center; background-color: grey;color: black; padding: 3px; border-radius: 5px;">
+                <b></b>
+            </p>
+            ''',
+            unsafe_allow_html=True
+        )
+        st.markdown(
+            f'''
+            <p style="font-size:{int(30*zoom)}px; text-align: center; background-color: black;color: orange; padding: 4px; border-radius: 5px;outline: 3px solid orange;">
+                <b>{round(100*rdr_p, 1):.1f} %</b>
+            </p>
+            ''',
+            unsafe_allow_html=True
+        )
+
+        st.markdown(
+            f'''
+            <p style="font-size:{int(30*zoom)}px; text-align: center; background-color: black;color: orange; padding: 4px; border-radius: 5px;outline: 3px solid orange;">
+                <b>{round(100*(1-rdl_p), 1):.1f} %</b>
+            </p>
+            ''',
+            unsafe_allow_html=True
+        )
+        st.markdown(
+            f'''
+            <p style="font-size:{int(30*zoom)}px; text-align: center; background-color: black;color: orange; padding: 4px; border-radius: 5px;outline: 3px solid orange;">
+                <b>{round(road_def+road_off,2):.2f}</b>
+            </p>
+            ''',
+            unsafe_allow_html=True
+        )
     with prono_name :
 
         st.markdown(
@@ -387,7 +462,7 @@ with pronostic :
         st.markdown(
             f'''
             <p style="font-size:{int(30*zoom)}px; text-align: center; background-color: {c1};color: {c2}; padding: 4px; border-radius: 5px;outline: 3px solid {c2};">
-                <b>PPS</b>
+                <b>PTS PER SHOOT</b>
             </p>
             ''',
             unsafe_allow_html=True
@@ -433,7 +508,60 @@ with pronostic :
         st.markdown(
             f'''
             <p style="font-size:{int(30*zoom)}px; text-align: center; background-color: {c1};color: {c2}; padding: 4px; border-radius: 5px;outline: 3px solid {c2};">
-                <b>FT ATT.</b>
+                <b>FT ATTEMPT.</b>
+            </p>
+            ''',
+            unsafe_allow_html=True
+        )
+        st.markdown(
+            f'''
+            <p style="font-size:{int(30*zoom)}px; text-align: center; background-color: grey;color: black; padding: 3px; border-radius: 5px;">
+                <b></b>
+            </p>
+            ''',
+            unsafe_allow_html=True
+        )
+
+        if rdl_p > rdr_p:
+            c1 =local_c1
+            c2 = local_c2
+        else :
+            c1 =road_c1
+            c2 = road_c2
+        st.markdown(
+            f'''
+            <p style="font-size:{int(30*zoom)}px; text-align: center; background-color: {c1};color: {c2}; padding: 4px; border-radius: 5px;outline: 3px solid {c2};">
+                <b>% REB DEF</b>
+            </p>
+            ''',
+            unsafe_allow_html=True
+        )
+
+        if (1-rdr_p )> (1 - rdl_p):
+            c1 =local_c1
+            c2 = local_c2
+        else :
+            c1 =road_c1
+            c2 = road_c2
+        st.markdown(
+            f'''
+            <p style="font-size:{int(30*zoom)}px; text-align: center; background-color: {c1};color: {c2}; padding: 4px; border-radius: 5px;outline: 3px solid {c2};">
+                <b>% REB OFF</b>
+            </p>
+            ''',
+            unsafe_allow_html=True
+        )
+
+        if (local_def+local_off )> (road_def+road_off):
+            c1 =local_c1
+            c2 = local_c2
+        else :
+            c1 =road_c1
+            c2 = road_c2
+        st.markdown(
+            f'''
+            <p style="font-size:{int(30*zoom)}px; text-align: center; background-color: {c1};color: {c2}; padding: 4px; border-radius: 5px;outline: 3px solid {c2};">
+                <b>REB.PERF.</b>
             </p>
             ''',
             unsafe_allow_html=True

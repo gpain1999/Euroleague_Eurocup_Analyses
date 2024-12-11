@@ -775,7 +775,7 @@ with cola :
         st.markdown(
                 f'''
                 <p style="font-size:{taille}px; text-align: center; background-color: {local_c2}; color: {local_c1}; padding: 4px; border-radius: 5px; outline: 3px solid {local_c1};">
-                    <b>{round(((team_moyenne["3_R"].mean()*3 + team_moyenne["2_R"].mean()*2)/(team_moyenne["2_T"].mean()+team_moyenne["3_T"].mean())),2)}&nbsp;PTS PER SHOOT</b>
+                    <b>{round(((team_moyenne["3_R"].mean()*3 + team_moyenne["2_R"].mean()*2)/(team_moyenne["2_T"].mean()+team_moyenne["3_T"].mean())),2):.2f}&nbsp;PTS PER SHOOT</b>
                 </p>
                 ''',
                 unsafe_allow_html=True
@@ -873,7 +873,7 @@ with colb :
     st.markdown(
                 f'''
                 <p style="font-size:{taille}px; text-align: center; background-color: white; color: orange; padding: 4px; border-radius: 5px; outline: 3px solid orange;">
-                    <b>{round(((data["3_R"].mean()*3 + data["2_R"].mean()*2)/(data["2_T"].mean()+data["3_T"].mean())),2)}&nbsp;PTS PER SHOOT</b>
+                    <b>{round(((data["3_R"].mean()*3 + data["2_R"].mean()*2)/(data["2_T"].mean()+data["3_T"].mean())),2):.2f}&nbsp;PTS PER SHOOT</b>
                 </p>
                 ''',
                 unsafe_allow_html=True
@@ -1111,7 +1111,7 @@ with good_bad_team :
         st.markdown(
             f'''
             <p style="font-size:{22*zoom}px; text-align: center; background-color: {local_c2};color: {local_c1}; padding: 6px; border-radius: 5px;outline: 3px solid {local_c1};">
-                <b>{round((team_detail_select["2_R"].sum()*2+team_detail_select["3_R"].sum()*3)/(team_detail_select["2_T"].sum()+team_detail_select["3_T"].sum()),2)}&nbsp; PTS PER SHOOT</b>
+                <b>{round((team_detail_select["2_R"].sum()*2+team_detail_select["3_R"].sum()*3)/(team_detail_select["2_T"].sum()+team_detail_select["3_T"].sum()),2):.2f}&nbsp; PTS PER SHOOT</b>
             </p>
             ''',
             unsafe_allow_html=True
@@ -1226,7 +1226,7 @@ with good_bad_opp :
         st.markdown(
             f'''
             <p style="font-size:{22*zoom}px; text-align: center; background-color: grey;color: black; padding: 6px; border-radius: 5px;outline: 3px solid orange;">
-                <b>{round((opp_detail_select["2_R"].sum()*2+opp_detail_select["3_R"].sum()*3)/(opp_detail_select["2_T"].sum()+opp_detail_select["3_T"].sum()),2)}&nbsp; PTS PER SHOOT</b>
+                <b>{round((opp_detail_select["2_R"].sum()*2+opp_detail_select["3_R"].sum()*3)/(opp_detail_select["2_T"].sum()+opp_detail_select["3_T"].sum()),2):.2f}&nbsp; PTS PER SHOOT</b>
             </p>
             ''',
             unsafe_allow_html=True
