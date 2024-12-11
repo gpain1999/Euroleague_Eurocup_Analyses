@@ -1,5 +1,6 @@
 import streamlit as st
 import pandas as pd
+import numpy as np
 import plotly.graph_objects as go
 import sys
 import os
@@ -175,20 +176,19 @@ with col1 :
     teams = result2["TEAM"]
     X = result2[["PPS","NB_FT","BC","PctOfReRec"]]
 
-    # Standardisation des données
-    scaler = StandardScaler()
-    X_scaled = scaler.fit_transform(X)
+    # Standardisation des données manuellement (en utilisant les moyennes et les écarts-types)
+    X_standardized = (X - X.mean()) / X.std()
 
-    # Application de l'ACP
-    pca = PCA()
-    X_pca = pca.fit_transform(X_scaled)
+    # Application de l'ACP avec SVD (Singular Value Decomposition)
+    U, S, Vt = np.linalg.svd(X_standardized, full_matrices=False)
 
-    # Affichage des coordonnées des équipes dans le premier plan factoriel
+    # Les composantes principales sont dans la matrice Vt (les lignes sont les composantes)
+    X_pca = U @ np.diag(S)  # Reconstituer les coordonnées des observations dans l'espace principal
+
+    # Création d'un DataFrame pour les résultats de l'ACP
     pca_df = pd.DataFrame(X_pca, columns=[f"PC{i+1}" for i in range(X_pca.shape[1])])
     pca_df["TEAM"] = teams
-    # Récupération des équations des deux premiers axes
-    components = pca.components_
-    features = X.columns
+
     # Visualisation du premier plan factoriel
     fig, ax = plt.subplots(figsize=(10, 10))
     ax.scatter(pca_df["PC1"], pca_df["PC2"], c='blue', alpha=0.7)
@@ -215,14 +215,16 @@ with col1 :
     buf.seek(0)
     st.image(buf, caption="Premier plan factoriel")
 
-    # Cercle des corrélations
+    # Cercle des corrélations (utilisation de Vt pour les directions des axes)
     fig_corr, ax_corr = plt.subplots(figsize=(10, 10))
 
-    for i in range(len(features)):
-        ax_corr.arrow(0, 0, components[0, i], components[1, i],
+    # Vt contient les directions des axes (composantes principales)
+    for i in range(len(X.columns)):
+        ax_corr.arrow(0, 0, Vt[0, i], Vt[1, i],
                     head_width=0.05, head_length=0.05, fc='red', ec='red')
-        ax_corr.text(components[0, i] * 1.1, components[1, i] * 1.1, features[i], color='black', ha='center', va='center')
+        ax_corr.text(Vt[0, i] * 1.1, Vt[1, i] * 1.1, X.columns[i], color='black', ha='center', va='center')
 
+    # Cercle des corrélations
     circle = plt.Circle((0, 0), 1, color='blue', fill=False)
     ax_corr.add_artist(circle)
     ax_corr.set_xlim(-1.1, 1.1)
@@ -238,26 +240,24 @@ with col1 :
     fig_corr.savefig(buf_corr, format="png")
     buf_corr.seek(0)
     st.image(buf_corr, caption="Cercle des corrélations")
-
 with col2 : 
     # Séparation de la colonne "TEAM" et des variables pour l'ACP
     teams = result2["TEAM"]
     X = result2[["PPS_opp","NB_FT_opp","BC_opp","PctDeReRec"]]
 
-    # Standardisation des données
-    scaler = StandardScaler()
-    X_scaled = scaler.fit_transform(X)
+    # Standardisation des données manuellement (en utilisant les moyennes et les écarts-types)
+    X_standardized = (X - X.mean()) / X.std()
 
-    # Application de l'ACP
-    pca = PCA()
-    X_pca = pca.fit_transform(X_scaled)
+    # Application de l'ACP avec SVD (Singular Value Decomposition)
+    U, S, Vt = np.linalg.svd(X_standardized, full_matrices=False)
 
-    # Affichage des coordonnées des équipes dans le premier plan factoriel
+    # Les composantes principales sont dans la matrice Vt (les lignes sont les composantes)
+    X_pca = U @ np.diag(S)  # Reconstituer les coordonnées des observations dans l'espace principal
+
+    # Création d'un DataFrame pour les résultats de l'ACP
     pca_df = pd.DataFrame(X_pca, columns=[f"PC{i+1}" for i in range(X_pca.shape[1])])
     pca_df["TEAM"] = teams
-    # Récupération des équations des deux premiers axes
-    components = pca.components_
-    features = X.columns
+
     # Visualisation du premier plan factoriel
     fig, ax = plt.subplots(figsize=(10, 10))
     ax.scatter(pca_df["PC1"], pca_df["PC2"], c='blue', alpha=0.7)
@@ -284,14 +284,16 @@ with col2 :
     buf.seek(0)
     st.image(buf, caption="Premier plan factoriel")
 
-    # Cercle des corrélations
+    # Cercle des corrélations (utilisation de Vt pour les directions des axes)
     fig_corr, ax_corr = plt.subplots(figsize=(10, 10))
 
-    for i in range(len(features)):
-        ax_corr.arrow(0, 0, components[0, i], components[1, i],
+    # Vt contient les directions des axes (composantes principales)
+    for i in range(len(X.columns)):
+        ax_corr.arrow(0, 0, Vt[0, i], Vt[1, i],
                     head_width=0.05, head_length=0.05, fc='red', ec='red')
-        ax_corr.text(components[0, i] * 1.1, components[1, i] * 1.1, features[i], color='black', ha='center', va='center')
+        ax_corr.text(Vt[0, i] * 1.1, Vt[1, i] * 1.1, X.columns[i], color='black', ha='center', va='center')
 
+    # Cercle des corrélations
     circle = plt.Circle((0, 0), 1, color='blue', fill=False)
     ax_corr.add_artist(circle)
     ax_corr.set_xlim(-1.1, 1.1)
@@ -307,26 +309,24 @@ with col2 :
     fig_corr.savefig(buf_corr, format="png")
     buf_corr.seek(0)
     st.image(buf_corr, caption="Cercle des corrélations")
-
 with col3 : 
     # Séparation de la colonne "TEAM" et des variables pour l'ACP
     teams = result2["TEAM"]
     X = result2[["PPS_DELTA","NB_SHOOT_DELTA","NB_FT_DELTA","BC_DELTA","REB_PERF"]]
 
-    # Standardisation des données
-    scaler = StandardScaler()
-    X_scaled = scaler.fit_transform(X)
+    # Standardisation des données manuellement (en utilisant les moyennes et les écarts-types)
+    X_standardized = (X - X.mean()) / X.std()
 
-    # Application de l'ACP
-    pca = PCA()
-    X_pca = pca.fit_transform(X_scaled)
+    # Application de l'ACP avec SVD (Singular Value Decomposition)
+    U, S, Vt = np.linalg.svd(X_standardized, full_matrices=False)
 
-    # Affichage des coordonnées des équipes dans le premier plan factoriel
+    # Les composantes principales sont dans la matrice Vt (les lignes sont les composantes)
+    X_pca = U @ np.diag(S)  # Reconstituer les coordonnées des observations dans l'espace principal
+
+    # Création d'un DataFrame pour les résultats de l'ACP
     pca_df = pd.DataFrame(X_pca, columns=[f"PC{i+1}" for i in range(X_pca.shape[1])])
     pca_df["TEAM"] = teams
-    # Récupération des équations des deux premiers axes
-    components = pca.components_
-    features = X.columns
+
     # Visualisation du premier plan factoriel
     fig, ax = plt.subplots(figsize=(10, 10))
     ax.scatter(pca_df["PC1"], pca_df["PC2"], c='blue', alpha=0.7)
@@ -353,14 +353,16 @@ with col3 :
     buf.seek(0)
     st.image(buf, caption="Premier plan factoriel")
 
-    # Cercle des corrélations
+    # Cercle des corrélations (utilisation de Vt pour les directions des axes)
     fig_corr, ax_corr = plt.subplots(figsize=(10, 10))
 
-    for i in range(len(features)):
-        ax_corr.arrow(0, 0, components[0, i], components[1, i],
+    # Vt contient les directions des axes (composantes principales)
+    for i in range(len(X.columns)):
+        ax_corr.arrow(0, 0, Vt[0, i], Vt[1, i],
                     head_width=0.05, head_length=0.05, fc='red', ec='red')
-        ax_corr.text(components[0, i] * 1.1, components[1, i] * 1.1, features[i], color='black', ha='center', va='center')
+        ax_corr.text(Vt[0, i] * 1.1, Vt[1, i] * 1.1, X.columns[i], color='black', ha='center', va='center')
 
+    # Cercle des corrélations
     circle = plt.Circle((0, 0), 1, color='blue', fill=False)
     ax_corr.add_artist(circle)
     ax_corr.set_xlim(-1.1, 1.1)
