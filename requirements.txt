@@ -1,7 +1,7 @@
 streamlit==1.41.0
 #setuptools>=75.6.0
 pandas
-numpy
+numpy==1.26.4
 euroleague_api
 Pillow==9.5.0
 plotly
