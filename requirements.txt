@@ -1,4 +1,6 @@
 streamlit==1.25.0
+setuptools
+python3-distutils
 pandas
 numpy
 euroleague_api
