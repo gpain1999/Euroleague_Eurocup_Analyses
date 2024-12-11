@@ -27,6 +27,7 @@ from statsmodels.api import add_constant
 import pickle
 from statsmodels.api import GLM, families,OLS
 from statsmodels.genmod.families.links import logit
+from statsmodels.genmod.families import Binomial
 
 def lire_fichier_pickle(nom_fichier):
     """
@@ -400,6 +401,67 @@ def modele_REB(r,df) :
     # Enregistrer le modèle RDR
     with open('./modeles/model_RDR.pkl', 'wb') as f:
         pickle.dump(results_RDR, f)
+def modele_W(r,df) : 
+        team_detail_select = get_aggregated_data(
+        df=df, min_round=1, max_round=r,
+        selected_teams=[],
+        selected_opponents=[],
+        selected_fields=["ROUND","TEAM"],
+        selected_players=[],
+        mode="CUMULATED",
+        percent="MADE"
+        )[["ROUND","HOME",'TEAM', 'OPPONENT','PTS']]
+
+
+
+
+        # Filtrer selon la condition HOME
+        t1 = team_detail_select[team_detail_select["HOME"] == "YES"]
+        t2 = team_detail_select[team_detail_select["HOME"] == "NO"]
+
+        # Effectuer le LEFT JOIN sur les conditions spécifiées
+        result = pd.merge(
+        t1,
+        t2,
+        how="left",
+        left_on=["TEAM", "OPPONENT", "ROUND"],
+        right_on=["OPPONENT", "TEAM", "ROUND"],
+        suffixes=('_local', '_road')
+        )
+
+        result["WIN"] = result["PTS_local"] > result["PTS_road"]
+
+
+
+        # Sélectionner et renommer les colonnes pour correspondre à la sortie SQL
+        result = result[["ROUND", "TEAM_local", "TEAM_road", "WIN"]]
+        result.columns = ["ROUND", "local.club.code", "road.club.code", "W"]
+                
+        clubs = sorted(list(set(result["local.club.code"].unique()) | set(result["road.club.code"].unique())))
+
+        # Ajouter une colonne pour chaque club
+        for club in clubs:
+                result[club] = result.apply(
+                        lambda row: 1 if row["local.club.code"] == club else 
+                                -1 if row["road.club.code"] == club else 0, 
+                        axis=1
+                )
+
+        X = result[clubs]
+        X = add_constant(X)
+        weights = result['ROUND'] + (result["ROUND"].max()+4)/3
+
+        Y = result['W']
+
+        # Ajustement d'un modèle GLM (Binomial avec lien logit)
+        model_W = GLM(Y, X, family=Binomial(link=logit()), freq_weights=weights)
+
+        results_W = model_W.fit()
+
+        # Enregistrer le modèle W
+        with open('./modeles/model_W.pkl', 'wb') as f:
+                pickle.dump(results_W, f)
+
 def hex_to_rgb(hex_color):
     """Convertit une couleur hexadécimale en RGB."""
     hex_color = hex_color.lstrip('#')

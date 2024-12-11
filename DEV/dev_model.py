@@ -4,7 +4,9 @@ import os
 import numpy as np
 from tabulate import tabulate
 from sklearn.linear_model import LogisticRegression
-from statsmodels.api import OLS
+from statsmodels.api import OLS,GLM
+from statsmodels.genmod.families import Binomial
+from statsmodels.genmod.families.links import logit
 
 
 season = 2024
@@ -26,16 +28,14 @@ df = df[['ROUND', 'NB_GAME', 'TEAM', 'OPPONENT', 'HOME', 'WIN', 'NUMBER', 'PLAYE
 
 r = 14
 
-# f.modele_PPS(r,df)
-# f.modele_BC(r,df)
-# f.modele_FT(r,df)
-#f.modele_SPG(r,df)
+f.modele_PPS(r,df)
+f.modele_BC(r,df)
+f.modele_FT(r,df)
+f.modele_SPG(r,df)
 f.modele_REB(r,df)
+f.modele_W(r,df)
 
 
-
-
-# Résultats
 
 # prediction_BCL,prediction_BCR = predict_ball_care(results_BCL = results_BCL,results_BCR = results_BCR, local_team = "BER", road_team = "PAR", clubs = clubs)
 

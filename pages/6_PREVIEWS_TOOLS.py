@@ -180,6 +180,9 @@ FTR = f.lire_fichier_pickle("./modeles/model_1TR.pkl")
 
 RDL = f.lire_fichier_pickle("./modeles/model_RDL.pkl")
 RDR = f.lire_fichier_pickle("./modeles/model_RDR.pkl")
+
+W = f.lire_fichier_pickle("./modeles/model_W.pkl")
+
 #################################DATA############################################
 local_moyenne = f.get_aggregated_data(
     df=df, min_round=selected_range[0], max_round=selected_range[1],
@@ -247,6 +250,7 @@ with pronostic :
     bcl_p,bcr_p = f.predict_(BCL,BCR, LOCALTEAM, ROADTEAM, sorted(df["TEAM"].unique()))
     ftl_p,ftr_p = f.predict_(FTL,FTR, LOCALTEAM, ROADTEAM, sorted(df["TEAM"].unique()))
     rdl_p,rdr_p = f.predict_(RDL,RDR, LOCALTEAM, ROADTEAM, sorted(df["TEAM"].unique()))
+    w_p,_ = f.predict_(W,W, LOCALTEAM, ROADTEAM, sorted(df["TEAM"].unique()))
 
     local_def = (rdl_p/0.7)/(rdl_p/0.7 + (1-rdl_p)/0.3)
     road_off = ((1-rdl_p)/0.3)/(rdl_p/0.7 + (1-rdl_p)/0.3)
@@ -343,6 +347,22 @@ with pronostic :
             ''',
             unsafe_allow_html=True
         )
+        st.markdown(
+            f'''
+            <p style="font-size:{int(30*zoom)}px; text-align: center; background-color: gold;color: black; padding: 3px; border-radius: 5px;">
+                <b></b>
+            </p>
+            ''',
+            unsafe_allow_html=True
+        )
+        st.markdown(
+            f'''
+            <p style="font-size:{int(30*zoom)}px; text-align: center; background-color: black;color: orange; padding: 4px; border-radius: 5px;outline: 3px solid orange;">
+                <b>{round(100*w_p, 1):.1f} %</b>
+            </p>
+            ''',
+            unsafe_allow_html=True
+        )
     with road_prono :
         st.markdown(
             f'''
@@ -429,6 +449,22 @@ with pronostic :
             f'''
             <p style="font-size:{int(30*zoom)}px; text-align: center; background-color: black;color: orange; padding: 4px; border-radius: 5px;outline: 3px solid orange;">
                 <b>{round(road_def+road_off,2):.2f}</b>
+            </p>
+            ''',
+            unsafe_allow_html=True
+        )
+        st.markdown(
+            f'''
+            <p style="font-size:{int(30*zoom)}px; text-align: center; background-color: gold;color: black; padding: 3px; border-radius: 5px;">
+                <b></b>
+            </p>
+            ''',
+            unsafe_allow_html=True
+        )
+        st.markdown(
+            f'''
+            <p style="font-size:{int(30*zoom)}px; text-align: center; background-color: black;color: orange; padding: 4px; border-radius: 5px;outline: 3px solid orange;">
+                <b>{round(100*(1-w_p), 1):.1f} %</b>
             </p>
             ''',
             unsafe_allow_html=True
@@ -562,6 +598,28 @@ with pronostic :
             f'''
             <p style="font-size:{int(30*zoom)}px; text-align: center; background-color: {c1};color: {c2}; padding: 4px; border-radius: 5px;outline: 3px solid {c2};">
                 <b>REB.PERF.</b>
+            </p>
+            ''',
+            unsafe_allow_html=True
+        )
+        st.markdown(
+            f'''
+            <p style="font-size:{int(30*zoom)}px; text-align: center; background-color: gold;color: black; padding: 3px; border-radius: 5px;">
+                <b></b>
+            </p>
+            ''',
+            unsafe_allow_html=True
+        )
+        if (w_p )> (0.5):
+            c1 =local_c1
+            c2 = local_c2
+        else :
+            c1 =road_c1
+            c2 = road_c2
+        st.markdown(
+            f'''
+            <p style="font-size:{int(30*zoom)}px; text-align: center; background-color: {c1};color: {c2}; padding: 4px; border-radius: 5px;outline: 3px solid {c2};">
+                <b>WINNER</b>
             </p>
             ''',
             unsafe_allow_html=True
