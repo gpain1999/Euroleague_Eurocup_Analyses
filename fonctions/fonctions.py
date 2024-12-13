@@ -868,7 +868,6 @@ def evol_score(data_dir,competition,season) :
 
         df_pbp2.loc[:, "NUMBEROFPLAY"] = range(len(df_pbp2))
 
-
         code = [df_gs2["local.club.code"].to_list()[0],df_gs2["road.club.code"].to_list()[0]]
         score = [df_gs2["local.score"].to_list()[0],df_gs2["road.score"].to_list()[0]]
 

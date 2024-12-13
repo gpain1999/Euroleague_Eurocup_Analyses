@@ -172,6 +172,7 @@ DR_data = player_stat.sort_values(by = ["DR","TIME_ON"],ascending = [False,True]
 NAME_DR = DR_data["PLAYER"].to_list()[0]
 NUMBER_DR = DR_data["#"].to_list()[0]
 TEAM_DR = DR_data["TEAM"].to_list()[0]
+print(NAME_DR)
 DR_ID = players[(players["CODETEAM"] == TEAM_DR) & (players["PLAYER"] == NAME_DR)]["PLAYER_ID"].to_list()[0]
 DR_image_path = os.path.join(images_dir, f"{competition}_{season}_players/{TEAM_DR}_{DR_ID}.png")
 
