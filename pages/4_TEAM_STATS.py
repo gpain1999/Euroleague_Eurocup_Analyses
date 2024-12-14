@@ -233,7 +233,6 @@ mvp_stat = f.get_aggregated_data(
 
 teams_color = pd.read_csv(f"datas/{competition}_{season}_teams_colors.csv",sep=";")
 
-teams_color[teams_color["TEAM"]==CODETEAM]["COL1"].to_list()[0]
 
 local_c1 = teams_color[teams_color["TEAM"]==CODETEAM]["COL1"].to_list()[0]
 local_c2 = teams_color[teams_color["TEAM"]==CODETEAM]["COL2"].to_list()[0]
@@ -264,6 +263,14 @@ def color_delta(val, column_name, inverse_columns=None):
         # Logique par défaut
         color = '#CCFFCC' if val > 0 else '#FFCCCC' if val < 0 else '#FFFFFF'
     return f'background-color: {color}; color: black'
+
+def style_pm_on(value):
+    if value > 0:
+        return "background-color: #CCFFCC;color: black;"
+    elif value < 0:
+        return "background-color: #FFCCCC;color: black;"
+    else:
+        return "background-color: #FFFFFF;color: black;"
 
 ###################### PRINT
 
@@ -1269,6 +1276,39 @@ with good_bad_opp :
             ''',
             unsafe_allow_html=True
         )
+
+
+title_placeholder = st.empty()
+
+col1,col2,col3 = st.columns([1,1,2])
+
+with col2 :
+    num_players = st.number_input("SOLO/DUO/TRIO", min_value=1,max_value=3 ,value=2)
+
+with col1 :
+    min_percent_in = st.slider("Minimum Time percent together ", min_value=0, max_value=100, value=round(30 - 10*(num_players-1)))
+
+title_placeholder.header(f"Stats +/- per 10 mins {num_players}-io : {CODETEAM}")
+
+io_data = f.analyse_io_2(data_dir = data_dir,
+                competition = competition,
+                season = season,
+                num_players = num_players,
+                min_round = min_round,
+                max_round = max_round,
+                CODETEAM = [CODETEAM],
+                selected_players = [],
+                min_percent_in = min_percent_in)
+
+io_data = io_data[[f"P{i}" for i in range(1,num_players+1)] + ["DELTA_ON","OFF_ON_10","DEF_ON_10","PERCENT_ON","TIME_ON"]]
+io_data = io_data.sort_values(by = "DELTA_ON",ascending = False)
+styled_io_data = io_data.style.applymap(style_pm_on, subset=["DELTA_ON"]).format(precision=2) 
+
+col1,col2 = st.columns([1,1])
+
+with col1 :
+    st.dataframe(styled_io_data,height=min(35*len(io_data),650), use_container_width=True,hide_index=True)
+
 
 st.header(f"Stats GAME BY GAME : {CODETEAM}")
 st.dataframe(team_detail_select_2,height=min(38*len(team_detail_select),650), use_container_width=True,hide_index=True)
