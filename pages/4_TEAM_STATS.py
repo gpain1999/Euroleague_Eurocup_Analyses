@@ -208,6 +208,8 @@ palette = [
 
 df_color = pd.DataFrame({
     "RANKING": [18,17,16,15,14,13,12,11,10,9,8,7,6,5,4,3,2,1],
+    "col_OPP": palette[::-1],
+
     "col": palette
 })
 
@@ -1288,7 +1290,7 @@ with good_bad_opp :
 
 
 
-col1,name_col,off_ranking,def_ranking = st.columns([1,0.4,0.3,0.3])
+col1,_,name_col,off_ranking,def_ranking = st.columns([0.5,0.1,0.2,0.1,0.1])
 
 tds = f.get_aggregated_data(
     df=df, min_round=selected_range[0], max_round=selected_range[1],
@@ -1322,15 +1324,20 @@ res_ranking = pd.merge(
 
 
 
-
+res_ranking["P2P"] = ((res_ranking["2_R_team"])/(res_ranking["2_T_team"]))
+res_ranking["P3P"] = ((res_ranking["3_R_team"])/(res_ranking["3_T_team"]))
 res_ranking["PPS"] = ((res_ranking["2_R_team"]*2 + res_ranking["3_R_team"]*3)/(res_ranking["2_T_team"] + res_ranking["3_T_team"]))
 res_ranking["NB_SHOOT"] = (res_ranking["2_T_team"] + res_ranking["3_T_team"]).round(1)
 
+res_ranking["P2P_opp"] = ((res_ranking["2_R_opp"])/(res_ranking["2_T_opp"]))
+res_ranking["P3P_opp"] = ((res_ranking["3_R_opp"])/(res_ranking["3_T_opp"]))
 res_ranking["PPS_opp"] = ((res_ranking["2_R_opp"]*2 + res_ranking["3_R_opp"]*3)/(res_ranking["2_T_opp"] + res_ranking["3_T_opp"]))
 res_ranking["NB_SHOOT_opp"] = (res_ranking["2_T_opp"] + res_ranking["3_T_opp"]).round(1)
 
+res_ranking["P1P"] = ((res_ranking["1_R_team"])/(res_ranking["1_T_team"]))
 res_ranking["NB_FT"] = (res_ranking["1_T_team"])
 
+res_ranking["P1P_opp"] = ((res_ranking["1_R_opp"])/(res_ranking["1_T_opp"]))
 res_ranking["NB_FT_opp"] = (res_ranking["1_T_opp"])
 
 
@@ -1387,12 +1394,12 @@ with col1 :
 
     title_placeholder.header(f"Stats +/- {name_io} per 10 mins  : {CODETEAM}")
 
-    st.dataframe(styled_io_data,height=min(40 + 36*len(io_data),650), use_container_width=True,hide_index=True)
+    st.dataframe(styled_io_data,height=min(40 + 36*len(io_data),550), use_container_width=True,hide_index=True)
 
 with name_col  :
     st.header(f"STATS RANKING")
 
-    for n in ["PTS PER SHOOT","NB SHOOT","NB FREE THROW","BALL CARE","% DEF REB REC","% OFF REB REC","REB. PERF."]:
+    for n in ["% 2 PTS","% 3 PTS","PTS PER SHOOT","NB SHOOT","% FREE THROW","NB FREE THROW","BALL CARE","% DEF REB REC","% OFF REB REC","REB. PERF."]:
         st.markdown(
             f'''
             <p style="font-size:{int(40*zoom)}px; text-align: center; background-color: {local_c1};color: {local_c2}; padding: 3px; border-radius: 5px;outline: 4px solid {local_c2};">
@@ -1402,15 +1409,15 @@ with name_col  :
             unsafe_allow_html=True
         ) 
 with off_ranking :
-    st.header(f"TEAM RANKING")
-    team_ranking = res_ranking[["TEAM","PPS","NB_SHOOT","NB_FT","BC","PctDeReRec","PctOfReRec","REB_PERF"]]
+    st.header(f"TEAM")
+    team_ranking = res_ranking[["TEAM","P2P","P3P","PPS","NB_SHOOT","P1P","NB_FT","BC","PctDeReRec","PctOfReRec","REB_PERF"]]
     team_ranking = team_ranking.copy()
-    team_ranking[["PPS","NB_SHOOT","NB_FT","BC","PctDeReRec","PctOfReRec","REB_PERF"]] = team_ranking[["PPS","NB_SHOOT","NB_FT","BC","PctDeReRec","PctOfReRec","REB_PERF"]].rank(ascending=False).astype(int)
+    team_ranking[["P2P","P3P","PPS","NB_SHOOT","P1P","NB_FT","BC","PctDeReRec","PctOfReRec","REB_PERF"]] = team_ranking[["P2P","P3P","PPS","NB_SHOOT","P1P","NB_FT","BC","PctDeReRec","PctOfReRec","REB_PERF"]].rank(ascending=False).astype(int)
     team_ranking = team_ranking[team_ranking["TEAM"]==CODETEAM].reset_index(drop = True)
     team_ranking = team_ranking.drop(columns = "TEAM")
     team_ranking = team_ranking.T
 
-    team_ranking.insert(0,"NAME_STATS",["PTS PER SHOOT","NB SHOOT","NB FREE THROW","BALL CARE","% DEF REB REC","% OFF REB REC","REB. PERF."])
+    team_ranking.insert(0,"NAME_STATS",["% 2 PTS","% 3 PTS","PTS PER SHOOT","NB SHOOT","% FREE THROW PTS","NB FREE THROW","BALL CARE","% DEF REB REC","% OFF REB REC","REB. PERF."])
     team_ranking = pd.merge(
         team_ranking,
         df_color,
@@ -1430,15 +1437,15 @@ with off_ranking :
         )
 
 with def_ranking :
-    st.header(f"OPP. RANKING")
-    opp_ranking = res_ranking[["TEAM","PPS_opp","NB_SHOOT_opp","NB_FT_opp","BC_opp","PctDeReRec_opp","PctOfReRec_opp","REB_PERF_opp"]]
+    st.header(f"OPP.")
+    opp_ranking = res_ranking[["TEAM","P2P_opp","P3P_opp","PPS_opp","NB_SHOOT_opp","P1P_opp","NB_FT_opp","BC_opp","PctDeReRec_opp","PctOfReRec_opp","REB_PERF_opp"]]
     opp_ranking = opp_ranking.copy()
-    opp_ranking[["PPS_opp",'NB_SHOOT_opp',"NB_FT_opp","BC_opp","PctDeReRec_opp","PctOfReRec_opp","REB_PERF_opp"]] = opp_ranking[["PPS_opp",'NB_SHOOT_opp',"NB_FT_opp","BC_opp","PctDeReRec_opp","PctOfReRec_opp","REB_PERF_opp"]].rank(ascending=True).astype(int)
+    opp_ranking[["P2P_opp","P3P_opp","PPS_opp",'NB_SHOOT_opp',"P1P_opp","NB_FT_opp","BC_opp","PctDeReRec_opp","PctOfReRec_opp","REB_PERF_opp"]] = opp_ranking[["P2P_opp","P3P_opp","PPS_opp",'NB_SHOOT_opp',"P1P_opp","NB_FT_opp","BC_opp","PctDeReRec_opp","PctOfReRec_opp","REB_PERF_opp"]].rank(ascending=False).astype(int)
     opp_ranking = opp_ranking[opp_ranking["TEAM"]==CODETEAM].reset_index(drop = True)
     opp_ranking = opp_ranking.drop(columns = "TEAM")
     opp_ranking = opp_ranking.T
 
-    opp_ranking.insert(0,"NAME_STATS",["PTS PER SHOOT","NB SHOOT","NB FREE THROW","BALL CARE","% DEF REB REC","% OFF REB REC","REB. PERF."])
+    opp_ranking.insert(0,"NAME_STATS",["% 2 PTS","% 3 PTS","PTS PER SHOOT","NB SHOOT","% \FREE THROW PTS","NB FREE THROW","BALL CARE","% DEF REB REC","% OFF REB REC","REB. PERF."])
 
     opp_ranking = pd.merge(
         opp_ranking,
@@ -1451,7 +1458,7 @@ with def_ranking :
     for index, row in opp_ranking.iterrows():
         st.markdown(
             f'''
-            <p style="font-size:{int(40*zoom)}px; text-align: center; background-color: {row["col"]};color: black; padding: 3px; border-radius: 5px;">
+            <p style="font-size:{int(40*zoom)}px; text-align: center; background-color: {row["col_OPP"]};color: black; padding: 3px; border-radius: 5px;">
                 <b>{row["RANKING"]} / 18</b>
             </p>
             ''',
