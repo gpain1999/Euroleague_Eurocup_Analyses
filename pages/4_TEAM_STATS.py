@@ -188,26 +188,34 @@ notation =f.analyse_per(data_dir,competition,season,R = [i for i in range(select
 palette = [
     "#FF0000",  
     "#FF4C00",  
-    "#FF7200",  
+    "#FF7200",
     "#FF9200",  
     "#FFAF00",  
-    "#FFCA00", 
+    "#FFCA00",
+    "#FFE500",
     "#FFE500",  
-    
+    "#FFFF00", 
     "#FFFF00",  
-    
-    "#D9F213",  
+    "#D9F213",
+    "#D9F213",
     "#B5E422", 
     "#93D52E",  
-    "#72C637",  
+    "#72C637",
     "#53B63E",  
     "#32A542",  
     "#009445"   
 ]
 
+df_color = pd.DataFrame({
+    "RANKING": [18,17,16,15,14,13,12,11,10,9,8,7,6,5,4,3,2,1],
+    "col": palette
+})
+
+
+
 
 # Diviser les données en 7 classes égales en nombre
-notation['CLASS'] = pd.qcut(notation['NOTE'], q=15, labels=range(15))
+notation['CLASS'] = pd.qcut(notation['NOTE'], q=18, labels=range(18))
 
 # Attribuer une couleur en fonction de la classe
 notation['COULEUR'] = notation['CLASS'].map(lambda x: palette[int(x)])
@@ -1278,36 +1286,177 @@ with good_bad_opp :
         )
 
 
-title_placeholder = st.empty()
 
-col1,col2,col3 = st.columns([1,1,2])
 
-with col2 :
-    num_players = st.number_input("SOLO/DUO/TRIO", min_value=1,max_value=3 ,value=2)
+col1,name_col,off_ranking,def_ranking = st.columns([1,0.4,0.3,0.3])
+
+tds = f.get_aggregated_data(
+    df=df, min_round=selected_range[0], max_round=selected_range[1],
+    selected_teams=[],
+    selected_opponents=[],
+    selected_fields=["TEAM"],
+    selected_players=[],
+    mode="AVERAGE",
+    percent="MADE"
+)
+
+ods = f.get_aggregated_data(
+    df=df, min_round=selected_range[0], max_round=selected_range[1],
+    selected_teams=[],
+    selected_opponents=[],
+    selected_fields=["OPPONENT"],
+    selected_players=[],
+    mode="AVERAGE",
+    percent="MADE"
+)
+
+res_ranking = pd.merge(
+    tds,
+    ods,
+    how="left",
+    left_on=["TEAM"],
+    right_on=["OPPONENT"],
+    suffixes=('_team', '_opp')
+)
+
+
+
+
+
+res_ranking["PPS"] = ((res_ranking["2_R_team"]*2 + res_ranking["3_R_team"]*3)/(res_ranking["2_T_team"] + res_ranking["3_T_team"]))
+res_ranking["NB_SHOOT"] = (res_ranking["2_T_team"] + res_ranking["3_T_team"]).round(1)
+
+res_ranking["PPS_opp"] = ((res_ranking["2_R_opp"]*2 + res_ranking["3_R_opp"]*3)/(res_ranking["2_T_opp"] + res_ranking["3_T_opp"]))
+res_ranking["NB_SHOOT_opp"] = (res_ranking["2_T_opp"] + res_ranking["3_T_opp"]).round(1)
+
+res_ranking["NB_FT"] = (res_ranking["1_T_team"])
+
+res_ranking["NB_FT_opp"] = (res_ranking["1_T_opp"])
+
+
+res_ranking["BC"] = (100*(res_ranking["1_T_team"]*0.5 + res_ranking["2_T_team"] + res_ranking["3_T_team"])/(res_ranking["1_T_team"]*0.5 + res_ranking["2_T_team"] + res_ranking["3_T_team"] + res_ranking["TO_team"]))
+res_ranking["BC_opp"] = (100*(res_ranking["1_T_opp"]*0.5 + res_ranking["2_T_opp"] + res_ranking["3_T_opp"])/(res_ranking["1_T_opp"]*0.5 + res_ranking["2_T_opp"] + res_ranking["3_T_opp"] + res_ranking["TO_opp"]))
+
+
+res_ranking["PctDeReRec"] = (100*(res_ranking["DR_team"])/(res_ranking["DR_team"] + res_ranking["OR_opp"]))
+res_ranking["PctOfReRec"] = (100*(res_ranking["OR_team"])/(res_ranking["OR_team"] + res_ranking["DR_opp"]))
+
+
+res_ranking["PctDeReRec_opp"] = 100 - res_ranking["PctOfReRec"]
+res_ranking["PctOfReRec_opp"] = 100 - res_ranking["PctDeReRec"]
+
+res_ranking["REB_PERF"] = ((res_ranking["PctDeReRec"]/70)/(res_ranking["PctDeReRec"]/70 + (100-res_ranking["PctDeReRec"])/30) + ((res_ranking["PctOfReRec"])/30)/((100 - res_ranking["PctOfReRec"])/70 + (res_ranking["PctOfReRec"])/30)).round(2)
+res_ranking["REB_PERF_opp"] = 2 - res_ranking["REB_PERF"]
+res_ranking.rename(columns={"TEAM_team": "TEAM"}, inplace=True)
+res_ranking.rename(columns={"NB_GAME_team": "NB_GAME"}, inplace=True)
+
 
 with col1 :
-    min_percent_in = st.slider("Minimum Time percent together ", min_value=0, max_value=100, value=round(30 - 10*(num_players-1)))
+    title_placeholder = st.empty()
 
-title_placeholder.header(f"Stats +/- per 10 mins {num_players}-io : {CODETEAM}")
+    c1,c2,=  st.columns([1,1])
 
-io_data = f.analyse_io_2(data_dir = data_dir,
-                competition = competition,
-                season = season,
-                num_players = num_players,
-                min_round = min_round,
-                max_round = max_round,
-                CODETEAM = [CODETEAM],
-                selected_players = [],
-                min_percent_in = min_percent_in)
+    with c2 :
+        num_players = st.number_input("SOLO/DUO/TRIO", min_value=1,max_value=3 ,value=2)
 
-io_data = io_data[[f"P{i}" for i in range(1,num_players+1)] + ["DELTA_ON","OFF_ON_10","DEF_ON_10","PERCENT_ON","TIME_ON"]]
-io_data = io_data.sort_values(by = "DELTA_ON",ascending = False)
-styled_io_data = io_data.style.applymap(style_pm_on, subset=["DELTA_ON"]).format(precision=2) 
+    with c1 :
+        min_percent_in = st.slider("Minimum Time percent together ", min_value=0, max_value=100, value=round(30 - 10*(num_players-1)))
 
-col1,col2 = st.columns([1,1])
 
-with col1 :
+
+    io_data = f.analyse_io_2(data_dir = data_dir,
+                    competition = competition,
+                    season = season,
+                    num_players = num_players,
+                    min_round = min_round,
+                    max_round = max_round,
+                    CODETEAM = [CODETEAM],
+                    selected_players = [],
+                    min_percent_in = min_percent_in)
+
+    io_data = io_data[[f"P{i}" for i in range(1,num_players+1)] + ["DELTA_ON","OFF_ON_10","DEF_ON_10","PERCENT_ON","TIME_ON"]]
+    io_data = io_data.sort_values(by = "DELTA_ON",ascending = False)
+    styled_io_data = io_data.style.applymap(style_pm_on, subset=["DELTA_ON"]).format(precision=2) 
+
+    if num_players == 1 :
+        name_io = "SOLO"
+    elif num_players == 2 :
+        name_io = "DUO"
+    else :
+        name_io = "TRIO"
+
+    title_placeholder.header(f"Stats +/- {name_io} per 10 mins  : {CODETEAM}")
+
     st.dataframe(styled_io_data,height=min(40 + 36*len(io_data),650), use_container_width=True,hide_index=True)
+
+with name_col  :
+    st.header(f"STATS RANKING")
+
+    for n in ["PTS PER SHOOT","NB SHOOT","NB FREE THROW","BALL CARE","% DEF REB REC","% OFF REB REC","REB. PERF."]:
+        st.markdown(
+            f'''
+            <p style="font-size:{int(40*zoom)}px; text-align: center; background-color: {local_c1};color: {local_c2}; padding: 3px; border-radius: 5px;outline: 4px solid {local_c2};">
+                <b>{n}</b>
+            </p>
+            ''',
+            unsafe_allow_html=True
+        ) 
+with off_ranking :
+    st.header(f"TEAM RANKING")
+    team_ranking = res_ranking[["TEAM","PPS","NB_SHOOT","NB_FT","BC","PctDeReRec","PctOfReRec","REB_PERF"]]
+    team_ranking = team_ranking.copy()
+    team_ranking[["PPS","NB_SHOOT","NB_FT","BC","PctDeReRec","PctOfReRec","REB_PERF"]] = team_ranking[["PPS","NB_SHOOT","NB_FT","BC","PctDeReRec","PctOfReRec","REB_PERF"]].rank(ascending=False).astype(int)
+    team_ranking = team_ranking[team_ranking["TEAM"]==CODETEAM].reset_index(drop = True)
+    team_ranking = team_ranking.drop(columns = "TEAM")
+    team_ranking = team_ranking.T
+
+    team_ranking.insert(0,"NAME_STATS",["PTS PER SHOOT","NB SHOOT","NB FREE THROW","BALL CARE","% DEF REB REC","% OFF REB REC","REB. PERF."])
+    team_ranking = pd.merge(
+        team_ranking,
+        df_color,
+        how="left",
+        left_on=[0],
+        right_on=["RANKING"]
+    )
+
+    for index, row in team_ranking.iterrows():
+        st.markdown(
+            f'''
+            <p style="font-size:{int(40*zoom)}px; text-align: center; background-color: {row["col"]};color: black; padding: 3px; border-radius: 5px;">
+                <b>{row["RANKING"]} / 18</b>
+            </p>
+            ''',
+            unsafe_allow_html=True
+        )
+
+with def_ranking :
+    st.header(f"OPP. RANKING")
+    opp_ranking = res_ranking[["TEAM","PPS_opp","NB_SHOOT_opp","NB_FT_opp","BC_opp","PctDeReRec_opp","PctOfReRec_opp","REB_PERF_opp"]]
+    opp_ranking = opp_ranking.copy()
+    opp_ranking[["PPS_opp",'NB_SHOOT_opp',"NB_FT_opp","BC_opp","PctDeReRec_opp","PctOfReRec_opp","REB_PERF_opp"]] = opp_ranking[["PPS_opp",'NB_SHOOT_opp',"NB_FT_opp","BC_opp","PctDeReRec_opp","PctOfReRec_opp","REB_PERF_opp"]].rank(ascending=True).astype(int)
+    opp_ranking = opp_ranking[opp_ranking["TEAM"]==CODETEAM].reset_index(drop = True)
+    opp_ranking = opp_ranking.drop(columns = "TEAM")
+    opp_ranking = opp_ranking.T
+
+    opp_ranking.insert(0,"NAME_STATS",["PTS PER SHOOT","NB SHOOT","NB FREE THROW","BALL CARE","% DEF REB REC","% OFF REB REC","REB. PERF."])
+
+    opp_ranking = pd.merge(
+        opp_ranking,
+        df_color,
+        how="left",
+        left_on=[0],
+        right_on=["RANKING"]
+    )
+
+    for index, row in opp_ranking.iterrows():
+        st.markdown(
+            f'''
+            <p style="font-size:{int(40*zoom)}px; text-align: center; background-color: {row["col"]};color: black; padding: 3px; border-radius: 5px;">
+                <b>{row["RANKING"]} / 18</b>
+            </p>
+            ''',
+            unsafe_allow_html=True
+        )
 
 
 st.header(f"Stats GAME BY GAME : {CODETEAM}")
