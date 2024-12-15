@@ -46,7 +46,7 @@ min_round, max_round = df["ROUND"].min(), df["ROUND"].max()
 # Sidebar : Curseur pour sélectionner la plage de ROUND
 st.sidebar.header("SETTINGS")
 
-DELTA = st.sidebar.selectbox("COMPARAISON TYPE", options=["LEAGUE", "OPPONENTS"], index=0)
+DELTA = st.sidebar.selectbox("COMPARAISON TYPE", options=["LEAGUE", "OPPONENTS"], index=1)
 
 selected_range = st.sidebar.slider(
     "Select a ROUND range:",
