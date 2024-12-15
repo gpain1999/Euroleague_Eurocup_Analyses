@@ -1307,7 +1307,7 @@ styled_io_data = io_data.style.applymap(style_pm_on, subset=["DELTA_ON"]).format
 col1,col2 = st.columns([1,1])
 
 with col1 :
-    st.dataframe(styled_io_data,height=min(35*len(io_data),650), use_container_width=True,hide_index=True)
+    st.dataframe(styled_io_data,height=min(40 + 36*len(io_data),650), use_container_width=True,hide_index=True)
 
 
 st.header(f"Stats GAME BY GAME : {CODETEAM}")

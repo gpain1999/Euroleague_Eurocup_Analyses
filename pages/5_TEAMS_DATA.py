@@ -126,7 +126,6 @@ result_rank = result.copy()
 result_rank[["Rank_PctDeReRec", "Rank_PctOfReRec", "Rank_REB_PERF"]] = result[["PctDeReRec", "PctOfReRec", "REB_PERF"]].rank(ascending=False).astype(int)
 
 result_rank = result_rank.sort_values(by = "Rank_REB_PERF").reset_index(drop = True)
-print(result_rank[["TEAM","Rank_PctDeReRec", "Rank_PctOfReRec", "Rank_REB_PERF"]])
 
 result2 = result[["NB_GAME","TEAM","PPS","NB_SHOOT","PPS_opp","NB_SHOOT_opp","PPS_DELTA","NB_SHOOT_DELTA","PP_FT","NB_FT","PP_FT_opp","NB_FT_opp","NB_FT_DELTA","BC","BC_opp","BC_DELTA","PctDeReRec","PctOfReRec","REB_PERF"]]
 
@@ -167,7 +166,9 @@ col1, col2,col3 = st.columns([0.33,0.33,0.33])
 
 
 
-with col1 : 
+with col1 :
+    st.header("ACP : OFFENSIVE")
+
     # Séparation de la colonne "TEAM" et des variables pour l'ACP
     teams = result2["TEAM"]
     X = result2[["PPS","NB_FT","BC","PctOfReRec"]]
@@ -237,6 +238,8 @@ with col1 :
     buf_corr.seek(0)
     st.image(buf_corr, caption="Cercle des corrélations")
 with col2 : 
+    st.header("ACP : DEFENSIVE")
+
     # Séparation de la colonne "TEAM" et des variables pour l'ACP
     teams = result2["TEAM"]
     X = result2[["PPS_opp","NB_FT_opp","BC_opp","PctDeReRec"]]
@@ -305,7 +308,8 @@ with col2 :
     fig_corr.savefig(buf_corr, format="png")
     buf_corr.seek(0)
     st.image(buf_corr, caption="Cercle des corrélations")
-with col3 : 
+with col3 :
+    st.header("ACP : DELTA")
     # Séparation de la colonne "TEAM" et des variables pour l'ACP
     teams = result2["TEAM"]
     X = result2[["PPS_DELTA","NB_SHOOT_DELTA","NB_FT_DELTA","BC_DELTA","REB_PERF"]]
