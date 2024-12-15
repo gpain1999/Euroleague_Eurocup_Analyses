@@ -787,7 +787,7 @@ with col_image :
     # Intégrer la couleur dans le markdown
     st.markdown(
         f'''
-        <p style="font-size:{int(40*zoom)}px; text-align: center; background-color: {player_color};color: black; padding: 2px; border-radius: 5px;outline: 3px solid {local_c2};">
+        <p style="font-size:{int(40*zoom)}px; text-align: center; background-color: {player_color};color: black; padding: 2px; border-radius: 5px;outline: 3px solid #FFFF00;">
             <b>NOTE : {round(player_note)}</b>
         </p>
         ''',
@@ -822,7 +822,7 @@ with col_image :
     )
     st.markdown(
         f'''
-    <p style="font-size:{int(35*zoom)}px; text-align: center; background-color: green;color: black; padding: 2px; border-radius: 5px;outline: 3px solid {local_c2};">
+    <p style="font-size:{int(35*zoom)}px; text-align: center; background-color: green;color: black; padding: 2px; border-radius: 5px;outline: 3px solid #FFFF00;">
             <b style="margin-right: {int(24*zoom)}px;">ON :</b> 
             <span style="margin-right: {int(24*zoom)}px;">{round(result_pm_solo["OFF_ON_10"].to_list()[0],1)}</span> 
             <span style="margin-right: {int(24*zoom)}px;">-</span> 
@@ -834,7 +834,7 @@ with col_image :
 
     st.markdown(
         f'''
-    <p style="font-size:{int(35*zoom)}px; text-align: center; background-color: red;color: black; padding: 2px; border-radius: 5px;outline: 3px solid {local_c2};">
+    <p style="font-size:{int(35*zoom)}px; text-align: center; background-color: red;color: black; padding: 2px; border-radius: 5px;outline: 3px solid #FF9200;">
             <b style="margin-right: {int(24*zoom)}px;">OFF :</b> 
             <span style="margin-right: {int(24*zoom)}px;">{round(result_pm_solo["OFF_OFF_10"].to_list()[0],1)}</span> 
             <span style="margin-right: {int(24*zoom)}px;">-</span> 

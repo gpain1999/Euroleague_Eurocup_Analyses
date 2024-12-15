@@ -1055,7 +1055,7 @@ st.markdown(
     ''',
     unsafe_allow_html=True
 )
-good_bad_team,good_bad_opp = st.columns([1,1]) 
+good_bad_team,_,good_bad_opp = st.columns([0.48,0.04,0.48]) 
 
 
 with good_bad_team :
@@ -1075,7 +1075,7 @@ with good_bad_team :
         'NEGATIVES': team_bottom_values
     })
 
-    good,bad,sho = st.columns([0.33,0.33,0.33])
+    good,_,bad,_,sho = st.columns([0.3,0.05,0.3,0.05,0.3])
 
     with good :
         st.markdown(
@@ -1189,7 +1189,7 @@ with good_bad_opp :
         'NEGATIVES': opp_bottom_values
     })
 
-    sho,bad,good = st.columns([0.33,0.33,0.33])
+    sho,_,good,_,bad = st.columns([0.3,0.05,0.3,0.05,0.3])
 
     with good :
         st.markdown(
@@ -1290,7 +1290,7 @@ with good_bad_opp :
 
 
 
-col1,_,name_col,off_ranking,def_ranking = st.columns([0.5,0.1,0.2,0.1,0.1])
+col1,_,name_col,off_ranking,def_ranking = st.columns([0.54,0.1,0.2,0.08,0.08])
 
 tds = f.get_aggregated_data(
     df=df, min_round=selected_range[0], max_round=selected_range[1],
