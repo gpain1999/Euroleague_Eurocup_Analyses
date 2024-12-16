@@ -1290,7 +1290,8 @@ with good_bad_opp :
 
 
 
-col1,_,name_col,off_ranking,def_ranking = st.columns([0.54,0.1,0.2,0.08,0.08])
+#col1,_,name_col,off_ranking,def_ranking = st.columns([0.54,0.1,0.2,0.08,0.08])
+col1,_,off_ranking,def_ranking = st.columns([0.45,0.07,0.24,0.24])
 
 tds = f.get_aggregated_data(
     df=df, min_round=selected_range[0], max_round=selected_range[1],
@@ -1396,20 +1397,19 @@ with col1 :
 
     st.dataframe(styled_io_data,height=min(40 + 36*len(io_data),550), use_container_width=True,hide_index=True)
 
-with name_col  :
-    st.header(f"STATS RANKING")
+# with name_col  :
+#     st.header(f"STATS RANKING")
 
-    for n in ["% 2 PTS","% 3 PTS","PTS PER SHOOT","NB SHOOT","% FREE THROW","NB FREE THROW","BALL CARE","% DEF REB REC","% OFF REB REC","REB. PERF."]:
-        st.markdown(
-            f'''
-            <p style="font-size:{int(40*zoom)}px; text-align: center; background-color: {local_c1};color: {local_c2}; padding: 3px; border-radius: 5px;outline: 4px solid {local_c2};">
-                <b>{n}</b>
-            </p>
-            ''',
-            unsafe_allow_html=True
-        ) 
+#     for n in ["% 2 PTS","% 3 PTS","PTS PER SHOOT","NB SHOOT","% FREE THROW","NB FREE THROW","BALL CARE","% DEF REB REC","% OFF REB REC","REB. PERF."]:
+#         st.markdown(
+#             f'''
+#             <p style="font-size:{int(40*zoom)}px; text-align: center; background-color: {local_c1};color: {local_c2}; padding: 3px; border-radius: 5px;outline: 4px solid {local_c2};">
+#                 <b>{n}</b>
+#             </p>
+#             ''',
+#             unsafe_allow_html=True
+#         ) 
 with off_ranking :
-    st.header(f"TEAM")
     team_ranking = res_ranking[["TEAM","P2P","P3P","PPS","NB_SHOOT","P1P","NB_FT","BC","PctDeReRec","PctOfReRec","REB_PERF"]]
     team_ranking = team_ranking.copy()
     team_ranking[["P2P","P3P","PPS","NB_SHOOT","P1P","NB_FT","BC","PctDeReRec","PctOfReRec","REB_PERF"]] = team_ranking[["P2P","P3P","PPS","NB_SHOOT","P1P","NB_FT","BC","PctDeReRec","PctOfReRec","REB_PERF"]].rank(ascending=False).astype(int)
@@ -1417,7 +1417,7 @@ with off_ranking :
     team_ranking = team_ranking.drop(columns = "TEAM")
     team_ranking = team_ranking.T
 
-    team_ranking.insert(0,"NAME_STATS",["% 2 PTS","% 3 PTS","PTS PER SHOOT","NB SHOOT","% FREE THROW PTS","NB FREE THROW","BALL CARE","% DEF REB REC","% OFF REB REC","REB. PERF."])
+    team_ranking.insert(0,"NAME_STATS",["% 2 PTS","% 3 PTS","PTS PER SHOOT","NB SHOOT","% F. THROW","NB F. THROW","BALL CARE","% DEF REB REC","% OFF REB REC","REB. PERF."])
     team_ranking = pd.merge(
         team_ranking,
         df_color,
@@ -1425,19 +1425,54 @@ with off_ranking :
         left_on=[0],
         right_on=["RANKING"]
     )
+    team_ranking = team_ranking.drop(columns = [0])
 
-    for index, row in team_ranking.iterrows():
-        st.markdown(
-            f'''
-            <p style="font-size:{int(40*zoom)}px; text-align: center; background-color: {row["col"]};color: black; padding: 3px; border-radius: 5px;">
-                <b>{row["RANKING"]} / 18</b>
-            </p>
-            ''',
-            unsafe_allow_html=True
-        )
+    # for index, row in team_ranking.iterrows():
+    #     st.markdown(
+    #         f'''
+    #         <p style="font-size:{int(40*zoom)}px; text-align: center; background-color: {row["col"]};color: black; padding: 3px; border-radius: 5px;">
+    #             <b>{row["RANKING"]} / 18</b>
+    #         </p>
+    #         ''',
+    #         unsafe_allow_html=True
+    #     )
 
+    # Création du radar graph
+    fig = go.Figure()
+
+    # Ajouter une trace pour les valeurs
+    fig.add_trace(go.Scatterpolar(
+        r=team_ranking["RANKING"].tolist(),  # Les valeurs originales
+        theta=team_ranking["NAME_STATS"].tolist(),  # Les noms des statistiques
+        fill='toself',
+        name='Performance',
+        mode='markers+lines+text',  # Ajout des textes
+        text=team_ranking["RANKING"],  # Afficher les valeurs sur les points
+        textposition="top center",  # Position du texte
+        textfont=dict(color="grey")  # Définit la couleur du texte en noir
+
+    ))
+
+    # Configuration de l'échelle inversée
+    fig.update_layout(
+        polar=dict(
+            radialaxis=dict(
+                visible=False,
+                range=[18, 1],  # Échelle inversée
+                tickmode='array',
+                tickvals=[18, 15, 12, 9, 6, 3, 1],  # Points d'échelle visibles
+                ticktext=["18", "15", "12", "9", "6", "3", "1"],  # Texte personnalisé
+                tickfont=dict(
+                    color="black",  # Couleur du texte des ticks en noir
+                    size=12         # Taille du texte (optionnel, pour lisibilité)
+                )
+            )
+        )    )
+
+    # Affichage avec Streamlit
+    st.title(f"STATS RANKING {CODETEAM}")
+    st.plotly_chart(fig)
 with def_ranking :
-    st.header(f"OPP.")
     opp_ranking = res_ranking[["TEAM","P2P_opp","P3P_opp","PPS_opp","NB_SHOOT_opp","P1P_opp","NB_FT_opp","BC_opp","PctDeReRec_opp","PctOfReRec_opp","REB_PERF_opp"]]
     opp_ranking = opp_ranking.copy()
     opp_ranking[["P2P_opp","P3P_opp","PPS_opp",'NB_SHOOT_opp',"P1P_opp","NB_FT_opp","BC_opp","PctDeReRec_opp","PctOfReRec_opp","REB_PERF_opp"]] = opp_ranking[["P2P_opp","P3P_opp","PPS_opp",'NB_SHOOT_opp',"P1P_opp","NB_FT_opp","BC_opp","PctDeReRec_opp","PctOfReRec_opp","REB_PERF_opp"]].rank(ascending=False).astype(int)
@@ -1445,7 +1480,7 @@ with def_ranking :
     opp_ranking = opp_ranking.drop(columns = "TEAM")
     opp_ranking = opp_ranking.T
 
-    opp_ranking.insert(0,"NAME_STATS",["% 2 PTS","% 3 PTS","PTS PER SHOOT","NB SHOOT","% \FREE THROW PTS","NB FREE THROW","BALL CARE","% DEF REB REC","% OFF REB REC","REB. PERF."])
+    opp_ranking.insert(0,"NAME_STATS",["% 2 PTS","% 3 PTS","PTS PER SHOOT","NB SHOOT","% F. THROW","NB F. THROW","BALL CARE","% DEF REB REC","% OFF REB REC","REB. PERF."])
 
     opp_ranking = pd.merge(
         opp_ranking,
@@ -1455,15 +1490,50 @@ with def_ranking :
         right_on=["RANKING"]
     )
 
-    for index, row in opp_ranking.iterrows():
-        st.markdown(
-            f'''
-            <p style="font-size:{int(40*zoom)}px; text-align: center; background-color: {row["col_OPP"]};color: black; padding: 3px; border-radius: 5px;">
-                <b>{row["RANKING"]} / 18</b>
-            </p>
-            ''',
-            unsafe_allow_html=True
-        )
+    # for index, row in opp_ranking.iterrows():
+    #     st.markdown(
+    #         f'''
+    #         <p style="font-size:{int(40*zoom)}px; text-align: center; background-color: {row["col_OPP"]};color: black; padding: 3px; border-radius: 5px;">
+    #             <b>{row["RANKING"]} / 18</b>
+    #         </p>
+    #         ''',
+    #         unsafe_allow_html=True
+    #     )
+    # Création du radar graph
+    fig = go.Figure()
+
+    # Ajouter une trace pour les valeurs
+    fig.add_trace(go.Scatterpolar(
+        r=opp_ranking["RANKING"].tolist(),  # Les valeurs originales
+        theta=opp_ranking["NAME_STATS"].tolist(),  # Les noms des statistiques
+        fill='toself',
+        name='Performance',
+        mode='markers+lines+text',  # Ajout des textes
+        text=opp_ranking["RANKING"],  # Afficher les valeurs sur les points
+        textposition="top center",  # Position du texte
+        textfont=dict(color="grey")  # Définit la couleur du texte en noir
+
+    ))
+
+    # Configuration de l'échelle inversée
+    fig.update_layout(
+        polar=dict(
+            radialaxis=dict(
+                visible=False,
+                range=[1, 18],  # Échelle inversée
+                tickmode='array',
+                tickvals=[1,3,6,9,12,15,18],  # Points d'échelle visibles
+                ticktext=["1","3","6","9","12","15","18"],  # Texte personnalisé
+                tickfont=dict(
+                    color="black",  # Couleur du texte des ticks en noir
+                    size=12         # Taille du texte (optionnel, pour lisibilité)
+                )
+            )
+        )    )
+
+    # Affichage avec Streamlit
+    st.title(f"STATS RANKING OPP")
+    st.plotly_chart(fig)
 
 
 st.header(f"Stats GAME BY GAME : {CODETEAM}")
