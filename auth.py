@@ -26,5 +26,8 @@ def check_password():
 
 
 def require_authentication():
-    if not check_password():
-        st.stop()  # Do not continue if check_password is not True.
+    if not st.session_state.get("authenticated", False):
+        if not check_password():
+            st.stop()  # Do not continue if check_password is not True.
+        else:
+            st.session_state["authenticated"] = True
