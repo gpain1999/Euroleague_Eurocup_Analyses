@@ -9,6 +9,12 @@ import math
 import matplotlib.pyplot as plt
 from io import BytesIO
 from matplotlib.offsetbox import OffsetImage, AnnotationBbox
+# Ajouter le chemin de la racine du projet pour les imports
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+
+from auth import require_authentication
+
+require_authentication()
 
 season = 2024
 competition = "euroleague"
