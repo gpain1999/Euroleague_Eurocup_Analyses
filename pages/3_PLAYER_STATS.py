@@ -11,7 +11,7 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
 from auth import require_authentication
 
-require_authentication()
+#require_authentication()
 
 season = 2024
 competition = "euroleague"

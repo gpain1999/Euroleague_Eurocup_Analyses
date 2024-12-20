@@ -2,7 +2,7 @@ import streamlit as st
 from PIL import Image
 from auth import require_authentication
 
-require_authentication()
+#require_authentication()
 st.set_page_config(page_title="Euroleague Data", layout="wide")
 competition = "euroleague"
 
