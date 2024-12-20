@@ -209,6 +209,8 @@ TO_data = player_stat.sort_values(by = ["TO","TIME_ON"],ascending = [False,True]
 NAME_TO = TO_data["PLAYER"].to_list()[0]
 NUMBER_TO = TO_data["#"].to_list()[0]
 TEAM_TO = TO_data["TEAM"].to_list()[0]
+print(TEAM_TO)
+print(NAME_TO)
 TO_ID = players[(players["CODETEAM"] == TEAM_TO) & (players["PLAYER"] == NAME_TO)]["PLAYER_ID"].to_list()[0]
 TO_image_path = os.path.join(images_dir, f"{competition}_{season}_players/{TEAM_TO}_{TO_ID}.png")
 
@@ -807,7 +809,7 @@ with snum :
             image_cropped = image.crop((0, 0, width, cropped_height))
 
             # Afficher l'image rognée avec Streamlit
-            st.image(image_cropped, caption=f"#{NUMBER_j} {NAME_j}", width=int(250*zoom))        
+            st.image(image_cropped, caption=f"#{NUMBER_j} {NAME_j}", width=int(220*zoom))         
         else:
 
             st.image(os.path.join(images_dir, f"{competition}_{season}_teams/{TEAM_j}.png"), caption=f"#{NUMBER_j} {NAME_j}", width=int(200*zoom))
@@ -833,7 +835,7 @@ with snum :
             image_cropped = image.crop((0, 0, width, cropped_height))
 
             # Afficher l'image rognée avec Streamlit
-            st.image(image_cropped, caption=f"#{NUMBER_PTS} {NAME_PTS}", width=int(250*zoom))
+            st.image(image_cropped, caption=f"#{NUMBER_PTS} {NAME_PTS}", width=int(220*zoom)) 
         else:
             st.image(os.path.join(images_dir, f"{competition}_{season}_teams/{TEAM_PTS}.png"), caption=f"#{NUMBER_PTS} {NAME_PTS}", width=int(200*zoom))
 
@@ -863,7 +865,7 @@ with snum :
             image_cropped = image.crop((0, 0, width, cropped_height))
 
             # Afficher l'image rognée avec Streamlit
-            st.image(image_cropped, caption=f"#{NUMBER_DR} {NAME_DR}", width=int(250*zoom))
+            st.image(image_cropped, caption=f"#{NUMBER_DR} {NAME_DR}", width=int(220*zoom)) 
         else:
             st.image(os.path.join(images_dir, f"{competition}_{season}_teams/{TEAM_DR}.png"), caption=f"#{NUMBER_DR} {NAME_DR}", width=int(200*zoom))
 
@@ -889,7 +891,7 @@ with snum :
             image_cropped = image.crop((0, 0, width, cropped_height))
 
             # Afficher l'image rognée avec Streamlit
-            st.image(image_cropped, caption=f"#{NUMBER_OR} {NAME_OR}", width=int(250*zoom)) 
+            st.image(image_cropped, caption=f"#{NUMBER_OR} {NAME_OR}", width=int(220*zoom))  
         else:
             st.image(os.path.join(images_dir, f"{competition}_{season}_teams/{TEAM_OR}.png"), caption=f"#{NUMBER_OR} {NAME_OR}", width=int(200*zoom))
 
@@ -939,7 +941,7 @@ with snum :
             image_cropped = image.crop((0, 0, width, cropped_height))
 
             # Afficher l'image rognée avec Streamlit
-            st.image(image_cropped, caption=f"#{NUMBER_j} {NAME_j}", width=int(250*zoom))        
+            st.image(image_cropped, caption=f"#{NUMBER_j} {NAME_j}", width=int(220*zoom))         
         else:
             st.image(os.path.join(images_dir, f"{competition}_{season}_teams/{TEAM_j}.png"), caption=f"#{NUMBER_j} {NAME_j}", width=int(200*zoom))
 
@@ -966,7 +968,7 @@ with snum :
             image_cropped = image.crop((0, 0, width, cropped_height))
 
             # Afficher l'image rognée avec Streamlit
-            st.image(image_cropped, caption=f"#{NUMBER_PM_ON} {NAME_PM_ON}", width=int(250*zoom)) 
+            st.image(image_cropped, caption=f"#{NUMBER_PM_ON} {NAME_PM_ON}", width=int(220*zoom))  
         else:
             st.image(os.path.join(images_dir, f"{competition}_{season}_teams/{TEAM_PM_ON}.png"), caption=f"#{NUMBER_PM_ON} {NAME_PM_ON}", width=int(200*zoom))
 
@@ -995,7 +997,7 @@ with snum :
             image_cropped = image.crop((0, 0, width, cropped_height))
 
             # Afficher l'image rognée avec Streamlit
-            st.image(image_cropped, caption=f"#{NUMBER_AS} {NAME_AS}", width=int(250*zoom))
+            st.image(image_cropped, caption=f"#{NUMBER_AS} {NAME_AS}", width=int(220*zoom)) 
         else:
             st.image(os.path.join(images_dir, f"{competition}_{season}_teams/{TEAM_AS}.png"), caption=f"#{NUMBER_AS} {NAME_AS}", width=int(200*zoom))
 
@@ -1030,7 +1032,7 @@ with snum :
 
             # Rogner l'image : garder seulement les 75% du haut
             image_cropped = image.crop((0, 0, width, cropped_height))
-            st.image(image_cropped, caption=f"#{NUMBER_TO} {NAME_TO}", width=int(250*zoom))
+            st.image(image_cropped, caption=f"#{NUMBER_TO} {NAME_TO}", width=int(220*zoom)) 
         else:
             st.image(os.path.join(images_dir, f"{competition}_{season}_teams/{TEAM_TO}.png"), caption=f"#{NUMBER_TO} {NAME_TO}", width=int(200*zoom))
 
@@ -1069,7 +1071,7 @@ with snum :
             image_cropped = image.crop((0, 0, width, cropped_height))
 
             # Afficher l'image rognée avec Streamlit
-            st.image(image_cropped, caption=f"#{NUMBER_j} {NAME_j}", width=int(250*zoom))        
+            st.image(image_cropped, caption=f"#{NUMBER_j} {NAME_j}", width=int(220*zoom))         
         else:
             st.image(os.path.join(images_dir, f"{competition}_{season}_teams/{TEAM_j}.png"), caption=f"#{NUMBER_j} {NAME_j}", width=int(200*zoom))
 
@@ -1105,7 +1107,7 @@ with snum :
             image_cropped = image.crop((0, 0, width, cropped_height))
 
             # Afficher l'image rognée avec Streamlit
-            st.image(image_cropped, caption=f"#{NUMBER_j} {NAME_j}", width=int(250*zoom))        
+            st.image(image_cropped, caption=f"#{NUMBER_j} {NAME_j}", width=int(220*zoom))         
         else:
             st.image(os.path.join(images_dir, f"{competition}_{season}_teams/{TEAM_j}.png"), caption=f"#{NUMBER_j} {NAME_j}", width=int(200*zoom))
 
@@ -1132,7 +1134,7 @@ with snum :
             image_cropped = image.crop((0, 0, width, cropped_height))
 
             # Afficher l'image rognée avec Streamlit
-            st.image(image_cropped, caption=f"#{NUMBER_ST} {NAME_ST}", width=int(250*zoom))
+            st.image(image_cropped, caption=f"#{NUMBER_ST} {NAME_ST}", width=int(220*zoom)) 
         else:
             st.image(os.path.join(images_dir, f"{competition}_{season}_teams/{TEAM_ST}.png"), caption=f"#{NUMBER_ST} {NAME_ST}", width=int(200*zoom))
     with s4 :
@@ -1158,7 +1160,7 @@ with snum :
             image_cropped = image.crop((0, 0, width, cropped_height))
 
             # Afficher l'image rognée avec Streamlit
-            st.image(image_cropped, caption=f"#{NUMBER_CO} {NAME_CO}", width=int(250*zoom))        
+            st.image(image_cropped, caption=f"#{NUMBER_CO} {NAME_CO}", width=int(220*zoom))         
         else:
             st.image(os.path.join(images_dir, f"{competition}_{season}_teams/{TEAM_CO}.png"), caption=f"#{NUMBER_CO} {NAME_CO}", width=int(200*zoom))
 
@@ -1190,7 +1192,7 @@ with sip1 :
 
     st.markdown(
         f'''
-        <p style="font-size:{int(19*zoom)}px; text-align: center; background-color: {color};color: {color_text}; padding: 5px; border-radius: 5px;outline: 3px solid {color_text};">
+        <p style="font-size:{int(17*zoom)}px; text-align: center; background-color: {color};color: {color_text}; padding: 5px; border-radius: 5px;outline: 3px solid {color_text};">
             <b>{playersip}</b>
         </p>
         ''',
@@ -1218,7 +1220,7 @@ with sip2:
 
     st.markdown(
         f'''
-        <p style="font-size:{int(19*zoom)}px; text-align: center; background-color: {color};color: {color_text}; padding: 5px; border-radius: 5px;outline: 3px solid {color_text};">
+        <p style="font-size:{int(17*zoom)}px; text-align: center; background-color: {color};color: {color_text}; padding: 5px; border-radius: 5px;outline: 3px solid {color_text};">
             <b>{playersip}</b>
         </p>
         ''',
@@ -1245,7 +1247,7 @@ with sip3 :
 
     st.markdown(
         f'''
-        <p style="font-size:{int(19*zoom)}px; text-align: center; background-color: {color};color: {color_text}; padding: 5px; border-radius: 5px;outline: 3px solid {color_text};">
+        <p style="font-size:{int(17*zoom)}px; text-align: center; background-color: {color};color: {color_text}; padding: 5px; border-radius: 5px;outline: 3px solid {color_text};">
             <b>{playersip}</b>
         </p>
         ''',
@@ -1272,7 +1274,7 @@ with sip4 :
 
     st.markdown(
         f'''
-        <p style="font-size:{int(19*zoom)}px; text-align: center; background-color: {color};color: {color_text}; padding: 5px; border-radius: 5px;outline: 3px solid {color_text};">
+        <p style="font-size:{int(17*zoom)}px; text-align: center; background-color: {color};color: {color_text}; padding: 5px; border-radius: 5px;outline: 3px solid {color_text};">
             <b>{playersip}</b>
         </p>
         ''',
@@ -1299,7 +1301,7 @@ with sip5 :
 
     st.markdown(
         f'''
-        <p style="font-size:{int(19*zoom)}px; text-align: center; background-color: {color};color: {color_text}; padding: 5px; border-radius: 5px;outline: 3px solid {color_text};">
+        <p style="font-size:{int(17*zoom)}px; text-align: center; background-color: {color};color: {color_text}; padding: 5px; border-radius: 5px;outline: 3px solid {color_text};">
             <b>{playersip}</b>
         </p>
         ''',
@@ -1326,7 +1328,7 @@ with sip6 :
 
     st.markdown(
         f'''
-        <p style="font-size:{int(19*zoom)}px; text-align: center; background-color: {color};color: {color_text}; padding: 5px; border-radius: 5px;outline: 3px solid {color_text};">
+        <p style="font-size:{int(17*zoom)}px; text-align: center; background-color: {color};color: {color_text}; padding: 5px; border-radius: 5px;outline: 3px solid {color_text};">
             <b>{playersip}</b>
         </p>
         ''',
@@ -1353,7 +1355,7 @@ with sip7 :
 
     st.markdown(
         f'''
-        <p style="font-size:{int(19*zoom)}px; text-align: center; background-color: {color};color: {color_text}; padding: 5px; border-radius: 5px;outline: 3px solid {color_text};">
+        <p style="font-size:{int(17*zoom)}px; text-align: center; background-color: {color};color: {color_text}; padding: 5px; border-radius: 5px;outline: 3px solid {color_text};">
             <b>{playersip}</b>
         </p>
         ''',
@@ -1380,7 +1382,7 @@ with sip8 :
 
     st.markdown(
         f'''
-        <p style="font-size:{int(19*zoom)}px; text-align: center; background-color: {color};color: {color_text}; padding: 5px; border-radius: 5px;outline: 3px solid {color_text};">
+        <p style="font-size:{int(17*zoom)}px; text-align: center; background-color: {color};color: {color_text}; padding: 5px; border-radius: 5px;outline: 3px solid {color_text};">
             <b>{playersip}</b>
         </p>
         ''',
@@ -1408,7 +1410,7 @@ with sip9 :
 
     st.markdown(
         f'''
-        <p style="font-size:{int(19*zoom)}px; text-align: center; background-color: {color};color: {color_text}; padding: 5px; border-radius: 5px;outline: 3px solid {color_text};">
+        <p style="font-size:{int(17*zoom)}px; text-align: center; background-color: {color};color: {color_text}; padding: 5px; border-radius: 5px;outline: 3px solid {color_text};">
             <b>{playersip}</b>
         </p>
         ''',
@@ -1435,7 +1437,7 @@ with sip10 :
 
     st.markdown(
         f'''
-        <p style="font-size:{int(19*zoom)}px; text-align: center; background-color: {color};color: {color_text}; padding: 5px; border-radius: 5px;outline: 3px solid {color_text};">
+        <p style="font-size:{int(17*zoom)}px; text-align: center; background-color: {color};color: {color_text}; padding: 5px; border-radius: 5px;outline: 3px solid {color_text};">
             <b>{playersip}</b>
         </p>
         ''',
