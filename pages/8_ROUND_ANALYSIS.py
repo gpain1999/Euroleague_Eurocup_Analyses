@@ -1,0 +1,72 @@
+import streamlit as st
+import pandas as pd
+import plotly.graph_objects as go
+import sys
+import os
+from PIL import Image
+import re
+import math
+
+# Ajouter le chemin de la racine du projet pour les imports
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+
+from auth import require_authentication
+
+#require_authentication()
+
+
+season = 2024
+competition = "euroleague"
+data_dir = os.path.join(os.path.dirname(__file__), '../datas')
+sys.path.append(os.path.join(os.path.dirname(__file__), '../fonctions'))
+images_dir = os.path.join(os.path.dirname(__file__), '..', 'images')  # Path to the images directory
+import fonctions as f
+
+st.set_page_config(
+    page_title="ROUND ANALYSIS",
+    layout="wide",  # Active le Wide mode par défaut
+    initial_sidebar_state="expanded",  # Si vous avez une barre latérale
+)
+
+
+image_path = f"images/{competition}.png"  # Chemin vers l'image
+
+
+
+
+# SETTINGS interactifs
+
+
+
+###################### DATA INIT ################################
+
+# Charger les données
+df = f.calcul_per2(data_dir, season, competition)
+df.insert(6, "I_PER", df["PER"] / df["TIME_ON"] ** 0.5)
+df["I_PER"] = df["I_PER"].round(2)
+df["NB_GAME"] = 1
+df = df[['ROUND', 'NB_GAME', 'TEAM', 'OPPONENT', 'HOME', 'WIN', 'NUMBER', 'PLAYER',
+         'TIME_ON', "I_PER", 'PER', 'PM_ON', 'PTS', 'DR', 'OR', 'TR', 'AS', 'ST', 'CO',
+         '1_R', '1_T', '2_R', '2_T', '3_R', '3_T', 'TO', 'FP', 'CF', 'NCF']]
+
+# Charger les données de jeux
+gs = pd.read_csv(f"datas/{competition}_gs_{season}.csv")[["Gamecode", "Round", "local.club.code", "local.score", "road.club.code", "road.score"]]
+
+teams_color = pd.read_csv(f"datas/{competition}_{season}_teams_colors.csv",sep=";")
+gs.columns = ["GAMECODE", "ROUND", "LOCAL_TEAM", "LOCAL_SCORE", "ROAD_TEAM", "ROAD_SCORE"]
+gs["GAME"] = gs.apply(lambda row: f"R{row['ROUND']} : {row['LOCAL_TEAM']} - {row['ROAD_TEAM']}", axis=1)
+
+players = pd.read_csv(os.path.join(data_dir, f"{competition}_idplayers_{season}.csv"))
+
+######################### PARAM
+st.sidebar.header("SETTINGS")
+
+zoom = st.sidebar.slider(
+    "Choose a zoom value for photos and graphs",
+    min_value=0.3,
+    max_value=1.0,
+    step=0.1,
+    value=0.7,  # Valeur initiale
+)
+
+SUB = st.sidebar.number_input("ROUND", min_value=gs["ROUND"].min(),max_value=gs["ROUND"].max() ,value=gs["ROUND"].max())
