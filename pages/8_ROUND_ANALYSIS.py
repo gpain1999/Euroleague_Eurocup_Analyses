@@ -54,7 +54,6 @@ gs = pd.read_csv(f"datas/{competition}_gs_{season}.csv")[["Gamecode", "Round", "
 
 teams_color = pd.read_csv(f"datas/{competition}_{season}_teams_colors.csv",sep=";")
 gs.columns = ["GAMECODE", "ROUND", "LOCAL_TEAM", "LOCAL_SCORE", "ROAD_TEAM", "ROAD_SCORE"]
-gs["GAME"] = gs.apply(lambda row: f"R{row['ROUND']} : {row['LOCAL_TEAM']} - {row['ROAD_TEAM']}", axis=1)
 
 players = pd.read_csv(os.path.join(data_dir, f"{competition}_idplayers_{season}.csv"))
 
@@ -71,6 +70,21 @@ zoom = st.sidebar.slider(
 
 SUB = st.sidebar.number_input("ROUND", min_value=gs["ROUND"].min(),max_value=gs["ROUND"].max() ,value=gs["ROUND"].max())
 
+############################ DATA ########################################################
+
+
+df_round = df[df["ROUND"]==SUB]
+gs_round = gs[gs["ROUND"]==SUB]
+
+team_stat = f.get_aggregated_data(
+    df=df, min_round=SUB, max_round=SUB,
+    selected_teams=[],
+    selected_opponents=[],
+    selected_fields=["TEAM"],
+    selected_players=[],
+    mode="CUMULATED",
+    percent="MADE"
+)
 
 ############################ PRINT ########################################################
 
@@ -113,3 +127,174 @@ st.markdown(
     ''',
     unsafe_allow_html=True
 )
+
+games_part, _,players_part = st.columns([0.3, 0.1,0.6])
+
+
+with games_part :
+    PPS,BC,RP = st.columns([0.33, 0.33,0.33])
+
+    with RP :
+        st.markdown(
+            f'''
+            <p style="font-size:{int(40*zoom)}px; text-align: center; background-color: #FFED00;color: black; padding: 4px; border-radius: 5px;outline: 3px solid #E2007A;">
+                <b>Reb. Perf.</b>
+            </p>
+            ''',
+            unsafe_allow_html=True
+        )
+ 
+    with BC :
+        st.markdown(
+            f'''
+            <p style="font-size:{int(40*zoom)}px; text-align: center; background-color: #E2007A;color: black; padding: 4px; border-radius: 5px;outline: 3px solid #009EE0;">
+                <b>Ball Care</b>
+            </p>
+            ''',
+            unsafe_allow_html=True
+        )
+    with PPS :
+        st.markdown(
+            f'''
+            <p style="font-size:{int(40*zoom)}px; text-align: center; background-color: #009EE0;color: black; padding: 4px; border-radius: 5px;outline: 3px solid #FFED00;">
+                <b>PPS</b>
+            </p>
+            ''',
+            unsafe_allow_html=True
+        )
+
+    st.markdown(
+        f'''
+        <p style="font-size:{int(27*zoom)}px; text-align: center; background-color: grey;color: black; padding: 3px; border-radius: 5px;">
+            <b></b>
+        </p>
+        ''',
+        unsafe_allow_html=True
+    )
+
+    for index, row in gs_round.iterrows():
+        local_logo_path = os.path.join(images_dir, f"{competition}_{season}_teams/{row['LOCAL_TEAM']}.png")
+        road_logo_path = os.path.join(images_dir, f"{competition}_{season}_teams/{row['ROAD_TEAM']}.png")
+        if row["LOCAL_SCORE"]> row["ROAD_SCORE"] :
+            cl1 = "#009036"
+            cl2 = "#96BF0D"
+            cr1 = "#E2001A"
+            cr2 = "#E3004F"
+        else : 
+            cr1 = "#009036"
+            cr2 = "#96BF0D"
+            cl1 = "#E2001A"
+            cl2 = "#E3004F"   
+
+        local_team_stat = team_stat[team_stat["TEAM"]==row['LOCAL_TEAM']]
+        road_team_stat = team_stat[team_stat["TEAM"]==row['ROAD_TEAM']]
+
+        local_def_perc = local_team_stat["DR"].sum()/(local_team_stat["DR"].sum() + road_team_stat["OR"].sum())
+        road_off_perc = 1 - local_def_perc
+        road_def_perc = road_team_stat["DR"].sum()/(road_team_stat["DR"].sum() + local_team_stat["OR"].sum())
+        local_off_perc = 1 - road_def_perc
+
+        local_def = (local_def_perc/0.7)/(local_def_perc/0.7 + road_off_perc/0.3)
+        road_off = (road_off_perc/0.3)/(local_def_perc/0.7 + road_off_perc/0.3)
+        road_def = (road_def_perc/0.7)/( road_def_perc/0.7 + local_off_perc/0.3)
+        local_off = (local_off_perc/0.3)/(road_def_perc/0.7 + local_off_perc/0.3)
+
+        LD,LT,_,RT,RD = st.columns([0.20,0.30, 0.1,0.30,0.20])
+
+        with LD :
+            st.markdown(
+                f'''
+            <p style="font-size:{int(30*zoom)}px; text-align: center; background-color: #009EE0;color: black; padding: 4px; border-radius: 5px;outline: 3px solid #FFED00;">
+                    <b>{round((local_team_stat["2_R"].sum()*2+local_team_stat["3_R"].sum()*3)/(local_team_stat["2_T"].sum()+local_team_stat["3_T"].sum()),2):.2f}</b>
+                </p>
+                ''',
+                unsafe_allow_html=True
+            )
+            shot_T = local_team_stat["1_T"].sum()/2 + local_team_stat["2_T"].sum() + local_team_stat["3_T"].sum()
+            TO = local_team_stat["TO"].sum()
+
+            st.markdown(
+                f'''
+            <p style="font-size:{int(30*zoom)}px; text-align: center; background-color: #E2007A;color: black; padding: 4px; border-radius: 5px;outline: 3px solid #009EE0;">
+                    <b>{round(100*shot_T/(shot_T+TO),1)} % </b>
+                </p>
+                ''',
+                unsafe_allow_html=True
+            )
+
+            st.markdown(
+                f'''
+                <p style="font-size:{int(30*zoom)}px; text-align: center; background-color: #FFED00;color: black; padding: 4px; border-radius: 5px;outline: 3px solid #E2007A;">
+                    <b>{round(local_def+local_off,2)}</b>
+                </p>
+                ''',
+                unsafe_allow_html=True
+            )
+
+        with RD :
+            st.markdown(
+                f'''
+            <p style="font-size:{int(30*zoom)}px; text-align: center; background-color: #009EE0;color: black; padding: 4px; border-radius: 5px;outline: 3px solid #FFED00;">
+                    <b>{round((road_team_stat["2_R"].sum()*2+road_team_stat["3_R"].sum()*3)/(road_team_stat["2_T"].sum()+road_team_stat["3_T"].sum()),2):.2f}</b>
+                </p>
+                ''',
+                unsafe_allow_html=True
+            )
+            shot_T = road_team_stat["1_T"].sum()/2 + road_team_stat["2_T"].sum() + road_team_stat["3_T"].sum()
+            TO = road_team_stat["TO"].sum()
+
+            st.markdown(
+                f'''
+            <p style="font-size:{int(30*zoom)}px; text-align: center; background-color: #E2007A;color: black; padding: 4px; border-radius: 5px;outline: 3px solid #009EE0;">
+                    <b>{round(100*shot_T/(shot_T+TO),1)} % </b>
+                </p>
+                ''',
+                unsafe_allow_html=True
+            )
+            st.markdown(
+                f'''
+                <p style="font-size:{int(30*zoom)}px; text-align: center; background-color: #FFED00;color: black; padding: 4px; border-radius: 5px;outline: 3px solid #E2007A;">
+                    <b>{round(road_def+road_off,2)}</b>
+                </p>
+                ''',
+                unsafe_allow_html=True
+            )
+        with LT : 
+            st.image(local_logo_path,  width=int(133*zoom))
+            st.markdown(
+            f'''
+            <p style="font-size:{int(40*zoom)}px; text-align: center; background-color: {cl1};color: black; padding: 4px; border-radius: 5px;outline: 3px solid {cl2};">
+                <b>{row["LOCAL_SCORE"]}</b>
+            </p>
+            ''',
+            unsafe_allow_html=True
+            )
+
+        with RT : 
+            st.image(road_logo_path,  width=int(133*zoom))
+            st.markdown(
+            f'''
+            <p style="font-size:{int(40*zoom)}px; text-align: center; background-color: {cr1};color: black; padding: 4px; border-radius: 5px;outline: 3px solid {cr2};">
+                <b>{row["ROAD_SCORE"]}</b>
+            </p>
+            ''',
+            unsafe_allow_html=True
+        )
+
+
+        
+
+
+        
+
+
+
+
+        st.markdown(
+        f'''
+        <p style="font-size:{int(10*zoom)}px; text-align: center; background-color: grey;color: black; padding: 3px; border-radius: 5px;">
+            <b></b>
+        </p>
+        ''',
+        unsafe_allow_html=True
+        )
