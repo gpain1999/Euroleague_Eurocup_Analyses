@@ -70,3 +70,46 @@ zoom = st.sidebar.slider(
 )
 
 SUB = st.sidebar.number_input("ROUND", min_value=gs["ROUND"].min(),max_value=gs["ROUND"].max() ,value=gs["ROUND"].max())
+
+
+############################ PRINT ########################################################
+
+col1, col2,t1,t2 = st.columns([1, 2.5,0.5,0.5])
+
+with col1 : 
+    try:
+        image = Image.open(image_path)
+        # Redimensionner l'image (par exemple, largeur de 300 pixels)
+        max_width = 400
+        image = image.resize((max_width, int(image.height * (max_width / image.width))))
+
+        # Afficher l'image redimensionnée
+        st.image(image)
+    except FileNotFoundError:
+        
+        st.warning(f"L'image pour {competition} est introuvable à l'emplacement : {image_path}") 
+    
+
+with col2 : 
+
+    taille_titre = 70*zoom
+    st.markdown(
+        f'''
+        <p style="font-size:{int(taille_titre)}px; text-align: center; padding: 10pxs;">
+            <b>Round Analysis - by gpain1999</b>
+        </p>
+        ''',
+        unsafe_allow_html=True
+    )
+
+
+
+
+st.markdown(
+    f'''
+    <p style="font-size:{int(27*zoom)}px; text-align: center; background-color: grey;color: black; padding: 3px; border-radius: 5px;">
+        <b></b>
+    </p>
+    ''',
+    unsafe_allow_html=True
+)
