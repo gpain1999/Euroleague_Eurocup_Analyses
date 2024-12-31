@@ -86,6 +86,16 @@ team_stat = f.get_aggregated_data(
     percent="MADE"
 )
 
+player_stat = f.get_aggregated_data(
+    df=df, min_round=SUB, max_round=SUB,
+    selected_teams=[],
+    selected_opponents=[],
+    selected_fields=["TEAM","PLAYER"],
+    selected_players=[],
+    mode="CUMULATED",
+    percent="MADE"
+)
+player_stat = player_stat.sort_values(by=["I_PER","PER", "TIME_ON"], ascending=[False, False, True])
 ############################ PRINT ########################################################
 
 col1, col2,t1,t2 = st.columns([1, 2.5,0.5,0.5])
@@ -225,7 +235,7 @@ with games_part :
             st.markdown(
                 f'''
                 <p style="font-size:{int(30*zoom)}px; text-align: center; background-color: #FFED00;color: black; padding: 4px; border-radius: 5px;outline: 3px solid #E2007A;">
-                    <b>{round(local_def+local_off,2)}</b>
+                    <b>{round(local_def+local_off,2):.2f}</b>
                 </p>
                 ''',
                 unsafe_allow_html=True
@@ -254,7 +264,7 @@ with games_part :
             st.markdown(
                 f'''
                 <p style="font-size:{int(30*zoom)}px; text-align: center; background-color: #FFED00;color: black; padding: 4px; border-radius: 5px;outline: 3px solid #E2007A;">
-                    <b>{round(road_def+road_off,2)}</b>
+                    <b>{round(road_def+road_off,2):.2f}</b>
                 </p>
                 ''',
                 unsafe_allow_html=True
@@ -291,6 +301,28 @@ with games_part :
 
 
         st.markdown(
+        f'''
+        <p style="font-size:{int(10*zoom)}px; text-align: center; background-color: grey;color: black; padding: 3px; border-radius: 5px;">
+            <b></b>
+        </p>
+        ''',
+        unsafe_allow_html=True
+        )
+
+with players_part :
+    st.header(f"TEAMS PERFORMANCES : ")
+
+    st.markdown(
+        f'''
+        <p style="font-size:{int(10*zoom)}px; text-align: center; background-color: grey;color: black; padding: 3px; border-radius: 5px;">
+            <b></b>
+        </p>
+        ''',
+        unsafe_allow_html=True
+        )
+    st.header(f"PLAYERS PERFORMANCES : ")
+
+    st.markdown(
         f'''
         <p style="font-size:{int(10*zoom)}px; text-align: center; background-color: grey;color: black; padding: 3px; border-radius: 5px;">
             <b></b>
