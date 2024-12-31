@@ -132,7 +132,7 @@ player_stat_global = f.get_aggregated_data(
 
 
 anti_join = player_stat_global[['TEAM',"#", 'PLAYER','TIME_ON']].merge(player_stat[['TEAM',"#", 'PLAYER','TIME_ON']], on=['TEAM', 'PLAYER',"#"], how='left', indicator=True,suffixes=('', '_x'))
-abs_not = anti_join[anti_join['_merge'] == 'left_only'].drop(columns=['_merge'])[['TEAM',"#", 'PLAYER','TIME_ON']].sort_values(by = 'TIME_ON',ascending = False).reset_index(drop = True).head(6)
+abs_not = anti_join[anti_join['_merge'] == 'left_only'].drop(columns=['_merge'])[['TEAM',"#", 'PLAYER','TIME_ON']].sort_values(by = 'TIME_ON',ascending = False).reset_index(drop = True).head(5)
 
 print(abs_not)
 
@@ -1194,6 +1194,11 @@ st.markdown(
     unsafe_allow_html=True
 )
 
+def truncate_string(s):
+    if len(s) > 18:
+        return s[:18] + '.'
+    return s
+
 sip1,sip2,sip3,sip4,sip5,sip6,sip7,sip8,sip9,sip10 = st.columns([1,1,1,1,1,1,1,1,1,1])
 
 
@@ -1211,8 +1216,8 @@ with sip1 :
 
     st.markdown(
         f'''
-        <p style="font-size:{int(17*zoom)}px; text-align: center; background-color: {color};color: {color_text}; padding: 5px; border-radius: 5px;outline: 3px solid {color_text};">
-            <b>{playersip}</b>
+        <p style="font-size:{int(20*zoom)}px; text-align: center; background-color: {color};color: {color_text}; padding: 5px; border-radius: 5px;outline: 3px solid {color_text};">
+            <b>{truncate_string(playersip)}</b>
         </p>
         ''',
         unsafe_allow_html=True
@@ -1239,8 +1244,8 @@ with sip2:
 
     st.markdown(
         f'''
-        <p style="font-size:{int(17*zoom)}px; text-align: center; background-color: {color};color: {color_text}; padding: 5px; border-radius: 5px;outline: 3px solid {color_text};">
-            <b>{playersip}</b>
+        <p style="font-size:{int(20*zoom)}px; text-align: center; background-color: {color};color: {color_text}; padding: 5px; border-radius: 5px;outline: 3px solid {color_text};">
+            <b>{truncate_string(playersip)}</b>
         </p>
         ''',
         unsafe_allow_html=True
@@ -1266,8 +1271,8 @@ with sip3 :
 
     st.markdown(
         f'''
-        <p style="font-size:{int(17*zoom)}px; text-align: center; background-color: {color};color: {color_text}; padding: 5px; border-radius: 5px;outline: 3px solid {color_text};">
-            <b>{playersip}</b>
+        <p style="font-size:{int(20*zoom)}px; text-align: center; background-color: {color};color: {color_text}; padding: 5px; border-radius: 5px;outline: 3px solid {color_text};">
+            <b>{truncate_string(playersip)}</b>
         </p>
         ''',
         unsafe_allow_html=True
@@ -1293,8 +1298,8 @@ with sip4 :
 
     st.markdown(
         f'''
-        <p style="font-size:{int(17*zoom)}px; text-align: center; background-color: {color};color: {color_text}; padding: 5px; border-radius: 5px;outline: 3px solid {color_text};">
-            <b>{playersip}</b>
+        <p style="font-size:{int(20*zoom)}px; text-align: center; background-color: {color};color: {color_text}; padding: 5px; border-radius: 5px;outline: 3px solid {color_text};">
+            <b>{truncate_string(playersip)}</b>
         </p>
         ''',
         unsafe_allow_html=True
@@ -1320,8 +1325,8 @@ with sip5 :
 
     st.markdown(
         f'''
-        <p style="font-size:{int(17*zoom)}px; text-align: center; background-color: {color};color: {color_text}; padding: 5px; border-radius: 5px;outline: 3px solid {color_text};">
-            <b>{playersip}</b>
+        <p style="font-size:{int(20*zoom)}px; text-align: center; background-color: {color};color: {color_text}; padding: 5px; border-radius: 5px;outline: 3px solid {color_text};">
+            <b>{truncate_string(playersip)}</b>
         </p>
         ''',
         unsafe_allow_html=True
@@ -1347,8 +1352,8 @@ with sip6 :
 
     st.markdown(
         f'''
-        <p style="font-size:{int(17*zoom)}px; text-align: center; background-color: {color};color: {color_text}; padding: 5px; border-radius: 5px;outline: 3px solid {color_text};">
-            <b>{playersip}</b>
+        <p style="font-size:{int(20*zoom)}px; text-align: center; background-color: {color};color: {color_text}; padding: 5px; border-radius: 5px;outline: 3px solid {color_text};">
+            <b>{truncate_string(playersip)}</b>
         </p>
         ''',
         unsafe_allow_html=True
@@ -1374,8 +1379,8 @@ with sip7 :
 
     st.markdown(
         f'''
-        <p style="font-size:{int(17*zoom)}px; text-align: center; background-color: {color};color: {color_text}; padding: 5px; border-radius: 5px;outline: 3px solid {color_text};">
-            <b>{playersip}</b>
+        <p style="font-size:{int(20*zoom)}px; text-align: center; background-color: {color};color: {color_text}; padding: 5px; border-radius: 5px;outline: 3px solid {color_text};">
+            <b>{truncate_string(playersip)}</b>
         </p>
         ''',
         unsafe_allow_html=True
@@ -1401,8 +1406,8 @@ with sip8 :
 
     st.markdown(
         f'''
-        <p style="font-size:{int(17*zoom)}px; text-align: center; background-color: {color};color: {color_text}; padding: 5px; border-radius: 5px;outline: 3px solid {color_text};">
-            <b>{playersip}</b>
+        <p style="font-size:{int(20*zoom)}px; text-align: center; background-color: {color};color: {color_text}; padding: 5px; border-radius: 5px;outline: 3px solid {color_text};">
+            <b>{truncate_string(playersip)}</b>
         </p>
         ''',
         unsafe_allow_html=True
@@ -1429,8 +1434,8 @@ with sip9 :
 
     st.markdown(
         f'''
-        <p style="font-size:{int(17*zoom)}px; text-align: center; background-color: {color};color: {color_text}; padding: 5px; border-radius: 5px;outline: 3px solid {color_text};">
-            <b>{playersip}</b>
+        <p style="font-size:{int(20*zoom)}px; text-align: center; background-color: {color};color: {color_text}; padding: 5px; border-radius: 5px;outline: 3px solid {color_text};">
+            <b>{truncate_string(playersip)}</b>
         </p>
         ''',
         unsafe_allow_html=True
@@ -1456,8 +1461,8 @@ with sip10 :
 
     st.markdown(
         f'''
-        <p style="font-size:{int(17*zoom)}px; text-align: center; background-color: {color};color: {color_text}; padding: 5px; border-radius: 5px;outline: 3px solid {color_text};">
-            <b>{playersip}</b>
+        <p style="font-size:{int(20*zoom)}px; text-align: center; background-color: {color};color: {color_text}; padding: 5px; border-radius: 5px;outline: 3px solid {color_text};">
+            <b>{truncate_string(playersip)}</b>
         </p>
         ''',
         unsafe_allow_html=True
@@ -1625,7 +1630,7 @@ with colc :
             image_cropped = image.crop((0, 0, width, cropped_height))
 
             # Afficher l'image rognée dans la colonne
-            col.image(image_cropped, caption=f"#{NUMBER} {NAME}", width=int(220 * zoom))
+            col.image(image_cropped, caption=f"#{NUMBER} {NAME}", width=int(250 * zoom))
         else:
             # Si l'image n'existe pas, afficher une image par défaut dans la colonne
             col.image(os.path.join(images_dir, f"{competition}_{season}_teams/{TEAM}.png"), caption=f"#{NUMBER} {NAME}", width=int(200 * zoom))
