@@ -118,6 +118,25 @@ player_stat = f.get_aggregated_data(
     mode="CUMULATED",
     percent="MADE"
 )
+
+player_stat_global = f.get_aggregated_data(
+    df=df, min_round=1, max_round=34,
+    selected_teams=[team_local,team_road],
+    selected_opponents=[],
+    selected_fields=["TEAM","PLAYER"],
+    selected_players=[],
+    mode="CUMULATED",
+    percent="MADE"
+)
+
+
+
+anti_join = player_stat_global[['TEAM',"#", 'PLAYER','TIME_ON']].merge(player_stat[['TEAM',"#", 'PLAYER','TIME_ON']], on=['TEAM', 'PLAYER',"#"], how='left', indicator=True,suffixes=('', '_x'))
+abs_not = anti_join[anti_join['_merge'] == 'left_only'].drop(columns=['_merge'])[['TEAM',"#", 'PLAYER','TIME_ON']].sort_values(by = 'TIME_ON',ascending = False).reset_index(drop = True).head(6)
+
+print(abs_not)
+
+
 player_stat = player_stat.sort_values(by = "TIME_ON",ascending = False)
 
 # Trier le DataFrame par "PER" et "I_PER"
@@ -1581,3 +1600,32 @@ with colc :
         
         data_aff2 = data_aff.style.apply(colorize_pm_on, axis=1).format(precision=1)
         st.dataframe(data_aff2, height=min(36 + 36*len(data_aff),22*36),hide_index=True,use_container_width=True)
+
+    st.header("KEYS ABSENTS:")
+
+    # Créer autant de colonnes que de lignes dans le DataFrame
+    cols = st.columns(len(abs_not))  # Une colonne par joueur
+
+    for i, col in enumerate(cols):  # Itérer sur chaque colonne
+        NUMBER = abs_not["#"].to_list()[i]
+        NAME = abs_not["PLAYER"].to_list()[i]
+        TEAM = abs_not["TEAM"].to_list()[i]
+        _ID = players[(players["CODETEAM"] == TEAM) & (players["PLAYER"] == NAME)]["PLAYER_ID"].to_list()[0]
+        image_path = os.path.join(images_dir, f"{competition}_{season}_players/{TEAM}_{_ID}.png")
+
+        if os.path.exists(image_path):
+            # Charger l'image avec Pillow
+            image = Image.open(image_path)
+
+            # Calculer la hauteur des 75% supérieurs
+            width, height = image.size
+            cropped_height = int(0.66 * height)
+
+            # Rogner l'image : garder seulement les 75% du haut
+            image_cropped = image.crop((0, 0, width, cropped_height))
+
+            # Afficher l'image rognée dans la colonne
+            col.image(image_cropped, caption=f"#{NUMBER} {NAME}", width=int(220 * zoom))
+        else:
+            # Si l'image n'existe pas, afficher une image par défaut dans la colonne
+            col.image(os.path.join(images_dir, f"{competition}_{season}_teams/{TEAM}.png"), caption=f"#{NUMBER} {NAME}", width=int(200 * zoom))

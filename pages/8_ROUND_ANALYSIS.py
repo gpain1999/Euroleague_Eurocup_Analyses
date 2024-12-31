@@ -68,7 +68,8 @@ zoom = st.sidebar.slider(
     value=0.7,  # Valeur initiale
 )
 
-SUB = st.sidebar.number_input("ROUND", min_value=gs["ROUND"].min(),max_value=gs["ROUND"].max() ,value=gs["ROUND"].max())
+#SUB = st.sidebar.number_input("ROUND", min_value=gs["ROUND"].min(),max_value=gs["ROUND"].max() ,value=gs["ROUND"].max())
+SUB = st.sidebar.selectbox("SEARCH", options=reversed(sorted(list(set(gs["ROUND"])))), index=0)
 
 ############################ DATA ########################################################
 
@@ -85,6 +86,41 @@ team_stat = f.get_aggregated_data(
     mode="CUMULATED",
     percent="MADE"
 )
+
+team_stat["PPS"] = round((team_stat["2_R"]*2+team_stat["3_R"]*3)/(team_stat["2_T"]+team_stat["3_T"]),2)
+team_stat["PP2S"] = round((team_stat["2_R"]*2)/(team_stat["2_T"]),2)
+team_stat["PP3S"] = round((team_stat["3_R"]*3)/(team_stat["3_T"]),2)
+team_stat["BC"] = (team_stat["1_T"]*0.5 + team_stat["2_T"] + team_stat["3_T"]) / (team_stat["TO"] + team_stat["1_T"]*0.5 + team_stat["2_T"] + team_stat["3_T"])
+
+opp_stat = f.get_aggregated_data(
+    df=df, min_round=SUB, max_round=SUB,
+    selected_teams=[],
+    selected_opponents=[],
+    selected_fields=["OPPONENT"],
+    selected_players=[],
+    mode="CUMULATED",
+    percent="MADE"
+)
+
+
+
+team_stat = pd.merge(
+    team_stat,
+    opp_stat[["OPPONENT","DR",'OR']],
+    how="left",
+    left_on=["TEAM"],
+    right_on=["OPPONENT"],
+    suffixes=('', '_opp')
+)
+
+team_stat["PctDeReRec"] = (100*(team_stat["DR"])/(team_stat["DR"] + team_stat["OR_opp"])).round(1)
+team_stat["PctOfReRec"] = (100*(team_stat["OR"])/(team_stat["OR"] + team_stat["DR_opp"])).round(1)
+
+
+
+
+team_stat["REB_PERF"] = ((team_stat["PctDeReRec"]/70)/(team_stat["PctDeReRec"]/70 + (100-team_stat["PctDeReRec"])/30) + ((team_stat["PctOfReRec"])/30)/((100 - team_stat["PctOfReRec"])/70 + (team_stat["PctOfReRec"])/30)).round(2)
+
 
 player_stat = f.get_aggregated_data(
     df=df, min_round=SUB, max_round=SUB,
@@ -138,7 +174,7 @@ st.markdown(
     unsafe_allow_html=True
 )
 
-games_part, _,players_part = st.columns([0.3, 0.1,0.6])
+games_part, _,players_part = st.columns([0.3, 0.06,0.64])
 
 
 with games_part :
@@ -209,7 +245,7 @@ with games_part :
         road_def = (road_def_perc/0.7)/( road_def_perc/0.7 + local_off_perc/0.3)
         local_off = (local_off_perc/0.3)/(road_def_perc/0.7 + local_off_perc/0.3)
 
-        LD,LT,_,RT,RD = st.columns([0.20,0.30, 0.1,0.30,0.20])
+        LD,LT,_,RT,RD = st.columns([0.225,0.225, 0.1,0.225,0.225])
 
         with LD :
             st.markdown(
@@ -292,14 +328,6 @@ with games_part :
         )
 
 
-        
-
-
-        
-
-
-
-
         st.markdown(
         f'''
         <p style="font-size:{int(10*zoom)}px; text-align: center; background-color: grey;color: black; padding: 3px; border-radius: 5px;">
@@ -314,13 +342,371 @@ with players_part :
 
     st.markdown(
         f'''
-        <p style="font-size:{int(10*zoom)}px; text-align: center; background-color: grey;color: black; padding: 3px; border-radius: 5px;">
+        <p style="font-size:{int(10*zoom)}px; text-align: center; background-color: green;color: black; padding: 3px; border-radius: 5px;">
             <b></b>
         </p>
         ''',
         unsafe_allow_html=True
         )
+    stat1,stat2,stat3,stat4,stat5,stat6,stat7,stat8,stat9 = st.columns([0.20,0.20,0.20, 0.20,0.20,0.20,0.20,0.20,0.20])
+
+    with stat1 :
+        ##DELTA +/-
+        s = "PM_ON"
+        tempo = team_stat.sort_values(by = s,ascending = False).reset_index(drop = True)
+        team = tempo["TEAM"].to_list()[0]
+        stat_ = tempo[s].to_list()[0]
+        c1 = teams_color[teams_color["TEAM"]==team]["COL1"].to_list()[0]
+        c2 = teams_color[teams_color["TEAM"]==team]["COL2"].to_list()[0]
+        st.markdown(
+            f'''
+            <p style="font-size:{int(30*zoom)}px; text-align: center; background-color: {c1};color: {c2}; padding: 4px; border-radius: 5px;outline: 3px solid {c2};">
+                <b>{stat_} +/- </b>
+            </p>
+            ''',
+            unsafe_allow_html=True
+        )
+        logo_path = os.path.join(images_dir, f"{competition}_{season}_teams/{team}.png")
+        
+        st.image(logo_path,  width=int(175*zoom))
+
+
+    with stat2 :
+        ##PTS
+        s = "PTS"
+        tempo = team_stat.sort_values(by = s,ascending = False).reset_index(drop = True)
+        team = tempo["TEAM"].to_list()[0]
+        stat_ = tempo[s].to_list()[0]
+        c1 = teams_color[teams_color["TEAM"]==team]["COL1"].to_list()[0]
+        c2 = teams_color[teams_color["TEAM"]==team]["COL2"].to_list()[0]
+        st.markdown(
+            f'''
+            <p style="font-size:{int(30*zoom)}px; text-align: center; background-color: {c1};color: {c2}; padding: 4px; border-radius: 5px;outline: 3px solid {c2};">
+                <b>{stat_} PTS </b>
+            </p>
+            ''',
+            unsafe_allow_html=True
+        )
+        logo_path = os.path.join(images_dir, f"{competition}_{season}_teams/{team}.png")
+        
+        st.image(logo_path,  width=int(175*zoom))
+
+
+    with stat3 :
+        ##PPS
+        s = "PPS"
+        tempo = team_stat.sort_values(by = s,ascending = False).reset_index(drop = True)
+        team = tempo["TEAM"].to_list()[0]
+        stat_ = tempo[s].to_list()[0]
+        c1 = teams_color[teams_color["TEAM"]==team]["COL1"].to_list()[0]
+        c2 = teams_color[teams_color["TEAM"]==team]["COL2"].to_list()[0]
+        st.markdown(
+            f'''
+            <p style="font-size:{int(30*zoom)}px; text-align: center; background-color: {c1};color: {c2}; padding: 4px; border-radius: 5px;outline: 3px solid {c2};">
+                <b>{stat_:.2f} PPS </b>
+            </p>
+            ''',
+            unsafe_allow_html=True
+        )
+        logo_path = os.path.join(images_dir, f"{competition}_{season}_teams/{team}.png")
+        
+        st.image(logo_path,  width=int(175*zoom))
+
+
+    with stat4 :
+        ##PP2S
+        s = "PP2S"
+        tempo = team_stat.sort_values(by = s,ascending = False).reset_index(drop = True)
+        team = tempo["TEAM"].to_list()[0]
+        stat_ = tempo[s].to_list()[0]
+        c1 = teams_color[teams_color["TEAM"]==team]["COL1"].to_list()[0]
+        c2 = teams_color[teams_color["TEAM"]==team]["COL2"].to_list()[0]
+        st.markdown(
+            f'''
+            <p style="font-size:{int(30*zoom)}px; text-align: center; background-color: {c1};color: {c2}; padding: 4px; border-radius: 5px;outline: 3px solid {c2};">
+                <b>{stat_:.2f} PP2S </b>
+            </p>
+            ''',
+            unsafe_allow_html=True
+        )
+        logo_path = os.path.join(images_dir, f"{competition}_{season}_teams/{team}.png")
+        
+        st.image(logo_path,  width=int(175*zoom))
+
+    with stat5 :
+        ##PP3S
+        s = "PP3S"
+        tempo = team_stat.sort_values(by = s,ascending = False).reset_index(drop = True)
+        team = tempo["TEAM"].to_list()[0]
+        stat_ = tempo[s].to_list()[0]
+        c1 = teams_color[teams_color["TEAM"]==team]["COL1"].to_list()[0]
+        c2 = teams_color[teams_color["TEAM"]==team]["COL2"].to_list()[0]
+        st.markdown(
+            f'''
+            <p style="font-size:{int(30*zoom)}px; text-align: center; background-color: {c1};color: {c2}; padding: 4px; border-radius: 5px;outline: 3px solid {c2};">
+                <b>{stat_:.2f} PP3S </b>
+            </p>
+            ''',
+            unsafe_allow_html=True
+        )
+        logo_path = os.path.join(images_dir, f"{competition}_{season}_teams/{team}.png")
+
+        st.image(logo_path,  width=int(175*zoom))
+
+    with stat6 :
+        ##BC
+        s = "BC"
+        tempo = team_stat.sort_values(by = s,ascending = False).reset_index(drop = True)
+        team = tempo["TEAM"].to_list()[0]
+        stat_ = tempo[s].to_list()[0]
+        c1 = teams_color[teams_color["TEAM"]==team]["COL1"].to_list()[0]
+        c2 = teams_color[teams_color["TEAM"]==team]["COL2"].to_list()[0]
+        st.markdown(
+            f'''
+            <p style="font-size:{int(30*zoom)}px; text-align: center; background-color: {c1};color: {c2}; padding: 4px; border-radius: 5px;outline: 3px solid {c2};">
+                <b>{round(100*stat_,1):.1f}% BC </b>
+            </p>
+            ''',
+            unsafe_allow_html=True
+        )
+        logo_path = os.path.join(images_dir, f"{competition}_{season}_teams/{team}.png")
+        
+        st.image(logo_path,  width=int(175*zoom))
+
+    with stat7 :
+        ##AS
+        s = "AS"
+        tempo = team_stat.sort_values(by = s,ascending = False).reset_index(drop = True)
+        team = tempo["TEAM"].to_list()[0]
+        stat_ = tempo[s].to_list()[0]
+        c1 = teams_color[teams_color["TEAM"]==team]["COL1"].to_list()[0]
+        c2 = teams_color[teams_color["TEAM"]==team]["COL2"].to_list()[0]
+        st.markdown(
+            f'''
+            <p style="font-size:{int(30*zoom)}px; text-align: center; background-color: {c1};color: {c2}; padding: 4px; border-radius: 5px;outline: 3px solid {c2};">
+                <b>{stat_} AS </b>
+            </p>
+            ''',
+            unsafe_allow_html=True
+        )
+        logo_path = os.path.join(images_dir, f"{competition}_{season}_teams/{team}.png")
+        
+        st.image(logo_path,  width=int(175*zoom))
+    with stat8 :
+        ##CO
+        s = "CO"
+        tempo = team_stat.sort_values(by = s,ascending = False).reset_index(drop = True)
+        team = tempo["TEAM"].to_list()[0]
+        stat_ = tempo[s].to_list()[0]
+        c1 = teams_color[teams_color["TEAM"]==team]["COL1"].to_list()[0]
+        c2 = teams_color[teams_color["TEAM"]==team]["COL2"].to_list()[0]
+        st.markdown(
+            f'''
+            <p style="font-size:{int(30*zoom)}px; text-align: center; background-color: {c1};color: {c2}; padding: 4px; border-radius: 5px;outline: 3px solid {c2};">
+                <b>{stat_} BLK </b>
+            </p>
+            ''',
+            unsafe_allow_html=True
+        )
+        logo_path = os.path.join(images_dir, f"{competition}_{season}_teams/{team}.png")
+        
+        st.image(logo_path,  width=int(175*zoom))
+
+    with stat9 :
+        ##REBPERF
+        s = "REB_PERF"
+        tempo = team_stat.sort_values(by = s,ascending = False).reset_index(drop = True)
+        team = tempo["TEAM"].to_list()[0]
+        stat_ = tempo[s].to_list()[0]
+        c1 = teams_color[teams_color["TEAM"]==team]["COL1"].to_list()[0]
+        c2 = teams_color[teams_color["TEAM"]==team]["COL2"].to_list()[0]
+        st.markdown(
+            f'''
+            <p style="font-size:{int(30*zoom)}px; text-align: center; background-color: {c1};color: {c2}; padding: 4px; border-radius: 5px;outline: 3px solid {c2};">
+                <b>{stat_:.2f} RP </b>
+            </p>
+            ''',
+            unsafe_allow_html=True
+        )
+        logo_path = os.path.join(images_dir, f"{competition}_{season}_teams/{team}.png")
+        
+        st.image(logo_path,  width=int(175*zoom))
+    st.markdown(
+        f'''
+        <p style="font-size:{int(10*zoom)}px; text-align: center; background-color: red;color: black; padding: 3px; border-radius: 5px;">
+            <b></b>
+        </p>
+        ''',
+        unsafe_allow_html=True
+        )
+
+    stat1,stat2,stat3,stat4,stat5,stat6,stat7,stat8,stat9 = st.columns([0.20,0.20,0.20, 0.20,0.20,0.20,0.20,0.20,0.20])
+    with stat1 :
+        s = "PM_ON"
+        tempo = team_stat.sort_values(by = s,ascending = True).reset_index(drop = True)
+        team = tempo["TEAM"].to_list()[0]
+        stat_ = tempo[s].to_list()[0]
+        c1 = teams_color[teams_color["TEAM"]==team]["COL1"].to_list()[0]
+        c2 = teams_color[teams_color["TEAM"]==team]["COL2"].to_list()[0]
+        st.markdown(
+            f'''
+            <p style="font-size:{int(30*zoom)}px; text-align: center; background-color: {c1};color: {c2}; padding: 4px; border-radius: 5px;outline: 3px solid {c2};">
+                <b>{stat_} +/- </b>
+            </p>
+            ''',
+            unsafe_allow_html=True
+        )
+        logo_path = os.path.join(images_dir, f"{competition}_{season}_teams/{team}.png")
+        
+        st.image(logo_path,  width=int(175*zoom))
+    with stat2 :
+        s = "PTS"
+        tempo = team_stat.sort_values(by = s,ascending = True).reset_index(drop = True)
+        team = tempo["TEAM"].to_list()[0]
+        stat_ = tempo[s].to_list()[0]
+        c1 = teams_color[teams_color["TEAM"]==team]["COL1"].to_list()[0]
+        c2 = teams_color[teams_color["TEAM"]==team]["COL2"].to_list()[0]
+        st.markdown(
+            f'''
+            <p style="font-size:{int(30*zoom)}px; text-align: center; background-color: {c1};color: {c2}; padding: 4px; border-radius: 5px;outline: 3px solid {c2};">
+                <b>{stat_} PTS </b>
+            </p>
+            ''',
+            unsafe_allow_html=True
+        )
+        logo_path = os.path.join(images_dir, f"{competition}_{season}_teams/{team}.png")
+        
+        st.image(logo_path,  width=int(175*zoom))
+    with stat3 :
+        s = "PPS"
+        tempo = team_stat.sort_values(by = s,ascending = True).reset_index(drop = True)
+        team = tempo["TEAM"].to_list()[0]
+        stat_ = tempo[s].to_list()[0]
+        c1 = teams_color[teams_color["TEAM"]==team]["COL1"].to_list()[0]
+        c2 = teams_color[teams_color["TEAM"]==team]["COL2"].to_list()[0]
+        st.markdown(
+            f'''
+            <p style="font-size:{int(30*zoom)}px; text-align: center; background-color: {c1};color: {c2}; padding: 4px; border-radius: 5px;outline: 3px solid {c2};">
+                <b>{stat_:.2f} PPS </b>
+            </p>
+            ''',
+            unsafe_allow_html=True
+        )
+        logo_path = os.path.join(images_dir, f"{competition}_{season}_teams/{team}.png")
+        
+        st.image(logo_path,  width=int(175*zoom))
+    with stat4 :
+        s = "PP2S"
+        tempo = team_stat.sort_values(by = s,ascending = True).reset_index(drop = True)
+        team = tempo["TEAM"].to_list()[0]
+        stat_ = tempo[s].to_list()[0]
+        c1 = teams_color[teams_color["TEAM"]==team]["COL1"].to_list()[0]
+        c2 = teams_color[teams_color["TEAM"]==team]["COL2"].to_list()[0]
+        st.markdown(
+            f'''
+            <p style="font-size:{int(30*zoom)}px; text-align: center; background-color: {c1};color: {c2}; padding: 4px; border-radius: 5px;outline: 3px solid {c2};">
+                <b>{stat_:.2f} PP2S </b>
+            </p>
+            ''',
+            unsafe_allow_html=True
+        )
+        logo_path = os.path.join(images_dir, f"{competition}_{season}_teams/{team}.png")
+        
+        st.image(logo_path,  width=int(175*zoom))    
+    with stat5 :
+        s = "PP3S"
+        tempo = team_stat.sort_values(by = s,ascending = True).reset_index(drop = True)
+        team = tempo["TEAM"].to_list()[0]
+        stat_ = tempo[s].to_list()[0]
+        c1 = teams_color[teams_color["TEAM"]==team]["COL1"].to_list()[0]
+        c2 = teams_color[teams_color["TEAM"]==team]["COL2"].to_list()[0]
+        st.markdown(
+            f'''
+            <p style="font-size:{int(30*zoom)}px; text-align: center; background-color: {c1};color: {c2}; padding: 4px; border-radius: 5px;outline: 3px solid {c2};">
+                <b>{stat_:.2f} PP3S </b>
+            </p>
+            ''',
+            unsafe_allow_html=True
+        )
+        logo_path = os.path.join(images_dir, f"{competition}_{season}_teams/{team}.png")
+        
+        st.image(logo_path,  width=int(175*zoom))
+    with stat6 :
+        s = "BC"
+        tempo = team_stat.sort_values(by = s,ascending = True).reset_index(drop = True)
+        team = tempo["TEAM"].to_list()[0]
+        stat_ = tempo[s].to_list()[0]
+        c1 = teams_color[teams_color["TEAM"]==team]["COL1"].to_list()[0]
+        c2 = teams_color[teams_color["TEAM"]==team]["COL2"].to_list()[0]
+        st.markdown(
+            f'''
+            <p style="font-size:{int(30*zoom)}px; text-align: center; background-color: {c1};color: {c2}; padding: 4px; border-radius: 5px;outline: 3px solid {c2};">
+                <b>{round(100*stat_,1):.1f}% BC </b>
+            </p>
+            ''',
+            unsafe_allow_html=True
+        )
+        logo_path = os.path.join(images_dir, f"{competition}_{season}_teams/{team}.png")
+        
+        st.image(logo_path,  width=int(175*zoom))
+    with stat7 :
+        s = "AS"
+        tempo = team_stat.sort_values(by = s,ascending = True).reset_index(drop = True)
+        team = tempo["TEAM"].to_list()[0]
+        stat_ = tempo[s].to_list()[0]
+        c1 = teams_color[teams_color["TEAM"]==team]["COL1"].to_list()[0]
+        c2 = teams_color[teams_color["TEAM"]==team]["COL2"].to_list()[0]
+        st.markdown(
+            f'''
+            <p style="font-size:{int(30*zoom)}px; text-align: center; background-color: {c1};color: {c2}; padding: 4px; border-radius: 5px;outline: 3px solid {c2};">
+                <b>{stat_} AS </b>
+            </p>
+            ''',
+            unsafe_allow_html=True
+        )
+        logo_path = os.path.join(images_dir, f"{competition}_{season}_teams/{team}.png")
+        
+        st.image(logo_path,  width=int(175*zoom))
+    with stat8 :
+        s = "CO"
+        tempo = team_stat.sort_values(by = s,ascending = True).reset_index(drop = True)
+        team = tempo["TEAM"].to_list()[0]
+        stat_ = tempo[s].to_list()[0]
+        c1 = teams_color[teams_color["TEAM"]==team]["COL1"].to_list()[0]
+        c2 = teams_color[teams_color["TEAM"]==team]["COL2"].to_list()[0]
+        st.markdown(
+            f'''
+            <p style="font-size:{int(30*zoom)}px; text-align: center; background-color: {c1};color: {c2}; padding: 4px; border-radius: 5px;outline: 3px solid {c2};">
+                <b>{stat_} BLK </b>
+            </p>
+            ''',
+            unsafe_allow_html=True
+        )
+        logo_path = os.path.join(images_dir, f"{competition}_{season}_teams/{team}.png")
+        
+        st.image(logo_path,  width=int(175*zoom))
+
+    with stat9 :
+        ##REBPERF
+        s = "REB_PERF"
+        tempo = team_stat.sort_values(by = s,ascending = True).reset_index(drop = True)
+        team = tempo["TEAM"].to_list()[0]
+        stat_ = tempo[s].to_list()[0]
+        c1 = teams_color[teams_color["TEAM"]==team]["COL1"].to_list()[0]
+        c2 = teams_color[teams_color["TEAM"]==team]["COL2"].to_list()[0]
+        st.markdown(
+            f'''
+            <p style="font-size:{int(30*zoom)}px; text-align: center; background-color: {c1};color: {c2}; padding: 4px; border-radius: 5px;outline: 3px solid {c2};">
+                <b>{stat_:.2f} RP </b>
+            </p>
+            ''',
+            unsafe_allow_html=True
+        )
+        logo_path = os.path.join(images_dir, f"{competition}_{season}_teams/{team}.png")
+        
+        st.image(logo_path,  width=int(175*zoom))
     st.header(f"PLAYERS PERFORMANCES : ")
+
 
     st.markdown(
         f'''
