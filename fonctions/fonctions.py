@@ -584,6 +584,63 @@ def stats_important_team(team,min_round,max_round,df) :
 
     return team_top_values,team_bottom_values,opp_top_values,opp_bottom_values
 
+def stats_important_players_round(r,df):
+    columns_to_average = ["DR", "OR", "AS", "ST", "CO", 
+                        "1_R", "1_L", "2_R", "2_L", "3_R", "3_L", 
+                        "TO", "FP", "CF", "NCF"]
+
+    coefficients = {
+        'DR': 0.85, 'OR': 1.35, 'AS': 0.8, 'ST': 1.33, 'CO': 0.6,
+        '1_R': 0.8, '2_R': 1.6, '3_R': 2.4, '1_L': -0.8, '2_L': -1.448, '3_L': -1.112,
+        'TO': -1.25, 'FP': 0.5, 'CF': -0.5, 'NCF': -1.25
+    }
+    coeff = pd.DataFrame(columns=['DR', 'OR', 'AS', 'ST', 'CO', 'TO', 'FP', 'CF', 'NCF', '1', '2', '3'])
+    stats = pd.DataFrame(columns=['ROUND', 'NB_GAME', 'TEAM', 'OPPONENT', 'HOME', 'WIN', '#', 'PLAYER',
+       'TIME_ON', 'I_PER', 'PER', 'PM_ON', 'PTS', 'DR', 'OR', 'TR', 'AS', 'ST',
+       'CO', '1_R', '1_T', '2_R', '2_T', '3_R', '3_T', 'TO', 'FP', 'CF', 'NCF',
+       '1_L', '2_L', '3_L'])
+
+    for t in list(set(df["TEAM"])) :
+        _stats = get_aggregated_stats_players(df, r, t)
+        _stats = add_delta_columns(_stats)
+
+        _coeff = apply_coefficients(_stats.copy()[columns_to_average], coefficients)
+        _coeff = process_dataframes(_coeff)
+        _coeff.index = _stats[["TEAM","PLAYER"]]
+
+        coeff = pd.concat([coeff,_coeff])
+        stats = pd.concat([stats,_stats])
+
+    coeff_abs = coeff.abs()
+    largest_values = coeff_abs.stack().nlargest(16)
+
+    result = largest_values.reset_index()
+
+    result[['TEAM', 'PLAYER']] = pd.DataFrame(result['level_0'].tolist(), index=result.index)
+    result = result.drop(columns=['level_0'])
+
+    result.columns = ["STAT","VALUE",'TEAM', 'PLAYER']
+
+    VALUE_0 = []
+    for s,p in zip(result["STAT"].to_list(),result["PLAYER"].to_list()):
+        stats_df = stats[stats["PLAYER"]==p].reset_index(drop = True)
+        if s in ['2', '3']:
+            VALUE_0.append(f"{stats_df.loc[0, f'{s}_R']}/{stats_df.loc[0, f'{s}_T']} {s}-PTS")
+        elif s in ['1']:
+            VALUE_0.append(f"{stats_df.loc[0, f'{s}_R']}/{stats_df.loc[0, f'{s}_T']} FT")
+
+        elif s in ['CO']:
+            VALUE_0.append(f"{stats_df.loc[0, s]} BL")
+        else :
+            VALUE_0.append(f"{stats_df.loc[0, s]} {s}")
+
+    result["VALUE"] = VALUE_0
+    result = result.drop(columns=['STAT'])
+    result = result[["TEAM","PLAYER","VALUE"]]
+
+    return result
+
+
 def stats_important_players(r,team_local,team_road,df) : 
     local_stats = get_aggregated_stats_players(df, r, team_local)
     road_stats = get_aggregated_stats_players(df, r, team_road)
@@ -614,6 +671,7 @@ def stats_important_players(r,team_local,team_road,df) :
 
     coeff = pd.concat([local_coeff,road_coeff])
     stats = pd.concat([local_stats,road_stats])
+
     coeff_abs = coeff.abs()
     largest_values = coeff_abs.stack().nlargest(10)
 
@@ -778,7 +836,7 @@ def stats_important(r,team_local,team_road,df) :
     # Coefficients pour appliquer aux colonnes
     coefficients = {
         'DR': 0.85, 'OR': 1.35, 'AS': 0.8, 'ST': 1.33, 'CO': 0.6,
-        '1_R': 1, '2_R': 2, '3_R': 3, '1_L': -0.6, '2_L': -0.9, '3_L': -0.6,
+        '1_R': 1, '2_R': 2, '3_R': 3, '1_L': -0.6, '2_L': -0.75, '3_L': -0.5,
         'TO': -1.25, 'PTS_C': -0.5, 'FP': 0.5, 'CF': -0.5, 'NCF': -1.25
     }
 

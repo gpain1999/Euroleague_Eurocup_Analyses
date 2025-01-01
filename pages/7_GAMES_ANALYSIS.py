@@ -134,7 +134,6 @@ player_stat_global = f.get_aggregated_data(
 anti_join = player_stat_global[['TEAM',"#", 'PLAYER','TIME_ON']].merge(player_stat[['TEAM',"#", 'PLAYER','TIME_ON']], on=['TEAM', 'PLAYER',"#"], how='left', indicator=True,suffixes=('', '_x'))
 abs_not = anti_join[anti_join['_merge'] == 'left_only'].drop(columns=['_merge'])[['TEAM',"#", 'PLAYER','TIME_ON']].sort_values(by = 'TIME_ON',ascending = False).reset_index(drop = True).head(5)
 
-print(abs_not)
 
 
 player_stat = player_stat.sort_values(by = "TIME_ON",ascending = False)
@@ -200,7 +199,6 @@ DR_data = player_stat.sort_values(by = ["DR","TIME_ON"],ascending = [False,True]
 NAME_DR = DR_data["PLAYER"].to_list()[0]
 NUMBER_DR = DR_data["#"].to_list()[0]
 TEAM_DR = DR_data["TEAM"].to_list()[0]
-print(NAME_DR)
 DR_ID = players[(players["CODETEAM"] == TEAM_DR) & (players["PLAYER"] == NAME_DR)]["PLAYER_ID"].to_list()[0]
 DR_image_path = os.path.join(images_dir, f"{competition}_{season}_players/{TEAM_DR}_{DR_ID}.png")
 
@@ -228,8 +226,6 @@ TO_data = player_stat.sort_values(by = ["TO","TIME_ON"],ascending = [False,True]
 NAME_TO = TO_data["PLAYER"].to_list()[0]
 NUMBER_TO = TO_data["#"].to_list()[0]
 TEAM_TO = TO_data["TEAM"].to_list()[0]
-print(TEAM_TO)
-print(NAME_TO)
 TO_ID = players[(players["CODETEAM"] == TEAM_TO) & (players["PLAYER"] == NAME_TO)]["PLAYER_ID"].to_list()[0]
 TO_image_path = os.path.join(images_dir, f"{competition}_{season}_players/{TEAM_TO}_{TO_ID}.png")
 
@@ -253,6 +249,8 @@ CO_image_path = os.path.join(images_dir, f"{competition}_{season}_players/{TEAM_
 
 
 local_top_values,local_bottom_values,road_top_values,road_bottom_values = f.stats_important(r,team_local,team_road,df)
+
+
 df_stats_important_players = f.stats_important_players(r,team_local,team_road,df)
 
 local_def_perc = local_player_stat["DR"].sum()/(local_player_stat["DR"].sum() + road_player_stat["OR"].sum())
