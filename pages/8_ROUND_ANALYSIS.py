@@ -889,6 +889,42 @@ with players_part :
             # Si l'image n'existe pas, afficher une image par défaut dans la colonne
             col.image(os.path.join(images_dir, f"{competition}_{season}_teams/{TEAM}.png"), caption=f"{NAME}", width=int(100 * zoom))
 
+    cols = st.columns(len(sipr.head(8)))  # Une colonne par joueur
+
+    for i, col in enumerate(cols):  # Itérer sur chaque colonne
+        NAME = sipr["PLAYER"].to_list()[i+16]
+        TEAM = sipr["TEAM"].to_list()[i+16]
+        _ID = players[(players["CODETEAM"] == TEAM) & (players["PLAYER"] == NAME)]["PLAYER_ID"].to_list()[0]
+        c1 = teams_color[teams_color["TEAM"]==TEAM]["COL1"].to_list()[0]
+        c2 = teams_color[teams_color["TEAM"]==TEAM]["COL2"].to_list()[0]
+        col.markdown(
+            f'''
+            <p style="font-size:{int(25*zoom)}px; text-align: center; background-color: {c1};color: {c2}; padding: 4px; border-radius: 5px;outline: 3px solid {c2};">
+                <b>{sipr["VALUE"].to_list()[i+16]} </b>
+            </p>
+            ''',
+            unsafe_allow_html=True
+        )
+
+        image_path = os.path.join(images_dir, f"{competition}_{season}_players/{TEAM}_{_ID}.png")
+
+        if os.path.exists(image_path):
+            # Charger l'image avec Pillow
+            image = Image.open(image_path)
+
+            # Calculer la hauteur des 75% supérieurs
+            width, height = image.size
+            cropped_height = int(0.66 * height)
+
+            # Rogner l'image : garder seulement les 75% du haut
+            image_cropped = image.crop((0, 0, width, cropped_height))
+
+            # Afficher l'image rognée dans la colonne
+            col.image(image_cropped, caption=f"{NAME}", width=int(175 * zoom))
+        else:
+            # Si l'image n'existe pas, afficher une image par défaut dans la colonne
+            col.image(os.path.join(images_dir, f"{competition}_{season}_teams/{TEAM}.png"), caption=f"{NAME}", width=int(100 * zoom))
+
 
     st.markdown(
         f'''

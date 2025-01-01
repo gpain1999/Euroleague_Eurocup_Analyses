@@ -590,7 +590,7 @@ def stats_important_players_round(r,df):
                         "TO", "FP", "CF", "NCF"]
 
     coefficients = {
-        'DR': 0.85, 'OR': 1.35, 'AS': 0.8, 'ST': 1.33, 'CO': 0.6,
+        'DR': 0.85, 'OR': 1.35, 'AS': 0.9, 'ST': 1.33, 'CO': 0.6,
         '1_R': 0.8, '2_R': 1.6, '3_R': 2.4, '1_L': -0.8, '2_L': -1.448, '3_L': -1.112,
         'TO': -1.25, 'FP': 0.5, 'CF': -0.5, 'NCF': -1.25
     }
@@ -612,7 +612,7 @@ def stats_important_players_round(r,df):
         stats = pd.concat([stats,_stats])
 
     coeff_abs = coeff.abs()
-    largest_values = coeff_abs.stack().nlargest(16)
+    largest_values = coeff_abs.stack().nlargest(24)
 
     result = largest_values.reset_index()
 
@@ -655,7 +655,7 @@ def stats_important_players(r,team_local,team_road,df) :
                         "TO", "FP", "CF", "NCF"]
 
     coefficients = {
-        'DR': 0.85, 'OR': 1.35, 'AS': 0.8, 'ST': 1.33, 'CO': 0.6,
+        'DR': 0.85, 'OR': 1.35, 'AS': 0.9, 'ST': 1.33, 'CO': 0.6,
         '1_R': 0.8, '2_R': 1.6, '3_R': 2.4, '1_L': -0.8, '2_L': -1.448, '3_L': -1.112,
         'TO': -1.25, 'FP': 0.5, 'CF': -0.5, 'NCF': -1.25
     }
