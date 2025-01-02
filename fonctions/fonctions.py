@@ -917,9 +917,8 @@ def evol_score(data_dir,competition,season) :
     # Création d'un dataframe vide avec ces colonnes
     df_evol_score = pd.DataFrame(columns=columns)
 
-
     for gc in list(df_pbp["Gamecode"].unique()) : 
-
+        print(gc)
         df_pbp2 = df_pbp[df_pbp["Gamecode"] == gc].reset_index(drop = True)
         df_gs2 = df_gs[df_gs["Gamecode"] == gc].reset_index(drop = True)
 
