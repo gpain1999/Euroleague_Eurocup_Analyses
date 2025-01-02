@@ -918,7 +918,6 @@ def evol_score(data_dir,competition,season) :
     df_evol_score = pd.DataFrame(columns=columns)
 
     for gc in list(df_pbp["Gamecode"].unique()) : 
-        print(gc)
         df_pbp2 = df_pbp[df_pbp["Gamecode"] == gc].reset_index(drop = True)
         df_gs2 = df_gs[df_gs["Gamecode"] == gc].reset_index(drop = True)
 
@@ -2038,6 +2037,7 @@ def recuperation_gs(competition, season, data_dir, round_ = None ):
 
 
             for gc in range(first_gamecode, last_gamecode + 1):
+
                 # Vérifier si _gs contient déjà des lignes pour ce gamecode
                 if not (_gs['Gamecode'] == gc).any():
                     # Récupérer les données pour le gamecode spécifique
