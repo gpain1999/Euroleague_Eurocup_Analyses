@@ -9,9 +9,8 @@ data_dir = os.path.join(os.path.dirname(__file__), '..', 'datas')
 image_dir = os.path.join(os.path.dirname(__file__), '..', 'images')
 
 season = 2024
-competition = "eurocup"
-round_ = 8
-
+competition = "euroleague"
+round_ = 19
 
 
 
@@ -28,3 +27,4 @@ f.calcul_per(data_dir = data_dir, season = season , competition = competition)
 f.calcul_per_global(data_dir = data_dir, season = season , competition = competition)
 f.df_images_players(competition,season,round_,data_dir)
 f.recuperation_players_photo2(competition,season,image_dir,data_dir)
+f.evol_score(data_dir,competition,season)
