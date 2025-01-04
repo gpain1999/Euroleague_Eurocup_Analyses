@@ -148,6 +148,26 @@ player_stat_global = f.get_aggregated_data(
 anti_join = player_stat_global[['TEAM',"#", 'PLAYER','TIME_ON']].merge(player_stat[['TEAM',"#", 'PLAYER','TIME_ON']], on=['TEAM', 'PLAYER',"#"], how='left', indicator=True,suffixes=('', '_x'))
 abs_not = anti_join[anti_join['_merge'] == 'left_only'].drop(columns=['_merge'])[['TEAM',"#", 'PLAYER','TIME_ON']].sort_values(by = 'TIME_ON',ascending = False).reset_index(drop = True).head(8)
 
+
+###for top 25 players
+player_stat_global_for_top30 = f.get_aggregated_data(
+    df=df, min_round=1, max_round=34,
+    selected_teams=list(set(player_stat["TEAM"])),
+    selected_opponents=[],
+    selected_fields=["TEAM","PLAYER"],
+    selected_players=[],
+    mode="AVERAGE",
+    percent="MADE"
+)
+
+player_stat_global_for_top30 = player_stat_global_for_top30.sort_values(by = ["I_PER","PER"],ascending = [False,False]).reset_index(drop = True)
+
+
+player_stat_global_for_top30 = pd.merge(player_stat_global_for_top30[["TEAM","#","PLAYER","I_PER","PER"]],player_stat[["TEAM","#","PLAYER","I_PER","PER"]], how = 'inner', left_on= ["TEAM","#","PLAYER"], right_on=["TEAM","#","PLAYER"],suffixes=["_SEASON","_TONIGHT"])
+player_stat_global_for_top30 = player_stat_global_for_top30.sort_values(by = ["I_PER_SEASON","PER_SEASON"],ascending = [False,False]).reset_index(drop = True).head(30)
+
+player_stat_global_for_top30["DELTA"] = player_stat_global_for_top30["I_PER_TONIGHT"] - player_stat_global_for_top30["I_PER_SEASON"]
+
 ############################ PRINT ########################################################
 
 col1, col2,t1,t2 = st.columns([1, 2.5,0.5,0.5])
@@ -963,3 +983,363 @@ with players_part :
             # Si l'image n'existe pas, afficher une image par défaut dans la colonne
             col.image(os.path.join(images_dir, f"{competition}_{season}_teams/{TEAM}.png"), caption=f"#{NUMBER} {NAME}", width=int(100 * zoom))
 
+st.header("ROUND PERFORMANCE OF SEASON TOP PLAYERS:")
+top1_10,_, top11_20,_,top21_30 = st.columns([0.3,0.05,0.3,0.05,0.3])
+
+with top1_10 :
+    st.markdown(
+            f'''
+            <p style="font-size:{int(35*zoom)}px; text-align: center; background-color: gold;color: black; padding: 5px; border-radius: 5px;">
+                <b>TOP 1-10</b>
+            </p>
+            ''',
+            unsafe_allow_html=True
+        )
+    team_col, name_col,avg_col,r_col,delta_col = st.columns([0.13,0.3,0.19,0.19,0.19])
+
+    with team_col :
+        st.markdown(
+                f'''
+                <p style="font-size:{int(20*zoom)}px; text-align: center; background-color: withe;color: black; padding: 5px; border-radius: 5px;outline: 3px solid black;">
+                    <b>TEAM</b>
+                </p>
+                ''',
+                unsafe_allow_html=True
+            )
+    with name_col :
+        st.markdown(
+                f'''
+                <p style="font-size:{int(20*zoom)}px; text-align: center; background-color: withe;color: black; padding: 5px; border-radius: 5px;outline: 3px solid black;">
+                    <b>PLAYER</b>
+                </p>
+                ''',
+                unsafe_allow_html=True
+            )
+    with avg_col :
+        st.markdown(
+                f'''
+                <p style="font-size:{int(20*zoom)}px; text-align: center; background-color: withe;color: black; padding: 5px; border-radius: 5px;outline: 3px solid black;">
+                    <b>AVG I_PER</b>
+                </p>
+                ''',
+                unsafe_allow_html=True
+            )
+    with r_col :
+        st.markdown(
+                f'''
+                <p style="font-size:{int(20*zoom)}px; text-align: center; background-color: withe;color: black; padding: 5px; border-radius: 5px;outline: 3px solid black;">
+                    <b>R I_PER</b>
+                </p>
+                ''',
+                unsafe_allow_html=True
+            )
+    with delta_col :
+        st.markdown(
+                f'''
+                <p style="font-size:{int(20*zoom)}px; text-align: center; background-color: withe;color: black; padding: 5px; border-radius: 5px;outline: 3px solid black;">
+                    <b>DELTA I_PER</b>
+                </p>
+                ''',
+                unsafe_allow_html=True
+            )
+    for index, row in player_stat_global_for_top30.head(10).iterrows():
+        c1 = teams_color[teams_color["TEAM"]==row["TEAM"]]["COL1"].to_list()[0]
+        c2 = teams_color[teams_color["TEAM"]==row["TEAM"]]["COL2"].to_list()[0]
+
+
+        with team_col :
+            st.markdown(
+                    f'''
+                    <p style="font-size:{int(20*zoom)}px; text-align: center; background-color: {c1};color: {c2}; padding: 5px; border-radius: 5px;outline: 3px solid {c2};">
+                        <b>{row["TEAM"]}</b>
+                    </p>
+                    ''',
+                    unsafe_allow_html=True
+                )
+        with name_col :
+            st.markdown(
+                    f'''
+                    <p style="font-size:{int(20*zoom)}px; text-align: center; background-color: {c1};color: {c2}; padding: 5px; border-radius: 5px;outline: 3px solid {c2};">
+                        <b>{row["PLAYER"]}</b>
+                    </p>
+                    ''',
+                    unsafe_allow_html=True
+                )
+        with avg_col :
+            st.markdown(
+                    f'''
+                    <p style="font-size:{int(20*zoom)}px; text-align: center; background-color: {c1};color: {c2}; padding: 5px; border-radius: 5px;outline: 3px solid {c2};">
+                        <b>{row["I_PER_SEASON"]}</b>
+                    </p>
+                    ''',
+                    unsafe_allow_html=True
+                )
+        with r_col :
+            st.markdown(
+                    f'''
+                    <p style="font-size:{int(20*zoom)}px; text-align: center; background-color: {c1};color: {c2}; padding: 5px; border-radius: 5px;outline: 3px solid {c2};">
+                        <b>{row["I_PER_TONIGHT"]}</b>
+                    </p>
+                    ''',
+                    unsafe_allow_html=True
+                )
+        with delta_col :
+            if row["DELTA"]>0 :
+                DELTA = f"+{round(row['DELTA'],1):.1f}"
+                c1 = "green"
+                c2 = "white"
+            elif  row["DELTA"]<0 :
+                DELTA = f"{round(row['DELTA'],1):.1f}"
+                c1 = "red"
+                c2 = "black"
+            else :
+                DELTA = f"{round(row['DELTA'],1):.1f}"
+                c1 = "white"
+                c2 = "black"        
+
+            st.markdown(
+                    f'''
+                    <p style="font-size:{int(20*zoom)}px; text-align: center; background-color: {c1};color: {c2}; padding: 5px; border-radius: 5px;outline: 3px solid {c2};">
+                        <b>{DELTA}</b>
+                    </p>
+                    ''',
+                    unsafe_allow_html=True
+                )
+
+with top11_20 :
+    st.markdown(
+            f'''
+            <p style="font-size:{int(35*zoom)}px; text-align: center; background-color: silver;color: black; padding: 5px; border-radius: 5px;">
+                <b>TOP 11-20</b>
+            </p>
+            ''',
+            unsafe_allow_html=True
+        )
+    team_col, name_col,avg_col,r_col,delta_col = st.columns([0.13,0.3,0.19,0.19,0.19])
+
+    with team_col :
+        st.markdown(
+                f'''
+                <p style="font-size:{int(20*zoom)}px; text-align: center; background-color: withe;color: black; padding: 5px; border-radius: 5px;outline: 3px solid black;">
+                    <b>TEAM</b>
+                </p>
+                ''',
+                unsafe_allow_html=True
+            )
+    with name_col :
+        st.markdown(
+                f'''
+                <p style="font-size:{int(20*zoom)}px; text-align: center; background-color: withe;color: black; padding: 5px; border-radius: 5px;outline: 3px solid black;">
+                    <b>PLAYER</b>
+                </p>
+                ''',
+                unsafe_allow_html=True
+            )
+    with avg_col :
+        st.markdown(
+                f'''
+                <p style="font-size:{int(20*zoom)}px; text-align: center; background-color: withe;color: black; padding: 5px; border-radius: 5px;outline: 3px solid black;">
+                    <b>AVG I_PER</b>
+                </p>
+                ''',
+                unsafe_allow_html=True
+            )
+    with r_col :
+        st.markdown(
+                f'''
+                <p style="font-size:{int(20*zoom)}px; text-align: center; background-color: withe;color: black; padding: 5px; border-radius: 5px;outline: 3px solid black;">
+                    <b>R I_PER</b>
+                </p>
+                ''',
+                unsafe_allow_html=True
+            )
+    with delta_col :
+        st.markdown(
+                f'''
+                <p style="font-size:{int(20*zoom)}px; text-align: center; background-color: withe;color: black; padding: 5px; border-radius: 5px;outline: 3px solid black;">
+                    <b>DELTA I_PER</b>
+                </p>
+                ''',
+                unsafe_allow_html=True
+            )
+    for index, row in player_stat_global_for_top30.iloc[10:20].iterrows():
+        c1 = teams_color[teams_color["TEAM"]==row["TEAM"]]["COL1"].to_list()[0]
+        c2 = teams_color[teams_color["TEAM"]==row["TEAM"]]["COL2"].to_list()[0]
+
+
+        with team_col :
+            st.markdown(
+                    f'''
+                    <p style="font-size:{int(20*zoom)}px; text-align: center; background-color: {c1};color: {c2}; padding: 5px; border-radius: 5px;outline: 3px solid {c2};">
+                        <b>{row["TEAM"]}</b>
+                    </p>
+                    ''',
+                    unsafe_allow_html=True
+                )
+        with name_col :
+            st.markdown(
+                    f'''
+                    <p style="font-size:{int(20*zoom)}px; text-align: center; background-color: {c1};color: {c2}; padding: 5px; border-radius: 5px;outline: 3px solid {c2};">
+                        <b>{row["PLAYER"]}</b>
+                    </p>
+                    ''',
+                    unsafe_allow_html=True
+                )
+        with avg_col :
+            st.markdown(
+                    f'''
+                    <p style="font-size:{int(20*zoom)}px; text-align: center; background-color: {c1};color: {c2}; padding: 5px; border-radius: 5px;outline: 3px solid {c2};">
+                        <b>{row["I_PER_SEASON"]}</b>
+                    </p>
+                    ''',
+                    unsafe_allow_html=True
+                )
+        with r_col :
+            st.markdown(
+                    f'''
+                    <p style="font-size:{int(20*zoom)}px; text-align: center; background-color: {c1};color: {c2}; padding: 5px; border-radius: 5px;outline: 3px solid {c2};">
+                        <b>{row["I_PER_TONIGHT"]}</b>
+                    </p>
+                    ''',
+                    unsafe_allow_html=True
+                )
+        with delta_col :
+            if row["DELTA"]>0 :
+                DELTA = f"+{round(row['DELTA'],1):.1f}"
+                c1 = "green"
+                c2 = "white"
+            elif  row["DELTA"]<0 :
+                DELTA = f"{round(row['DELTA'],1):.1f}"
+                c1 = "red"
+                c2 = "black"
+            else :
+                DELTA = f"{round(row['DELTA'],1):.1f}"
+                c1 = "white"
+                c2 = "black"  
+            st.markdown(
+                    f'''
+                    <p style="font-size:{int(20*zoom)}px; text-align: center; background-color: {c1};color: {c2}; padding: 5px; border-radius: 5px;outline: 3px solid {c2};">
+                        <b>{DELTA}</b>
+                    </p>
+                    ''',
+                    unsafe_allow_html=True
+                )
+with top21_30 :
+    st.markdown(
+            f'''
+            <p style="font-size:{int(35*zoom)}px; text-align: center; background-color: #CD7F32;color: white; padding: 5px; border-radius: 5px;">
+                <b>TOP 21-30</b>
+            </p>
+            ''',
+            unsafe_allow_html=True
+        )
+
+    team_col, name_col,avg_col,r_col,delta_col = st.columns([0.13,0.3,0.19,0.19,0.19])
+
+    with team_col :
+        st.markdown(
+                f'''
+                <p style="font-size:{int(20*zoom)}px; text-align: center; background-color: withe;color: black; padding: 5px; border-radius: 5px;outline: 3px solid black;">
+                    <b>TEAM</b>
+                </p>
+                ''',
+                unsafe_allow_html=True
+            )
+    with name_col :
+        st.markdown(
+                f'''
+                <p style="font-size:{int(20*zoom)}px; text-align: center; background-color: withe;color: black; padding: 5px; border-radius: 5px;outline: 3px solid black;">
+                    <b>PLAYER</b>
+                </p>
+                ''',
+                unsafe_allow_html=True
+            )
+    with avg_col :
+        st.markdown(
+                f'''
+                <p style="font-size:{int(20*zoom)}px; text-align: center; background-color: withe;color: black; padding: 5px; border-radius: 5px;outline: 3px solid black;">
+                    <b>AVG I_PER</b>
+                </p>
+                ''',
+                unsafe_allow_html=True
+            )
+    with r_col :
+        st.markdown(
+                f'''
+                <p style="font-size:{int(20*zoom)}px; text-align: center; background-color: withe;color: black; padding: 5px; border-radius: 5px;outline: 3px solid black;">
+                    <b>R I_PER</b>
+                </p>
+                ''',
+                unsafe_allow_html=True
+            )
+    with delta_col :
+        st.markdown(
+                f'''
+                <p style="font-size:{int(20*zoom)}px; text-align: center; background-color: withe;color: black; padding: 5px; border-radius: 5px;outline: 3px solid black;">
+                    <b>DELTA I_PER</b>
+                </p>
+                ''',
+                unsafe_allow_html=True
+            )
+    for index, row in player_stat_global_for_top30.iloc[20:30].iterrows():
+        c1 = teams_color[teams_color["TEAM"]==row["TEAM"]]["COL1"].to_list()[0]
+        c2 = teams_color[teams_color["TEAM"]==row["TEAM"]]["COL2"].to_list()[0]
+
+
+        with team_col :
+            st.markdown(
+                    f'''
+                    <p style="font-size:{int(20*zoom)}px; text-align: center; background-color: {c1};color: {c2}; padding: 5px; border-radius: 5px;outline: 3px solid {c2};">
+                        <b>{row["TEAM"]}</b>
+                    </p>
+                    ''',
+                    unsafe_allow_html=True
+                )
+        with name_col :
+            st.markdown(
+                    f'''
+                    <p style="font-size:{int(20*zoom)}px; text-align: center; background-color: {c1};color: {c2}; padding: 5px; border-radius: 5px;outline: 3px solid {c2};">
+                        <b>{row["PLAYER"]}</b>
+                    </p>
+                    ''',
+                    unsafe_allow_html=True
+                )
+        with avg_col :
+            st.markdown(
+                    f'''
+                    <p style="font-size:{int(20*zoom)}px; text-align: center; background-color: {c1};color: {c2}; padding: 5px; border-radius: 5px;outline: 3px solid {c2};">
+                        <b>{row["I_PER_SEASON"]}</b>
+                    </p>
+                    ''',
+                    unsafe_allow_html=True
+                )
+        with r_col :
+            st.markdown(
+                    f'''
+                    <p style="font-size:{int(20*zoom)}px; text-align: center; background-color: {c1};color: {c2}; padding: 5px; border-radius: 5px;outline: 3px solid {c2};">
+                        <b>{row["I_PER_TONIGHT"]}</b>
+                    </p>
+                    ''',
+                    unsafe_allow_html=True
+                )
+        with delta_col :
+            if row["DELTA"]>0 :
+                DELTA = f"+{round(row['DELTA'],1):.1f}"
+                c1 = "green"
+                c2 = "white"
+            elif  row["DELTA"]<0 :
+                DELTA = f"{round(row['DELTA'],1):.1f}"
+                c1 = "red"
+                c2 = "black"
+            else :
+                DELTA = f"{round(row['DELTA'],1):.1f}"
+                c1 = "white"
+                c2 = "black"  
+            st.markdown(
+                    f'''
+                    <p style="font-size:{int(20*zoom)}px; text-align: center; background-color: {c1};color: {c2}; padding: 5px; border-radius: 5px;outline: 3px solid {c2};">
+                        <b>{DELTA}</b>
+                    </p>
+                    ''',
+                    unsafe_allow_html=True
+                )
