@@ -986,6 +986,11 @@ with players_part :
 st.header("ROUND PERFORMANCE OF SEASON TOP PLAYERS:")
 top1_10,_, top11_20,_,top21_30 = st.columns([0.3,0.05,0.3,0.05,0.3])
 
+def truncate_string(s):
+    if len(s) > 18:
+        return s[:18] + '.'
+    return s
+
 with top1_10 :
     st.markdown(
             f'''
@@ -1060,7 +1065,7 @@ with top1_10 :
             st.markdown(
                     f'''
                     <p style="font-size:{int(20*zoom)}px; text-align: center; background-color: {c1};color: {c2}; padding: 5px; border-radius: 5px;outline: 3px solid {c2};">
-                        <b>{row["PLAYER"]}</b>
+                        <b>{truncate_string(row["PLAYER"])}</b>
                     </p>
                     ''',
                     unsafe_allow_html=True
@@ -1180,7 +1185,7 @@ with top11_20 :
             st.markdown(
                     f'''
                     <p style="font-size:{int(20*zoom)}px; text-align: center; background-color: {c1};color: {c2}; padding: 5px; border-radius: 5px;outline: 3px solid {c2};">
-                        <b>{row["PLAYER"]}</b>
+                        <b>{truncate_string(row["PLAYER"])}</b>
                     </p>
                     ''',
                     unsafe_allow_html=True
@@ -1299,7 +1304,7 @@ with top21_30 :
             st.markdown(
                     f'''
                     <p style="font-size:{int(20*zoom)}px; text-align: center; background-color: {c1};color: {c2}; padding: 5px; border-radius: 5px;outline: 3px solid {c2};">
-                        <b>{row["PLAYER"]}</b>
+                        <b>{truncate_string(row["PLAYER"])}</b>
                     </p>
                     ''',
                     unsafe_allow_html=True
