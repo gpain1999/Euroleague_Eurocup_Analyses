@@ -4,6 +4,7 @@ import sys
 sys.path.append(os.path.join(os.path.dirname(__file__), '../fonctions'))
 import fonctions as f
 
+
 from tabulate import tabulate
 
 data_dir = os.path.join(os.path.dirname(__file__), '..', 'datas')
