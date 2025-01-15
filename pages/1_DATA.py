@@ -31,7 +31,7 @@ df["I_PER"] = df["I_PER"].round(2)
 df["NB_GAME"] = 1
 df = df[['ROUND', 'NB_GAME', 'TEAM', 'OPPONENT', 'HOME', 'WIN', 'NUMBER', 'PLAYER',
          'TIME_ON', "I_PER", 'PER', 'PM_ON', 'PTS', 'DR', 'OR', 'TR', 'AS', 'ST', 'CO',
-         '1_R', '1_T', '2_R', '2_T', '3_R', '3_T', 'TO', 'FP', 'CF', 'NCF']]
+         '1_R', '1_T', '2_R', '2_T', '3_R', '3_T','TO', 'FP', 'CF', 'NCF']]
 
 
 # Ajouter une image en haut à droite
@@ -157,6 +157,7 @@ if not df.empty:
         result_df = result_df.drop(columns=['NB_GAME'])
 
     result_df = result_df.sort_values(by = "TIME_ON",ascending = False)
+
     st.dataframe(result_df, height=min(35 + 35*len(result_df),900),width=2000,hide_index=True)  # Augmenter la hauteur du tableau
 else:
     st.error("Les données ne sont pas chargées. Veuillez vérifier votre fichier source.")
