@@ -7,4 +7,5 @@ Pillow==9.5.0
 plotly
 matplotlib
 statsmodels==0.14.0
+plotly==5.24.1
 #scikit-learn==1.2.0

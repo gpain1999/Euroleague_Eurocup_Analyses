@@ -660,7 +660,7 @@ with good_bad :
         st.markdown(
             f'''
             <p style="font-size:{22*zoom}px; text-align: center; background-color: {local_c2};color: {local_c1}; padding: 8px; border-radius: 5px;outline: 3px solid {local_c1};">
-                <b>{round(local_def+local_off,2)} REB. PERF</b>
+                <b>{round(local_def+local_off,2):.2f} REB. PERF</b>
             </p>
             ''',
             unsafe_allow_html=True
@@ -776,7 +776,7 @@ with good_bad :
         st.markdown(
             f'''
             <p style="font-size:{22*zoom}px; text-align: center; background-color: {road_c2};color: {road_c1}; padding: 8px; border-radius: 5px;outline: 3px solid {road_c1};">
-                <b>{round(road_def+road_off,2)} REB. PERF</b>
+                <b>{round(road_def+road_off,2):.2f} REB. PERF</b>
             </p>
             ''',
             unsafe_allow_html=True

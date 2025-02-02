@@ -3,6 +3,10 @@ import sys
 import os
 import numpy as np
 
+import plotly
+print(plotly.__version__)
+
+
 # Charger les modules nécessaires
 season = 2024
 competition = "euroleague"
