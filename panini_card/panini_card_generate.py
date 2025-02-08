@@ -9,7 +9,7 @@ height = round(850 * 88/63) - 60
 
 font_path_bold = "police_ecriture/GothamBoldItalic.ttf" 
 text_color = "black"
-border_size = 80
+border_size = 30
 dossier_path = f'images/{competition}_{season}_players'  # Remplacez par le chemin de votre dossier
 ct = pd.read_csv("panini_card/color_team.csv")
 if competition == "euroleague" :
@@ -128,16 +128,12 @@ for index, row in data.iterrows():
         panini_image.paste(competition_image, (width - 200, 40), mask=competition_image)
 
 
-
-
-
-
         # BORDURE
         # Créer l'image avec le contour
         color = ct.loc[ct["TEAM"] == team, "COLOR"].values
 
-        panini_image = ImageOps.expand(panini_image, border=int(border_size*1/5), fill=color[0])
+        panini_image = ImageOps.expand(panini_image, border=int(border_size*1/3), fill=color[0])
 
-        panini_image = ImageOps.expand(panini_image, border=int(border_size*4/5), fill=border_color)
+        panini_image = ImageOps.expand(panini_image, border=int(border_size*2/3), fill=border_color)
 
         panini_image.save(f"{folder_path}/{team}_card_{id_players}.png")
