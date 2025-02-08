@@ -918,6 +918,7 @@ def evol_score(data_dir,competition,season) :
     df_evol_score = pd.DataFrame(columns=columns)
 
     for gc in list(df_pbp["Gamecode"].unique()) : 
+
         df_pbp2 = df_pbp[df_pbp["Gamecode"] == gc].reset_index(drop = True)
         df_gs2 = df_gs[df_gs["Gamecode"] == gc].reset_index(drop = True)
 
@@ -976,9 +977,16 @@ def evol_score(data_dir,competition,season) :
 
         for i in range(1, nb_per + 1):
             filtred_indices = df_pbp2[df_pbp2['MARKERTIME'] > i * 2.5].index
+
             if not filtred_indices.empty:
-                evol_point_a.append(df_pbp2.loc[filtred_indices[0] - 1, 'POINTS_A'])
-                evol_point_b.append(df_pbp2.loc[filtred_indices[0] - 1, 'POINTS_B'])
+
+                ind = filtred_indices[0] - 1
+                if ind == -1 :
+                    evol_point_a.append(0)
+                    evol_point_b.append(0)
+                else : 
+                    evol_point_a.append(df_pbp2.loc[ind, 'POINTS_A'])
+                    evol_point_b.append(df_pbp2.loc[ind, 'POINTS_B'])
 
             else:
                 # Si aucun n'est vrai, prendre le maximum de POINTS_A
