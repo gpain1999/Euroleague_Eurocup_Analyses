@@ -108,12 +108,12 @@ with col1:
 
     # Introduction
     st.markdown("""
-    The **I_PER** (Impact PER) is an advanced metric used to evaluate a player's performance by considering both **total production (PER)** and **playing time (TDJ)**.  
+    The **I_PER** (Impact PER) is an advanced metric used to evaluate a player's performance by considering both **total production (PER)** and **playing time (Time(minutes))**.  
     It is defined by the formula:
     """)
 
     # Displaying the main formula in LaTeX
-    st.latex(r"I\_PER = \frac{PER}{TDJ^{0.5}}")
+    st.latex(r"I\_PER = \frac{PER}{Time(minutes)^{0.5}}")
 
     # Section: The Two Extremes
     st.subheader("🔸 The Two Extremes: Raw PER vs Qualitative PER")
@@ -122,28 +122,28 @@ with col1:
     The idea behind I_PER is to balance between two opposite approaches:
     """)
 
-    # Raw PER (TDJ power 0)
+    # Raw PER (Time(minutes) power 0)
     st.markdown("#### 📌 1. **Raw PER: Ignoring Playing Time**")
-    st.latex(r"QUANTITY = \frac{PER}{TDJ^0} = \frac{PER}{1} = PER")
+    st.latex(r"QUANTITY = \frac{PER}{Time(minutes)^0} = \frac{PER}{1} = PER")
     st.markdown("""
     - Here, **playing time is not considered**.  
     - This favors players with high playing volume.  
     - A player accumulating stats over **35 minutes** will have a high PER, even if they lack efficiency.
     """)
 
-    # Qualitative PER (TDJ power 1)
+    # Qualitative PER (Time(minutes) power 1)
     st.markdown("#### 📌 2. **Qualitative PER: Evaluating Pure Efficiency**")
-    st.latex(r"QUALITY = \frac{PER}{TDJ^1} = \frac{PER}{TDJ}")
+    st.latex(r"QUALITY = \frac{PER}{Time(minutes)^1} = \frac{PER}{Time(minutes)}")
     st.markdown("""
     - Here, every minute played is accounted for, favoring **efficiency per minute**.  
-    - Players performing well in short bursts will have a **high PER/TDJ**, but they don’t experience the physical wear of a long match.  
-    - A player effective in **10 minutes** may have an excellent PER/TDJ, but it doesn’t guarantee they could maintain the same efficiency over **30 minutes**.
+    - Players performing well in short bursts will have a **high PER/Time(minutes)**, but they don’t experience the physical wear of a long match.  
+    - A player effective in **10 minutes** may have an excellent PER/Time(minutes), but it doesn’t guarantee they could maintain the same efficiency over **30 minutes**.
     """)
 
     # I_PER (The Balance Between Both)
     st.subheader("⚖️ I_PER: The Perfect Balance")
 
-    st.latex(r"BALANCE = I\_PER = \frac{PER}{TDJ^{0.5}}")
+    st.latex(r"BALANCE = I\_PER = \frac{PER}{Time(minutes)^{0.5}}")
 
     st.markdown("""
     - **I_PER** considers **playing time** but **without overly penalizing it**.  
@@ -177,7 +177,7 @@ with col2:
     It is defined by:  
     """)
 
-    st.latex(r"I\_PER = \frac{PER}{TDJ^{0.5}}")
+    st.latex(r"I\_PER = \frac{PER}{Time(minutes)^{0.5}}")
 
     st.markdown("""
     The higher the **I_PER**, the better the player's performance.  
