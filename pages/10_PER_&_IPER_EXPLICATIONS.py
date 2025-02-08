@@ -113,7 +113,8 @@ with col1:
     """)
 
     # Displaying the main formula in LaTeX
-    st.latex(r"I\_PER = \frac{PER}{Time^{0.5}}")
+    st.latex(r"I\_PER = \frac{PER}{Time^{0.5}} = \frac{PER}{\sqrt{Time}}")
+
 
     # Section: The Two Extremes
     st.subheader("🔸 The Two Extremes: Raw PER vs Qualitative PER")
