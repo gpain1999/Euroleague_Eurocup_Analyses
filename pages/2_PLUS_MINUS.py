@@ -88,23 +88,20 @@ min_round = st.sidebar.number_input("Round Minimum", min_value=1, value=1)
 max_round = st.sidebar.number_input("Round Maximum", min_value=min_round, value=34 if not df.empty else 1)
 
 # Filtrage dynamique des équipes
-CODETEAM = st.sidebar.multiselect("Équipes Sélectionnées", options=sorted(df["TEAM"].unique()) if not df.empty else [])
+CODETEAM = st.sidebar.multiselect("Selected teams", options=sorted(df["TEAM"].unique()) if not df.empty else [])
 
 # Mise à jour dynamique des joueurs en fonction des équipes sélectionnées
 if CODETEAM:
-
     available_players = players[players["CODETEAM"].isin(CODETEAM)]["PLAYER"].unique()
 else:
     available_players = players["PLAYER"].unique()
 
-selected_players = st.sidebar.multiselect("Joueurs Sélectionnés", options=sorted(available_players))
+selected_players = st.sidebar.multiselect("Selected players", options=sorted(available_players))
 
-
-col1,col2,col3,col4 = st.columns([1,1,1, 4])
+col1,col2,col3,col4 = st.columns([1,1,1,4])
 
 with col1 :
     min_percent_in = st.slider("Minimum Time percent together ", min_value=0, max_value=100, value=0)
-
 with col3 :
     num_players = st.number_input("SOLO/DUO/TRIO", min_value=1,max_value=3 ,value=2)
 
