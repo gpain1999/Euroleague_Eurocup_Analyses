@@ -117,14 +117,14 @@ with col1:
 
 
     # Section: The Two Extremes
-    st.subheader("🔸 The Two Extremes: Raw PER vs Qualitative PER")
+    st.subheader("🔸 The Two Extremes: Absolute PER vs Qualitative PER")
 
     st.markdown("""
     The idea behind I_PER is to balance between two opposite approaches:
     """)
 
-    # Raw PER (Time power 0)
-    st.markdown("#### 📌 1. **Raw PER: Ignoring Playing Time**")
+    # Absolute PER (Time power 0)
+    st.markdown("#### 📌 1. **Absolute PER: Ignoring Playing Time**")
     st.latex(r"QUANTITY = \frac{PER}{Time^0} = \frac{PER}{1} = PER")
     st.markdown("""
     - Here, **playing time is not considered**.  
