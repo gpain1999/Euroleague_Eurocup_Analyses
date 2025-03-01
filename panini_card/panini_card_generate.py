@@ -4,12 +4,12 @@ import os
 
 competition = "euroleague"
 season = 2024
-width = 850 - 60
-height = round(850 * 88/63) - 60
+width = 850 - 100
+height = round(850 * 89/63) - 100
 
 font_path_bold = "police_ecriture/GothamBoldItalic.ttf" 
 text_color = "black"
-border_size = 30
+border_size = 50
 dossier_path = f'images/{competition}_{season}_players'  # Remplacez par le chemin de votre dossier
 ct = pd.read_csv("panini_card/color_team.csv")
 if competition == "euroleague" :
@@ -72,7 +72,7 @@ for index, row in data.iterrows():
         player_image = player_image.convert("RGBA")
 
 
-        panini_image.paste(player_image, (10, 50), mask=player_image)
+        panini_image.paste(player_image, ((width-770)//2, 50), mask=player_image)
 
 
 
@@ -96,7 +96,7 @@ for index, row in data.iterrows():
 
         # Calculer la position x pour centrer le texte
         text_position_x = (panini_image.width - text_width) // 2  # Position x centrée
-        text_position_y = 977 + round((150-text_height)/2)  # Position y centrée
+        text_position_y = (height-150) + round((150-text_height)/2)  # Position y centrée
 
         draw.text((text_position_x, text_position_y), name_players, fill=text_color, font=ImageFont.truetype(font_path_bold, font_size))
         bbox = draw.textbbox((0, 0), f"{season}-{season+1}", font=ImageFont.truetype(font_path_bold, 35))
@@ -132,8 +132,8 @@ for index, row in data.iterrows():
         # Créer l'image avec le contour
         color = ct.loc[ct["TEAM"] == team, "COLOR"].values
 
-        panini_image = ImageOps.expand(panini_image, border=int(border_size*1/3), fill=color[0])
+        panini_image = ImageOps.expand(panini_image, border=int(border_size*1/5), fill=color[0])
 
-        panini_image = ImageOps.expand(panini_image, border=int(border_size*2/3), fill=border_color)
+        panini_image = ImageOps.expand(panini_image, border=int(border_size*4/5), fill=border_color)
 
         panini_image.save(f"{folder_path}/{team}_card_{id_players}.png")

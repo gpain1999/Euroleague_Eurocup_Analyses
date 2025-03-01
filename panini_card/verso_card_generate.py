@@ -4,9 +4,9 @@ import os
 
 competition = "euroleague"
 season = 2024
-width = 850 - 60
-height = round(850 * 88/63) - 60
-border_size = 30
+width = 850 - 80
+height = round(850 * 89/63) - 80
+border_size = 40
 border_color = "#FEB673"
 background_color = "black"
 
@@ -24,8 +24,7 @@ competition_image = competition_image.convert("RGBA")
 
 panini_image.paste(competition_image, ((width - 500)//2, (height - 500)//2), mask=competition_image)
 
-panini_image = ImageOps.expand(panini_image, border=int(border_size*1/5), fill=border_color)
+panini_image = ImageOps.expand(panini_image, border=border_size, fill=border_color)
 
-panini_image = ImageOps.expand(panini_image, border=int(border_size*4/5), fill=border_color)
 
 panini_image.save(f"{folder_path}/_verso.png")
