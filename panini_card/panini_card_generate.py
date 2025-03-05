@@ -68,7 +68,6 @@ for index, row in data.iterrows():
         player_image_path = f"images/{competition}_{season}_players/{team}_{id_players}.png"
         player_image = Image.open(player_image_path)
         player_image = player_image.resize((770,1027), Image.Resampling.LANCZOS)
-        
         player_image = player_image.convert("RGBA")
 
 
