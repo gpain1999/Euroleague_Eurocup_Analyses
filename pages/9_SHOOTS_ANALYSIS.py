@@ -14,7 +14,7 @@ from auth import require_authentication
 #require_authentication()
 
 
-season = 2024
+season = 2025
 competition = "euroleague"
 data_dir = os.path.join(os.path.dirname(__file__), '../datas')
 sys.path.append(os.path.join(os.path.dirname(__file__), '../fonctions'))
@@ -31,6 +31,8 @@ import fonctions as f
 
 # Charger les données
 df = f.calcul_per2(data_dir, season, competition)
+df = df[(df["TIME_ON"]>0)].copy()
+
 df.insert(6, "I_PER", df["PER"] / df["TIME_ON"] ** 0.5)
 df["I_PER"] = df["I_PER"].round(2)
 df["NB_GAME"] = 1
@@ -85,19 +87,42 @@ selected_range = st.sidebar.slider(
 min_round = selected_range[0]
 max_round = selected_range[1]
 
-col1, col2,col3,col4,col5 = st.columns([2, 2,1,1,1])
+col1, col2, col3, col4, col5, col6 = st.columns([2, 2, 1.3, 1.3, 1.3,1.3])
 
-with col1 : 
+with col1:
     mode = st.selectbox("Méthode d'Agrégation", options=["CUMULATED", "AVERAGE"], index=0)
-with col2 : 
 
+with col2:
     gp = st.selectbox("GROUP BY", options=["PLAYER", "TEAM"], index=0)
 
-with col3 : 
-    M1 = st.checkbox("Stats 1P", value=True)
-    M2 = st.checkbox("Stats 2P", value=True)
-    M3 = st.checkbox("Stats 3P", value=True)
+df_for_max = df.copy()
 
+# Agrégation selon gp
+if gp == "PLAYER":
+    df_for_max = df_for_max.groupby("PLAYER")[["1_T", "2_T", "3_T"]].sum().reset_index()
+else:  # TEAM
+    df_for_max = df_for_max.groupby("TEAM")[["1_T", "2_T", "3_T"]].sum().reset_index()
+# Valeurs max dynamiques
+max_1T = int(df_for_max["1_T"].max())
+max_2T = int(df_for_max["2_T"].max())
+max_3T = int(df_for_max["3_T"].max())
+
+max_shot = max_2T + max_3T + max_1T
+
+with col3:
+    M1 = st.checkbox("Stats 1P", value=True)
+    min_1T = st.slider("Min 1T", 0, max_1T, 0)
+
+with col4:
+    M2 = st.checkbox("Stats 2P", value=True)
+    min_2T = st.slider("Min 2T", 0, max_2T, 0)
+
+with col5:
+    M3 = st.checkbox("Stats 3P", value=True)
+    min_3T = st.slider("Min 3T", 0, max_3T, 0)
+
+with col6:
+    min_total_shot = st.slider("Min Total Shots", 0, max_shot, 0)
  
 
 
@@ -167,11 +192,26 @@ if M3 :
     col_to_return = col_to_return + ["3_R","3_T","INF_3P","3_P","SUP_3P"]
 
 
+result_df = result_df[result_df["1_T"] >= min_1T]
+
+result_df = result_df[result_df["2_T"] >= min_2T]
+
+result_df = result_df[result_df["3_T"] >= min_3T]
+
+result_df = result_df[(result_df["1_T"] + result_df["2_T"] + result_df["3_T"]) >= min_total_shot]
+
 result_df = result_df[col_to_return]
 result_df = result_df.loc[:, (result_df != "---").any(axis=0)]
 
+
+result_df["TS"] = round(
+    (2*result_df["2_R"] + 3*result_df["3_R"] + result_df["1_R"]) * 100
+    / (2 * (result_df["2_T"] + result_df["3_T"] + 0.44 * result_df["1_T"]))
+,2)
+
 ################### STYLES
 ###################### PRINT
+
 
 
 st.dataframe(result_df, height=min(35 + 35*len(result_df),900),width=2000,hide_index=True)

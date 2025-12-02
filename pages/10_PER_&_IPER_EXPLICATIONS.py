@@ -5,7 +5,7 @@ import sys
 import os
 from PIL import Image
 import math
-season = 2024
+season = 2025
 competition = "euroleague"
 data_dir = os.path.join(os.path.dirname(__file__), '../datas')
 sys.path.append(os.path.join(os.path.dirname(__file__), '../fonctions'))

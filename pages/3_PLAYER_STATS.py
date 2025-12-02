@@ -13,7 +13,7 @@ from auth import require_authentication
 
 #require_authentication()
 
-season = 2024
+season = 2025
 competition = "euroleague"
 data_dir = os.path.join(os.path.dirname(__file__), '../datas')
 sys.path.append(os.path.join(os.path.dirname(__file__), '../fonctions'))
@@ -38,6 +38,8 @@ gs = gs[["Round","local.club.code","local.score","road.score","road.club.code"]]
 gs.columns = ["ROUND","LOCAL","SL","SR","ROAD"]
 # Charger les données
 df = f.calcul_per2(data_dir, season, competition)
+df = df[(df["TEAM"]!=0)&(df["TIME_ON"]>0)].copy()
+
 df.insert(6, "I_PER", df["PER"] / df["TIME_ON"] ** 0.5)
 df["I_PER"] = df["I_PER"].round(2)
 df["NB_GAME"] = 1
@@ -115,7 +117,7 @@ notation = notation.sort_values(by = "NOTE",ascending = False)
 
 selected_stats = st.sidebar.selectbox("Stat Selected", options=["PER","I_PER","PTS","TR","AS","PM_ON","ST"])
 
-window_size = st.sidebar.number_input("Sliding average", min_value=1,max_value=max_round ,value=5)
+window_size = st.sidebar.number_input("Sliding average", min_value=1,max_value=max_round ,value=min(5, max_round))
 # Calcul des min et max pour les axes
 min_selected_stats = df[selected_stats].min()
 max_selected_stats = df[selected_stats].max()

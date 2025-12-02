@@ -13,7 +13,7 @@ from auth import require_authentication
 
 #require_authentication()
 
-season = 2024
+season = 2025
 competition = "euroleague"
 data_dir = os.path.join(os.path.dirname(__file__), '../datas')
 sys.path.append(os.path.join(os.path.dirname(__file__), '../fonctions'))
@@ -31,6 +31,8 @@ import fonctions as f
 
 # Charger les données
 df = f.calcul_per2(data_dir, season, competition)
+df = df[(df["TEAM"]!=0)].copy()
+
 df.insert(6, "I_PER", df["PER"] / df["TIME_ON"] ** 0.5)
 df["I_PER"] = df["I_PER"].round(2)
 df["NB_GAME"] = 1
@@ -62,8 +64,9 @@ selected_range = st.sidebar.slider(
     step=1
 )
 
+
 # Filtrage dynamique des équipes
-CODETEAM = st.sidebar.selectbox("Selected Team", options=sorted(df["TEAM"].unique()) if not df.empty else [])
+CODETEAM = st.sidebar.selectbox("Selected Team", options=sorted(df[(df["TEAM"]!=0)&(df["TIME_ON"]>0)]["TEAM"].unique()) if not df.empty else [])
 team_logo_path = os.path.join(images_dir, f"{competition}_{season}_teams/{CODETEAM}.png")
 
 zoom = st.sidebar.slider(

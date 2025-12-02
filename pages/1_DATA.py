@@ -10,7 +10,7 @@ from auth import require_authentication
 
 # require_authentication()
 
-season = 2024
+season = 2025
 competition = "euroleague"
 data_dir = os.path.join(os.path.dirname(__file__), '../datas')
 sys.path.append(os.path.join(os.path.dirname(__file__), '../fonctions'))
@@ -26,6 +26,8 @@ import fonctions as f
 
 # Charger les données
 df = f.calcul_per2(data_dir, season, competition)
+
+df = df[(df["TIME_ON"]>0)].copy()
 df.insert(6, "I_PER", df["PER"] / df["TIME_ON"] ** 0.5)
 df["I_PER"] = df["I_PER"].round(2)
 df["NB_GAME"] = 1
@@ -112,6 +114,8 @@ selected_range = st.sidebar.slider(
 min_round = selected_range[0]
 max_round = selected_range[1]
 
+print(df["TEAM"].unique())
+
 # Filtrage dynamique des équipes
 selected_teams = st.sidebar.multiselect("Équipes Sélectionnées", options=sorted(df["TEAM"].unique()) if not df.empty else [])
 
@@ -159,5 +163,5 @@ if not df.empty:
     result_df = result_df.sort_values(by = "TIME_ON",ascending = False)
 
     st.dataframe(result_df, height=min(35 + 35*len(result_df),900),width=2000,hide_index=True)  # Augmenter la hauteur du tableau
-else:
+else :
     st.error("Les données ne sont pas chargées. Veuillez vérifier votre fichier source.")

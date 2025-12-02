@@ -14,7 +14,7 @@ from auth import require_authentication
 #require_authentication()
 
 
-season = 2024
+season = 2025
 competition = "euroleague"
 data_dir = os.path.join(os.path.dirname(__file__), '../datas')
 sys.path.append(os.path.join(os.path.dirname(__file__), '../fonctions'))

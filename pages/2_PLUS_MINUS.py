@@ -11,7 +11,7 @@ from auth import require_authentication
 #require_authentication()
 
 
-season = 2024
+season = 2025
 competition = "euroleague"
 data_dir = os.path.join(os.path.dirname(__file__), '../datas')
 sys.path.append(os.path.join(os.path.dirname(__file__), '../fonctions'))
@@ -85,7 +85,7 @@ st.sidebar.header("SETTINGS")
 
 
 min_round = st.sidebar.number_input("Round Minimum", min_value=1, value=1)
-max_round = st.sidebar.number_input("Round Maximum", min_value=min_round, value=34 if not df.empty else 1)
+max_round = st.sidebar.number_input("Round Maximum", min_value=min_round, value=38 if not df.empty else 1)
 
 # Filtrage dynamique des équipes
 CODETEAM = st.sidebar.multiselect("Selected teams", options=sorted(df["TEAM"].unique()) if not df.empty else [])
@@ -100,10 +100,16 @@ selected_players = st.sidebar.multiselect("Selected players", options=sorted(ava
 
 col1,col2,col3,col4 = st.columns([1,1,1,4])
 
-with col1 :
-    min_percent_in = st.slider("Minimum Time percent together ", min_value=0, max_value=100, value=0)
-with col3 :
-    num_players = st.number_input("SOLO/DUO/TRIO", min_value=1,max_value=3 ,value=2)
+
+with col1:
+    min_percent_in = st.slider("Minimum Time percent together", min_value=0, max_value=100, value=0)
+
+with col2:
+    min_time_together = st.number_input("Minimum Time together (min)", min_value=0, value=0)
+
+with col3:
+    num_players = st.number_input("SOLO/DUO/TRIO/QUATRIO", min_value=1, max_value=4, value=2)
+
 
 
 # Mise à jour automatique des résultats
@@ -118,6 +124,9 @@ if not df.empty:
                    selected_players = selected_players,
                    min_percent_in = min_percent_in)
 
+    result_df = result_df[result_df["TIME_ON"] >= min_time_together]
     st.dataframe(result_df, height=min(37*(len(result_df)+1),900),width=3000,hide_index=True)  # Augmenter la hauteur du tableau
+    st.markdown(f"**Number of rows: {len(result_df)}**")
+
 else:
     st.error("Les données ne sont pas chargées. Veuillez vérifier votre fichier source.")

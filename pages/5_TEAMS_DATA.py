@@ -16,7 +16,7 @@ from auth import require_authentication
 
 #require_authentication()
 
-season = 2024
+season = 2025
 competition = "euroleague"
 data_dir = os.path.join(os.path.dirname(__file__), '../datas')
 sys.path.append(os.path.join(os.path.dirname(__file__), '../fonctions'))
@@ -96,6 +96,8 @@ result = pd.merge(
 )
 
 result["PPS"] = ((result["2_R_team"]*2 + result["3_R_team"]*3)/(result["2_T_team"] + result["3_T_team"])).round(2)
+PPS_MOYEN = (result["2_R_team"].sum()*2 + result["3_R_team"].sum()*3)/(result["2_T_team"].sum() + result["3_T_team"].sum())
+
 result["NB_SHOOT"] = (result["2_T_team"] + result["3_T_team"]).round(1)
 
 result["PPS_opp"] = ((result["2_R_opp"]*2 + result["3_R_opp"]*3)/(result["2_T_opp"] + result["3_T_opp"])).round(2)
@@ -113,14 +115,27 @@ result["NB_FT_opp"] = (result["1_T_opp"])
 result["NB_FT_DELTA"] = (result["NB_FT"] - result["NB_FT_opp"]).round(1)
 
 result["BC"] = (100*(result["1_T_team"]*0.5 + result["2_T_team"] + result["3_T_team"])/(result["1_T_team"]*0.5 + result["2_T_team"] + result["3_T_team"] + result["TO_team"])).round(1)
+BC_MOYEN = (100*(result["1_T_team"].sum()*0.5 + result["2_T_team"].sum() + result["3_T_team"].sum())/(result["1_T_team"].sum()*0.5 + result["2_T_team"].sum() + result["3_T_team"].sum() + result["TO_team"].sum())).round(1)
 result["BC_opp"] = (100*(result["1_T_opp"]*0.5 + result["2_T_opp"] + result["3_T_opp"])/(result["1_T_opp"]*0.5 + result["2_T_opp"] + result["3_T_opp"] + result["TO_opp"])).round(1)
 
 result["BC_DELTA"] = (result["BC"] - result["BC_opp"]).round(1)
 
 result["PctDeReRec"] = (100*(result["DR_team"])/(result["DR_team"] + result["OR_opp"])).round(1)
+PCT_DE_REB_MOYEN = (100*df["DR"].sum()/(df["DR"].sum() + df["OR"].sum())).round(1)
 result["PctOfReRec"] = (100*(result["OR_team"])/(result["OR_team"] + result["DR_opp"])).round(1)
 
 
+for side in ["team", "opp"]:
+    PTS = 2*result[f"2_R_{side}"] + 3*result[f"3_R_{side}"] + result[f"1_R_{side}"]
+    FGA = result[f"2_T_{side}"] + result[f"3_T_{side}"]
+    FTA = result[f"1_T_{side}"]
+    result[f"TS_{side}"] = (PTS * 100) / (2 * (FGA + 0.44 * FTA))
+
+TS_MOYEN     = round((2*result["2_R_team"].sum() + 3*result["3_R_team"].sum() + result["1_R_team"].sum()) * 100 /
+                     (2 * ((result["2_T_team"].sum() + result["3_T_team"].sum()) + 0.44 * result["1_T_team"].sum())), 1)
+
+result["TS_team"] = result["TS_team"].round(2)
+result["TS_opp"] = result["TS_opp"].round(2)
 
 
 result["REB_PERF"] = ((result["PctDeReRec"]/70)/(result["PctDeReRec"]/70 + (100-result["PctDeReRec"])/30) + ((result["PctOfReRec"])/30)/((100 - result["PctOfReRec"])/70 + (result["PctOfReRec"])/30)).round(2)
@@ -133,7 +148,7 @@ result_rank[["Rank_PctDeReRec", "Rank_PctOfReRec", "Rank_REB_PERF"]] = result[["
 
 result_rank = result_rank.sort_values(by = "Rank_REB_PERF").reset_index(drop = True)
 
-result2 = result[["NB_GAME","TEAM","PPS","NB_SHOOT","PPS_opp","NB_SHOOT_opp","PPS_DELTA","NB_SHOOT_DELTA","PP_FT","NB_FT","PP_FT_opp","NB_FT_opp","NB_FT_DELTA","BC","BC_opp","BC_DELTA","PctDeReRec","PctOfReRec","REB_PERF"]]
+result2 = result[["NB_GAME","TEAM","PPS","TS_team","NB_SHOOT","PPS_opp","TS_opp","NB_SHOOT_opp","PPS_DELTA","NB_SHOOT_DELTA","PP_FT","NB_FT","PP_FT_opp","NB_FT_opp","NB_FT_DELTA","BC","BC_opp","BC_DELTA","PctDeReRec","PctOfReRec","REB_PERF"]]
 
 ######################PRINT#############
 image_path = f"images/{competition}.png"  # Chemin vers l'image
@@ -172,32 +187,22 @@ col1, col2,col3 = st.columns([0.33,0.33,0.33])
 
 
 
-with col1 :
-    st.header("ACP : OFFENSIVE")
+with col1:
+    st.header("True Shooting Efficiency")
 
-    # Séparation de la colonne "TEAM" et des variables pour l'ACP
+    # Séparation des variables
     teams = result2["TEAM"]
-    X = result2[["PPS","NB_FT","BC","PctOfReRec"]]
+    X = result2[["TS_team", "TS_opp"]]
 
-    # Standardisation des données manuellement (en utilisant les moyennes et les écarts-types)
-    X_standardized = (X - X.mean()) / X.std()
-
-    # Application de l'ACP avec SVD (Singular Value Decomposition)
-    U, S, Vt = np.linalg.svd(X_standardized, full_matrices=False)
-
-    # Les composantes principales sont dans la matrice Vt (les lignes sont les composantes)
-    X_pca = U @ np.diag(S)  # Reconstituer les coordonnées des observations dans l'espace principal
-
-    # Création d'un DataFrame pour les résultats de l'ACP
-    pca_df = pd.DataFrame(X_pca, columns=[f"PC{i+1}" for i in range(X_pca.shape[1])])
-    pca_df["TEAM"] = teams
-
-    # Visualisation du premier plan factoriel
+    # Création de la figure
     fig, ax = plt.subplots(figsize=(10, 10))
-    ax.scatter(pca_df["PC1"], pca_df["PC2"], c='blue', alpha=0.7)
 
+    # Nuage de points
+    ax.scatter(X["TS_team"], X["TS_opp"], c='blue', alpha=0.7)
+
+    # Ajout des logos ou noms des équipes
     for i, team in enumerate(teams):
-        x, y = pca_df.loc[i, "PC1"], pca_df.loc[i, "PC2"]
+        x, y = X.loc[i, "TS_team"], X.loc[i, "TS_opp"]
         logo_path = os.path.join(images_dir, f"{competition}_{season}_teams/{team}.png")
         if os.path.exists(logo_path):
             image = plt.imread(logo_path)
@@ -205,70 +210,58 @@ with col1 :
             ab = AnnotationBbox(imagebox, (x, y), frameon=False)
             ax.add_artist(ab)
         else:
-            ax.text(x, y, team, fontsize=9)
+            ax.text(x, y, team, fontsize=9, ha='center', va='center')
 
-    ax.set_xlabel("PC1")
-    ax.set_ylabel("PC2")
-    ax.set_title("Premier plan factoriel")
-    ax.grid()
+    # Ajout des lignes pointillées pour les moyennes
+    ax.axvline(TS_MOYEN, color='red', linestyle='--')
+    ax.axhline(TS_MOYEN, color='green', linestyle='--')
 
-    # Sauvegarder et afficher l'image dans Streamlit
+    # Inversion de l’axe vertical pour que les meilleures défenses soient en haut
+    ax.invert_yaxis()
+
+    # Graduation tous les 0.02 sur les deux axes
+    x_min, x_max = X["TS_team"].min(), X["TS_team"].max()
+    y_min, y_max = X["TS_opp"].min(), X["TS_opp"].max()
+    # Arrondir vers le bas pour le min, vers le haut pour le max
+    x_start = math.floor(x_min)
+    x_end = math.ceil(x_max)
+    y_start = math.floor(y_min)
+    y_end = math.ceil(y_max)
+
+    # Définir les ticks tous les 1%
+    ax.set_xticks(np.arange(x_start, x_end + 1, 1))
+    ax.set_yticks(np.arange(y_start, y_end + 1, 1))
+
+    # Mise en forme
+    ax.set_xlabel("True Shooting %")
+    ax.set_ylabel("Opponent True Shooting %")
+    ax.set_title("Team vs Opponent True Shooting Efficiency")
+    ax.grid(True, linestyle=':')
+
+    # Sauvegarde et affichage dans Streamlit
     buf = BytesIO()
-    plt.savefig(buf, format="png")
+    plt.savefig(buf, format="png", bbox_inches='tight')
     buf.seek(0)
-    st.image(buf, caption="Premier plan factoriel")
+    st.image(buf, caption="Team vs Opponent True Shooting Efficiency")
 
-    # Cercle des corrélations (utilisation de Vt pour les directions des axes)
-    fig_corr, ax_corr = plt.subplots(figsize=(10, 10))
 
-    # Vt contient les directions des axes (composantes principales)
-    for i in range(len(X.columns)):
-        ax_corr.arrow(0, 0, Vt[0, i], Vt[1, i],
-                    head_width=0.05, head_length=0.05, fc='red', ec='red')
-        ax_corr.text(Vt[0, i] * 1.1, Vt[1, i] * 1.1, X.columns[i], color='black', ha='center', va='center')
 
-    # Cercle des corrélations
-    circle = plt.Circle((0, 0), 1, color='blue', fill=False)
-    ax_corr.add_artist(circle)
-    ax_corr.set_xlim(-1.1, 1.1)
-    ax_corr.set_ylim(-1.1, 1.1)
-    ax_corr.set_xlabel("PC1")
-    ax_corr.set_ylabel("PC2")
-    ax_corr.set_title("Cercle des corrélations")
-    ax_corr.grid()
-    ax_corr.axhline(0, color='black', linewidth=0.5, linestyle='--')
-    ax_corr.axvline(0, color='black', linewidth=0.5, linestyle='--')
+with col2:
+    st.header("Ball Care")
 
-    buf_corr = BytesIO()
-    fig_corr.savefig(buf_corr, format="png")
-    buf_corr.seek(0)
-    st.image(buf_corr, caption="Cercle des corrélations")
-with col2 : 
-    st.header("ACP : DEFENSIVE")
-
-    # Séparation de la colonne "TEAM" et des variables pour l'ACP
+    # Séparation des variables
     teams = result2["TEAM"]
-    X = result2[["PPS_opp","NB_FT_opp","BC_opp","PctDeReRec"]]
+    X = result2[["BC", "BC_opp"]]
 
-    # Standardisation des données manuellement (en utilisant les moyennes et les écarts-types)
-    X_standardized = (X - X.mean()) / X.std()
-
-    # Application de l'ACP avec SVD (Singular Value Decomposition)
-    U, S, Vt = np.linalg.svd(X_standardized, full_matrices=False)
-
-    # Les composantes principales sont dans la matrice Vt (les lignes sont les composantes)
-    X_pca = U @ np.diag(S)  # Reconstituer les coordonnées des observations dans l'espace principal
-
-    # Création d'un DataFrame pour les résultats de l'ACP
-    pca_df = pd.DataFrame(X_pca, columns=[f"PC{i+1}" for i in range(X_pca.shape[1])])
-    pca_df["TEAM"] = teams
-
-    # Visualisation du premier plan factoriel
+    # Création de la figure
     fig, ax = plt.subplots(figsize=(10, 10))
-    ax.scatter(pca_df["PC1"], pca_df["PC2"], c='blue', alpha=0.7)
 
+    # Nuage de points
+    ax.scatter(X["BC"], X["BC_opp"], c='blue', alpha=0.7)
+
+    # Ajout des logos ou noms des équipes
     for i, team in enumerate(teams):
-        x, y = pca_df.loc[i, "PC1"], pca_df.loc[i, "PC2"]
+        x, y = X.loc[i, "BC"], X.loc[i, "BC_opp"]
         logo_path = os.path.join(images_dir, f"{competition}_{season}_teams/{team}.png")
         if os.path.exists(logo_path):
             image = plt.imread(logo_path)
@@ -276,69 +269,57 @@ with col2 :
             ab = AnnotationBbox(imagebox, (x, y), frameon=False)
             ax.add_artist(ab)
         else:
-            ax.text(x, y, team, fontsize=9)
+            ax.text(x, y, team, fontsize=9, ha='center', va='center')
 
-    ax.set_xlabel("PC1")
-    ax.set_ylabel("PC2")
-    ax.set_title("Premier plan factoriel")
-    ax.grid()
+    # Ajout des lignes pointillées pour les moyennes
+    ax.axvline(BC_MOYEN, color='red', linestyle='--')
+    ax.axhline(BC_MOYEN, color='green', linestyle='--')
 
-    # Sauvegarder et afficher l'image dans Streamlit
+    # Inversion de l’axe vertical pour que les meilleures défenses soient en haut
+    ax.invert_yaxis()
+
+
+    x_min, x_max = X["BC"].min(), X["BC"].max()
+    y_min, y_max = X["BC_opp"].min(), X["BC_opp"].max()
+
+    # Calculs pour que les axes commencent/finissent sur un multiple de 0.5
+    x_start = math.floor(x_min * 2) / 2
+    x_end = math.ceil(x_max * 2) / 2
+    y_start = math.floor(y_min * 2) / 2
+    y_end = math.ceil(y_max * 2) / 2
+
+    # Définir les ticks tous les 0.5
+    ax.set_xticks(np.arange(x_start, x_end + 0.5, 0.5))
+    ax.set_yticks(np.arange(y_start, y_end + 0.5, 0.5))
+
+    # Mise en forme
+    ax.set_xlabel("Ball Care (%)")
+    ax.set_ylabel("Opponent Ball Care (%)")
+    ax.set_title("Ball Care vs Opponent Ball Care")
+    ax.grid(True, linestyle=':')
+
+    # Sauvegarde et affichage dans Streamlit
     buf = BytesIO()
-    plt.savefig(buf, format="png")
+    plt.savefig(buf, format="png", bbox_inches='tight')
     buf.seek(0)
-    st.image(buf, caption="Premier plan factoriel")
+    st.image(buf, caption="Ball Care vs Opponent Ball Care")
 
-    # Cercle des corrélations (utilisation de Vt pour les directions des axes)
-    fig_corr, ax_corr = plt.subplots(figsize=(10, 10))
+with col3:
+    st.header("Rebound Recovery")
 
-    # Vt contient les directions des axes (composantes principales)
-    for i in range(len(X.columns)):
-        ax_corr.arrow(0, 0, Vt[0, i], Vt[1, i],
-                    head_width=0.05, head_length=0.05, fc='red', ec='red')
-        ax_corr.text(Vt[0, i] * 1.1, Vt[1, i] * 1.1, X.columns[i], color='black', ha='center', va='center')
-
-    # Cercle des corrélations
-    circle = plt.Circle((0, 0), 1, color='blue', fill=False)
-    ax_corr.add_artist(circle)
-    ax_corr.set_xlim(-1.1, 1.1)
-    ax_corr.set_ylim(-1.1, 1.1)
-    ax_corr.set_xlabel("PC1")
-    ax_corr.set_ylabel("PC2")
-    ax_corr.set_title("Cercle des corrélations")
-    ax_corr.grid()
-    ax_corr.axhline(0, color='black', linewidth=0.5, linestyle='--')
-    ax_corr.axvline(0, color='black', linewidth=0.5, linestyle='--')
-
-    buf_corr = BytesIO()
-    fig_corr.savefig(buf_corr, format="png")
-    buf_corr.seek(0)
-    st.image(buf_corr, caption="Cercle des corrélations")
-with col3 :
-    st.header("ACP : DELTA")
-    # Séparation de la colonne "TEAM" et des variables pour l'ACP
+    # Séparation des variables
     teams = result2["TEAM"]
-    X = result2[["PPS_DELTA","NB_SHOOT_DELTA","NB_FT_DELTA","BC_DELTA","REB_PERF"]]
+    X = result2[["PctDeReRec", "PctOfReRec"]]
 
-    # Standardisation des données manuellement (en utilisant les moyennes et les écarts-types)
-    X_standardized = (X - X.mean()) / X.std()
-
-    # Application de l'ACP avec SVD (Singular Value Decomposition)
-    U, S, Vt = np.linalg.svd(X_standardized, full_matrices=False)
-
-    # Les composantes principales sont dans la matrice Vt (les lignes sont les composantes)
-    X_pca = U @ np.diag(S)  # Reconstituer les coordonnées des observations dans l'espace principal
-
-    # Création d'un DataFrame pour les résultats de l'ACP
-    pca_df = pd.DataFrame(X_pca, columns=[f"PC{i+1}" for i in range(X_pca.shape[1])])
-    pca_df["TEAM"] = teams
-
-    # Visualisation du premier plan factoriel
+    # Création de la figure
     fig, ax = plt.subplots(figsize=(10, 10))
-    ax.scatter(pca_df["PC1"], pca_df["PC2"], c='blue', alpha=0.7)
 
+    # Nuage de points
+    ax.scatter(X["PctDeReRec"], X["PctOfReRec"], c='blue', alpha=0.7)
+
+    # Ajout des logos ou noms des équipes
     for i, team in enumerate(teams):
-        x, y = pca_df.loc[i, "PC1"], pca_df.loc[i, "PC2"]
+        x, y = X.loc[i, "PctDeReRec"], X.loc[i, "PctOfReRec"]
         logo_path = os.path.join(images_dir, f"{competition}_{season}_teams/{team}.png")
         if os.path.exists(logo_path):
             image = plt.imread(logo_path)
@@ -346,41 +327,39 @@ with col3 :
             ab = AnnotationBbox(imagebox, (x, y), frameon=False)
             ax.add_artist(ab)
         else:
-            ax.text(x, y, team, fontsize=9)
+            ax.text(x, y, team, fontsize=9, ha='center', va='center')
 
-    ax.set_xlabel("PC1")
-    ax.set_ylabel("PC2")
-    ax.set_title("Premier plan factoriel")
-    ax.grid()
+    # Ajout des lignes pointillées pour les moyennes
+    ax.axvline(PCT_DE_REB_MOYEN, color='red', linestyle='--')
+    ax.axhline(100-PCT_DE_REB_MOYEN, color='green', linestyle='--')
 
-    # Sauvegarder et afficher l'image dans Streamlit
+
+
+    x_min, x_max = X["PctDeReRec"].min(), X["PctDeReRec"].max()
+    y_min, y_max = X["PctOfReRec"].min(), X["PctOfReRec"].max()
+
+    # Arrondir vers le bas pour le min, vers le haut pour le max
+    x_start = math.floor(x_min)
+    x_end = math.ceil(x_max)
+    y_start = math.floor(y_min)
+    y_end = math.ceil(y_max)
+
+    # Définir les ticks tous les 1%
+    ax.set_xticks(np.arange(x_start, x_end + 1, 1))
+    ax.set_yticks(np.arange(y_start, y_end + 1, 1))
+
+
+    # Mise en forme
+    ax.set_xlabel("Defensive Rebound Control (%)")
+    ax.set_ylabel("Offensive Rebound Control (%)")
+    ax.set_title("Defensive vs Offensive Rebound Control")
+    ax.grid(True, linestyle=':')
+
+    # Sauvegarde et affichage dans Streamlit
     buf = BytesIO()
-    plt.savefig(buf, format="png")
+    plt.savefig(buf, format="png", bbox_inches='tight')
     buf.seek(0)
-    st.image(buf, caption="Premier plan factoriel")
+    st.image(buf, caption="Defensive vs Offensive Rebound Control")
 
-    # Cercle des corrélations (utilisation de Vt pour les directions des axes)
-    fig_corr, ax_corr = plt.subplots(figsize=(10, 10))
 
-    # Vt contient les directions des axes (composantes principales)
-    for i in range(len(X.columns)):
-        ax_corr.arrow(0, 0, Vt[0, i], Vt[1, i],
-                    head_width=0.05, head_length=0.05, fc='red', ec='red')
-        ax_corr.text(Vt[0, i] * 1.1, Vt[1, i] * 1.1, X.columns[i], color='black', ha='center', va='center')
 
-    # Cercle des corrélations
-    circle = plt.Circle((0, 0), 1, color='blue', fill=False)
-    ax_corr.add_artist(circle)
-    ax_corr.set_xlim(-1.1, 1.1)
-    ax_corr.set_ylim(-1.1, 1.1)
-    ax_corr.set_xlabel("PC1")
-    ax_corr.set_ylabel("PC2")
-    ax_corr.set_title("Cercle des corrélations")
-    ax_corr.grid()
-    ax_corr.axhline(0, color='black', linewidth=0.5, linestyle='--')
-    ax_corr.axvline(0, color='black', linewidth=0.5, linestyle='--')
-
-    buf_corr = BytesIO()
-    fig_corr.savefig(buf_corr, format="png")
-    buf_corr.seek(0)
-    st.image(buf_corr, caption="Cercle des corrélations")

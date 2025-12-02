@@ -3,7 +3,7 @@ import pandas as pd
 import os
 
 competition = "euroleague"
-season = 2024
+season = 2025
 width = 850 - 100
 height = round(850 * 89/63) - 100
 

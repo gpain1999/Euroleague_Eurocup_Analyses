@@ -28,6 +28,7 @@ import pickle
 from statsmodels.api import GLM, families,OLS
 from statsmodels.genmod.families.links import logit
 from statsmodels.genmod.families import Binomial
+import streamlit as st
 
 def lire_fichier_pickle(nom_fichier):
     """
@@ -909,7 +910,7 @@ def team_evol_score(team,min_round,max_round,data_dir,competition,season,type = 
 def evol_score(data_dir,competition,season) : 
     df_pbp = pd.read_csv(os.path.join(data_dir, f"{competition}_pbp_{season}.csv"))
     df_gs = pd.read_csv(os.path.join(data_dir, f"{competition}_gs_{season}.csv"))
-
+    print(df_pbp)
     columns = [
         "Season","ROUND", "Gamecode", "TEAM","OPPONENT", "WIN", "HOME"
     ] + [f"P{i}" for i in range(1, 25)]
@@ -921,6 +922,8 @@ def evol_score(data_dir,competition,season) :
 
         df_pbp2 = df_pbp[df_pbp["Gamecode"] == gc].reset_index(drop = True)
         df_gs2 = df_gs[df_gs["Gamecode"] == gc].reset_index(drop = True)
+        print(df_pbp2)
+        print(gc)
 
 
         df_pbp2.loc[:, "NUMBEROFPLAY"] = range(len(df_pbp2))
@@ -929,7 +932,7 @@ def evol_score(data_dir,competition,season) :
         score = [df_gs2["local.score"].to_list()[0],df_gs2["road.score"].to_list()[0]]
 
 
-
+        print(df_pbp2['PERIOD'])
         df_pbp2['PERIOD'] = df_pbp2['PERIOD'].apply(lambda x: x if x in [1, 2, 3, 4] else 4 + 0.5 * (x - 4)).astype(float)
 
         game_duration = pd.to_timedelta(max(df_pbp2['PERIOD']) *10,unit = "minutes")
@@ -940,12 +943,15 @@ def evol_score(data_dir,competition,season) :
             (df_pbp2['PLAYINFO'] == 'Out') |
             (df_pbp2['PLAYINFO'] == 'In')
         ].reset_index(drop = True)
-
+        print(df_pbp2[['PERIOD','MARKERTIME']])
         df_pbp2['MARKERTIME'] = pd.to_timedelta('00:' + df_pbp2['MARKERTIME'])
+        print(df_pbp2[['PERIOD','MARKERTIME']])
 
         df_pbp2['MARKERTIME'] = pd.to_timedelta(10,unit = "minutes") - df_pbp2['MARKERTIME'] + pd.to_timedelta(10 * (df_pbp2['PERIOD']-1), unit='minutes')
+        print(df_pbp2[['PERIOD','MARKERTIME']])
 
         df_pbp2['MARKERTIME'] = pd.to_timedelta(df_pbp2['MARKERTIME']).dt.total_seconds() / 60
+        print(df_pbp2[['PERIOD','MARKERTIME']])
 
 
         ##### POINTS_A
@@ -970,7 +976,7 @@ def evol_score(data_dir,competition,season) :
 
         # Calcul du nombre de périodes
         nb_per = math.ceil(df_pbp2['MARKERTIME'].max() / 2.5)
-
+        print(df_pbp2['MARKERTIME'])
         # Génération des évolutions de POINTS_A
         evol_point_a = []
         evol_point_b = []
@@ -1001,7 +1007,8 @@ def evol_score(data_dir,competition,season) :
         while len(evol_point_b) < 24:
             evol_point_b.append(None)
 
-
+        print(evol_point_a)
+        print(evol_point_b)
         df_result = pd.DataFrame(
             [evol_point_a, evol_point_b], 
             columns=[f'P{i}' for i in range(1, 25)]
@@ -1014,9 +1021,9 @@ def evol_score(data_dir,competition,season) :
         df_result.insert(0,"TEAM",[df_gs2["local.club.code"].to_list()[0],df_gs2["road.club.code"].to_list()[0]])
         df_result.insert(0,"Gamecode",[df_gs2["Gamecode"].to_list()[0],df_gs2["Gamecode"].to_list()[0]])
         if competition == "euroleague" : 
-            df_result.insert(0,"ROUND",[(df_gs2["Gamecode"].to_list()[0] - 1) // 9 + 1,(df_gs2["Gamecode"].to_list()[0] - 1) // 9 + 1])
+            df_result.insert(0,"ROUND",[(df_gs2["Gamecode"].to_list()[0] - 1) // 10 + 1,(df_gs2["Gamecode"].to_list()[0] - 1) // 10 + 1])
         else :
-            df_result.insert(0,"ROUND",[(df_gs2["Gamecode"].to_list()[0] - 1) // 9 + 1,(df_gs2["Gamecode"].to_list()[0] - 1) // 10 + 1])
+            df_result.insert(0,"ROUND",[(df_gs2["Gamecode"].to_list()[0] - 1) // 10 + 1,(df_gs2["Gamecode"].to_list()[0] - 1) // 10 + 1])
 
         df_result.insert(0,"Season",[df_gs2["Season"].to_list()[0],df_gs2["Season"].to_list()[0]])
         df_evol_score = pd.concat([df_evol_score, df_result], ignore_index=True)
@@ -1099,7 +1106,7 @@ def analyse_io_2(data_dir,competition,season,num_players,min_round,max_round,COD
 
 
     if competition == "euroleague" :
-        data_pm.insert(0,"R",(data_pm["Gamecode"] - 1 ) // 9 + 1 )
+        data_pm.insert(0,"R",(data_pm["Gamecode"] - 1 ) // 10 + 1 )
     else :
         data_pm.insert(0,"R",(data_pm["Gamecode"] - 1 ) // 10 + 1 )
 
@@ -1343,18 +1350,18 @@ def create_infographie(df,titre,season,competition,images_dir,infographie_dir,na
             text_bold = f"{row['PM_ON']}"
         
         if percent_time :
-            text_regular = f"ON court in {round(row['TIME_ON']/row['TIME_TEAM']*100)}% of mins"
-            second_text = f"{round(row['TIME_OFF'] / row['TIME_TEAM'] * 100)}%"
+            text_regular = f"when on court ( {round(row['TIME_ON']/row['TIME_TEAM']*100)}%)"
+            second_text = f"({round(row['TIME_OFF'] / row['TIME_TEAM'] * 100)}%)"
         else : 
-            text_regular = f"ON court in {row['TIME_ON']} mins"
+            text_regular = f"when on court in {row['TIME_ON']}"
             second_text = row['TIME_OFF']
 
 
         
         if row['PM_OFF'] > 0 :
-            text_regular2 = f"+{row['PM_OFF']} OFF court in {second_text}"
+            text_regular2 = f"+{row['PM_OFF']} when off court {second_text}"
         else :
-            text_regular2 = f"{row['PM_OFF']} OFF court in {second_text}"
+            text_regular2 = f"{row['PM_OFF']} when off court {second_text}"
 
         # Calculer la largeur du texte en gras
         text_bold_width = draw.textlength(text_bold, font=ImageFont.truetype(font_path_bold, 300))
@@ -1424,6 +1431,8 @@ def recuperation_team_photo(competition, season, image_dir):
     )
 
     # Extraire les colonnes nécessaires
+    print(df_teams)
+    
     df_filtered_teams = df_teams[["team.code", "team.imageUrl"]]
     df_filtered_teams.columns = ["team_id", "team_image_url"]
     df_filtered_teams = df_filtered_teams[df_filtered_teams["team_image_url"].notna()]
@@ -1527,7 +1536,14 @@ def analyse_per(data_dir,competition,season,R = [],CODETEAM = []) :
 
     return df_result
 
+@st.cache_data
+def load_data(file_path,sep = None):
+    # Cette fonction ne sera exécutée qu'une seule fois
+    # sauf si le fichier change ou que le cache est invalidé
+    df = pd.read_csv(file_path,sep = sep)
+    return df
 
+@st.cache_data
 def calcul_per2(data_dir,season,competition) :
     competition_pbp = pd.read_csv(os.path.join(data_dir, f'{competition}_pbp_{season}.csv'))
     gs = pd.read_csv(os.path.join(data_dir, f'{competition}_gs_{season}.csv'))
@@ -1575,8 +1591,8 @@ def calcul_per2(data_dir,season,competition) :
     }
 
     if competition == "euroleague" : 
-        competition_pbp.loc[:,"ROUND"] = (competition_pbp["Gamecode"] - 1) // 9 + 1
-        competition_pbp = competition_pbp[competition_pbp["ROUND"]<= 34].reset_index(drop=True)
+        competition_pbp.loc[:,"ROUND"] = (competition_pbp["Gamecode"] - 1) // 10 + 1
+        competition_pbp = competition_pbp[competition_pbp["ROUND"]<= 38].reset_index(drop=True)
     else :
         competition_pbp.loc[:,"ROUND"] = (competition_pbp["Gamecode"] - 1) // 10 + 1
         competition_pbp = competition_pbp[competition_pbp["ROUND"]<= 18].reset_index(drop=True)
@@ -1584,8 +1600,21 @@ def calcul_per2(data_dir,season,competition) :
     # Filtrer le DataFrame pour garder seulement les PLAYTYPE présents dans playtype_scores
     #competition_pbp = competition_pbp[competition_pbp["PLAYER"]!=""].reset_index(drop=True)
     df_unique = competition_pbp[["ROUND", "CODETEAM", "OPPONENT", "HOME", "WIN", "DORSAL", "PLAYER","PLAYER_ID"]].drop_duplicates()
-    df_unique = df_unique[~df_unique["PLAYER"].isna()]
+    #df_unique = df_unique[~df_unique["PLAYER"].isna()]
     df_filtered = competition_pbp[competition_pbp['PLAYTYPE'].isin(playtype_scores.keys())]
+
+    ############
+    df_unique = df_unique[df_unique["PLAYER_ID"]!="CO_B"]
+
+    df_unique["PLAYER_ID"] = df_unique.apply(lambda x: x["CODETEAM"] if pd.isnull(x["PLAYER_ID"]) else x["PLAYER_ID"], axis=1)
+    df_unique["PLAYER"] = df_unique.apply(lambda x: x["CODETEAM"] if pd.isnull(x["PLAYER"]) else x["PLAYER"], axis=1)
+    df_unique["DORSAL"] = df_unique.apply(lambda x: 100 if pd.isnull(x["DORSAL"]) else x["DORSAL"], axis=1)
+    df_filtered = competition_pbp[competition_pbp['PLAYTYPE'].isin(playtype_scores.keys())]
+    df_filtered = df_filtered[df_filtered["PLAYER_ID"]!="CO_B"]
+    df_filtered["PLAYER_ID"] = df_filtered.apply(lambda x: x["CODETEAM"] if pd.isnull(x["PLAYER_ID"]) else x["PLAYER_ID"], axis=1)
+    df_filtered["PLAYER"] = df_filtered.apply(lambda x: x["CODETEAM"] if pd.isnull(x["PLAYER"]) else x["PLAYER"], axis=1)
+    df_filtered["DORSAL"] = df_filtered.apply(lambda x: 100 if pd.isnull(x["DORSAL"]) else x["DORSAL"], axis=1)
+    ############
 
     df_filtered = pd.merge(df_unique, df_filtered, 
                         on=["ROUND", "CODETEAM", "OPPONENT", "HOME", "WIN", "DORSAL", "PLAYER","PLAYER_ID"], 
@@ -1657,7 +1686,7 @@ def calcul_per2(data_dir,season,competition) :
     df_result["PER"] = (df_result["PER"]).round(1)
 
     #df_result.to_csv(os.path.join(data_dir, f'{competition}_PER_{season}_round.csv'),index = False)
-
+    df_result = df_result[df_result["TEAM"]!=0]
     return df_result[['ROUND', 'TEAM','OPPONENT','HOME','WIN',"NUMBER","PLAYER","TIME_ON","PER",
                       "PM_ON","PTS","DR","OR","TR","AS","ST","CO","1_R",
                       "1_T","2_R","2_T","3_R","3_T","TO","FP","CF","NCF"]]
@@ -1666,7 +1695,7 @@ def calcul_per(data_dir,season,competition) :
     competition_pbp = pd.read_csv(os.path.join(data_dir, f'{competition}_pbp_{season}.csv'))
 
     if competition == "euroleague" : 
-        competition_pbp.loc[:,"ROUND"] = (competition_pbp["Gamecode"] - 1) // 9 + 1
+        competition_pbp.loc[:,"ROUND"] = (competition_pbp["Gamecode"] - 1) // 10 + 1
         competition_pbp = competition_pbp[competition_pbp["ROUND"]<= 34].reset_index(drop=True)
     else :
         competition_pbp.loc[:,"ROUND"] = (competition_pbp["Gamecode"] - 1) // 10 + 1
@@ -1817,7 +1846,7 @@ def recup_idteam(data_dir,season,competition) :
         ts = TeamStats("U")
 
     df = ts.get_team_stats_single_season(
-            endpoint="traditional", season=2024, phase_type_code="RS", statistic_mode="PerGame"
+            endpoint="traditional", season=season, phase_type_code="RS", statistic_mode="PerGame"
         )
     df = df[['team.code', 'team.name']].drop_duplicates()
     df.columns = ["CODETEAM","NAMETEAM"]
@@ -1836,8 +1865,8 @@ def df_images_players(competition,season,round_,data_dir) :
         last_gamecode=10*(round_)
     else:
         gs_ = GameStats(competition="E")
-        first_gamecode=9*(round_- 1) + 1
-        last_gamecode=9*(round_)    
+        first_gamecode=10*(round_- 1) + 1
+        last_gamecode=10*(round_)    
 
     for gc in range(first_gamecode,last_gamecode + 1) :
         try : 
@@ -1893,8 +1922,8 @@ def recuperation_pbp(competition, season, data_dir, round_=None):
                 first_gamecode=10*(round_- 1) + 1 
                 last_gamecode=10*(round_)
             else :
-                first_gamecode=9*(round_- 1) + 1
-                last_gamecode=9*(round_) 
+                first_gamecode=10*(round_- 1) + 1
+                last_gamecode=10*(round_) 
             
             for gc in range(first_gamecode, last_gamecode + 1):
                 # Vérifier si _pbp contient déjà des lignes pour ce gamecode
@@ -1903,7 +1932,6 @@ def recuperation_pbp(competition, season, data_dir, round_=None):
                     try : 
                         sub = pbp_.get_game_play_by_play_data(season=season, gamecode=gc)
                         sub['PERIOD'] = (sub['PLAYINFO'] == 'Begin Period').cumsum()
-
                         if "End Game" in sub["PLAYINFO"].values:
                             # Concaténer les nouvelles données avec _pbp
                             _pbp = pd.concat([_pbp, sub], ignore_index=True)
@@ -1922,7 +1950,7 @@ def recuperation_pbp(competition, season, data_dir, round_=None):
                         pass
         
         if competition == "euroleague" : 
-            _pbp.loc[:,"Round"] = (_pbp["Gamecode"] - 1) // 9 + 1
+            _pbp.loc[:,"Round"] = (_pbp["Gamecode"] - 1) // 1010 + 1
         else :
              _pbp.loc[:,"Round"] = (_pbp["Gamecode"] - 1) // 10 + 1
 
@@ -1935,7 +1963,7 @@ def recuperation_pbp(competition, season, data_dir, round_=None):
         _pbp['PERIOD'] = (_pbp['PLAYINFO'] == 'Begin Period').cumsum()
 
         if competition == "euroleague" : 
-            _pbp.loc[:,"Round"] =(_pbp["Gamecode"] - 1) // 9 + 1
+            _pbp.loc[:,"Round"] =(_pbp["Gamecode"] - 1) // 10 + 1
         else :
              _pbp.loc[:,"Round"] = (_pbp["Gamecode"] - 1) // 10 + 1
         # Sauvegarder les données dans un fichier CSV
@@ -2040,8 +2068,8 @@ def recuperation_gs(competition, season, data_dir, round_ = None ):
                 first_gamecode=10*(round_- 1) + 1 
                 last_gamecode=10*(round_)
             else :
-                first_gamecode=9*(round_- 1) + 1
-                last_gamecode=9*(round_)
+                first_gamecode=10*(round_- 1) + 1
+                last_gamecode=10*(round_)
 
 
             for gc in range(first_gamecode, last_gamecode + 1):
@@ -2118,6 +2146,8 @@ def debroussallage_pbp_data(df_gs,df_pbp):
     game_duration : pandas.Timedelta
         Durée totale du match calculée à partir des périodes et des minutes.
     """
+
+
     df_pbp.loc[:, "NUMBEROFPLAY"] = range(len(df_pbp))
 
 
@@ -2125,9 +2155,7 @@ def debroussallage_pbp_data(df_gs,df_pbp):
     score = [df_gs["local.score"].to_list()[0],df_gs["road.score"].to_list()[0]]
 
 
-
     df_pbp['PERIOD'] = df_pbp['PERIOD'].apply(lambda x: x if x in [1, 2, 3, 4] else 4 + 0.5 * (x - 4)).astype(float)
-
     game_duration = pd.to_timedelta(max(df_pbp['PERIOD']) *10,unit = "minutes")
     
     df_pbp = df_pbp[
@@ -2383,7 +2411,7 @@ def analyse_io(data_dir,competition,season,num_players,R = [],CODETEAM = []) :
 
 
     if competition == "euroleague" :
-        data_pm.insert(0,"R",(data_pm["Gamecode"] - 1 ) // 9 + 1 )
+        data_pm.insert(0,"R",(data_pm["Gamecode"] - 1 ) // 10 + 1 )
     else :
         data_pm.insert(0,"R",(data_pm["Gamecode"] - 1 ) // 10 + 1 )
 
@@ -2492,7 +2520,7 @@ def io_plus_minus_analysis(data_dir,season,competition,io,sortby = "PM",teamcode
 
     if round != "" :
         if competition == "euroleague" :
-            data_io = data_io[(data_io["GAMECODE"]>= (9*round - 8 ))&(data_io["GAMECODE"]<= (9*round))]
+            data_io = data_io[(data_io["GAMECODE"]>= (10*round - 9 ))&(data_io["GAMECODE"]<= (10*round))]
         else  :
             data_io = data_io[(data_io["GAMECODE"]>= (10*round - 9 ))&(data_io["GAMECODE"]<= (10*round))]
 
@@ -2582,7 +2610,9 @@ def process_dataframe(data_dir, competition, season, nb_groupe):
     
     # Calcul de la liste des Gamecode
     gc_list = list(set(five_summary["Gamecode"].unique()) - set(already_exist["Gamecode"].unique()))
-
+    print(set(five_summary["Gamecode"].unique()))
+    print(set(already_exist["Gamecode"].unique()))
+    print(gc_list)
     # Validation de nb_groupe
     if not (1 <= nb_groupe <= 5):
         raise ValueError(f"nb_groupe doit être compris entre 1 et 5.")
@@ -2604,7 +2634,7 @@ def process_dataframe(data_dir, competition, season, nb_groupe):
 
     # Création d'un DataFrame avec les nouvelles lignes
     new_df = pd.DataFrame(new_rows)
-
+    print(new_df)
     # Agrégation des données
     group_columns = ['Gamecode', 'CODETEAM'] + [col for col in new_df.columns if col.startswith('J')]
     aggregated_df = new_df.groupby(group_columns).agg({
@@ -2626,7 +2656,7 @@ def process_dataframe(data_dir, competition, season, nb_groupe):
     # Sauvegarde dans un fichier CSV
     new_exist.to_csv(already_exist_path, index=False)
 
-
+@st.cache_data
 def get_aggregated_data(df, 
                         min_round, 
                         max_round, 
@@ -2667,7 +2697,7 @@ def get_aggregated_data(df,
     df_team["TIME_ON"] =( (df_team["TIME_ON"]).round(0)).astype(int)
     df_team["PM_ON"] = (df_team["PM_ON"]/5).astype(int)
 
-
+    
     if selected_fields2 == ["ROUND"] : 
 
         df_grouped = df_filtered.groupby(selected_fields2).agg(aggregation_functions).reset_index()

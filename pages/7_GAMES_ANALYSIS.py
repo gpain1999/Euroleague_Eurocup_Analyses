@@ -15,7 +15,7 @@ from auth import require_authentication
 #require_authentication()
 
 
-season = 2024
+season = 2025
 competition = "euroleague"
 data_dir = os.path.join(os.path.dirname(__file__), '../datas')
 sys.path.append(os.path.join(os.path.dirname(__file__), '../fonctions'))
@@ -119,8 +119,9 @@ player_stat = f.get_aggregated_data(
     percent="MADE"
 )
 
+
 player_stat_global = f.get_aggregated_data(
-    df=df, min_round=1, max_round=34,
+    df=df, min_round=1, max_round=38,
     selected_teams=[team_local,team_road],
     selected_opponents=[],
     selected_fields=["TEAM","PLAYER"],
@@ -167,14 +168,6 @@ NUMBER_MVP = mvp_data["#"].to_list()[0]
 TEAM_MVP = mvp_data["TEAM"].to_list()[0]
 MVP_ID = players[(players["CODETEAM"] == TEAM_MVP) & (players["PLAYER"] == NAME_MVP)]["PLAYER_ID"].to_list()[0]
 mvp_image_path = os.path.join(images_dir, f"{competition}_{season}_players/{TEAM_MVP}_{MVP_ID}.png")
-
-BL_data = player_stat[player_stat["WIN"]=="NO"].sort_values(by = ["I_PER","TIME_ON"],ascending = [False,True]).reset_index(drop = True)
-NAME_BL = BL_data["PLAYER"].to_list()[0]
-NUMBER_BL = BL_data["#"].to_list()[0]
-TEAM_BL = BL_data["TEAM"].to_list()[0]
-BL_ID = players[(players["CODETEAM"] == TEAM_BL) & (players["PLAYER"] == NAME_BL)]["PLAYER_ID"].to_list()[0]
-BL_image_path = os.path.join(images_dir, f"{competition}_{season}_players/{TEAM_BL}_{BL_ID}.png")
-
 ### PTS ###
 
 PTS_data = player_stat.sort_values(by = ["PTS","TIME_ON"],ascending = [False,True]).reset_index(drop = True)
@@ -187,6 +180,8 @@ PTS_image_path = os.path.join(images_dir, f"{competition}_{season}_players/{TEAM
 ### PM_ON ###
 
 PM_ON_data = player_stat.sort_values(by = ["PM_ON","TIME_ON"],ascending = [False,True]).reset_index(drop = True)
+PM_ON_data = PM_ON_data[PM_ON_data["#"]<100].reset_index(drop = True)
+
 NAME_PM_ON = PM_ON_data["PLAYER"].to_list()[0]
 NUMBER_PM_ON = PM_ON_data["#"].to_list()[0]
 TEAM_PM_ON = PM_ON_data["TEAM"].to_list()[0]
@@ -196,6 +191,7 @@ PM_ON_image_path = os.path.join(images_dir, f"{competition}_{season}_players/{TE
 ### DR ###
 
 DR_data = player_stat.sort_values(by = ["DR","TIME_ON"],ascending = [False,True]).reset_index(drop = True)
+DR_data = DR_data[DR_data["#"]<100].reset_index(drop = True)
 NAME_DR = DR_data["PLAYER"].to_list()[0]
 NUMBER_DR = DR_data["#"].to_list()[0]
 TEAM_DR = DR_data["TEAM"].to_list()[0]
@@ -205,6 +201,7 @@ DR_image_path = os.path.join(images_dir, f"{competition}_{season}_players/{TEAM_
 ### OR ###
 
 OR_data = player_stat.sort_values(by = ["OR","TIME_ON"],ascending = [False,True]).reset_index(drop = True)
+OR_data = OR_data[OR_data["#"]<100].reset_index(drop = True)
 NAME_OR = OR_data["PLAYER"].to_list()[0]
 NUMBER_OR = OR_data["#"].to_list()[0]
 TEAM_OR = OR_data["TEAM"].to_list()[0]
@@ -244,11 +241,15 @@ CO_data = player_stat.sort_values(by = ["CO","TIME_ON"],ascending = [False,True]
 NAME_CO = CO_data["PLAYER"].to_list()[0]
 NUMBER_CO = CO_data["#"].to_list()[0]
 TEAM_CO = CO_data["TEAM"].to_list()[0]
+
+print(TEAM_CO,NAME_CO)
+
 CO_ID = players[(players["CODETEAM"] == TEAM_CO) & (players["PLAYER"] == NAME_CO)]["PLAYER_ID"].to_list()[0]
 CO_image_path = os.path.join(images_dir, f"{competition}_{season}_players/{TEAM_CO}_{CO_ID}.png")
 
 
-local_top_values,local_bottom_values,road_top_values,road_bottom_values = f.stats_important(r,team_local,team_road,df)
+df_stats_important = df[df["NUMBER"]<100].reset_index(drop = True)
+local_top_values,local_bottom_values,road_top_values,road_bottom_values = f.stats_important(r,team_local,team_road,df_stats_important)
 
 
 df_stats_important_players = f.stats_important_players(r,team_local,team_road,df)
