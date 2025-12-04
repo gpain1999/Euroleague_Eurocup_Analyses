@@ -1,100 +1,29 @@
 import streamlit as st
-import pandas as pd
-import sys
-import os
 from PIL import Image
+from auth import require_authentication
 
-st.set_page_config(layout="wide")  # Pour une mise en page plus large
-
-season = 2024
+#require_authentication()
+st.set_page_config(page_title="Euroleague Data", layout="wide")
 competition = "euroleague"
-data_dir = os.path.join(os.path.dirname(__file__), 'datas')
-sys.path.append(os.path.join(os.path.dirname(__file__), 'fonctions'))
 
-import fonctions as f
-
-# Charger les données
-df = f.calcul_per2(data_dir, season, competition)
-df.insert(6, "I_PER", df["PER"] / df["TIME_ON"] ** 0.5)
-df["I_PER"] = df["I_PER"].round(2)
-df["NB_GAME"] = 1
-df = df[['ROUND', 'NB_GAME', 'TEAM', 'OPPONENT', 'HOME', 'WIN', 'NUMBER', 'PLAYER',
-         'TIME_ON', "I_PER", 'PER', 'PM_ON', 'PTS', 'DR', 'OR', 'TR', 'AS', 'ST', 'CO',
-         '1_R', '1_T', '2_R', '2_T', '3_R', '3_T', 'TO', 'FP', 'CF', 'NCF']]
-
-# Ajouter une image en haut à droite
 image_path = f"images/{competition}.png"  # Chemin vers l'image
-if os.path.exists(image_path):
-    # Charger l'image
-    img = Image.open(image_path)
 
-    # Ajouter du CSS pour positionner l'image en haut à droite
-    st.markdown(
-        """
-        <style>
-            .top-right-image {
-                position: absolute;
-                top: 10px;
-                right: 100px;
-                z-index: 1;
-            }
-        </style>
-        """,
-        unsafe_allow_html=True
-    )
+try:
+    # Charger la première image
+    image = Image.open(image_path)
+    # Redimensionner la première image (par exemple, largeur de 600 pixels)
+    max_width1 = 600
+    image = image.resize((max_width1, int(image.height * (max_width1 / image.width))))
 
-    # Insérer l'image en utilisant HTML
-    st.markdown(
-        f"""
-        <div class="top-right-image">
-            <img src="data:image/png;base64,{st.image(image_path)}" alt="Logo" width="150">
-        </div>
-        """,
-        unsafe_allow_html=True
-    )
-else:
-    st.warning(f"L'image {image_path} est introuvable. Veuillez vérifier le chemin.")
 
-# Configuration de l'interface utilisateur
-st.title("Interface Interactive - Analyse des Données")
+    # Afficher les images côte à côte dans deux colonnes
+    col1, col2 = st.columns(2)
 
-# Paramètres interactifs
-st.sidebar.header("Paramètres")
+    with col1:
+        st.image(image, caption=f"Rapport pour {competition}")
 
-min_round = st.sidebar.number_input("Round Minimum", min_value=1, value=1)
-max_round = st.sidebar.number_input("Round Maximum", min_value=min_round, value=df["ROUND"].max() if not df.empty else 1)
 
-selected_teams = st.sidebar.multiselect("Équipes Sélectionnées", options=df["TEAM"].unique() if not df.empty else [])
-selected_opponents = st.sidebar.multiselect("Adversaires Sélectionnés", options=df["OPPONENT"].unique() if not df.empty else [])
-selected_players = st.sidebar.multiselect("Joueurs Sélectionnés", options=df["PLAYER"].unique() if not df.empty else [])
+except FileNotFoundError:
+    st.warning(f"L'image pour {competition} est introuvable à l'emplacement : {image_path}") 
 
-selected_fields = st.sidebar.multiselect(
-    "Champs Sélectionnés",
-    options=["ROUND", "PLAYER", "TEAM", "OPPONENT"],
-    default=["PLAYER", "TEAM"]
-)
-
-mode = st.sidebar.selectbox("Mode", options=["CUMULATED", "AVERAGE"], index=0)
-percent = st.sidebar.selectbox("Pourcentage ou Bruts", options=["MADE", "PERCENT"], index=0)
-
-# Mise à jour automatique des résultats
-if not df.empty:
-    result_df = f.get_aggregated_data(
-        df, min_round, max_round,
-        selected_teams=selected_teams,
-        selected_opponents=selected_opponents,
-        selected_fields=selected_fields,
-        selected_players=selected_players,
-        mode=mode,
-        percent=percent
-    )
-
-    st.write("### Résultats")
-    st.dataframe(result_df, height=700)  # Augmenter la hauteur du tableau
-else:
-    st.error("Les données ne sont pas chargées. Veuillez vérifier votre fichier source.")
-
-# Afficher le DataFrame d'origine pour référence
-if st.checkbox("Afficher les données brutes"):
-    st.write("### Données Brutes")
-    st.dataframe(df, height=700)  # Augmenter la hauteur du tableau brut
+st.title("Application Euroleague - by gpain1999")

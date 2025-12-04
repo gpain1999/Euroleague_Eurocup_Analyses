@@ -18,14 +18,1195 @@ from PIL import Image, ImageOps,ImageDraw,ImageFont
 import warnings
 import numpy as np
 warnings.filterwarnings("ignore")
-
-import tkinter as tk
-from tkinter import ttk
-
-import tkinter as tk
-from tkinter import ttk
+import matplotlib.pyplot as plt
 import pandas as pd
 import threading
+import streamlit as st
+import plotly.graph_objects as go
+from statsmodels.api import add_constant
+import pickle
+from statsmodels.api import GLM, families,OLS
+from statsmodels.genmod.families.links import logit
+from statsmodels.genmod.families import Binomial
+import streamlit as st
+
+def lire_fichier_pickle(nom_fichier):
+    """
+    Lit un fichier pickle et retourne son contenu.
+
+    Parameters:
+        nom_fichier (str): Le chemin du fichier pickle à lire.
+
+    Returns:
+        obj: L'objet chargé depuis le fichier pickle.
+    """
+    try:
+        with open(nom_fichier, 'rb') as fichier:
+            contenu = pickle.load(fichier)
+        return contenu
+    except FileNotFoundError:
+        print(f"Erreur : Le fichier '{nom_fichier}' n'existe pas.")
+    except pickle.UnpicklingError:
+        print("Erreur : Le fichier n'a pas pu être désérialisé.")
+    except Exception as e:
+        print(f"Une erreur inattendue s'est produite : {e}")
+
+def predict_(results_L,results_R, local_team, road_team, clubs):
+
+    # Créer une nouvelle ligne de données pour ce match
+    row = {club: 0 for club in clubs}  # Initialisation avec des valeurs 0
+    row[local_team] = 1  # L'équipe locale reçoit la valeur 1
+    row[road_team] = -1  # L'équipe adverse reçoit la valeur -1
+    
+    # Convertir la ligne en DataFrame
+    match_data = pd.DataFrame(row, index=[0])
+    
+    # Ajouter la constante, mais vérifier que toutes les colonnes sont présentes
+    match_data = add_constant(match_data, has_constant='add')  # Ajouter une constante correctement
+    # S'assurer que les colonnes du match_data sont dans le même ordre que celles de X
+    
+    # Effectuer la prédiction avec le modèle GLM
+    prediction_BCL = results_L.predict(match_data)[0]  
+    prediction_BCR = results_R.predict(match_data)[0]  
+
+    return prediction_BCL,prediction_BCR
+
+
+def modele_BC(r,df) : 
+
+    team_detail_select = get_aggregated_data(
+        df=df, min_round=1, max_round=r,
+        selected_teams=[],
+        selected_opponents=[],
+        selected_fields=["ROUND","TEAM"],
+        selected_players=[],
+        mode="CUMULATED",
+        percent="MADE"
+    )[["ROUND","HOME",'TEAM', 'OPPONENT','1_T','2_T','3_T','TO']]
+
+    team_detail_select["BC"] = ((team_detail_select["1_T"]*0.5 + team_detail_select["2_T"] + team_detail_select["3_T"])/(team_detail_select["1_T"]*0.5 + team_detail_select["2_T"] + team_detail_select["3_T"] + team_detail_select["TO"])).round(4)
+
+
+
+    # Filtrer selon la condition HOME
+    t1 = team_detail_select[team_detail_select["HOME"] == "YES"]
+    t2 = team_detail_select[team_detail_select["HOME"] == "NO"]
+
+    # Effectuer le LEFT JOIN sur les conditions spécifiées
+    result = pd.merge(
+        t1,
+        t2,
+        how="left",
+        left_on=["TEAM", "OPPONENT", "ROUND"],
+        right_on=["OPPONENT", "TEAM", "ROUND"],
+        suffixes=('_local', '_road')
+    )
+
+    # Sélectionner et renommer les colonnes pour correspondre à la sortie SQL
+    result = result[["ROUND", "TEAM_local", "TEAM_road", "BC_local", "BC_road"]]
+    result.columns = ["ROUND", "local.club.code", "road.club.code", "BCL", "BCR"]
+            
+    clubs = sorted(list(set(result["local.club.code"].unique()) | set(result["road.club.code"].unique())))
+
+    # Ajouter une colonne pour chaque club
+    for club in clubs:
+        result[club] = result.apply(
+            lambda row: 1 if row["local.club.code"] == club else 
+                        -1 if row["road.club.code"] == club else 0, 
+            axis=1
+        )
+
+    X = result[clubs]
+    X = add_constant(X)
+    weights = result['ROUND'] + (result["ROUND"].max()+4)/3
+
+    ################################## BCL ########################################################""
+    Y = result['BCL']
+
+    # Ajustement d'un modèle GLM (Binomial avec lien logit)
+    model_BCL = GLM(Y, X, family=families.Binomial(link=logit()), freq_weights=weights)
+    results_BCL = model_BCL.fit()
+    ################################## BCR ########################################################""
+    Y = result['BCR']
+
+    # Ajustement d'un modèle GLM (Binomial avec lien logit)
+    model_BCR = GLM(Y, X, family=families.Binomial(link=logit()), freq_weights=weights)
+    results_BCR = model_BCR.fit()
+
+    # Enregistrer le modèle BCL
+    with open('./modeles/model_BCL.pkl', 'wb') as f:
+        pickle.dump(results_BCL, f)
+
+    # Enregistrer le modèle BCR
+    with open('./modeles/model_BCR.pkl', 'wb') as f:
+        pickle.dump(results_BCR, f)
+
+def modele_PPS(r,df) : 
+
+    team_detail_select = get_aggregated_data(
+    df=df, min_round=1, max_round=r,
+    selected_teams=[],
+    selected_opponents=[],
+    selected_fields=["ROUND","TEAM"],
+    selected_players=[],
+    mode="CUMULATED",
+    percent="MADE"
+    )[["ROUND","HOME",'TEAM', 'OPPONENT','2_R','2_T','3_R','3_T']]
+
+
+    team_detail_select["PPS"] = ((team_detail_select["2_R"]*2 + team_detail_select["3_R"]*3)/(team_detail_select["2_T"] + team_detail_select["3_T"])).round(4)
+
+
+
+    # Filtrer selon la condition HOME
+    t1 = team_detail_select[team_detail_select["HOME"] == "YES"]
+    t2 = team_detail_select[team_detail_select["HOME"] == "NO"]
+
+    # Effectuer le LEFT JOIN sur les conditions spécifiées
+    result = pd.merge(
+    t1,
+    t2,
+    how="left",
+    left_on=["TEAM", "OPPONENT", "ROUND"],
+    right_on=["OPPONENT", "TEAM", "ROUND"],
+    suffixes=('_local', '_road')
+    )
+
+    # Sélectionner et renommer les colonnes pour correspondre à la sortie SQL
+    result = result[["ROUND", "TEAM_local", "TEAM_road", "PPS_local", "PPS_road"]]
+    result.columns = ["ROUND", "local.club.code", "road.club.code", "PPSL", "PPSR"]
+
+    clubs = sorted(list(set(result["local.club.code"].unique()) | set(result["road.club.code"].unique())))
+
+    # Ajouter une colonne pour chaque club
+    for club in clubs:
+            result[club] = result.apply(
+                    lambda row: 1 if row["local.club.code"] == club else 
+                            -1 if row["road.club.code"] == club else 0, 
+                    axis=1
+            )
+
+    X = result[clubs]
+    X = add_constant(X)
+    weights = result['ROUND'] + (result["ROUND"].max()+4)/3
+
+    ################################## PPSL ########################################################""
+    Y = result['PPSL']
+
+    model_PPSL = OLS(Y, X, weights=weights)
+    results_PPSL = model_PPSL.fit()
+
+    ################################## PPSR ########################################################""
+    Y = result['PPSR']
+
+    model_PPSR = OLS(Y, X, weights=weights)
+    results_PPSR = model_PPSR.fit()
+
+    # Enregistrer le modèle BCL
+    with open('./modeles/model_PPSL.pkl', 'wb') as f:
+            pickle.dump(results_PPSL, f)
+
+    # Enregistrer le modèle BCR
+    with open('./modeles/model_PPSR.pkl', 'wb') as f:
+            pickle.dump(results_PPSR, f)
+def modele_FT(r,df) : 
+
+    team_detail_select = get_aggregated_data(
+    df=df, min_round=1, max_round=r,
+    selected_teams=[],
+    selected_opponents=[],
+    selected_fields=["ROUND","TEAM"],
+    selected_players=[],
+    mode="CUMULATED",
+    percent="MADE"
+    )[["ROUND","HOME",'TEAM', 'OPPONENT','1_T']]
+
+
+
+
+
+    # Filtrer selon la condition HOME
+    t1 = team_detail_select[team_detail_select["HOME"] == "YES"]
+    t2 = team_detail_select[team_detail_select["HOME"] == "NO"]
+
+    # Effectuer le LEFT JOIN sur les conditions spécifiées
+    result = pd.merge(
+    t1,
+    t2,
+    how="left",
+    left_on=["TEAM", "OPPONENT", "ROUND"],
+    right_on=["OPPONENT", "TEAM", "ROUND"],
+    suffixes=('_local', '_road')
+    )
+
+    # Sélectionner et renommer les colonnes pour correspondre à la sortie SQL
+    result = result[["ROUND", "TEAM_local", "TEAM_road", "1_T_local", "1_T_road"]]
+    result.columns = ["ROUND", "local.club.code", "road.club.code", "1TL", "1TR"]
+
+    clubs = sorted(list(set(result["local.club.code"].unique()) | set(result["road.club.code"].unique())))
+
+    # Ajouter une colonne pour chaque club
+    for club in clubs:
+            result[club] = result.apply(
+                    lambda row: 1 if row["local.club.code"] == club else 
+                            -1 if row["road.club.code"] == club else 0, 
+                    axis=1
+            )
+
+    X = result[clubs]
+    X = add_constant(X)
+    weights = result['ROUND'] + (result["ROUND"].max()+4)/3
+
+    ################################## PPSL ########################################################""
+    Y = result['1TL']
+
+    model_1TL = OLS(Y, X, weights=weights)
+    results_1TL = model_1TL.fit()
+
+    ################################## PPSR ########################################################""
+    Y = result['1TR']
+
+    model_1TR = OLS(Y, X, weights=weights)
+    results_1TR = model_1TR.fit()
+
+    # Enregistrer le modèle BCL
+    with open('./modeles/model_1TL.pkl', 'wb') as f:
+            pickle.dump(results_1TL, f)
+
+    # Enregistrer le modèle BCR
+    with open('./modeles/model_1TR.pkl', 'wb') as f:
+            pickle.dump(results_1TR, f)
+
+def modele_SPG(r,df) : 
+        team_detail_select = get_aggregated_data(
+        df=df, min_round=1, max_round=r,
+        selected_teams=[],
+        selected_opponents=[],
+        selected_fields=["ROUND","TEAM"],
+        selected_players=[],
+        mode="CUMULATED",
+        percent="MADE"
+        )[["ROUND","HOME",'TEAM', 'OPPONENT','2_T','3_T']]
+
+
+        # Filtrer selon la condition HOME
+        t1 = team_detail_select[team_detail_select["HOME"] == "YES"]
+        t2 = team_detail_select[team_detail_select["HOME"] == "NO"]
+
+        # Effectuer le LEFT JOIN sur les conditions spécifiées
+        result = pd.merge(
+        t1,
+        t2,
+        how="left",
+        left_on=["TEAM", "OPPONENT", "ROUND"],
+        right_on=["OPPONENT", "TEAM", "ROUND"],
+        suffixes=('_local', '_road')
+        )
+
+        result["SPG"] = result["2_T_local"] + result["3_T_local"] + result["2_T_road"] + result["3_T_road"]
+
+        result = result[["ROUND", "TEAM_local", "TEAM_road", "SPG"]]
+        result.columns = ["ROUND", "local.club.code", "road.club.code", "SPG"]
+
+        clubs = sorted(list(set(result["local.club.code"].unique()) | set(result["road.club.code"].unique())))
+
+        # Ajouter une colonne pour chaque club
+        for club in clubs:
+                result[club] = result.apply(
+                        lambda row: 1 if row["local.club.code"] == club else 
+                                -1 if row["road.club.code"] == club else 0, 
+                        axis=1
+                )
+
+        X = result[clubs]
+        X = add_constant(X)
+        weights = result['ROUND'] + (result["ROUND"].max()+4)/3
+
+        Y = result['SPG']
+
+        model_SPG = OLS(Y, X, weights=weights)
+        results_SPG = model_SPG.fit()
+
+        # Enregistrer le modèle SPG
+        with open('./modeles/model_SPG.pkl', 'wb') as f:
+                pickle.dump(results_SPG, f)
+
+def modele_REB(r,df) : 
+
+    team_detail_select = get_aggregated_data(
+        df=df, min_round=1, max_round=r,
+        selected_teams=[],
+        selected_opponents=[],
+        selected_fields=["ROUND","TEAM"],
+        selected_players=[],
+        mode="CUMULATED",
+        percent="MADE"
+    )[["ROUND","HOME",'TEAM', 'OPPONENT','OR','DR']]
+
+
+
+
+    # Filtrer selon la condition HOME
+    t1 = team_detail_select[team_detail_select["HOME"] == "YES"]
+    t2 = team_detail_select[team_detail_select["HOME"] == "NO"]
+
+    # Effectuer le LEFT JOIN sur les conditions spécifiées
+    result = pd.merge(
+        t1,
+        t2,
+        how="left",
+        left_on=["TEAM", "OPPONENT", "ROUND"],
+        right_on=["OPPONENT", "TEAM", "ROUND"],
+        suffixes=('_local', '_road')
+    )
+
+    result["REB_DEF_local"] = result["DR_local"] / (result["DR_local"] + result["OR_road"])
+    result["REB_DEF_road"] = result["DR_road"] / (result["DR_road"] + result["OR_local"])
+
+
+    # Sélectionner et renommer les colonnes pour correspondre à la sortie SQL
+    result = result[["ROUND", "TEAM_local", "TEAM_road", "REB_DEF_local", "REB_DEF_road"]]
+    result.columns = ["ROUND", "local.club.code", "road.club.code", "RDL", "RDR"]
+            
+    clubs = sorted(list(set(result["local.club.code"].unique()) | set(result["road.club.code"].unique())))
+
+    # Ajouter une colonne pour chaque club
+    for club in clubs:
+        result[club] = result.apply(
+            lambda row: 1 if row["local.club.code"] == club else 
+                        -1 if row["road.club.code"] == club else 0, 
+            axis=1
+        )
+
+    X = result[clubs]
+    X = add_constant(X)
+    weights = result['ROUND'] + (result["ROUND"].max()+4)/3
+
+    ################################## BCL ########################################################""
+    Y = result['RDL']
+
+    # Ajustement d'un modèle GLM (Binomial avec lien logit)
+    model_RDL = GLM(Y, X, family=families.Binomial(link=logit()), freq_weights=weights)
+    results_RDL = model_RDL.fit()
+    ################################## BCR ########################################################""
+    Y = result['RDR']
+
+    # Ajustement d'un modèle GLM (Binomial avec lien logit)
+    model_RDR = GLM(Y, X, family=families.Binomial(link=logit()), freq_weights=weights)
+    results_RDR = model_RDR.fit()
+
+    # Enregistrer le modèle RDL
+    with open('./modeles/model_RDL.pkl', 'wb') as f:
+        pickle.dump(results_RDL, f)
+
+    # Enregistrer le modèle RDR
+    with open('./modeles/model_RDR.pkl', 'wb') as f:
+        pickle.dump(results_RDR, f)
+def modele_W(r,df) : 
+        team_detail_select = get_aggregated_data(
+        df=df, min_round=1, max_round=r,
+        selected_teams=[],
+        selected_opponents=[],
+        selected_fields=["ROUND","TEAM"],
+        selected_players=[],
+        mode="CUMULATED",
+        percent="MADE"
+        )[["ROUND","HOME",'TEAM', 'OPPONENT','PTS']]
+
+
+
+
+        # Filtrer selon la condition HOME
+        t1 = team_detail_select[team_detail_select["HOME"] == "YES"]
+        t2 = team_detail_select[team_detail_select["HOME"] == "NO"]
+
+        # Effectuer le LEFT JOIN sur les conditions spécifiées
+        result = pd.merge(
+        t1,
+        t2,
+        how="left",
+        left_on=["TEAM", "OPPONENT", "ROUND"],
+        right_on=["OPPONENT", "TEAM", "ROUND"],
+        suffixes=('_local', '_road')
+        )
+
+        result["WIN"] = result["PTS_local"] > result["PTS_road"]
+
+
+
+        # Sélectionner et renommer les colonnes pour correspondre à la sortie SQL
+        result = result[["ROUND", "TEAM_local", "TEAM_road", "WIN"]]
+        result.columns = ["ROUND", "local.club.code", "road.club.code", "W"]
+                
+        clubs = sorted(list(set(result["local.club.code"].unique()) | set(result["road.club.code"].unique())))
+
+        # Ajouter une colonne pour chaque club
+        for club in clubs:
+                result[club] = result.apply(
+                        lambda row: 1 if row["local.club.code"] == club else 
+                                -1 if row["road.club.code"] == club else 0, 
+                        axis=1
+                )
+
+        X = result[clubs]
+        X = add_constant(X)
+        weights = result['ROUND'] + (result["ROUND"].max()+4)/3
+
+        Y = result['W']
+
+        # Ajustement d'un modèle GLM (Binomial avec lien logit)
+        model_W = GLM(Y, X, family=Binomial(link=logit()), freq_weights=weights)
+
+        results_W = model_W.fit()
+
+        # Enregistrer le modèle W
+        with open('./modeles/model_W.pkl', 'wb') as f:
+                pickle.dump(results_W, f)
+
+def hex_to_rgb(hex_color):
+    """Convertit une couleur hexadécimale en RGB."""
+    hex_color = hex_color.lstrip('#')
+    return tuple(int(hex_color[i:i+2], 16) for i in (0, 2, 4))
+
+def color_distance(rgb1, rgb2):
+    """Calcule la distance euclidienne entre deux couleurs RGB."""
+    return math.sqrt(sum((c1 - c2) ** 2 for c1, c2 in zip(rgb1, rgb2)))
+
+
+def choisir_maillot(couleur_domicile, couleurs_exterieur):
+    """
+    Sélectionne la première couleur extérieure ayant une distance > 200 avec la couleur domicile,
+    ou la couleur avec la distance maximale si aucune distance > 200 n'existe.
+    
+    Args:
+        couleur_domicile (str): Couleur hex de l'équipe à domicile (e.g., "#FF5733").
+        couleurs_exterieur (list): Liste de couleurs hex pour l'équipe extérieure (e.g., ["#33FF57", "#3357FF"]).
+    
+    Returns:
+        str: Couleur hex choisie pour l'équipe extérieure.
+    """
+    rgb_domicile = hex_to_rgb(couleur_domicile)
+    distances = {
+        couleur: color_distance(rgb_domicile, hex_to_rgb(couleur))
+        for couleur in couleurs_exterieur
+    }
+    
+    # Cherche la première couleur avec une distance > 200
+    for couleur, distance in distances.items():
+        if distance > 200:
+            return couleur
+    
+    # Si aucune distance > 200, retourne la couleur avec la distance maximale
+    return max(distances, key=distances.get)
+
+
+
+def stats_important_team(team,min_round,max_round,df) : 
+    team_stats = get_aggregated_stats(df, min_round,max_round, team = team,more = "")
+    team_stats = add_delta_columns(team_stats)
+
+    opp_stats = get_aggregated_stats(df, min_round,max_round, opponent = team,more = "")
+    opp_stats = add_delta_columns(opp_stats)
+
+    team_stats["PTS_C"] = opp_stats["PTS"]
+    opp_stats["PTS_C"] = team_stats["PTS"]
+
+
+
+    mean_stats = get_aggregated_data(
+        df, 1, 34,
+        selected_teams=[],
+        selected_opponents=[],
+        selected_fields=["TEAM", "ROUND"],
+        selected_players=[],
+        mode="AVERAGE",
+        percent="MADE"
+    )
+
+    mean_stats = add_delta_columns(mean_stats)
+    mean_stats["PTS_C"] = mean_stats["PTS"]
+
+    columns_to_average = ["PTS_C", "DR", "OR", "AS", "ST", "CO", 
+                            "1_R", "1_L", "2_R", "2_L", "3_R", "3_L", 
+                            "TO", "FP", "CF", "NCF"]
+
+    # Calcul des moyennes arrondies et ajout dans un DataFrame
+    mean_stats = mean_stats[columns_to_average].mean().round(3).to_frame().T
+
+    # Coefficients pour appliquer aux colonnes
+    coefficients = {
+        'DR': 0.85, 'OR': 1.35, 'AS': 0.8, 'ST': 1.33, 'CO': 0.6,
+        '1_R': 1, '2_R': 2, '3_R': 3, '1_L': -0.7, '2_L': -0.9, '3_L': -0.6,
+        'TO': -1.25, 'PTS_C': -0.5, 'FP': 0.5, 'CF': -0.5, 'NCF': -1.25
+    }
+
+
+    team_coeff = apply_coefficients(team_stats.copy()[columns_to_average], coefficients)
+    team_coeff = pd.DataFrame(team_coeff.mean().round(3)).T  # Transpose pour avoir une ligne
+
+    opp_coeff = apply_coefficients(opp_stats.copy()[columns_to_average], coefficients)
+    opp_coeff = pd.DataFrame(opp_coeff.mean().round(3)).T  # Transpose pour avoir une ligne
+
+    mean_coeff = apply_coefficients(mean_stats.copy()[columns_to_average], coefficients)
+
+
+
+    team_delta = (team_coeff - mean_coeff).round(3)
+    opp_delta = (opp_coeff - mean_coeff).round(3)
+
+
+    team_coeff = process_dataframes(team_coeff)
+    opp_coeff = process_dataframes(opp_coeff)
+    mean_coeff = process_dataframes(mean_coeff)
+    team_delta = process_dataframes(team_delta)
+    opp_delta = process_dataframes(opp_delta)
+
+    team_top_columns, team_bottom_columns = get_top_and_bottom_column_names(team_delta)
+    opp_top_columns, opp_bottom_columns = get_top_and_bottom_column_names(opp_delta)
+
+    # Extraire les valeurs formatées
+    team_top_values = extract_column_values(team_top_columns, team_stats,"top")
+    team_bottom_values = extract_column_values(team_bottom_columns, team_stats,"bottom")
+    opp_top_values = extract_column_values(opp_top_columns, opp_stats,"top")
+    opp_bottom_values = extract_column_values(opp_bottom_columns, opp_stats,"bottom")
+
+    # Compléter les listes manuellement
+    if len(team_top_values) < 6:
+        team_top_values += ["--"] * (6 - len(team_top_values))
+
+    if len(team_bottom_values) < 6:
+        team_bottom_values += ["--"] * (6 - len(team_bottom_values))
+
+    if len(opp_top_values) < 6:
+        opp_top_values += ["--"] * (6 - len(opp_top_values))
+
+    if len(opp_bottom_values) < 6:
+        opp_bottom_values += ["--"] * (6 - len(opp_bottom_values))
+
+    return team_top_values,team_bottom_values,opp_top_values,opp_bottom_values
+
+def stats_important_players_round(r,df):
+    columns_to_average = ["DR", "OR", "AS", "ST", "CO", 
+                        "1_R", "1_L", "2_R", "2_L", "3_R", "3_L", 
+                        "TO", "FP", "CF", "NCF"]
+
+    coefficients = {
+        'DR': 0.85, 'OR': 1.35, 'AS': 0.9, 'ST': 1.33, 'CO': 0.6,
+        '1_R': 0.8, '2_R': 1.6, '3_R': 2.4, '1_L': -0.8, '2_L': -1.448, '3_L': -1.112,
+        'TO': -1.25, 'FP': 0.5, 'CF': -0.5, 'NCF': -1.25
+    }
+    coeff = pd.DataFrame(columns=['DR', 'OR', 'AS', 'ST', 'CO', 'TO', 'FP', 'CF', 'NCF', '1', '2', '3'])
+    stats = pd.DataFrame(columns=['ROUND', 'NB_GAME', 'TEAM', 'OPPONENT', 'HOME', 'WIN', '#', 'PLAYER',
+       'TIME_ON', 'I_PER', 'PER', 'PM_ON', 'PTS', 'DR', 'OR', 'TR', 'AS', 'ST',
+       'CO', '1_R', '1_T', '2_R', '2_T', '3_R', '3_T', 'TO', 'FP', 'CF', 'NCF',
+       '1_L', '2_L', '3_L'])
+
+    for t in list(set(df["TEAM"])) :
+        _stats = get_aggregated_stats_players(df, r, t)
+        _stats = add_delta_columns(_stats)
+
+        _coeff = apply_coefficients(_stats.copy()[columns_to_average], coefficients)
+        _coeff = process_dataframes(_coeff)
+        _coeff.index = _stats[["TEAM","PLAYER"]]
+
+        coeff = pd.concat([coeff,_coeff])
+        stats = pd.concat([stats,_stats])
+
+    coeff_abs = coeff.abs()
+    largest_values = coeff_abs.stack().nlargest(24)
+
+    result = largest_values.reset_index()
+
+    result[['TEAM', 'PLAYER']] = pd.DataFrame(result['level_0'].tolist(), index=result.index)
+    result = result.drop(columns=['level_0'])
+
+    result.columns = ["STAT","VALUE",'TEAM', 'PLAYER']
+
+    VALUE_0 = []
+    for s,p in zip(result["STAT"].to_list(),result["PLAYER"].to_list()):
+        stats_df = stats[stats["PLAYER"]==p].reset_index(drop = True)
+        if s in ['2', '3']:
+            VALUE_0.append(f"{stats_df.loc[0, f'{s}_R']}/{stats_df.loc[0, f'{s}_T']} {s}-PTS")
+        elif s in ['1']:
+            VALUE_0.append(f"{stats_df.loc[0, f'{s}_R']}/{stats_df.loc[0, f'{s}_T']} FT")
+
+        elif s in ['CO']:
+            VALUE_0.append(f"{stats_df.loc[0, s]} BL")
+        else :
+            VALUE_0.append(f"{stats_df.loc[0, s]} {s}")
+
+    result["VALUE"] = VALUE_0
+    result = result.drop(columns=['STAT'])
+    result = result[["TEAM","PLAYER","VALUE"]]
+
+    return result
+
+
+def stats_important_players(r,team_local,team_road,df) : 
+    local_stats = get_aggregated_stats_players(df, r, team_local)
+    road_stats = get_aggregated_stats_players(df, r, team_road)
+
+
+    local_stats = add_delta_columns(local_stats)
+    road_stats = add_delta_columns(road_stats)
+
+
+    columns_to_average = ["DR", "OR", "AS", "ST", "CO", 
+                        "1_R", "1_L", "2_R", "2_L", "3_R", "3_L", 
+                        "TO", "FP", "CF", "NCF"]
+
+    coefficients = {
+        'DR': 0.85, 'OR': 1.35, 'AS': 0.9, 'ST': 1.33, 'CO': 0.6,
+        '1_R': 0.8, '2_R': 1.6, '3_R': 2.4, '1_L': -0.8, '2_L': -1.448, '3_L': -1.112,
+        'TO': -1.25, 'FP': 0.5, 'CF': -0.5, 'NCF': -1.25
+    }
+
+    local_coeff = apply_coefficients(local_stats.copy()[columns_to_average], coefficients)
+    local_coeff = process_dataframes(local_coeff)
+    local_coeff.index = local_stats[["TEAM","PLAYER"]]
+
+
+    road_coeff = apply_coefficients(road_stats.copy()[columns_to_average], coefficients)
+    road_coeff = process_dataframes(road_coeff)
+    road_coeff.index = road_stats[["TEAM","PLAYER"]]
+
+    coeff = pd.concat([local_coeff,road_coeff])
+    stats = pd.concat([local_stats,road_stats])
+
+    coeff_abs = coeff.abs()
+    largest_values = coeff_abs.stack().nlargest(10)
+
+    result = largest_values.reset_index()
+
+    result[['TEAM', 'PLAYER']] = pd.DataFrame(result['level_0'].tolist(), index=result.index)
+    result = result.drop(columns=['level_0'])
+
+    result.columns = ["STAT","VALUE",'TEAM', 'PLAYER']
+
+    VALUE_0 = []
+    for s,p in zip(result["STAT"].to_list(),result["PLAYER"].to_list()):
+        stats_df = stats[stats["PLAYER"]==p].reset_index(drop = True)
+        if s in ['2', '3']:
+            VALUE_0.append(f"{stats_df.loc[0, f'{s}_R']}/{stats_df.loc[0, f'{s}_T']} {s}-PTS")
+        elif s in ['1']:
+            VALUE_0.append(f"{stats_df.loc[0, f'{s}_R']}/{stats_df.loc[0, f'{s}_T']} FT")
+
+        elif s in ['CO']:
+            VALUE_0.append(f"{stats_df.loc[0, s]} BL")
+        else :
+            VALUE_0.append(f"{stats_df.loc[0, s]} {s}")
+
+    result["VALUE"] = VALUE_0
+    result = result.drop(columns=['STAT'])
+    result = result[["TEAM","PLAYER","VALUE"]]
+
+    return result
+
+
+# Récupérer les statistiques agrégées pour l'équipe locale et l'équipe visiteuse
+def get_aggregated_stats(df, round_min,round_max, team = None, opponent=None,more = "ROUND"):
+    if team : 
+        if more == "ROUND" :
+            selected_fields = ["TEAM","ROUND"]
+        else :
+            selected_fields = ["TEAM"]
+    if opponent : 
+        if more == "ROUND" :
+            selected_fields = ["OPPONENT","ROUND"]
+        else :
+            selected_fields = ["OPPONENT"]
+
+    return get_aggregated_data(
+        df, round_min, round_max,
+        selected_teams=[team] if team else [],
+        selected_opponents=[opponent] if opponent else [],
+        selected_fields=selected_fields,
+        selected_players=[],
+        mode="AVERAGE",
+        percent="MADE"
+    )
+def get_aggregated_stats_players(df, round_value, team = None, opponent=None):
+    return get_aggregated_data(
+        df, round_value, round_value,
+        selected_teams=[team] if team else [],
+        selected_opponents=[opponent] if opponent else [],
+        selected_fields=["TEAM", "ROUND",'PLAYER'],
+        selected_players=[],
+        mode="CUMULATED",
+        percent="MADE"
+    )
+
+# Créer les colonnes '1_L', '2_L', '3_L' pour local_stats et road_stats
+def add_delta_columns(stats_df):
+    for col in ["1", "2", "3"]:
+        stats_df[f"{col}_L"] = stats_df[f"{col}_T"] - stats_df[f"{col}_R"]
+    return stats_df
+
+# Fonction pour appliquer les coefficients
+def apply_coefficients(stats_df, coefficients):
+    for column, coef in coefficients.items():
+        stats_df[column] = (stats_df[column] * coef).round(3)
+    return stats_df
+
+# Création des colonnes '1', '2', '3' et suppression des colonnes intermédiaires
+def process_dataframes(df):
+    for col in ['1', '2', '3']:
+        df[col] = df[f"{col}_R"] + df[f"{col}_L"]
+    df.drop(columns=[f"{col}_R" for col in ['1', '2', '3']] + [f"{col}_L" for col in ['1', '2', '3']], inplace=True)
+    return df
+
+# Fonction pour extraire les noms des colonnes 'top' et 'bottom' selon les critères
+def get_top_and_bottom_column_names(df, n=6):
+    top_values = df.unstack()
+    top_values = top_values[top_values > 0].nlargest(n)
+    top_columns = [col for col, _ in top_values.index if col != "NCF"]
+    
+    bottom_values = df.unstack()
+    bottom_values = bottom_values[bottom_values < 0].nsmallest(n)
+    bottom_columns = [col for col, _ in bottom_values.index]
+    
+    return top_columns, bottom_columns
+
+# Fonction pour récupérer les valeurs avec un formatage spécial pour '1', '2', '3'
+def extract_column_values(columns, stats_df,top):
+    extracted_values = []
+    for column in columns:
+        if column in ['2', '3']:
+            extracted_values.append(f"{stats_df.loc[0, f'{column}_R']}/{stats_df.loc[0, f'{column}_T']} {column}-PTS")
+        elif column == '1' :
+            if (stats_df.loc[0, f'{column}_R'] / stats_df.loc[0, f'{column}_T'] < 0.75) and top == "bottom"  :
+                extracted_values.append(f"{stats_df.loc[0, f'{column}_R']}/{stats_df.loc[0, f'{column}_T']} FT")
+            elif (stats_df.loc[0, f'{column}_R'] / stats_df.loc[0, f'{column}_T'] > 0.75) and top == "top":
+                extracted_values.append(f"{stats_df.loc[0, f'{column}_R']}/{stats_df.loc[0, f'{column}_T']} FT")
+            else :
+                extracted_values.append(f"{stats_df.loc[0, f'{column}_T']} FT ATTEMPTED")
+
+        elif column in ['CO']:
+            extracted_values.append(f"{stats_df.loc[0, column]} BLOCKS")
+        elif column == "PTS_C" :
+            extracted_values.append(f"{stats_df.loc[0, column]} PTS CONC.")
+
+        else:
+            extracted_values.append(f"{stats_df.loc[0, column]} {column}")
+    return extracted_values
+
+
+def stats_important(r,team_local,team_road,df) : 
+    local_stats = get_aggregated_stats(df, r,r, team_local)
+    road_stats = get_aggregated_stats(df, r,r, team_road)
+
+
+    local_stats = add_delta_columns(local_stats)
+    road_stats = add_delta_columns(road_stats)
+
+    # Mettre à jour la colonne "PTS_C" dans local_stats et road_stats
+    local_stats["PTS_C"] = road_stats["PTS"]
+    road_stats["PTS_C"] = local_stats["PTS"]
+
+    for col in local_stats.select_dtypes(include='float').columns:
+        if col != 'I_PER':
+            local_stats[col] = local_stats[col].astype(int)
+
+    for col in road_stats.select_dtypes(include='float').columns:
+        if col != 'I_PER':
+            road_stats[col] = road_stats[col].astype(int)
+    # Calculer les moyennes pour mean_stats
+    mean_stats = get_aggregated_data(
+        df, 1, 34,
+        selected_teams=[],
+        selected_opponents=[],
+        selected_fields=["TEAM", "ROUND"],
+        selected_players=[],
+        mode="AVERAGE",
+        percent="MADE"
+    )
+
+    # Ajouter les colonnes '1_L', '2_L', '3_L' à mean_stats
+    mean_stats = add_delta_columns(mean_stats)
+    mean_stats["PTS_C"] = mean_stats["PTS"]
+
+    # Liste des colonnes à traiter
+    columns_to_average = ["PTS_C", "DR", "OR", "AS", "ST", "CO", 
+                        "1_R", "1_L", "2_R", "2_L", "3_R", "3_L", 
+                        "TO", "FP", "CF", "NCF"]
+
+    # Calcul des moyennes arrondies et ajout dans un DataFrame
+    mean_stats = mean_stats[columns_to_average].mean().round(3).to_frame().T
+
+
+    # Coefficients pour appliquer aux colonnes
+    coefficients = {
+        'DR': 0.85, 'OR': 1.35, 'AS': 0.8, 'ST': 1.33, 'CO': 0.6,
+        '1_R': 1, '2_R': 2, '3_R': 3, '1_L': -0.6, '2_L': -0.75, '3_L': -0.5,
+        'TO': -1.25, 'PTS_C': -0.5, 'FP': 0.5, 'CF': -0.5, 'NCF': -1.25
+    }
+
+
+
+    local_coeff = apply_coefficients(local_stats.copy()[columns_to_average], coefficients)
+    road_coeff = apply_coefficients(road_stats.copy()[columns_to_average], coefficients)
+    mean_coeff = apply_coefficients(mean_stats.copy()[columns_to_average], coefficients)
+
+    # Calcul des deltas
+    local_delta = (local_coeff - mean_coeff).round(3)
+    road_delta = (road_coeff - mean_coeff).round(3)
+
+
+    local_coeff = process_dataframes(local_coeff)
+    road_coeff = process_dataframes(road_coeff)
+    mean_coeff = process_dataframes(mean_coeff)
+    local_delta = process_dataframes(local_delta)
+    road_delta = process_dataframes(road_delta)
+
+
+    # Extraire les colonnes top et bottom pour local_delta et road_delta
+    local_top_columns, local_bottom_columns = get_top_and_bottom_column_names(local_delta)
+    road_top_columns, road_bottom_columns = get_top_and_bottom_column_names(road_delta)
+
+
+
+    # Extraire les valeurs formatées
+    local_top_values = extract_column_values(local_top_columns, local_stats,"top")
+    local_bottom_values = extract_column_values(local_bottom_columns, local_stats,"bottom")
+    road_top_values = extract_column_values(road_top_columns, road_stats,"top")
+    road_bottom_values = extract_column_values(road_bottom_columns, road_stats,"bottom")
+
+    # Compléter les listes manuellement
+    if len(local_top_values) < 6:
+        local_top_values += ["--"] * (6 - len(local_top_values))
+
+    if len(local_bottom_values) < 6:
+        local_bottom_values += ["--"] * (6 - len(local_bottom_values))
+
+    if len(road_top_values) < 6:
+        road_top_values += ["--"] * (6 - len(road_top_values))
+
+    if len(road_bottom_values) < 6:
+        road_bottom_values += ["--"] * (6 - len(road_bottom_values))
+        
+    return local_top_values,local_bottom_values,road_top_values,road_bottom_values
+
+
+def team_evol_score(team,min_round,max_round,data_dir,competition,season,type = "MEAN") :
+    df_evol_score = pd.read_csv(os.path.join(data_dir, f"{competition}_evolscore_{season}.csv"))
+
+    team_df = df_evol_score[(df_evol_score["TEAM"]==team)&(df_evol_score["ROUND"]>=min_round)&(df_evol_score["ROUND"]<=max_round)]
+    opp_df = df_evol_score[(df_evol_score["OPPONENT"]==team)&(df_evol_score["ROUND"]>=min_round)&(df_evol_score["ROUND"]<=max_round)]
+
+
+    columns_p = [f'P{i}' for i in range(1, 25)]
+    if type != "MEAN" :
+        team_df_mean_values = list(team_df[columns_p].median(skipna=True))
+        opp_df_mean_values = list(opp_df[columns_p].median(skipna=True))
+    else : 
+        team_df_mean_values = list(team_df[columns_p].mean(skipna=True))
+        opp_df_mean_values = list(opp_df[columns_p].mean(skipna=True))
+        
+    cumul_df_mean_values = [round(a-b,3) for a,b in zip(team_df_mean_values,opp_df_mean_values)]
+    periode_mean_values = [cumul_df_mean_values[0]] + [round(cumul_df_mean_values[i] - cumul_df_mean_values[i-1],3) for i in range(1, len(cumul_df_mean_values))]
+
+    return [x for x in periode_mean_values if not math.isnan(x)],[x for x in cumul_df_mean_values if not math.isnan(x)],team_df_mean_values,opp_df_mean_values
+
+def evol_score(data_dir,competition,season) : 
+    df_pbp = pd.read_csv(os.path.join(data_dir, f"{competition}_pbp_{season}.csv"))
+    df_gs = pd.read_csv(os.path.join(data_dir, f"{competition}_gs_{season}.csv"))
+    print(df_pbp)
+    columns = [
+        "Season","ROUND", "Gamecode", "TEAM","OPPONENT", "WIN", "HOME"
+    ] + [f"P{i}" for i in range(1, 25)]
+
+    # Création d'un dataframe vide avec ces colonnes
+    df_evol_score = pd.DataFrame(columns=columns)
+
+    for gc in list(df_pbp["Gamecode"].unique()) : 
+
+        df_pbp2 = df_pbp[df_pbp["Gamecode"] == gc].reset_index(drop = True)
+        df_gs2 = df_gs[df_gs["Gamecode"] == gc].reset_index(drop = True)
+        print(df_pbp2)
+        print(gc)
+
+
+        df_pbp2.loc[:, "NUMBEROFPLAY"] = range(len(df_pbp2))
+
+        code = [df_gs2["local.club.code"].to_list()[0],df_gs2["road.club.code"].to_list()[0]]
+        score = [df_gs2["local.score"].to_list()[0],df_gs2["road.score"].to_list()[0]]
+
+
+        print(df_pbp2['PERIOD'])
+        df_pbp2['PERIOD'] = df_pbp2['PERIOD'].apply(lambda x: x if x in [1, 2, 3, 4] else 4 + 0.5 * (x - 4)).astype(float)
+
+        game_duration = pd.to_timedelta(max(df_pbp2['PERIOD']) *10,unit = "minutes")
+
+        df_pbp2 = df_pbp2[
+            df_pbp2['POINTS_A'].notna() |
+            df_pbp2['POINTS_B'].notna() |
+            (df_pbp2['PLAYINFO'] == 'Out') |
+            (df_pbp2['PLAYINFO'] == 'In')
+        ].reset_index(drop = True)
+        print(df_pbp2[['PERIOD','MARKERTIME']])
+        df_pbp2['MARKERTIME'] = pd.to_timedelta('00:' + df_pbp2['MARKERTIME'])
+        print(df_pbp2[['PERIOD','MARKERTIME']])
+
+        df_pbp2['MARKERTIME'] = pd.to_timedelta(10,unit = "minutes") - df_pbp2['MARKERTIME'] + pd.to_timedelta(10 * (df_pbp2['PERIOD']-1), unit='minutes')
+        print(df_pbp2[['PERIOD','MARKERTIME']])
+
+        df_pbp2['MARKERTIME'] = pd.to_timedelta(df_pbp2['MARKERTIME']).dt.total_seconds() / 60
+        print(df_pbp2[['PERIOD','MARKERTIME']])
+
+
+        ##### POINTS_A
+        # Remplacer les NaN au début de la colonne par 0
+        first_valid_index = df_pbp2['POINTS_A'].first_valid_index()  # Trouver le premier index valide
+        if first_valid_index is not None:  # S'il y a au moins un valide
+            df_pbp2.loc[:first_valid_index-1, 'POINTS_A'] = df_pbp2.loc[:first_valid_index-1, 'POINTS_A'].fillna(0)
+
+        # Remplacer les autres NaN par la dernière valeur non NaN
+        df_pbp2['POINTS_A'] = df_pbp2['POINTS_A'].ffill().astype(int)
+
+
+        ##### POINTS_B
+        # Remplacer les NaN au début de la colonne par 0
+        first_valid_index = df_pbp2['POINTS_B'].first_valid_index()  # Trouver le premier index valide
+        if first_valid_index is not None:  # S'il y a au moins un valide
+            df_pbp2.loc[:first_valid_index-1, 'POINTS_B'] = df_pbp2.loc[:first_valid_index-1, 'POINTS_B'].fillna(0)
+
+        # Remplacer les autres NaN par la dernière valeur non NaN
+        df_pbp2['POINTS_B'] = df_pbp2['POINTS_B'].ffill().astype(int)
+
+
+        # Calcul du nombre de périodes
+        nb_per = math.ceil(df_pbp2['MARKERTIME'].max() / 2.5)
+        print(df_pbp2['MARKERTIME'])
+        # Génération des évolutions de POINTS_A
+        evol_point_a = []
+        evol_point_b = []
+
+        for i in range(1, nb_per + 1):
+            filtred_indices = df_pbp2[df_pbp2['MARKERTIME'] > i * 2.5].index
+
+            if not filtred_indices.empty:
+
+                ind = filtred_indices[0] - 1
+                if ind == -1 :
+                    evol_point_a.append(0)
+                    evol_point_b.append(0)
+                else : 
+                    evol_point_a.append(df_pbp2.loc[ind, 'POINTS_A'])
+                    evol_point_b.append(df_pbp2.loc[ind, 'POINTS_B'])
+
+            else:
+                # Si aucun n'est vrai, prendre le maximum de POINTS_A
+                evol_point_a.append(df_pbp2['POINTS_A'].max())
+                evol_point_b.append(df_pbp2['POINTS_B'].max())
+                sa = df_pbp2['POINTS_A'].max()
+                sb = df_pbp2['POINTS_B'].max()
+                break  # Arrêter si plus aucun seuil supérieur n'est trouvé
+
+        while len(evol_point_a) < 24:
+            evol_point_a.append(None)
+        while len(evol_point_b) < 24:
+            evol_point_b.append(None)
+
+        print(evol_point_a)
+        print(evol_point_b)
+        df_result = pd.DataFrame(
+            [evol_point_a, evol_point_b], 
+            columns=[f'P{i}' for i in range(1, 25)]
+        )
+
+        df_result.insert(0,"HOME",["YES","NO"])
+        df_result.insert(0,"WIN",[sa>sb,sb>sa])
+        df_result['WIN'] = df_result['WIN'].replace({True: 'YES', False: 'NO'})
+        df_result.insert(0,"OPPONENT",[df_gs2["road.club.code"].to_list()[0],df_gs2["local.club.code"].to_list()[0]])
+        df_result.insert(0,"TEAM",[df_gs2["local.club.code"].to_list()[0],df_gs2["road.club.code"].to_list()[0]])
+        df_result.insert(0,"Gamecode",[df_gs2["Gamecode"].to_list()[0],df_gs2["Gamecode"].to_list()[0]])
+        if competition == "euroleague" : 
+            df_result.insert(0,"ROUND",[(df_gs2["Gamecode"].to_list()[0] - 1) // 10 + 1,(df_gs2["Gamecode"].to_list()[0] - 1) // 10 + 1])
+        else :
+            df_result.insert(0,"ROUND",[(df_gs2["Gamecode"].to_list()[0] - 1) // 10 + 1,(df_gs2["Gamecode"].to_list()[0] - 1) // 10 + 1])
+
+        df_result.insert(0,"Season",[df_gs2["Season"].to_list()[0],df_gs2["Season"].to_list()[0]])
+        df_evol_score = pd.concat([df_evol_score, df_result], ignore_index=True)
+
+
+    df_evol_score.to_csv(os.path.join(data_dir, f"{competition}_evolscore_{season}.csv"),index=False)
+    
+def plot_semi_circular_chart(value, t, size=300, font_size=20,m=True):
+    """
+    Create a semi-circular chart that is perfectly square without unnecessary white space.
+    """
+    if m : 
+        marg = size
+    else :
+        marg = 0
+    # Validate input
+    if not 0 <= value <= 1:
+        raise ValueError("Value must be between 0 and 1.")
+
+    # Define chart data for the semi-circle
+    value_percentage = value * 100
+    filled_portion = value * 180  # Degrees for the filled portion
+    empty_portion = 180 - filled_portion  # Degrees for the empty portion
+
+    # Add a transparent placeholder to simulate the bottom half of the circle
+    placeholder = 180
+
+    # Create the semi-circular plot using a Pie chart
+    fig = go.Figure()
+
+    # Add the green (filled) and red (empty) portions
+    fig.add_trace(go.Pie(
+        values=[filled_portion, empty_portion, placeholder],
+        labels=["Rempli", "Vide", ""],  # Empty label for the placeholder
+        marker=dict(colors=["#00ff00", "#ff0000", "rgba(0,0,0,0)"]),  # Transparent for placeholder
+        textinfo="none",  # Hide text on the slices
+        hole=0.5,
+        direction="clockwise",
+        sort=False,
+        showlegend=False
+    ))
+
+    # Add the percentage text in the center
+    fig.update_layout(
+        autosize=True,
+        annotations=[
+            dict(
+                text=f"{t} : <b>{round(value_percentage,1)}%</b>",
+                x=0.5, y=0.2,  # Center the text in the top half
+                font_size=font_size,
+                showarrow=False
+            )
+        ],
+        # Set layout to remove unnecessary spaces
+        margin=dict(t=0, b=0, l=0, r=0),
+        width=size,  # Ensure square dimensions
+        height=size,  # Ensure square dimensions
+    )
+
+    # Restrict to the top half of the circle and align properly
+    fig.update_traces(
+        rotation=270, 
+        pull=[0, 0, 0]
+    )  # Rotate to make green start on the top left
+
+    # Tighten the figure for perfect square export
+    fig.update_layout(
+        autosize=False,
+        paper_bgcolor="rgba(0,0,0,0)",  # Transparent background
+        plot_bgcolor="rgba(0,0,0,0)",  # Transparent plot area
+    )
+
+    return fig
+
+
+
+def analyse_io_2(data_dir,competition,season,num_players,min_round,max_round,CODETEAM = [],selected_players = [],min_percent_in = 0) :
+    conn = sqlite3.connect(':memory:')
+    data_pm = pd.read_csv(os.path.join(data_dir, f"{competition}_io_{num_players}_{season}.csv"))
+
+
+    if competition == "euroleague" :
+        data_pm.insert(0,"R",(data_pm["Gamecode"] - 1 ) // 10 + 1 )
+    else :
+        data_pm.insert(0,"R",(data_pm["Gamecode"] - 1 ) // 10 + 1 )
+
+    data_id = pd.read_csv(os.path.join(data_dir, f"{competition}_idplayers_{season}.csv"))
+
+    data_pm.to_sql('data_pm', conn, index=False, if_exists='replace') 
+    data_id.to_sql('data_id', conn, index=False, if_exists='replace')
+
+
+
+    # Commencer à construire la requête SQL
+    query = """
+    SELECT t.CODETEAM as TEAM,
+    """
+
+    # Ajouter les jointures et les colonnes de joueurs dynamiquement
+    joins = []
+    for i in range(1, num_players + 1):
+        query += f"t{i}.PLAYER as P{i},t{i}.PLAYER_ID as ID{i},\n"
+        joins.append(f"LEFT JOIN data_id as t{i} on (t.CODETEAM = t{i}.CODETEAM) and (t.J{i} = t{i}.PLAYER_ID)")
+
+    # Ajouter les agrégations
+    query += """
+    sum(t.TIME) as TIME_ON,
+    sum(DELTA_SCORE) as PM_ON,
+    ROUND(sum(OFF)/sum(TIME) *10,2) as OFF_ON_10,
+    ROUND(sum(DEF)/sum(TIME) *10,2) as DEF_ON_10,
+
+    ROUND(MAX(TEAM.TIME_TEAM) - sum(t.TIME),2) as TIME_OFF,
+    MAX(TEAM.DELTA_SCORE_TEAM) - sum(DELTA_SCORE) as PM_OFF,
+    ROUND((MAX(TEAM.OFF_TEAM) - sum(OFF)) / (MAX(TEAM.TIME_TEAM) - sum(t.TIME)) *10,2)  as OFF_OFF_10,
+    ROUND((MAX(TEAM.DEF_TEAM) - sum(DEF)) / (MAX(TEAM.TIME_TEAM) - sum(t.TIME)) *10,2) as DEF_OFF_10,
+
+    CAST(ROUND(MAX(TEAM.TIME_TEAM)) AS INTEGER) as TIME_TEAM,
+    MAX(TEAM.DELTA_SCORE_TEAM) as PM_TEAM,
+    ROUND(MAX(TEAM.OFF_TEAM)/MAX(TEAM.TIME_TEAM)*10,2) as OFF_TEAM_10,
+    ROUND(MAX(TEAM.DEF_TEAM)/MAX(TEAM.TIME_TEAM)*10,2) as DEF_TEAM_10
+
+    FROM data_pm as t
+    """
+
+    # Ajouter les jointures à la requête
+    query += "\n".join(joins)
+
+    # Ajouter le sous-requête pour les équipes
+    query += f"""
+    LEFT JOIN (SELECT CODETEAM,
+    sum(TIME)/{math.comb(5, num_players)} as TIME_TEAM,
+    sum(DELTA_SCORE)/{math.comb(5, num_players)} as DELTA_SCORE_TEAM,
+    sum(OFF) /{math.comb(5, num_players)} as OFF_TEAM,
+    sum(DEF) /{math.comb(5, num_players)} as DEF_TEAM
+
+    from data_pm
+    """
+
+    query += f"WHERE R>= {min_round} and R <= {max_round}"
+
+    query += f"""
+    group by CODETEAM
+    ORDER BY DELTA_SCORE_TEAM DESC) as TEAM on t.CODETEAM = TEAM.CODETEAM
+    """
+
+    # Terminer la requête avec les clauses GROUP BY et ORDER BY
+    query += f"""
+    WHERE 1=1
+    """
+
+    # Ajout conditionnel pour R
+    R = [i for i in range(min_round,max_round +1)]
+    if R:
+        r_filter = ', '.join(map(str, R))
+        query += f"AND t.R IN ({r_filter}) "
+
+    # Ajout conditionnel pour CODETEAM
+    if CODETEAM:
+        code_filter = "', '".join(CODETEAM)  # Création de la chaîne pour la liste
+        query += f"AND t.CODETEAM IN ('{code_filter}') "
+
+    query += f"""
+    GROUP BY t.CODETEAM, {', '.join([f't{i}.PLAYER' for i in range(1, num_players + 1)])}
+    ORDER BY sum(DELTA_SCORE) DESC, sum(TIME)
+    """
+
+    # Exécution de la requête
+    result = pd.read_sql_query(query, conn)
+    conn.close()
+
+    result = result.drop(columns=[f'ID{i}' for i in range(1,num_players+1)],axis = 1)
+
+    result.insert(num_players+1,"PERCENT_ON",((result["TIME_ON"]/result["TIME_TEAM"]*100).round(1)))
+    result.insert(num_players+6,"DELTA_ON",((result["OFF_ON_10"]-result["DEF_ON_10"]).round(2)))
+
+    result.insert(num_players+7,"PERCENT_OFF",((result["TIME_OFF"]/result["TIME_TEAM"]*100).round(1)))
+    result.insert(num_players+12,"DELTA_OFF",((result["OFF_OFF_10"]-result["DEF_OFF_10"]).round(2)))
+
+    if selected_players != [] :
+        result = result[result[[f"P{i+1}" for i in range(num_players)]].apply(lambda row: all(joueur in row.values for joueur in selected_players), axis=1)]
+
+    result = result[result["PERCENT_ON"]>=min_percent_in]
+    return result.reset_index(drop = True)
 
 
 def afficher_dataframe(df):
@@ -169,18 +1350,18 @@ def create_infographie(df,titre,season,competition,images_dir,infographie_dir,na
             text_bold = f"{row['PM_ON']}"
         
         if percent_time :
-            text_regular = f"ON court in {round(row['TIME_ON']/row['TIME_TEAM']*100)}% of mins"
-            second_text = f"{round(row['TIME_OFF'] / row['TIME_TEAM'] * 100)}%"
+            text_regular = f"when on court ( {round(row['TIME_ON']/row['TIME_TEAM']*100)}%)"
+            second_text = f"({round(row['TIME_OFF'] / row['TIME_TEAM'] * 100)}%)"
         else : 
-            text_regular = f"ON court in {row['TIME_ON']} mins"
+            text_regular = f"when on court in {row['TIME_ON']}"
             second_text = row['TIME_OFF']
 
 
         
         if row['PM_OFF'] > 0 :
-            text_regular2 = f"+{row['PM_OFF']} OFF court in {second_text}"
+            text_regular2 = f"+{row['PM_OFF']} when off court {second_text}"
         else :
-            text_regular2 = f"{row['PM_OFF']} OFF court in {second_text}"
+            text_regular2 = f"{row['PM_OFF']} when off court {second_text}"
 
         # Calculer la largeur du texte en gras
         text_bold_width = draw.textlength(text_bold, font=ImageFont.truetype(font_path_bold, 300))
@@ -250,6 +1431,8 @@ def recuperation_team_photo(competition, season, image_dir):
     )
 
     # Extraire les colonnes nécessaires
+    print(df_teams)
+    
     df_filtered_teams = df_teams[["team.code", "team.imageUrl"]]
     df_filtered_teams.columns = ["team_id", "team_image_url"]
     df_filtered_teams = df_filtered_teams[df_filtered_teams["team_image_url"].notna()]
@@ -331,16 +1514,16 @@ def analyse_per(data_dir,competition,season,R = [],CODETEAM = []) :
     ecart_type_actuel = df_result['IRS'].std()
 
     # Transformation des valeurs pour ajuster la moyenne à 75 et l'écart type à 10
-    df_result['NOTE'] = 75 + 5 * ((df_result['IRS'] - moyenne_actuelle) / ecart_type_actuel)
+    df_result['NOTE'] = 75 + 7.5 * ((df_result['IRS'] - moyenne_actuelle) / ecart_type_actuel)
     df_result['NOTE'] = np.clip(df_result['NOTE'], 50, 100)
     moyenne_actuelle = df_result['NOTE'].mean()
     ecart_type_actuel = df_result['NOTE'].std()
-    df_result['NOTE'] = (75 + 5 * ((df_result['NOTE'] - moyenne_actuelle) / ecart_type_actuel)).round(1)
+    df_result['NOTE'] = (75 + 7.5 * ((df_result['NOTE'] - moyenne_actuelle) / ecart_type_actuel)).round(1)
     df_result['NOTE'] = np.clip(df_result['NOTE'], 50, 100)
     df_result = df_result.sort_values(by = ["NOTE","PER"], ascending=[False,False]).reset_index(drop=True)
     df_result.insert(0,"RANK",range(1,len(df_result)+1))
     df_result["PER"] = df_result["PER"].round(2)
-    df_result["IRS"] = df_result["IRS"].round(2)
+    df_result["IRS"] = df_result["IRS"].round(3)
     df_result["TIME_ON"] = df_result["TIME_ON"].round(2)
     df_result["NUMBER"] = df_result["NUMBER"].astype(int)
     #df_result = df_result.drop(["PER_MOYEN"],axis=1)
@@ -353,7 +1536,14 @@ def analyse_per(data_dir,competition,season,R = [],CODETEAM = []) :
 
     return df_result
 
+@st.cache_data
+def load_data(file_path,sep = None):
+    # Cette fonction ne sera exécutée qu'une seule fois
+    # sauf si le fichier change ou que le cache est invalidé
+    df = pd.read_csv(file_path,sep = sep)
+    return df
 
+@st.cache_data
 def calcul_per2(data_dir,season,competition) :
     competition_pbp = pd.read_csv(os.path.join(data_dir, f'{competition}_pbp_{season}.csv'))
     gs = pd.read_csv(os.path.join(data_dir, f'{competition}_gs_{season}.csv'))
@@ -379,30 +1569,30 @@ def calcul_per2(data_dir,season,competition) :
 
     # Dictionnaire des scores pour chaque PLAYTYPE
     playtype_scores = {
-        'D': 0.75,
-        '2FGA': -0.8,
-        '2FGM': 1.5,
+        'D': 0.8,
+        '2FGA': -0.75,
+        '2FGM': 1.6,
         'AS': 0.8,
         'RV': 0.5,
         'CM': -0.5,
-        '3FGA': -0.6,
-        'FTM': 0.75,
-        '3FGM': 2.25,
-        'O': 1.25,
-        'TO': -1.33,
+        '3FGA': -0.5,
+        'FTM': 0.8,
+        '3FGM': 2.4,
+        'O': 1.2,
+        'TO': -1.25,
         'ST': 1.33,
-        'FTA': -0.7,
+        'FTA': -1,
         'FV': 0.5,
         'CMU': -1.5,
         'CMD': -1.25,
         'CMTI': -1.25,
         'CMT': -1.25,
-        'OF': -1.33
+        'OF': -1.25
     }
 
     if competition == "euroleague" : 
-        competition_pbp.loc[:,"ROUND"] = (competition_pbp["Gamecode"] - 1) // 9 + 1
-        competition_pbp = competition_pbp[competition_pbp["ROUND"]<= 34].reset_index(drop=True)
+        competition_pbp.loc[:,"ROUND"] = (competition_pbp["Gamecode"] - 1) // 10 + 1
+        competition_pbp = competition_pbp[competition_pbp["ROUND"]<= 38].reset_index(drop=True)
     else :
         competition_pbp.loc[:,"ROUND"] = (competition_pbp["Gamecode"] - 1) // 10 + 1
         competition_pbp = competition_pbp[competition_pbp["ROUND"]<= 18].reset_index(drop=True)
@@ -410,8 +1600,21 @@ def calcul_per2(data_dir,season,competition) :
     # Filtrer le DataFrame pour garder seulement les PLAYTYPE présents dans playtype_scores
     #competition_pbp = competition_pbp[competition_pbp["PLAYER"]!=""].reset_index(drop=True)
     df_unique = competition_pbp[["ROUND", "CODETEAM", "OPPONENT", "HOME", "WIN", "DORSAL", "PLAYER","PLAYER_ID"]].drop_duplicates()
-    df_unique = df_unique[~df_unique["PLAYER"].isna()]
+    #df_unique = df_unique[~df_unique["PLAYER"].isna()]
     df_filtered = competition_pbp[competition_pbp['PLAYTYPE'].isin(playtype_scores.keys())]
+
+    ############
+    df_unique = df_unique[df_unique["PLAYER_ID"]!="CO_B"]
+
+    df_unique["PLAYER_ID"] = df_unique.apply(lambda x: x["CODETEAM"] if pd.isnull(x["PLAYER_ID"]) else x["PLAYER_ID"], axis=1)
+    df_unique["PLAYER"] = df_unique.apply(lambda x: x["CODETEAM"] if pd.isnull(x["PLAYER"]) else x["PLAYER"], axis=1)
+    df_unique["DORSAL"] = df_unique.apply(lambda x: 100 if pd.isnull(x["DORSAL"]) else x["DORSAL"], axis=1)
+    df_filtered = competition_pbp[competition_pbp['PLAYTYPE'].isin(playtype_scores.keys())]
+    df_filtered = df_filtered[df_filtered["PLAYER_ID"]!="CO_B"]
+    df_filtered["PLAYER_ID"] = df_filtered.apply(lambda x: x["CODETEAM"] if pd.isnull(x["PLAYER_ID"]) else x["PLAYER_ID"], axis=1)
+    df_filtered["PLAYER"] = df_filtered.apply(lambda x: x["CODETEAM"] if pd.isnull(x["PLAYER"]) else x["PLAYER"], axis=1)
+    df_filtered["DORSAL"] = df_filtered.apply(lambda x: 100 if pd.isnull(x["DORSAL"]) else x["DORSAL"], axis=1)
+    ############
 
     df_filtered = pd.merge(df_unique, df_filtered, 
                         on=["ROUND", "CODETEAM", "OPPONENT", "HOME", "WIN", "DORSAL", "PLAYER","PLAYER_ID"], 
@@ -483,7 +1686,7 @@ def calcul_per2(data_dir,season,competition) :
     df_result["PER"] = (df_result["PER"]).round(1)
 
     #df_result.to_csv(os.path.join(data_dir, f'{competition}_PER_{season}_round.csv'),index = False)
-
+    df_result = df_result[df_result["TEAM"]!=0]
     return df_result[['ROUND', 'TEAM','OPPONENT','HOME','WIN',"NUMBER","PLAYER","TIME_ON","PER",
                       "PM_ON","PTS","DR","OR","TR","AS","ST","CO","1_R",
                       "1_T","2_R","2_T","3_R","3_T","TO","FP","CF","NCF"]]
@@ -492,7 +1695,7 @@ def calcul_per(data_dir,season,competition) :
     competition_pbp = pd.read_csv(os.path.join(data_dir, f'{competition}_pbp_{season}.csv'))
 
     if competition == "euroleague" : 
-        competition_pbp.loc[:,"ROUND"] = (competition_pbp["Gamecode"] - 1) // 9 + 1
+        competition_pbp.loc[:,"ROUND"] = (competition_pbp["Gamecode"] - 1) // 10 + 1
         competition_pbp = competition_pbp[competition_pbp["ROUND"]<= 34].reset_index(drop=True)
     else :
         competition_pbp.loc[:,"ROUND"] = (competition_pbp["Gamecode"] - 1) // 10 + 1
@@ -500,25 +1703,25 @@ def calcul_per(data_dir,season,competition) :
 
 
     coefficients = {
-        'D': 0.75,
-        '2FGA': -0.8,
+        'D': 0.85,
+        '2FGA': -0.75,
         '2FGM': 1.5,
         'AS': 0.8,
-        'RV': 0.5,
+        'RV': 0.6,
         'CM': -0.5,
-        '3FGA': -0.6,
+        '3FGA': -0.5,
         'FTM': 0.75,
         '3FGM': 2.25,
-        'O': 1.25,
-        'TO': -1.5,
-        'ST': 1.5,
+        'O': 1.35,
+        'TO': -1.25,
+        'ST': 1.33,
         'FTA': -0.7,
         'FV': 0.5,
-        'CMU': -1.5,
-        'CMD': -1.5,
-        'CMTI': -1.5,
-        'CMT': -1.5,
-        'OF': -1.5
+        'CMU': -1.25,
+        'CMD': -1.25,
+        'CMTI': -1.25,
+        'CMT': -1.25,
+        'OF': -1.25
     }
 
     # Création de la nouvelle colonne 'Nouveau_Coeff' en utilisant map et en attribuant 0 par défaut si non trouvé
@@ -643,7 +1846,7 @@ def recup_idteam(data_dir,season,competition) :
         ts = TeamStats("U")
 
     df = ts.get_team_stats_single_season(
-            endpoint="traditional", season=2024, phase_type_code="RS", statistic_mode="PerGame"
+            endpoint="traditional", season=season, phase_type_code="RS", statistic_mode="PerGame"
         )
     df = df[['team.code', 'team.name']].drop_duplicates()
     df.columns = ["CODETEAM","NAMETEAM"]
@@ -662,8 +1865,8 @@ def df_images_players(competition,season,round_,data_dir) :
         last_gamecode=10*(round_)
     else:
         gs_ = GameStats(competition="E")
-        first_gamecode=9*(round_- 1) + 1
-        last_gamecode=9*(round_)    
+        first_gamecode=10*(round_- 1) + 1
+        last_gamecode=10*(round_)    
 
     for gc in range(first_gamecode,last_gamecode + 1) :
         try : 
@@ -719,8 +1922,8 @@ def recuperation_pbp(competition, season, data_dir, round_=None):
                 first_gamecode=10*(round_- 1) + 1 
                 last_gamecode=10*(round_)
             else :
-                first_gamecode=9*(round_- 1) + 1
-                last_gamecode=9*(round_) 
+                first_gamecode=10*(round_- 1) + 1
+                last_gamecode=10*(round_) 
             
             for gc in range(first_gamecode, last_gamecode + 1):
                 # Vérifier si _pbp contient déjà des lignes pour ce gamecode
@@ -728,6 +1931,7 @@ def recuperation_pbp(competition, season, data_dir, round_=None):
                     # Récupérer les données pour le gamecode spécifique
                     try : 
                         sub = pbp_.get_game_play_by_play_data(season=season, gamecode=gc)
+                        sub['PERIOD'] = (sub['PLAYINFO'] == 'Begin Period').cumsum()
                         if "End Game" in sub["PLAYINFO"].values:
                             # Concaténer les nouvelles données avec _pbp
                             _pbp = pd.concat([_pbp, sub], ignore_index=True)
@@ -738,13 +1942,15 @@ def recuperation_pbp(competition, season, data_dir, round_=None):
                     try : 
                         _pbp = _pbp[_pbp["Gamecode"]!=gc]
                         sub = pbp_.get_game_play_by_play_data(season=season, gamecode=gc)
+                        sub['PERIOD'] = (sub['PLAYINFO'] == 'Begin Period').cumsum()
+
                         # Concaténer les nouvelles données avec _pbp
                         _pbp = pd.concat([_pbp, sub], ignore_index=True)
                     except :
                         pass
         
         if competition == "euroleague" : 
-            _pbp.loc[:,"Round"] = (_pbp["Gamecode"] - 1) // 9 + 1
+            _pbp.loc[:,"Round"] = (_pbp["Gamecode"] - 1) // 1010 + 1
         else :
              _pbp.loc[:,"Round"] = (_pbp["Gamecode"] - 1) // 10 + 1
 
@@ -754,9 +1960,10 @@ def recuperation_pbp(competition, season, data_dir, round_=None):
     else:
         # Récupérer les données en utilisant PlayByPlay
         _pbp = pbp_.get_game_play_by_play_data_single_season(season=season)
+        _pbp['PERIOD'] = (_pbp['PLAYINFO'] == 'Begin Period').cumsum()
 
         if competition == "euroleague" : 
-            _pbp.loc[:,"Round"] =(_pbp["Gamecode"] - 1) // 9 + 1
+            _pbp.loc[:,"Round"] =(_pbp["Gamecode"] - 1) // 10 + 1
         else :
              _pbp.loc[:,"Round"] = (_pbp["Gamecode"] - 1) // 10 + 1
         # Sauvegarder les données dans un fichier CSV
@@ -780,7 +1987,7 @@ def recuperation_players_photo2(competition,season,image_dir,data_dir) :
 
     for index, row in df_filtered.iterrows():
 
-        image_player_link = os.path.join(image_dir, f'{competition}_{season}_players\{row["TEAM"]}_{row["PLAYER_ID"]}.png')
+        image_player_link = os.path.join(image_dir, rf'{competition}_{season}_players\{row["TEAM"]}_{row["PLAYER_ID"]}.png')
         url_player = row["LINK"]
         response = requests.get(url_player)
         # Vérifier que la requête est réussie (code 200)
@@ -861,11 +2068,12 @@ def recuperation_gs(competition, season, data_dir, round_ = None ):
                 first_gamecode=10*(round_- 1) + 1 
                 last_gamecode=10*(round_)
             else :
-                first_gamecode=9*(round_- 1) + 1
-                last_gamecode=9*(round_)
+                first_gamecode=10*(round_- 1) + 1
+                last_gamecode=10*(round_)
 
 
             for gc in range(first_gamecode, last_gamecode + 1):
+
                 # Vérifier si _gs contient déjà des lignes pour ce gamecode
                 if not (_gs['Gamecode'] == gc).any():
                     # Récupérer les données pour le gamecode spécifique
@@ -938,6 +2146,8 @@ def debroussallage_pbp_data(df_gs,df_pbp):
     game_duration : pandas.Timedelta
         Durée totale du match calculée à partir des périodes et des minutes.
     """
+
+
     df_pbp.loc[:, "NUMBEROFPLAY"] = range(len(df_pbp))
 
 
@@ -945,9 +2155,7 @@ def debroussallage_pbp_data(df_gs,df_pbp):
     score = [df_gs["local.score"].to_list()[0],df_gs["road.score"].to_list()[0]]
 
 
-
     df_pbp['PERIOD'] = df_pbp['PERIOD'].apply(lambda x: x if x in [1, 2, 3, 4] else 4 + 0.5 * (x - 4)).astype(float)
-
     game_duration = pd.to_timedelta(max(df_pbp['PERIOD']) *10,unit = "minutes")
     
     df_pbp = df_pbp[
@@ -1203,7 +2411,7 @@ def analyse_io(data_dir,competition,season,num_players,R = [],CODETEAM = []) :
 
 
     if competition == "euroleague" :
-        data_pm.insert(0,"R",(data_pm["Gamecode"] - 1 ) // 9 + 1 )
+        data_pm.insert(0,"R",(data_pm["Gamecode"] - 1 ) // 10 + 1 )
     else :
         data_pm.insert(0,"R",(data_pm["Gamecode"] - 1 ) // 10 + 1 )
 
@@ -1312,7 +2520,7 @@ def io_plus_minus_analysis(data_dir,season,competition,io,sortby = "PM",teamcode
 
     if round != "" :
         if competition == "euroleague" :
-            data_io = data_io[(data_io["GAMECODE"]>= (9*round - 8 ))&(data_io["GAMECODE"]<= (9*round))]
+            data_io = data_io[(data_io["GAMECODE"]>= (10*round - 9 ))&(data_io["GAMECODE"]<= (10*round))]
         else  :
             data_io = data_io[(data_io["GAMECODE"]>= (10*round - 9 ))&(data_io["GAMECODE"]<= (10*round))]
 
@@ -1402,7 +2610,9 @@ def process_dataframe(data_dir, competition, season, nb_groupe):
     
     # Calcul de la liste des Gamecode
     gc_list = list(set(five_summary["Gamecode"].unique()) - set(already_exist["Gamecode"].unique()))
-
+    print(set(five_summary["Gamecode"].unique()))
+    print(set(already_exist["Gamecode"].unique()))
+    print(gc_list)
     # Validation de nb_groupe
     if not (1 <= nb_groupe <= 5):
         raise ValueError(f"nb_groupe doit être compris entre 1 et 5.")
@@ -1424,7 +2634,7 @@ def process_dataframe(data_dir, competition, season, nb_groupe):
 
     # Création d'un DataFrame avec les nouvelles lignes
     new_df = pd.DataFrame(new_rows)
-
+    print(new_df)
     # Agrégation des données
     group_columns = ['Gamecode', 'CODETEAM'] + [col for col in new_df.columns if col.startswith('J')]
     aggregated_df = new_df.groupby(group_columns).agg({
@@ -1446,8 +2656,17 @@ def process_dataframe(data_dir, competition, season, nb_groupe):
     # Sauvegarde dans un fichier CSV
     new_exist.to_csv(already_exist_path, index=False)
 
-
-def get_aggregated_data(df, min_round, max_round, selected_teams = [],selected_opponents=[],selected_fields = [],selected_players = [],mode="CUMULATED",percent = "MADE"):
+@st.cache_data
+def get_aggregated_data(df, 
+                        min_round, 
+                        max_round, 
+                        selected_teams = [],
+                        selected_opponents=[],
+                        selected_fields = [],
+                        selected_players = [],
+                        mode="CUMULATED",
+                        percent = "MADE",
+                        ranking_mode = False):
     selected_fields2 = selected_fields
 
     if selected_fields == [] :
@@ -1466,6 +2685,8 @@ def get_aggregated_data(df, min_round, max_round, selected_teams = [],selected_o
         df_filtered = df_filtered[df_filtered['TEAM'].isin(selected_teams)]
     
     stats = ["TIME_ON"   , "PER" , "PM_ON","PTS",   "DR" ,  "OR" ,  "TR"  , "AS"  , "ST" , "CO" , "1_R" , "1_T" , "2_R" , "2_T" , "3_R" , "3_T" ,  "TO" ,  "FP"  , "CF" , "NCF"]
+    stats_i = ["PER" ,"PTS",   "DR" ,  "OR" ,  "TR"  , "AS"  , "ST" , "CO" ,  "TO" ,  "FP"  , "CF" , "NCF"]
+
     aggregation_functions = {
         'TIME_ON': 'sum', 'PER': 'sum', 'PM_ON': 'sum', 'PTS': 'sum', 'DR': 'sum', 'OR': 'sum', 'TR': 'sum',
         'AS': 'sum', 'ST': 'sum', 'CO': 'sum', '1_R': 'sum', '1_T': 'sum', '2_R': 'sum', '2_T': 'sum',
@@ -1476,7 +2697,7 @@ def get_aggregated_data(df, min_round, max_round, selected_teams = [],selected_o
     df_team["TIME_ON"] =( (df_team["TIME_ON"]).round(0)).astype(int)
     df_team["PM_ON"] = (df_team["PM_ON"]/5).astype(int)
 
-
+    
     if selected_fields2 == ["ROUND"] : 
 
         df_grouped = df_filtered.groupby(selected_fields2).agg(aggregation_functions).reset_index()
@@ -1596,6 +2817,10 @@ def get_aggregated_data(df, min_round, max_round, selected_teams = [],selected_o
     if mode == "AVERAGE" : 
         for s in stats :
             df_grouped[s] = (df_grouped[s]/df_grouped["NB_GAME"]).round(1)
+
+    # if mode == "I_MODE" :
+    #     for s in stats_i :
+    #         df_grouped[s] = (df_grouped[s]/(df_grouped["TIME_ON"]**0.5)).round(1)
 
     if (df_grouped['NB_GAME'] == 1).all():
         # If NB_GAME is entirely filled with 1, map HOME and WIN to 'YES'/'NO'
